@@ -10,7 +10,7 @@
   <nav class="sidebar">
     <ul>
       {% for item in site.data.nav %}
-        <li><a href="{{ item.link | relative_url }}">{{ item.name }}</a></li>
+      <li><a href="{{ item.link }}">{{ item.name }}</a></li>
       {% endfor %}
     </ul>
   </nav>
