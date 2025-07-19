@@ -18,11 +18,16 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 # required by disqus to display comments
+title: Pwn3d777
+author: GitHub User
+description: > # this means to ignore newlines until "show_exerpts:"
+  This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+show_excerpts: false # set to true to show excerpts on the homepage
 url: https://your-site-url
 
 # jekyll-paginate
 paginate: 5
-paginate_path: "/blog/page:num/"
+paginate_path: "/write-ups/page:num"
 
 # jekyll-tagging (optional)
 tag_permalink_style: pretty

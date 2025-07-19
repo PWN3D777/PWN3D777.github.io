@@ -1,0 +1,21 @@
+---
+layout: home
+title: "write-ups"
+permalink: /write-ups/
+
+pagination:
+  enabled: true
+---
+
+<section class="post-feed">
+  {% for post in site.posts %}
+    <article class="post-item">
+      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+      <p>{{ post.excerpt }}</p>
+      <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+    </article>
+  {% endfor %}
+</section>
+
+{% include pagination.html %}
+

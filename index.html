@@ -8,13 +8,25 @@ pagination:
   <h1>{{ site.title }}</h1>
   <p>{{ site.description }}</p>
 </section>
-<section class="post-feed">
-  {% for post in paginator.posts %}
-    <article class="post-item">
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p>{{ post.excerpt }}</p>
-      <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
-    </article>
-  {% endfor %}
+
 </section>
+
+<section class="home-blocks">
+  <div class="block">
+    <h2><a href="/write-ups/">Write Ups</a></h2>
+    <p>Aquí irán los artículos y write ups más recientes.</p>
+  </div>
+
+  <div class="block">
+    <h2><a href="/my-apps/">My Apps</a></h2>
+    <p>Explora las aplicaciones y proyectos que he desarrollado.</p>
+  <div class="block">
+
+    <h2><a href="/about/">About</a></h2>
+    <p>About me.</p>
+  </div>
+
+
+</section>
+
 {% include pagination.html %}
