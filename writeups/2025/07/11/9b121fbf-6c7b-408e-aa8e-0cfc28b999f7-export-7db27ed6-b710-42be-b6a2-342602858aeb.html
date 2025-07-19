@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>2Million 3bbd57b2faa540098692e701ec8147cc | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="2Million 3bbd57b2faa540098692e701ec8147cc" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="2Million" />
+<meta property="og:description" content="2Million" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-11T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="2Million 3bbd57b2faa540098692e701ec8147cc" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"2Million","headline":"2Million 3bbd57b2faa540098692e701ec8147cc","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb.html"},"url":"https://your-site-url/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">2Million 3bbd57b2faa540098692e701ec8147cc</h1>
+  
+  <div class="post-date">
+    Published on 11 Jul 2025
+    
+  </div>
+  
+  <h1 id="2million">2Million</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>start with nmap recognition there are just 2 ports open</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled.png" alt="Untitled" /></p>
+
+<p>On http server we can put an invitation code to register ourselves but we don’t have this invitation code right now</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_1.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Go to see view source page, we can see that once the code is received the code is send to /register directory.</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_2.png" alt="Untitled" /></p>
+
+<p>We need to go to the file that we are calling to see more details, but the code is obfuscated</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_3.png" alt="Untitled" /></p>
+
+<p>de4js is a online tool where it’s possible to deobfuscate Javascript code</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_4.png" alt="Untitled" /></p>
+
+<p>Now we will have a path where we can find how to generate a code, it’s needed to do a POST request</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_5.png" alt="Untitled" /></p>
+
+<p>There’s some encrypted information</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_6.png" alt="Untitled" /></p>
+
+<p>Use <a href="https://cryptii.com/pipes/rot13-decoder">cryptii</a>  to find the plain text which is another path to generate an invitation code</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_7.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_8.png" alt="Untitled" /></p>
+
+<p>Use the generated code to register</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_9.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_10.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_11.png" alt="Untitled" /></p>
+
+<p>Once we got a valid user we can seek for routes inside of the web application</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_12.png" alt="Untitled" /></p>
+
+<p>There are several functionalities related with admin and generating vpn</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_13.png" alt="Untitled" /></p>
+
+<p>In the .php resource when it is use update function, it is only checked if the variable is false, but it is false if it doesn’t exists, so regarding the value of the parameter it always return a successful response</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_14.png" alt="Untitled" /></p>
+
+<p>Set the content-type and add the proper parameters to update your settings</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_15.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_16.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_17.png" alt="Untitled" /></p>
+
+<p>Now we are able to check if we are admins</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_18.png" alt="Untitled" /></p>
+
+<p>It is clear that the main functionality of HTB is possible due to we can connect to their private network through a vpn, using POST request we can generate vpn’s to a specific user, but we are sure this is sanitized? Try to run a command and we realize there RCE</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_19.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_20.png" alt="Untitled" /></p>
+
+<p>Create a rev shell, and break into the system, but we are just data user, check for environment variables and got the user flag with admin user</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_21.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_22.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Inside of the mail there are information about some emerging vulnerabilities more specific vulnerabilities related with OverlayFS / FUSE</p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_23.png" alt="Untitled" /></p>
+
+<ul>
+  <li>CVE-2023-0386
+    <ul>
+      <li>
+        <p>Background on the SUID bit and OverlayFS</p>
+
+        <p><strong>The SUID bit</strong></p>
+
+        <p>The SUID bit is a special file permission that allows a binary to impersonate the owner of the binary using the <code class="language-plaintext highlighter-rouge">setuid</code> system call family, instead of the user executing it.</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">**</span><span class="c1">#include &lt;stdio.h&gt;
+</span>  <span class="c1">#include &lt;stdlib.h&gt;
+</span>  <span class="c1">#include &lt;unistd.h&gt;
+</span>  <span class="c1">#include &lt;errno.h&gt;
+</span>  <span class="c1">#include &lt;string.h&gt;
+</span>        
+  <span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nb">int</span> <span class="n">result</span><span class="p">;</span>
+        
+      <span class="n">result</span> <span class="o">=</span> <span class="n">setuid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"could not setuid(0): %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+      <span class="p">}</span>
+        
+      <span class="n">result</span> <span class="o">=</span> <span class="n">setgid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"could not setguid(0): %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+      <span class="p">}</span>
+        
+      <span class="n">printf</span><span class="p">(</span><span class="s">"Starting root shell...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="n">system</span><span class="p">(</span><span class="s">"/bin/bash"</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span><span class="o">**</span>
+        
+</code></pre></div>        </div>
+
+        <p>This program attempts to impersonate the root user (UID 0). The operation will succeed only if the binary is owned by <code class="language-plaintext highlighter-rouge">root</code> and if the binary has the SUID bit set.</p>
+
+        <p>Let’s compile the binary and try to run it</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">gcc</span> <span class="o">-</span><span class="n">Wall</span> <span class="n">setuid</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">seruid</span>
+  <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">setuid</span>
+  <span class="p">.</span><span class="o">/</span><span class="n">setuid</span>
+  <span class="p">(</span><span class="n">Operation</span> <span class="n">no</span> <span class="n">permitted</span><span class="p">)</span>
+</code></pre></div>        </div>
+
+        <p>To change the ownership of the file to root, we need to be root. Let’s  do it as a privileged user and add the SUID bit to it:</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">chown</span> <span class="n">root</span><span class="p">:</span><span class="n">root</span> <span class="n">setuid</span>
+  <span class="n">chmod</span> <span class="o">+</span><span class="n">s</span> <span class="n">setuid</span>
+        
+</code></pre></div>        </div>
+
+        <p>Going back to our unprivileged user shell, let’s run it again:</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="p">.</span><span class="o">/</span><span class="n">setuid</span>
+  <span class="n">Starting</span> <span class="n">root</span> <span class="n">shell</span><span class="p">...</span>
+  <span class="nb">id</span>
+  <span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">),</span><span class="mi">1002</span><span class="p">(</span><span class="n">john</span><span class="p">)</span>
+        
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>The overlay file system</p>
+
+        <p>The overlay file system (often abbreviated as Overlay FS) allows a user to “merge” several mount points into a unified file system.</p>
+
+        <p>Let’s see an example of how it works. We start by creating several folders, representing out different mount points, and create a directory structure inside them:</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">mkdir</span> <span class="n">base</span> <span class="n">base</span><span class="o">/</span><span class="n">foo</span> <span class="n">base</span><span class="o">/</span><span class="n">bar</span>
+  <span class="n">mkdir</span> <span class="n">upper</span>
+</code></pre></div>        </div>
+
+        <p>We can then create a “unified” file system mount combining these directories using an OverlayFs mount:</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Create mount point and empty "workdir" directory required by OverlayFS
+</span>  <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span> <span class="n">workdir</span>
+        
+  <span class="n">sudo</span> <span class="n">mount</span> <span class="n">overlay</span> <span class="o">-</span><span class="n">t</span> <span class="n">overlay</span> <span class="o">-</span><span class="n">o</span> <span class="n">lowerdir</span><span class="o">=</span><span class="p">.</span><span class="o">/</span><span class="n">base</span><span class="p">,</span><span class="n">upperdir</span><span class="o">=</span><span class="p">.</span><span class="o">/</span><span class="n">upper</span><span class="p">,</span><span class="n">workdir</span><span class="o">=</span><span class="p">.</span><span class="o">/</span><span class="n">workdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span>
+</code></pre></div>        </div>
+
+        <p>When a file is written to one of the lower directories (<code class="language-plaintext highlighter-rouge">base</code>)it is copied up to the upper directory and ends up in the overlay mount as well.</p>
+
+        <p>When we write a file to out overlay file system, it is reflected only in the upper  directory (<code class="language-plaintext highlighter-rouge">upper</code>)</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="err">$</span> <span class="n">touch</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">hello</span>
+  <span class="err">$</span> <span class="n">ls</span> <span class="n">base</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span> <span class="c1"># 'hello' was not created in the "lower" directory
+</span>  <span class="err">$</span> <span class="n">ls</span> <span class="n">upper</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span> <span class="c1"># 'hello' was created in the "upper" directory
+</span>  <span class="n">hello</span>
+</code></pre></div>        </div>
+
+        <p>Finally when we write a file to any of the mount points (<code class="language-plaintext highlighter-rouge">base</code> or <code class="language-plaintext highlighter-rouge">upper</code>) it is reflected on the overlay file system.</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="err">$</span> <span class="n">touch</span> <span class="n">base</span><span class="o">/</span><span class="k">from</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">base</span>
+  <span class="err">$</span> <span class="n">touch</span> <span class="n">upper</span><span class="o">/</span><span class="k">from</span><span class="o">-</span><span class="n">upper</span>
+  <span class="err">$</span> <span class="n">ls</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span><span class="o">/</span><span class="k">from</span><span class="o">*</span>
+  <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span><span class="o">/</span><span class="k">from</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">base</span> 
+  <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span><span class="o">/</span><span class="k">from</span><span class="o">-</span><span class="n">upper</span>
+        
+</code></pre></div>        </div>
+
+        <p><a href="2Million%203bbd57b2faa540098692e701ec8147cc/overlayfs.avif">overlayfs.avif</a></p>
+      </li>
+      <li>
+        <p>How the CVE-2023-0386 works</p>
+
+        <p>CVE-2023-0386 lies in the fact that when the kernel copied a file the overlay file system to the upper directory, it did not check if the user/group owning this file was mapped in the current userspace. This allows an unprivileged user to smuggle an SUID binary from a lower directory to the upper directory, by using OverlayFS as an intermediary.</p>
+
+        <p>The exploit works as follows:</p>
+
+        <ol>
+          <li>Create a FUSE (File System in User Space) file system. This virtual file system is backed by a piece of code making it appear as if it contains a single binary that is owned by root and has the SUID bit set. This step requires FUSE, as we do not have permissions to <code class="language-plaintext highlighter-rouge">chmod root:root</code>  and <code class="language-plaintext highlighter-rouge">chmod +s</code>  on the real file system.</li>
+          <li>Enter a new user and mount namespace using the unshare system call. The sole purpose of this step is to allow us to use mount in the next step to create our overlay file system.</li>
+          <li>
+            <p>Create a new OverlayFS mount, with:</p>
+
+            <p>-as the lower directory, the FUSE file system created in step 1</p>
+
+            <p>-as the upper directory a world-write directory like <code class="language-plaintext highlighter-rouge">/tmp</code></p>
+          </li>
+          <li>Trigger a copy of out SUID binary from the overlay file system to the upper directory for instance, by running touch on it. The kernel will:
+            <ol>
+              <li>catch the file change on the overlay file system</li>
+              <li>read the malicious binary from our FUSE file system</li>
+              <li>consider that it has the SUID bit set and os owned by root, since out FUSE file system tells it so</li>
+              <li>Write the file with the same properties to the upper directory</li>
+            </ol>
+
+            <p>At this point, we are left with a SUID binary owned by root in <code class="language-plaintext highlighter-rouge">/tmp</code> all we need to do is exit the user namespace created in step2 and execute de binary, allowing us to escalate to super admin privileges.</p>
+
+            <p><a href="2Million%203bbd57b2faa540098692e701ec8147cc/flow.avif">flow.avif</a></p>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_24.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_25.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_26.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_27.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_28.png" alt="Untitled" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb.html';
+     this.page.identifier = '/writeups/2025/07/11/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb';
+     this.page.title = '2Million 3bbd57b2faa540098692e701ec8147cc';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

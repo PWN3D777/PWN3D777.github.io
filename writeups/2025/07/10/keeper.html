@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Keeper 0d96ae1b297a472d9b07a3aee6b7c8eb | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Keeper 0d96ae1b297a472d9b07a3aee6b7c8eb" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Keeper" />
+<meta property="og:description" content="Keeper" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/keeper.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/keeper.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Keeper 0d96ae1b297a472d9b07a3aee6b7c8eb" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Keeper","headline":"Keeper 0d96ae1b297a472d9b07a3aee6b7c8eb","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/keeper.html"},"url":"https://your-site-url/writeups/2025/07/10/keeper.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="keeper">Keeper</h1>
+
+<p>HackTheBox: Easy</p>
+
+<aside>
+💡 Keeper is and Linux machine which exploits keepass vulnerabilities, and take advantages of default creds.
+
+</aside>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>Check the active connection</li>
+</ul>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled.png" alt="Untitled" /></p>
+
+<ul>
+  <li>Scanning ports</li>
+</ul>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_1.png" alt="Untitled" /></p>
+
+<p>We can see there’s a web services running in 80 port and ssh service in 22</p>
+
+<h2 id="2-looking-around">2: Looking around</h2>
+
+<ul>
+  <li>We can see a redirect to a subdomain, we look for default creds of</li>
+</ul>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_2.png" alt="Untitled" /></p>
+
+<p>root:password</p>
+
+<ul>
+  <li>Selecting users we find creds for ssh session</li>
+</ul>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_3.png" alt="Untitled" /></p>
+
+<h2 id="3-user-flag">3: User flag</h2>
+
+<p>Got it</p>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_4.png" alt="Untitled" /></p>
+
+<h2 id="4-priv-esc">4: Priv esc</h2>
+
+<ul>
+  <li>We find a keepass technology to protect password, there is a vulnerability (CVE-2023-32784) at:</li>
+  <li><a href="https://github.com/vdohney/keepass-password-dumper">https://github.com/vdohney/keepass-password-dumper</a></li>
+</ul>
+
+<p>We copy the .zip in our local machine</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp lnorgaard@10.129.122.221:~/RT30000.zip <span class="nb">.</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_5.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_6.png" alt="Untitled" /></p>
+
+<ul>
+  <li>We use a keepass tool for discover the root password</li>
+</ul>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_7.png" alt="Untitled" /></p>
+
+<p>If we can not get the password we can use a client through command line</p>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_8.png" alt="Untitled" /></p>
+
+<p>To make the right format for ssh</p>
+
+<p><img src="/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_9.png" alt="Untitled" /></p>
+
+<p>Machine pwned</p>
+
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

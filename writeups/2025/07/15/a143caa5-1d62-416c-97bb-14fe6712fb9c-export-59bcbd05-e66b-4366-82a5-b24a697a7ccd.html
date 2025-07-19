@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Administrator 13db95255291808bbb60ffbcfd15d2ee | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Administrator 13db95255291808bbb60ffbcfd15d2ee" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Administrator" />
+<meta property="og:description" content="Administrator" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-15T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Administrator 13db95255291808bbb60ffbcfd15d2ee" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-15T16:05:57+00:00","datePublished":"2025-07-15T16:05:57+00:00","description":"Administrator","headline":"Administrator 13db95255291808bbb60ffbcfd15d2ee","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd.html"},"url":"https://your-site-url/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Administrator 13db95255291808bbb60ffbcfd15d2ee</h1>
+  
+  <div class="post-date">
+    Published on 15 Jul 2025
+    
+  </div>
+  
+  <h1 id="administrator">Administrator</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>We have initial username and password from htb to start enumeration</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image.png" alt="image.png" /></p>
+
+<p>Once again we don’t</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_1.png" alt="image.png" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p>Effectively those are valid credentials, check share files</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_2.png" alt="image.png" /></p>
+
+<p>we can not log in as this user in ftp</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_3.png" alt="image.png" /></p>
+
+<p>proceed to get all shared files it would be useful to get more information</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_4.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_5.png" alt="image.png" /></p>
+
+<p>Not interesting stuff, check Active Directory structure with bloodhound, ethan has a high privilege, we may try to reach him</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_6.png" alt="image.png" /></p>
+
+<p>As olivia we can set michael password</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_7.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_8.png" alt="image.png" /></p>
+
+<p>And Michael can force bejamin password change</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_9.png" alt="image.png" /></p>
+
+<p>Enumerate users in the domain</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_10.png" alt="image.png" /></p>
+
+<p>Set Benjamin password</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_11.png" alt="image.png" /></p>
+
+<p>Log in as benjamin in ftp</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_12.png" alt="image.png" /></p>
+
+<p>There we will find a backup in psafe3 format</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_13.png" alt="image.png" /></p>
+
+<p>use pwsafe2john to get a crackeable hash of the password file</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_14.png" alt="image.png" /></p>
+
+<p>That’s how we could access to this protected database, where emily password is disclosed</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_15.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_16.png" alt="image.png" /></p>
+
+<p>Get user flag</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_17.png" alt="image.png" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>Emily has generic write over ethan</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_18.png" alt="image.png" /></p>
+
+<p>And ethan direct DCSync with the domain</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_19.png" alt="image.png" /></p>
+
+<p>We try to perform a DS-keycredential attack but KDC don’t support pre-auth data</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_20.png" alt="image.png" /></p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_21.png" alt="image.png" /></p>
+
+<p>Perform a kerberoast attack and get ethan hash</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_22.png" alt="image.png" /></p>
+
+<p>crack it with john</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_23.png" alt="image.png" /></p>
+
+<p>And get all the secrets and hashes</p>
+
+<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_24.png" alt="image.png" /></p>
+
+<p>Machine pwned!!!</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd.html';
+     this.page.identifier = '/writeups/2025/07/15/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd';
+     this.page.title = 'Administrator 13db95255291808bbb60ffbcfd15d2ee';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

