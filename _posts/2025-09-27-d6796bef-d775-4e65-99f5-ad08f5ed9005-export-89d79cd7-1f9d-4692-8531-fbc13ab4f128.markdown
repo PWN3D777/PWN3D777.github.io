@@ -1,0 +1,240 @@
+---
+layout: post
+title: "Vintage 152b9525529180ec9b1ae5479196c8f7"
+date:   2025-07-15 12:05:57 -0400
+categories: writeups
+---
+
+# Vintage
+
+# 1. Enumeration
+
+Start enumerating with a given username and password
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image.png' | relative_url }})
+
+Check all ports open, something curious is that there are no web application around there, but there are a whole Active Directory infrastructure deployed
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_1.png' | relative_url }})
+
+We can even check if it is possible to execute commands remotely by evil-winrm 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_2.png' | relative_url }})
+
+# 2. User flag
+
+As we don’t have much to explore begin trying to enumerate shares or users, but it wasn’t possible. We might need to set `/etc/krb5.conf` file to perform valid authentication in the server
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_3.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_4.png' | relative_url }})
+
+But first let’s enumerate the active directory as we can download .json files with that info
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_5.png' | relative_url }})
+
+Once inside we can note that L.BIANCHI_ADM user has high privileges, he even has  DCSync with the domain which means he could dump secrets or perform other privileged tasks
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_6.png' | relative_url }})
+
+At this point we can see that he even has privileges over all users in the domain, so mark him as a high value target
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_7.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_8.png' | relative_url }})
+
+We can also enumerate users here, you can see P.ROSA who is pwned from the start of this penetration testing 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_9.png' | relative_url }})
+
+Set the file using Regular Expressions 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_10.png' | relative_url }})
+
+It looks like we don’t have more options that just try to exploit some privileges with ROSA but she hasn’t got privileges yet, she is only member of SERVICEMANAGERS
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_11.png' | relative_url }})
+
+May be other user would have the same credentials. But, something is wrong with the domain
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_12.png' | relative_url }})
+
+It’s time to set `/etc/krb5.conf` to avoid problems with kerberos
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_13.png' | relative_url }})
+
+It should be as follow
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_14.png' | relative_url }})
+
+After all we keep getting not supported error, this might be due crackmapexec is not longer maintained it could encounter some errors
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_15.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_16.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_17.png' | relative_url }})
+
+Try it again 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_18.png' | relative_url }})
+
+But this time use netexec (nxc) and perform rid brute attack successfully 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_19.png' | relative_url }})
+
+Now use grep and cut to filter only valide users
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_20.png' | relative_url }})
+
+Comparing the 2 file we got there are almost the same users the only difference is capital letters, active directory don’t used to be case-sensitive in users fields, but let’s use the second file to be sure. Also we users account like DC01 in here
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_21.png' | relative_url }})
+
+$pre2k$ is a useful tool to enumerate old objects checking for bad configurations, in this case we found an access as FS01$ account with predetermined creds it is used because FS01 is part of PRE-WINDOWS 2000 COMPATIBLE ACCESS group
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_22.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_23.png' | relative_url }})
+
+It’s time to check who is FS01$ and what it could do
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_24.png' | relative_url }})
+
+It is member of Domaincompuers, and Domaincomputers has ReadGMSAPassword right over GMSA01 which is a group managed service account
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_25.png' | relative_url }})
+
+Authenticated as FS01 we might be able to get info of that Group Managed Service Account
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_26.png' | relative_url }})
+
+We effectively have got information, we tried to get msDS-ManagedPasswrodId
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_27.png' | relative_url }})
+
+A hash is retrieved but this is not what we are looking for
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_28.png' | relative_url }})
+
+ Let’s break the point getting `msDS-ManagedPassword` NTLM hash is retrieved
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_29.png' | relative_url }})
+
+That’s how we impersonate GMSA01$ service account
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_30.png' | relative_url }})
+
+We have generic write rights over service managers 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_31.png' | relative_url }})
+
+Try to add a to rosa in here
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_32.png' | relative_url }})
+
+Now as part of SERVICEMANAGERS group we have generic-all rights over all service accounts 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_33.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_34.png' | relative_url }})
+
+We might try to perform a Pre-authentication attack using GetNPUsers which will retrieve users who have “Do not require Kerberos preauthentication” set 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_35.png' | relative_url }})
+
+It seems that any user have this attribute set, as we saw before we have generic rights over service accounts, we could set that flag ourselves
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_36.png' | relative_url }})
+
+After that only SVC_ARK hash is retrieved, but after a while we discovered that it is not useful in here, we need to find the reason why svc_sql is not retrieving a hash, try to remove the uac set as ACCOUNTDISABLE 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_37.png' | relative_url }})
+
+The account were disabled and now we can get the hash
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_38.png' | relative_url }})
+
+Cracking it using john
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_39.png' | relative_url }})
+
+Spray the password using kerbrute to find that it is a reused password and we can access as C.Neri 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_40.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_41.png' | relative_url }})
+
+Save her Ticket Granting Ticket and get the user flag
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_42.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_43.png' | relative_url }})
+
+# 3.Priv esc
+
+We tried to extract password stored with sharpdpapi but there is an antivirus that detect this as malicious actions, but we are low level hackers, so we tried to extract them by ourselves manually.
+
+Listing child items inside our user folder we know that we have access to some interenting directories like AppData
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_44.png' | relative_url }})
+
+Follow paths until find Microsoft protected credentials
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_45.png' | relative_url }})
+
+Now save it in a `.blob` file
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_46.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_47.png' | relative_url }})
+
+We have the encrypted credential but we need a master key, otherwise we won’t have access to plain text password
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_48.png' | relative_url }})
+
+It seems like there are 2 master keys, save them both as a `.bin` file
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_49.png' | relative_url }})
+
+Download all this locally to start playing
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_50.png' | relative_url }})
+
+Decrypt the masterkey with impacket-dpapi using the password to logon used previously, once retrieved saved in a shell variable
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_51.png' | relative_url }})
+
+Use that master key to decrypt the .blob file which is the password for `c.neri_adm`
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_52.png' | relative_url }})
+
+Access to the system as the new admin user
+
+Check privileges for the new admin user
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_53.png' | relative_url }})
+
+Enable again sql account
+
+Set its service principal name to cifs/x (Common Internet File System)
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_54.png' | relative_url }})
+
+Add this user to delegateadmins
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_55.png' | relative_url }})
+
+Now as member of delegatedadmins sql user could impersonate admins account in the domain, as we set a new service principal name to it we use this to impersonate L.BIANCHI_ADM user and steal his TGS
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_56.png' | relative_url }})
+
+That’s how we can even dump hashes 
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_57.png' | relative_url }})
+
+We can even execute commands logon as L.Bianchi with hist ticket
+
+![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_58.png' | relative_url }})
+
+Machine pwned!@!!

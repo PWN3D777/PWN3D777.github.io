@@ -1,0 +1,107 @@
+---
+layout: post
+title: "Cicada 111b9525529180218b7fea77840c5bdb"
+date:   2025-07-14 12:05:57 -0400
+categories: writeups
+---
+
+# Cicada
+
+# 1. Enumeration
+
+Start nmap looking for open ports
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image.png' | relative_url }})
+
+Kerberos authentication is used, smb protocol running on 445, a good way to start could be checking for public files shared in smb, we also can note that rpc is used in port135
+
+# 2. User flag
+
+We use GUEST user and find a public file on HR directory
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_1.png' | relative_url }})
+
+That file is disclosing a default password, it might happen that a user just forgot to change it, let’s break it up
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_2.png' | relative_url }})
+
+We can perform a user recognizing using kerbrute, but for this case it is no useful
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_3.png' | relative_url }})
+
+Consequently we use `—rid-brute` in crackmapexec, this flag helps us to carry out a rid brute force attack. Basically it will try to get valid user accounts making requests using known RIDs (Relative IDentifiers) when it finds valid accounts, the system will respond with information related with that RID.
+What we are going to do is take all this output saving it to a next .txt file, and using VIM we are going to filter (SidTypeuser) we can use regular expressions like:
+
+```jsx
+##Eliminar todas las lineas que no tengan (SidTypeUser)
+:g!/SidTypeUser/d
+##Eliminar todo lo que este detras de CICADA\
+:%s/.*\(CICADA\\)//g
+##Eliminar (SidTypeGroup)
+:%s/(SidTypeUser)//g
+```
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_4.png' | relative_url }})
+
+After that we could spray the password in all the usernames found on it.
+
+We are going to find that michael.wrightson haven’t change his password, we can access to his shared files, but as we see below there are no more than the guest user can see
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_5.png' | relative_url }})
+
+Go to rpcclient we might get more information there
+
+```jsx
+getdompwinfo #Retrieves domain password information
+enumdomusers #Retrieves users in the domain with their rid
+queryuser #Retrieves information about the given user
+```
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_6.png' | relative_url }})
+
+That’s how we are able to get to dev directory inside smb protocol using david password.
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_7.png' | relative_url }})
+
+Download the file contained in DEV
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_8.png' | relative_url }})
+
+There we can find Powershell code, where emily password is changed
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_9.png' | relative_url }})
+
+Got the user flag
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_10.png' | relative_url }})
+
+# 3.Priv esc
+
+Enumerate privileges using
+
+```jsx
+whoami /all
+
+##We have SeBackUpPrivilege  - BackUp files and directories
+##It means we can proceed as shown below
+```
+
+We are going to use the command `reg save` to save log sections with determined files:
+
+- HKLM/SAM (HKEY_LOCAL_MACHINE)/(Security Account Manager): This path contains user accounts and their passwords in form of hashes. This includes local users and security policies associated.
+- HKLM/SYSTEM: This path contains critical information about the configuration system, including hardware, drivers, and services
+
+```jsx
+reg save hklm\sam sam
+reg save hklm\system system
+```
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_11.png' | relative_url }})
+
+Download those files and use impacket-secretsdump or pypykatz and it will give us the administrator and other users hashes
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_12.png' | relative_url }})
+
+![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_13.png' | relative_url }})
+
+Machine pwned!!!!

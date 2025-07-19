@@ -1,0 +1,68 @@
+---
+layout: post
+title: "PermX e9c17d0d44624c318129763a39c15b44"
+date:   2025-07-12 12:05:57 -0400
+categories: writeups
+---
+
+# PermX
+
+# 1. Enumeration
+
+We start with scanning ports using nmap
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled.png' | relative_url }})
+
+We went to the http service but it didn’t have anything interesting at least on the principal subdomain, so use ffuf to recognize another dns this time to make the request in the correct way we need fuzz the header of the request, remaining the url
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_1.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_2.png' | relative_url }})
+
+# 2. User flag
+
+There is a chamilo service
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_3.png' | relative_url }})
+
+Search for vulnerabilities which an unauthenticated user can bypass the web application
+
+### CVE-2023-4220
+
+To exploit this vulnerability which is a RFI we need to assure the existence of the next directory
+
+`/main/inc/lib/javascript/bigupload/files`
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_4.png' | relative_url }})
+
+Create a revshell and upload it in the web, then call it to get control as data
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_5.png' | relative_url }})
+
+Check configuration files
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_6.png' | relative_url }})
+
+Find credentials to a db, we can try those credentials to know if they’re associated with the principal user of the machine (MTZ)
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_7.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_8.png' | relative_url }})
+
+# 3.Priv esc
+
+Review which commands we can run with sudo, and there is a script available, this code allows user mtz to set sudo permissions on his directory, and we can find some security filters mitigating reverse path traverse
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_9.png' | relative_url }})
+
+This one is easy just create a symlink of the file sudoers and set it up to grant mtz full sudo permissions
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_11.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_12.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_13.png' | relative_url }})
+
+Machine PWNED#@!

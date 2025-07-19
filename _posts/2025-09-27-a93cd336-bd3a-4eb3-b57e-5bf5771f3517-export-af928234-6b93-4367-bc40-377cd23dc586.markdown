@@ -1,0 +1,108 @@
+---
+layout: post
+title: "GreenHorn c748edb6e6974c2fa1eeda4d3938260a"
+date:   2025-07-12 12:05:57 -0400
+categories: writeups
+---
+
+# GreenHorn
+
+# 1. Enumeration
+
+Start with nmap enumeration
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled.png' | relative_url }})
+
+There are 2 web applications running on it, the first one a gitea page
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_1.png' | relative_url }})
+
+The second one, a web page which promises helps web devs
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_2.png' | relative_url }})
+
+Try ways to get path reverse to find a lfi
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_3.png' | relative_url }})
+
+But it’s enforced against those kinds of attacks
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_4.png' | relative_url }})
+
+Here we have some directories
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_5.png' | relative_url }})
+
+According with the web structure it looks like a php web application, so let’s fuzz directories
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_6.png' | relative_url }})
+
+There is a login directory and we only need a password, it will be our work today
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_7.png' | relative_url }})
+
+# 2. User flag
+
+Search paths in the gitea service
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_8.png' | relative_url }})
+
+/explore/repos path has something which looked like the other web service source
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_9.png' | relative_url }})
+
+In login page, we can analyze what is taking account to bypass the authentication protection, first we have the hash algorithm 
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_10.png' | relative_url }})
+
+Then we have that the value given for the user is compared with an environmental variable
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_11.png' | relative_url }})
+
+Digging into the repository we found the variable value
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_12.png' | relative_url }})
+
+Just crack the password
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_13.png' | relative_url }})
+
+Here we have more information about this framework. 
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_14.png' | relative_url }})
+
+With the version given we could find a vulnerability
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_15.png' | relative_url }})
+
+To get the revese shell we only need to have a php rev shell and compress it to a .zip file, just upload it in the install modules section
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_16.png' | relative_url }})
+
+Now we are data user, but if we try to become to junior user we just re utilize the password found previously
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_17.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_18.png' | relative_url }})
+
+# 3.Priv esc
+
+There is a pdf file inside of junior desktop, let’s analyze it
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_19.png' | relative_url }})
+
+After download the pdf file we found that there is information about execute files as root, it’s showed a imagen with the corresponding password, but it is pixelated, first at all extract that image
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_20.png' | relative_url }})
+
+Use depix tool to at some way to unpixel the image, it works using an auxiliar template with letters written in a notepad, those are compared until we finally find a copy of the original image
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_21.png' | relative_url }})
+
+Now we have the information to escalate our privilege to root
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_22.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_23.png' | relative_url }})
+
+Machine pwned!!

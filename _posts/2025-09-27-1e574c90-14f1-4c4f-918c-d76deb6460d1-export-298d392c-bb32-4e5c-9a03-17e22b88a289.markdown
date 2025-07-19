@@ -1,0 +1,180 @@
+---
+layout: post
+title: "BigBang 1a4b9525529180969ab4c536d535c545"
+date:   2025-07-16 12:05:57 -0400
+categories: writeups
+---
+
+# BigBang
+
+# 1. Enumeration
+
+Start enumerating ports, there are only two ports open
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image.png' | relative_url }})
+
+Nothing much in port 80
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_1.png' | relative_url }})
+
+We can login
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_2.png' | relative_url }})
+
+We can also submit a form
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_3.png' | relative_url }})
+
+To perform this is used buddyForms
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_4.png' | relative_url }})
+
+Use whatweb tool to get more information about this web application, wordpress and php are on it
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_5.png' | relative_url }})
+
+Enumerate and map this website using gobuster adding php extension
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_6.png' | relative_url }})
+
+This is the same login page that we can be redirected in budyform
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_7.png' | relative_url }})
+
+Another endpoint but nothing useful 
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_8.png' | relative_url }})
+
+Use wpscan to a more comprehensive about vulnerabilities present
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_9.png' | relative_url }})
+
+Buddyforms plugin is present in here
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_10.png' | relative_url }})
+
+To know a little more about it search this specific version, it says that we have to be a user with minimal permissions, when we submit a form we can see that we are automatically assigned as guest user which can be enough to attack
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_11.png' | relative_url }})
+
+# 2. User flag
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_12.png' | relative_url }})
+
+Download this exploit and follow its instructions to get a rev shell
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_13.png' | relative_url }})
+
+We have access to some .php files, search for passwords 
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_14.png' | relative_url }})
+
+We have a good sign
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_15.png' | relative_url }})
+
+Forward sql port  to access database locally
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_16.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_17.png' | relative_url }})
+
+Access to this database
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_18.png' | relative_url }})
+
+Before skip ssl
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_19.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_20.png' | relative_url }})
+
+We have shawking creds
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_21.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_22.png' | relative_url }})
+
+Got the user flags
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_23.png' | relative_url }})
+
+# 3.Priv esc
+
+Digging a little bit we found another database, this time a local database
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_24.png' | relative_url }})
+
+We can see if we could do something in this grafana service
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_25.png' | relative_url }})
+
+Find the right port
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_26.png' | relative_url }})
+
+Forward that port
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_27.png' | relative_url }})
+
+But nothing useful in here
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_28.png' | relative_url }})
+
+Download this local database
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_29.png' | relative_url }})
+
+These tables are present
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_30.png' | relative_url }})
+
+Developer creds are present
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_31.png' | relative_url }})
+
+Use this to make it crackeable
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_32.png' | relative_url }})
+
+And crack it
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_33.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_34.png' | relative_url }})
+
+Access as developer with this creds
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_35.png' | relative_url }})
+
+An application in here, download it locally
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_36.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_37.png' | relative_url }})
+
+Use apktool to decompile it to see all we have 
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_38.png' | relative_url }})
+
+We are able to execute commands as sudo, but those commands are default ones, even that we also can specify a file where that command will be affect, we can imagine how the task is automated, it should be somethin like sudo <default command> <file>, we have control over the file and it is not sanitized which means we could make a line feed to execute another command as root
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_39.png' | relative_url }})
+
+get authenticated first 
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_40.png' | relative_url }})
+
+You can use this script 
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_41.png' | relative_url }})
+
+It looks like it fails
+
+![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_42.png' | relative_url }})
+
+But if we do this
+
+`bash -p` 
+
+A shell with root is open and the machine is pwned!!!

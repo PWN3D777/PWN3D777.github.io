@@ -1,0 +1,79 @@
+---
+layout: post
+title: "Sea 41722b3b7e7f478a9839eb5b748f9475"
+date:   2025-07-13 12:05:57 -0400
+categories: writeups
+---
+
+# Sea
+
+# 1. Enumeration
+
+Start with enumeration 
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image.png' | relative_url }})
+
+Two ports opened, let’s see what is happening on port 80
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_1.png' | relative_url }})
+
+There is a cookie, we might need to steal it, but we tried reflected xssand it didn’t work, keep going the enumeration
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_2.png' | relative_url }})
+
+# 2. User flag
+
+The resource code show us a directory path where we can search
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_3.png' | relative_url }})
+
+Using dirsearch we found the readme which can give us more information about the page
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_4.png' | relative_url }})
+
+WonderCMS is used
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_5.png' | relative_url }})
+
+Searching for vulnerabilities, we have found a stored XSS
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_6.png' | relative_url }})
+
+1. First we need to store the xss.js file which will save a .zip file
+2. The xss.js file will call the .zip file to get a shell
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_7.png' | relative_url }})
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_8.png' | relative_url }})
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_9.png' | relative_url }})
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_10.png' | relative_url }})
+
+There are credentials on the database file
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_11.png' | relative_url }})
+
+Crack it, don’t forget to delete bashslash `\` to perform the tool with the right format
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_12.png' | relative_url }})
+
+# 3.Priv esc
+
+Enumerating local ports there is a http service, go ahead and port forward this 
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_14.png' | relative_url }})
+
+Use the same creds for log in 
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_15.png' | relative_url }})
+
+There is a monitor system which has a section where someone can read log files, but this component has root permissions so try to get the flag via cat 
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_16.png' | relative_url }})
+
+![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_17.png' | relative_url }})
+
+Machine Pwned!!

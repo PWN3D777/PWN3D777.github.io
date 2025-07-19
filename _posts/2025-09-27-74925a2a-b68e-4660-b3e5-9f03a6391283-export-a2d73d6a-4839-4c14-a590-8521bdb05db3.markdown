@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Bizness 784dc5ebce2b40f4877e658e241e6409"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Bizness
+
+HackTheBox: Medium
+
+<aside>
+💡 Visual is a linux  machine which handles with some vulnerabilities and decode encrypted credentials
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning
+
+ 
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled.png' | relative_url }})
+
+We can see a https service running let’s use dirsearch 
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_1.png' | relative_url }})
+
+We found there is a login interface powered by apache ofbiz 18.12v after a search on google we find a vulnerability which allow us inject commands (CVE-2023-51467 AND CVE-2023-49070)
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_2.png' | relative_url }})
+
+## 2: User flag
+
+Let’s exploit this vulnerability
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_3.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_4.png' | relative_url }})
+
+Lets stabilize the shell
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_5.png' | relative_url }})
+
+## 3: Priv esc
+
+After a little seeking into the machine we find this route with credential
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_7.png' | relative_url }})
+
+password for admin
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_8.png' | relative_url }})
+
+There is a useful tool called cyberchef to decode it. It is on base64.urlsafe_b64encode()
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_9.png' | relative_url }})
+
+now let’s hash it
+
+It is a SHA-1 So use this command
+
+```bash
+hashcat -m 120 -a 0 "b8f...........:d" rockyou.txt
+```
+
+:d is the salt 
+
+That’s it machine pwned
+
+![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_10.png' | relative_url }})

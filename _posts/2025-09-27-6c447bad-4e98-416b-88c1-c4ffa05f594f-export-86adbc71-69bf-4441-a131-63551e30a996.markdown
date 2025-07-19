@@ -1,0 +1,168 @@
+---
+layout: post
+title: "Infiltrator 698aafaf861740a18e96786542b054ab"
+date:   2025-07-13 12:05:57 -0400
+categories: writeups
+---
+
+# Infiltrator
+
+# 1. Enumeration
+
+Start enumerating ports with nmap, there are a lot of them open.
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_1.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_2.png' | relative_url }})
+
+Check the http service
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_3.png' | relative_url }})
+
+There are some potential users where we might enumerate kerberos or something like that
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_4.png' | relative_url }})
+
+Looking around the source page we have more users
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_5.png' | relative_url }})
+
+# 2. User flag
+
+Save the names into a file 
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_6.png' | relative_url }})
+
+We tried to enumerate in kerberos directly but there no result, so we create a script in bash abbreviating those names
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_7.png' | relative_url }})
+
+In this way
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_8.png' | relative_url }})
+
+Use kerbrute to enumerate all of them, we have some valid users
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_9.png' | relative_url }})
+
+We will save them
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_10.png' | relative_url }})
+
+And proceed to use getNPUsers to check if there is a user with the no required pre-authenticated kerberos attribute to get his service ticket TGT
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_11.png' | relative_url }})
+
+How lucky, just crack it
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_12.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_14.png' | relative_url }})
+
+Now spray the password with all the valid users, there are two users with the same password
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_15.png' | relative_url }})
+
+Check if we could authenticate in bloodhound to get all the information about the Active Directory Domain
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_16.png' | relative_url }})
+
+We can authenticate as d.anderson, let’s seek for a route where we can sign in using evil-winrm
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_17.png' | relative_url }})
+
+We have a route from d.anderson to get the password a sign in as m.harris, and m.harris has ps remote to the domain controller which means it would take to a privilege escalation
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_18.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_19.png' | relative_url }})
+
+We must install msada_guid.py module in our machine to straight off the process with dacledit.py
+
+See: [https://www.youtube.com/watch?v=O_VeRoT1f1k](https://www.youtube.com/watch?v=O_VeRoT1f1k)
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_20.png' | relative_url }})
+
+First at all we have to get the Ticket granting ticket’s anderson with his credentials, and save it in the environment variable KRB5CCNAME
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_21.png' | relative_url }})
+
+As we have generic all  permissions over Marketing Digital we give to our user full control in MARKETING target 
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_22.png' | relative_url }})
+
+To make this possible, modify the DACL to write full control rights to d.anderson user over marketing digital
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_23.png' | relative_url }})
+
+Now that we already have right permissions we can change the password for every user that is contained in marketing, in this case is e.rodriguez
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_24.png' | relative_url }})
+
+Again import the TGT and save it on KRB5CCNAME
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_25.png' | relative_url }})
+
+The current user has the possibility to add himself to chiefs marketing, first we proceed with net but for some reason i suspect net tool is not taking account the Kerberos authentication
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_26.png' | relative_url }})
+
+So we used bloodyAD which is a tool with several functionalities to break into AD, so we added e.rodriguez to chief s marketing group
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_27.png' | relative_url }})
+
+Now as part of the chief’s marketing group we can force the password change of m.harris user, always using Kerberos authentication
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_28.png' | relative_url }})
+
+It’s important to take account the krb5.conf which is a file that indicates to kerberos protocol how to handle communication with other servers including Key Distribution Center KDC, this file can include:
+
+- **[libdefaults]:** It has the default configurations to the kerberos library
+- [realms]: Defines all the domains
+- [domain_realm]: Map al the domains (realms)
+- [kdc]: Specific configurations for KDCs, like network addresses.
+- [admin_server]: Configurations for the kerberos administration servers.
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_29.png' | relative_url }})
+
+After set the password  we can log as m.harris and get the user flag
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_30.png' | relative_url }})
+
+# 3.Priv esc
+
+Now, run linpeas and it will disclose information about a output messenger service with sql, this means that there are a sql database saving messages or events, we might find something interesting here, we could get the .exe and reversing but in this case if we look around all those files we will find a . zip file. We tried to see the .init file but it wasn’t possible
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_31.png' | relative_url }})
+
+Let’s download it
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_32.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_33.png' | relative_url }})
+
+There are root creds on the .init file, this can indicate a straight forward privilege escalation
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_34.png' | relative_url }})
+
+Forward the port to access the database locally
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_35.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_36.png' | relative_url }})
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_37.png' | relative_url }})
+
+we can use outputwall database 
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_38.png' | relative_url }})
+
+and steal the root flag using the LOAD_FILE() function 
+
+![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_39.png' | relative_url }})
+
+Machine pwned!!!

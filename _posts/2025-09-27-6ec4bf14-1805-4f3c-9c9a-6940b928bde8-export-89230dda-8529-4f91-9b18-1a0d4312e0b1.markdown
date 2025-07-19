@@ -1,0 +1,198 @@
+---
+layout: post
+title: "Intuition 4a86c963710a4d3fa5c149c9dddc8e63"
+date:   2025-07-11 12:05:57 -0400
+categories: writeups
+---
+
+# Intuition
+
+# 1. Enumeration
+
+We start enumeration process using nmap
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled.png' | relative_url }})
+
+As you can see, there are 2 ports open. Let’s check some public information with what-web
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_1.png' | relative_url }})
+
+We find the first domain
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_2.png' | relative_url }})
+
+There is a web application where clients can compress files. At some point there is a bug report section, once we added the corresponding domains we found a flow to report a bug.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_3.png' | relative_url }})
+
+Register yourself and log in the application
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_4.png' | relative_url }})
+
+# 2. User flag
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_5.png' | relative_url }})
+
+It’s important to know what does the server do through communication process, we can see user data with a standardized structure 64 encoded.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_7.png' | relative_url }})
+
+Try to exploit a reflected xss using some Javascript commands and encoding the payload to base 64, it is a normal document.cookie request
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_8.png' | relative_url }})
+
+A cookie was hijacked
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_9.png' | relative_url }})
+
+Search for more subdomains, based on the previous experience it is probably to find another one.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_10.png' | relative_url }})
+
+Here we found the administrator interface, and a report can change the priority, let’s see what happens if we change the priority in our reflected xss.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_11.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_12.png' | relative_url }})
+
+Another cookie was hijacked.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_13.png' | relative_url }})
+
+Now we’ve found the real admin, with some other feature in their interface
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_14.png' | relative_url }})
+
+On the create pdf report we found that something is extracted from the server, what should happen if for some reason the input is not sanitized? At the first attempt it supposed to be sanitized because only allow url’s but if we remember cve-2023–24329 says that some times blank spaces can make the input pass the filter, and that’s it.
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_15.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_16.png' | relative_url }})
+
+Once we realized the section is vulnerable to SSRF we can think on a plan to dig into looking for useful information for our progress.
+
+<aside>
+💡 **/proc/self/cmdline** path in Linux based systems is a special file that provides access to the command used to start the current process.
+
+</aside>
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_17.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_18.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_19.png' | relative_url }})
+
+As we get more and more information, we can see a blueprint section we can imagine how the data is organized thanks to the way import on Flask is made
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_20.png' | relative_url }})
+
+Inside of one of those files there are some credentials and disclose ftp service running locally
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_21.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_22.png' | relative_url }})
+
+The we access to de File Transfer Protocol account
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_23.png' | relative_url }})
+
+There is a SSH private key and some information about how to get into ssh account
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_24.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_25.png' | relative_url }})
+
+To get the username of the account it was necessary to generate a public key
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_26.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_27.png' | relative_url }})
+
+We access with id_rsa and passphrase and got the user flag
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_28.png' | relative_url }})
+
+# 3.Priv esc
+
+First we make a system recognition using linpeas
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_29.png' | relative_url }})
+
+Information about a db is exposed
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_30.png' | relative_url }})
+
+Some users were found, crack the hash and lateral movement…?
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_31.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_32.png' | relative_url }})
+
+The type of the hash
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_33.png' | relative_url }})
+
+Password cracked but it doesn’t work on ssh
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_34.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_35.png' | relative_url }})
+
+We realized there are some suricata logs expose in .gz files, start seeking for password
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_36.png' | relative_url }})
+
+There are some information about lopez, search for him
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_37.png' | relative_url }})
+
+A password disclosed on logs!!
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_38.png' | relative_url }})
+
+Lateral movement successful
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_39.png' | relative_url }})
+
+As we already have a password we can search the privileged process running on this machine, we also can try to use ftp to use the creds we found before
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_40.png' | relative_url }})
+
+Backup got it, there are some information about how Runner works, first we got the key hash which is necessary to make it run
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_41.png' | relative_url }})
+
+We already have half password on another file in the backup directory
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_42.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_43.png' | relative_url }})
+
+There are established ways to run the tool
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_44.png' | relative_url }})
+
+It is necessary to use a json file to pass it parameters, and the parameters are in the test files 
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_45.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_46.png' | relative_url }})
+
+We inject code trying to get system RCE which is posible due to input not sanitized it will create a system admin role and create a shell
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_47.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_48.png' | relative_url }})
+
+<aside>
+💡 A Ansible role file, used for system automation. This file defines a role called galaxy_info which is used to manage system administrator users and create a group with sudoers permissions in an Ubuntu Xenial environment
+
+</aside>
+
+It will create the new system role it is used to fill the prerequisite of use .yml file finally it will create a bash as root
+
+![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_49.png' | relative_url }})
+
+machine pwned!!!!

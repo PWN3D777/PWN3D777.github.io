@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Perfection 5139f6d9fbb44e8fb01aa52e1aaf461f"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Perfection
+
+HackTheBox: Easy
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_1.png' | relative_url }})
+
+## 2: User flag
+
+We found a http service, useful to calculate grades.
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_2.png' | relative_url }})
+
+Using search exploit we can see there’s a vulnerable framework to some kind of injection.
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_3.png' | relative_url }})
+
+There’s a section where we can input information
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_4.png' | relative_url }})
+
+Using Server Side Template Injection (SSTI) we found a way to use a payload for RCE
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_5.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_7.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_8.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_9.png' | relative_url }})
+
+So we use a url-encoded to generate a rev-shell
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_10.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_11.png' | relative_url }})
+
+## 3: Priv esc
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_12.png' | relative_url }})
+
+Crafting a little bit we found important information about passwords
+
+We also found some hashes 
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_13.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_14.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_15.png' | relative_url }})
+
+In hashcat info we can search for a way to find the hash
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_16.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_17.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_18.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_19.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424/0f37f099-f66f-4634-ba98-9b907a9fe698-export-f17e384c-c307-43cd-ac18-37f4dc6eb424_Untitled_20.png' | relative_url }})
+
+Machine pwned!!

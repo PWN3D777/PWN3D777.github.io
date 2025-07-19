@@ -1,0 +1,82 @@
+---
+layout: post
+title: "Underpass 196b9525529180c1bb45edce62f8c7e5"
+date:   2025-07-15 12:05:57 -0400
+categories: writeups
+---
+
+# Underpass
+
+# 1. Enumeration
+
+Start checking public open ports
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image.png' | relative_url }})
+
+On web application there is a apache2 default page
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_1.png' | relative_url }})
+
+We tried to find new endpoints, but it seems to don’t have anything else to trigger around here
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_2.png' | relative_url }})
+
+We decide to scan udp top ports to see if there are interesting services running on it, we have a snmp service, which has underpass with its version disclosed
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_3.png' | relative_url }})
+
+snmpwalk is a tool to enumerate this kind of situations, we use -c public to refer this community info, and the version where we can access information is 2c, now we have a user and a clue about what service is really running in  80 port 
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_4.png' | relative_url }})
+
+# 2. User flag
+
+On github dalo repo we have more about what we are trying to find
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_5.png' | relative_url }})
+
+Finally we have more of it
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_6.png' | relative_url }})
+
+Taking this as a base line, we could fuzz new endpoints or try out some default ones as login
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_7.png' | relative_url }})
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_8.png' | relative_url }})
+
+As user login default creds didn’t work, but our recognize on upd port says that some configurations are default configurations
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_9.png' | relative_url }})
+
+So access to a operators login 
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_10.png' | relative_url }})
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_11.png' | relative_url }})
+
+Here we have a login successful and access to users and its creds
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_12.png' | relative_url }})
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_13.png' | relative_url }})
+
+# 3.Priv esc
+
+Check if we can run something as root
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_14.png' | relative_url }})
+
+We have mosh which is a tool to connect to a server via CLI, in its docs there are some flags where we can execute commands
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_15.png' | relative_url }})
+
+—server flag allows to specify the command that will be used in the remote server to init the process in Mosh. This is useful if custom configurations
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_16.png' | relative_url }})
+
+Basically we are going to start and connect to mosh-server as root in localhost 
+
+![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_17.png' | relative_url }})
+
+Machine pwned!!!

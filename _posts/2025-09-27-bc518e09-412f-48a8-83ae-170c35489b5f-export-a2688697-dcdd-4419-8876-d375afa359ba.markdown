@@ -1,0 +1,82 @@
+---
+layout: post
+title: "Drive 552eaccaa73d42a0bdc5d568172125ad"
+date:   2025-07-10 12:05:57 -0400
+categories: writeups
+---
+
+# Drive
+
+HackTheBox: Hard
+
+<aside>
+💡 Drive is a linux machine. It is a google drive simulation  we can create files a upload them, There is a vulnerability, when we use an admin opcion this file loose security and we can access to protected files.
+
+</aside>
+
+## 1: Enumeration
+
+- nmap scanning:  http-ssh service
+
+> We need to use Burp Suite to get protected files
+> 
+1. Active proxy
+2. Generate request
+3. Send request number to intruder
+4. Execute fuzz payload and find number with 200 responses
+
+We access ssh port with those cred found
+
+Got the route:
+
+> /var/www/backups
+> 
+
+We sent this directory with ssh
+
+```bash
+scp user@ip:/ruta/*   /routelocal/
+```
+
+## 2: User flag
+
+Find some creds
+
+Using net stat we can see a local service running so lets use port forwarding
+
+```bash
+ssh user@ip -l 3000:ip:3000
+
+```
+
+-l Redirect ports
+
+We find creds for users.
+
+## 3: Priv esc
+
+There is a doodlegrive file we download
+
+> Using a tool called IDA we find other creds
+IDA is a disambler and review inside the root data
+> 
+1. Create a file where will save root
+2. compile 
+
+```bash
+gcc -shared a.c -o a.so -nostartfiles -fPIC
+```
+
+- -share create a share file
+- a.c File
+- [a.so](http://a.so) solid file
+- -nostartfile Dont include standart files
+- -fpic Position independent
+1. run .doodlegrive
+2. Inject
+
+```bash
+"+load_extension(char(46,47,97))+"
+```
+
+Root
