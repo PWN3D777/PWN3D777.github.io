@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Surveillance e9fc577cd1014f2aa42663e1d6339231"
+title: "Surveillance-Linux-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/d2ddffcb2eced6a4d5486dc99d440d1a.webp
 ---
 
 # Surveillance

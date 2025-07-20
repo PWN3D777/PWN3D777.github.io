@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Instant 121b95255291806581e2d9d9719c1246"
+title: "Instant-Linux-Medium"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/8e9f11a3cceeb4f69e659ed31347cc77.webp
 ---
 
 # Instant

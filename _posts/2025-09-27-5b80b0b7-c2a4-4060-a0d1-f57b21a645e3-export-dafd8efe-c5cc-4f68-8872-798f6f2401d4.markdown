@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Blazorized 6aefe7e7cacf4579870756086c6c2e93"
+title: "Blazorized-Windows-Hard"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/3ad1911c18a46af0d6967aef8521989c.webp
 ---
 
 # Blazorized

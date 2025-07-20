@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Jab 2f3c02ca2b854a4f9321ba534c49463e"
+title: "Jab-Windows-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/e809e8df8d66ec8bb2ca3bbcc1942de7.webp
 ---
 
 # Jab

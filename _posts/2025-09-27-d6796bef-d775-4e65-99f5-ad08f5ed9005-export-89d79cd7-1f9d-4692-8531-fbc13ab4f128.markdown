@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Vintage 152b9525529180ec9b1ae5479196c8f7"
+title: "Vintage-Windows-Hard"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/4eae732c7af0ce1b443d009637167610.webp
 ---
 
 # Vintage

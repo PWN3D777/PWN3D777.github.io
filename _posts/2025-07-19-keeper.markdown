@@ -1,8 +1,9 @@
 ---
 layout: page
-title: "Keeper 0d96ae1b297a472d9b07a3aee6b7c8eb"
+title: "Keeper Linux Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/Keeper.png
 ---
 
 # Keeper

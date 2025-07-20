@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Certified 13db9525529180b89389fd4ce07fa67f"
-date: 2025-09-27
+title: "Certified-Windows-Medium"
+date: 2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/28b71ec11bb839b5b58bdfc555006816.webp
 ---
 
 # Certified

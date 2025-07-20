@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Usage 8d234d5fc6ff4e36bfd7a0d29615a381"
+title: "Usage-Linux-Easy"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/23e804513a47e8f20bc865d0419946e1.webp
 ---
 
 # Usage

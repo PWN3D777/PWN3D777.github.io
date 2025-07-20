@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Appsanity b07c236213cc4a9a8f6e41d61d403a84"
+title: "Appsanity-Wiwdows-Hard"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/3637f8cd2b3850f40cb6d16b7c39d43b.webp
 ---
 
 # Appsanity

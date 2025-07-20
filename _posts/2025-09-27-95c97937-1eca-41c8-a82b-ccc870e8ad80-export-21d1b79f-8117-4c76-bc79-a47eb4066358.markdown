@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "PermX e9c17d0d44624c318129763a39c15b44"
+title: "PermX-Linux-Easy"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/3ec233f1bf70b096a66f8a452e7cd52f.webp
 ---
 
 # PermX

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "WifineticTwo 728a1a1fb96942678c00d6407a5a0611"
-date: 2025-09-27
+title: "WifineticTwo-Linux-Easy"
+date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/4aaf2ad33bea830079d74497f8e7fefc.webp
 ---
 
 # WifineticTwo

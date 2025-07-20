@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Monitored 5072dccbda244138834a1e9fcdcde283"
+title: "Monitored-Linux-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/d4988810825d26acb2e84ca0ac9feaf4.webp
 ---
 
 # Monitored

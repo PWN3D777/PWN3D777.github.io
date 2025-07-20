@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Boardlight 035d30a2de5d4052ac9b1c549f5e87b1"
+title: "Boardlight-Linux-Easy"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/7768afed979c9abe917b0c20df49ceb8.webp
 ---
 
 # Boardlight

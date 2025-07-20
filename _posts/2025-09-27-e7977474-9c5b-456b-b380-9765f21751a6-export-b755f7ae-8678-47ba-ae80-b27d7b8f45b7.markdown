@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "EscapeTwo 196b95255291806dafd8c49da5657ea7"
+title: "EscapeTwo-Windows-Easy"
 date:   2025-07-16 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/d5fcf2425893a73cf137284e2de580e1.webp
 ---
 
 # EscapeTwo

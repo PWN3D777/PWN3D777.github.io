@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Editorial 63d0cc16bccf469b8694593a80281674"
+title: "Editorial-Linux-Easy"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a466db5ce4f7aaea98f588d1cb71a0aa.webp
 ---
 
 # Editorial

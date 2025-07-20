@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Caption d357fbf216864fc58a5316bbf22743b4"
+title: "Caption-Linux-Hard"
 date: 2025-09-27
 categories: writeups
+thumb: /assets/images/logos/d3cb6edd2a219f122696655d0015b101.webp
 ---
 
 # Caption

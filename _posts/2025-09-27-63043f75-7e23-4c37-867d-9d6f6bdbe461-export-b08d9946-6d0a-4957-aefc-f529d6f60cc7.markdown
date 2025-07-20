@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "EvilCups 11db952552918080abc6ea8e4ca765e3"
+title: "EvilCups-Medium-LInux"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/4291edf91628b7c378a58084318a70c1.webp
 ---
 
 # EvilCups

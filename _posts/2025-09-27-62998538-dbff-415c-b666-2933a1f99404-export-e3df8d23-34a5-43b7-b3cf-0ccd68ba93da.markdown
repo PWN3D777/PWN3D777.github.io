@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Sightless 0648b4c387774389b036092ed198458c"
+title: "Sightless-Linux-Easy"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/f96160a20e9cf0138885238444b47404.webp
 ---
 
 # Sightless

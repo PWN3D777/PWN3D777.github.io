@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Block Block 15eb9525529180579f72c0f73b96d93e"
+title: "Block-Block-Linux-Hard"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a6165b53a2df41fbfd6530782224925f.webp
 ---
 
 # Block Block

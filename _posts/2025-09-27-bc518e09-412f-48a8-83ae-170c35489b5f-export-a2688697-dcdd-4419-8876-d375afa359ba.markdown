@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Drive 552eaccaa73d42a0bdc5d568172125ad"
+title: "Drive-Linux-Hard"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/69894bcbc09fb85054b71bdc805f86bc.webp
 ---
 
 # Drive

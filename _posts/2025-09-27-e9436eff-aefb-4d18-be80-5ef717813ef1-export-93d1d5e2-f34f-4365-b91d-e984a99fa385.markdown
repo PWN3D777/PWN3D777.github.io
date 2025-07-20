@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Lantern 29bcfd00a6174ce182e33a42760f2f45"
+title: "Lantern-Linux-Hard"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/d2e8271977fdc3f13bee7d7ab48954ca.webp
 ---
 
 # Lantern

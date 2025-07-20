@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Cat 1abb9525529180ae82d4f25f2121346a"
+title: "Cat-Linux-Medium"
 date:   2025-07-17 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/bf7ae27f4e0ce1703bdd10d538334d9e.webp
 ---
 
 # Cat

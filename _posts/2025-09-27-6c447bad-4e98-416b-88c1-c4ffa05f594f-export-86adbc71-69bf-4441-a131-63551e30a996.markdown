@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Infiltrator 698aafaf861740a18e96786542b054ab"
+title: "Infiltrator-Windows-Insane"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/dc36c40fe951cf7f32a84f3da1b43ce8.webp
 ---
 
 # Infiltrator

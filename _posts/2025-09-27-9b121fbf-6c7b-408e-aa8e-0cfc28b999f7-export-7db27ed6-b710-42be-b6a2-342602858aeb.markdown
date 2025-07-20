@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "2Million 3bbd57b2faa540098692e701ec8147cc"
+title: "2Million-Linux-Easy"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/d7bc2758fb7589dfa046bee9ce4d75cb.webp
 ---
 
 # 2Million

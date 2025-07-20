@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Perfection 5139f6d9fbb44e8fb01aa52e1aaf461f"
+title: "Perfection-Linux-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/57fc0f58916cb3ed8e793db071769d70.webp
 ---
 
 # Perfection

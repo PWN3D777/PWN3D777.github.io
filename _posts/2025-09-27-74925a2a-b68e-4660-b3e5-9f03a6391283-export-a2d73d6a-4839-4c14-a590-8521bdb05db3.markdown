@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Bizness 784dc5ebce2b40f4877e658e241e6409"
+title: "Bizness-Linux-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/1919b64800f6676d0c0d285a9d664cee.webp
 ---
 
 # Bizness

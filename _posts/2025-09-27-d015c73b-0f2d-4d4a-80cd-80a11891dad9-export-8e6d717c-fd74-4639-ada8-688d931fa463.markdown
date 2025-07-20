@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "LinkVortex 159b952552918047981de65e0ff2db19"
+title: "LinkVortex-Linux-Easy"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/97f12db8fafed028448e29e30be7efac.webp
 ---
 
 # LinkVortex

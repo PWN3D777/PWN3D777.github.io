@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Intuition 4a86c963710a4d3fa5c149c9dddc8e63"
+title: "Intuition-Linux-Hard"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/464537cc0d3e9962fc598767bff7b1f1.webp
 ---
 
 # Intuition

@@ -1,8 +1,9 @@
 ---
 layout: page
-title:  "CozyHosting"
+title:  "CozyHosting-Linux-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: jekyll update
+thumb: /assets/images/logos/box-cozyhosting.png
 ---
 
 # CozyHosting

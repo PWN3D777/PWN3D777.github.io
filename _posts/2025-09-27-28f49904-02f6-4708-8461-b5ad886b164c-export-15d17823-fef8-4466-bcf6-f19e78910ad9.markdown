@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Magicgardens 0eff0627d5364a36aa38d148d2256c53"
+title: "Magicgardens-Linux-Insane"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a878db048e3cb6ba0e4a467bb705e145.webp
 ---
 
 # Magicgardens

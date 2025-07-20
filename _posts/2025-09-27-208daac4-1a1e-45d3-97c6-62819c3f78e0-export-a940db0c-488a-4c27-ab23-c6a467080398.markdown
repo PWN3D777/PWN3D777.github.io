@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Headless 959e704c96114d0e9b6749ab0cdc3dbc"
-date: 2025-09-27
+title: "Headless-Linux-Easy"
+date: 2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/26e076db204a74b99390e586d7ebcf8c.webp
 ---
 
 # Headless

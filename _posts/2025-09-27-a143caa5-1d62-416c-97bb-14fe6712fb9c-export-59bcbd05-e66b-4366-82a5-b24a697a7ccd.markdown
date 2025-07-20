@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Administrator 13db95255291808bbb60ffbcfd15d2ee"
+title: "Administrator-Windows-Medium"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/9d232b1558b7543c7cb85f2774687363.webp
 ---
 
 # Administrator

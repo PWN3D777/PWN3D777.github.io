@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Underpass 196b9525529180c1bb45edce62f8c7e5"
+title: "Underpass-Linux-Easy"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/456a4d2e52f182847fb0a2dba0420a44.webp
 ---
 
 # Underpass

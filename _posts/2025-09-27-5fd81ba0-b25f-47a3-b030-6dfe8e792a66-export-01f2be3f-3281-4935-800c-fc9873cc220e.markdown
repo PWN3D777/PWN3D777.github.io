@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "SolarLab b23ec7bccd58401ea2edb6ea17dccad1"
+title: "SolarLab-Windows-Medium"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a2c2bd7b4e98ff8b782ed590896305a1.webp
 ---
 
 # SolarLab

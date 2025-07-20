@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Codify e2e4dadbc8fe4382b136fde11892ad8b"
+title: "Codify-Linux-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/57b977ea744af01a5454c8643a850e59.webp
 ---
 
 # Codify

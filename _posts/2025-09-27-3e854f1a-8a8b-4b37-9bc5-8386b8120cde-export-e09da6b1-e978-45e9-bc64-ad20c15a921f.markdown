@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Alert 14eb9525529180c9b200f28db6068308"
+title: "Alert-Linux-Easy"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/6f4647030d6aadc676b8d8a459de344f.webp
 ---
 
 # Alert

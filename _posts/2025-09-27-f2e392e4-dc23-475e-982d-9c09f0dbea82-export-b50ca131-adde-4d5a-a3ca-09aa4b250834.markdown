@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Resource 1943e7f3c0b94bdfa3cd5b3b80375e53"
+title: "Resource-Linux-Hard"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/e83ac2321955bd2e0beb788d47fa5ae9.webp
 ---
 
 # Resource

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Heal 15eb9525529180ab8095d9465156425b"
+title: "Heal-Linux-Medium"
 date:   2025-07-15 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/dcd5ef09ab764228c64385374ac744c1.webp
 ---
 
 # Heal

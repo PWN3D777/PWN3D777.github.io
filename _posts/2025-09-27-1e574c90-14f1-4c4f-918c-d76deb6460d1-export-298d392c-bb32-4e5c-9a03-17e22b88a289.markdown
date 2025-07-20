@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "BigBang 1a4b9525529180969ab4c536d535c545"
+title: "BigBang-Linux-Hard"
 date:   2025-07-16 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/2d22afd496c5ae6f6c51ca24bf3719e1.webp
 ---
 
 # BigBang

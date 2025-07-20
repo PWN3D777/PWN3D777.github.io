@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Sea 41722b3b7e7f478a9839eb5b748f9475"
+title: "Sea-Linux-Easy"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/0011f6725aed869f8683589cb08c90d0.webp
 ---
 
 # Sea

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Blurry 8e433db17c4a43b790fb0030a3f23d14"
+title: "Blurry-Linux-Medium"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/344998b24aad421410cabf912d3dc3af.webp
 ---
 
 # Blurry

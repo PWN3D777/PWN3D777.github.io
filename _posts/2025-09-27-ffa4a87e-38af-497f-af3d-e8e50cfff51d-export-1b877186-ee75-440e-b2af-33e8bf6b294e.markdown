@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Dog 207b952552918059ae99cbb25a8392ef"
+title: "Dog-Linux-Easy"
 date:   2025-07-17 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/426830ea2ae4f05f7892ad89195f8276.webp
 ---
 
 # Dog

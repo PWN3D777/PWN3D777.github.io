@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Clicker 2631e18944b846e4ab17528fdc8d13cf"
+title: "Clicker-Linux-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/5a89d213ede5af4b4f94035fd059f976.webp
 ---
 
 # Clicker

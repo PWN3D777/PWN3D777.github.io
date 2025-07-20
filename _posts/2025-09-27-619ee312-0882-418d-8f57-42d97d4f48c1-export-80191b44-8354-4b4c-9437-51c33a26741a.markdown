@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Cap 0b84940c903441639ca6a3610c448b2a"
+title: "Cap-Linux-Easy"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/70ea3357a2d090af11a0953ec8717e90.webp
 ---
 
 # Cap

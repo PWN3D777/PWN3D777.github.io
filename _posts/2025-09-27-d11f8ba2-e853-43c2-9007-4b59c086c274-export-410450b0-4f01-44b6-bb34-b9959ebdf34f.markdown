@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Mailing 4e68e06a4c4f42e4a09aaf379ce5a555"
+title: "Mailing-Windows-Easy"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/cedb2f991409f9f39b55b04513f6b102.webp
 ---
 
 # Mailing

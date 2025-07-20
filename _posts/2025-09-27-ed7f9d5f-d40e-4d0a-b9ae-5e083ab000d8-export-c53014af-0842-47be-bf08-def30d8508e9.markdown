@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Compiled 2f5b6b950d704581a461fd336e54e807"
+title: "Compiled-Windows-Medium"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/ea0bd450c67da1efd2058c2cab9400cf.webp
 ---
 
 # Compiled

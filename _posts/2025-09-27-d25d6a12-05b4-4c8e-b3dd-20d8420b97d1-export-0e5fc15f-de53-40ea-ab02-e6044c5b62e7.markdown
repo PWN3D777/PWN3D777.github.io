@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Devvortex 8aaf1edae1e645f8a3502c240817c61c"
+title: "Devvortex-Linux-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/2565d292772abc4a2d774117cf4d36ff.webp
 ---
 
 # Devvortex

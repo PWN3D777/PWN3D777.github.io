@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Chemistry 126b9525529180abbe29ee9458c62b1e"
+title: "Chemistry-Linux-Easy"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/b8f3d660af2d3ed0929eb119e33526cf.webp
 ---
 
 # Chemistry

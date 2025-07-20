@@ -1,8 +1,10 @@
 ---
 layout: post
-title: "Pov 682faba83ef741dd99a8d341ec0d9a59"
+title: "Pov-Windows-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a36f80aa6bc43863512ec9537c4366c9.webp
+
 ---
 
 # Pov

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Checker 1eab952552918014a431c736eae89e54"
+title: "Checker-Linux-Hard"
 date:   2025-07-17 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/afe87a33205a5ffd978c805aa93488a9.webp
 ---
 
 # Checker

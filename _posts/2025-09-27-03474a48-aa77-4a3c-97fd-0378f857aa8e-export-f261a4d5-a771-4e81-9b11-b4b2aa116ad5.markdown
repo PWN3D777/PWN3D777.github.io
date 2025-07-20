@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Hospital 20c59ccb35cc4f3f99a35e93dd0be86a"
+title: "Hospital-Windows-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/box-hospital.png
 ---
 
 # Hospital

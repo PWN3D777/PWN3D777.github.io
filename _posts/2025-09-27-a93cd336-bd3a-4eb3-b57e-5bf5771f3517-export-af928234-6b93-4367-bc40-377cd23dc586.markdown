@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "GreenHorn c748edb6e6974c2fa1eeda4d3938260a"
+title: "GreenHorn-Linux-Easy"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/b7d9a9b075fd49c8509866fe24f58dbb.webp
 ---
 
 # GreenHorn

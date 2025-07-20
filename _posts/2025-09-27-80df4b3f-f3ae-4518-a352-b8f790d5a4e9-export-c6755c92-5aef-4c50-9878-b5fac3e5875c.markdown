@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Crafty dac548b6abac405aab1cf0e7f0e9bf69"
+title: "Crafty-Windows-Easy"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/c01c8813bfc7795ae0717bbee7b407d1.webp
 ---
 
 # Crafty

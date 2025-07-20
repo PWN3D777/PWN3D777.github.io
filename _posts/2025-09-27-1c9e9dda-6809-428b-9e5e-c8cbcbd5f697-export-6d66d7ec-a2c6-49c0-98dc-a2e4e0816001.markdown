@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "BackFire 19db9525529180c59281c89bbc555f9c"
+title: "BackFire-Medium-Linux"
 date:   2025-07-16 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/aa0a93908243c51fe21e691fc6571911.webp
 ---
 
 # BackFire

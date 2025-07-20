@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Visual 0840890c71974a4cb941dd43720bdafa"
+title: "Visual-Windows-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a75ac8ed04e6e728547538bfa41cfc68.webp
 ---
 
 # Visual

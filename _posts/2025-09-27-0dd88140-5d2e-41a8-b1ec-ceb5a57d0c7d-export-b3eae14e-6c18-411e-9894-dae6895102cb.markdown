@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Trickster 10cb9525529180f2b8c1d1bf360066ad"
+title: "Trickster-Linux-Medium"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/0eff5f0d7d2208024e519e5abfb132d0.webp
 ---
 
 # Trickster

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Analysis 0090fa0a858243a69b3e23fa77ef57f0"
+title: "Analysis-Windows-Hard"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/c31f19a4d6a3be17987a3ef98e2446a5.webp
 ---
 
 # Analysis

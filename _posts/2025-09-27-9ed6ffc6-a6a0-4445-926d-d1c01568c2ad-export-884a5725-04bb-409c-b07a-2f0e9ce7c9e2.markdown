@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "FormulaX fa3bdf2c47804a049a31fb516f6a4800"
+title: "FormulaX-Linux-Hard"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/897faece9f60bf69d8e109833f63da48.webp
 ---
 
 # FormulaX

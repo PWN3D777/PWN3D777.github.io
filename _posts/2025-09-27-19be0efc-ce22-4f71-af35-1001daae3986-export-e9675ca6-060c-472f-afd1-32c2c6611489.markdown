@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "MonitorsThree 897c3658402142178322085d7768da96"
+title: "MonitorsThree-Linux-Medium"
 date:   2025-07-13 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/a9c8709743c935ae079e3b04d9304c99.webp
 ---
 
 # MonitorsThree

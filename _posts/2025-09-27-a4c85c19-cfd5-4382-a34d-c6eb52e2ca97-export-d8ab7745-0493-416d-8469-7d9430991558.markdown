@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Freelancer 3035f9150e8841f6b9024dcb7c2be394"
+title: "Freelancer-Windows-Hard"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/cc3c525e7837e7e95d0da9b6596e7a30.webp
 ---
 
 # Freelancer

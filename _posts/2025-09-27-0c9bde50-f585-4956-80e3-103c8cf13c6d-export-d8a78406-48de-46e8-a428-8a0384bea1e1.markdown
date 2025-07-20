@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Yummy 11ab95255291808cac2bdff728027ba4"
+title: "Yummy-Linux-Hard"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/5ca57613886666c4c33ef23876b3f054.webp
 ---
 
 # Yummy

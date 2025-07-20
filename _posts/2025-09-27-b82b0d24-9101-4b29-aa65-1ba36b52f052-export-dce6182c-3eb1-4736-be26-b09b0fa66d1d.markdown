@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Manager cfec3cd46494480db7224387594ecdf2"
+title: "Manager-Windows-Medium"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/5ca8f0c721a9eca6f1aeb9ff4b4bac60.webp
 ---
 
 # Manager

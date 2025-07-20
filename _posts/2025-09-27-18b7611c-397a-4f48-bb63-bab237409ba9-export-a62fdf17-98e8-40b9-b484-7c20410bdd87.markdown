@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Office fb98949d426941feb525ffda5de0984e"
+title: "Office-Windows-Hard"
 date:   2025-07-10 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/2cdef06b99725f3dcce38431a95b7b77.webp
 ---
 
 # Office

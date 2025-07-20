@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Axlle fac56ddd38cf444fa5d5a2c5a78caf75"
+title: "Axlle-Windows-Hard"
 date:   2025-07-12 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/e6052efa31516d5aa9c78831509bcedd.webp
 ---
 
 # Axlle

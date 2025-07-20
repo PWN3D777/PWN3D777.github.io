@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Cicada 111b9525529180218b7fea77840c5bdb"
+title: "Cicada-Windows-Easy"
 date:   2025-07-14 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/79616a32a057e5e672dadb51bb96dd04.webp
 ---
 
 # Cicada

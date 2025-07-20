@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Iclean 8c1402c5cf454f41bf188e1767729463"
-date: 2025-09-27
+title: "Iclean-Linux-Medium"
+date: 2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/750ba886c8a87103c69cac0f13f2de70.webp
 ---
 
 # Iclean

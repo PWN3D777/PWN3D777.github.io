@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Titanic 1eab9525529180a9b52fc9a7eb126a50"
+title: "Titanic-Linux-Easy"
 date:   2025-07-17 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/eb5942ec56dd9b6feb06dcf8af8aefc6.webp
 ---
 
 # Titanic

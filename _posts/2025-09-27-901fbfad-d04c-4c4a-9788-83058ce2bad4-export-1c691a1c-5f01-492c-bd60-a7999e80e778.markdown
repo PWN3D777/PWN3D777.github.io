@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Runner 4b1da7b22392418faa02ce4ffe8868f1"
+title: "Runner-Linux-Medium"
 date:   2025-07-11 12:05:57 -0400
 categories: writeups
+thumb: /assets/images/logos/029d258b4444bc4226b90b1f8f27d086.webp
 ---
 
 # Runner
