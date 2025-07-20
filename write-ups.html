@@ -2,7 +2,6 @@
 layout: home
 title: "write-ups"
 permalink: /write-ups/
-
 pagination:
   enabled: true
 ---
@@ -11,13 +10,22 @@ pagination:
 <section class="post-feed">
   {% for post in site.posts %}
     <article class="post-item">
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p>{{ post.excerpt }}</p>
-      <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+	           <h2>
+	        <a href="{{ post.url | relative_url }}">{{ post.title }}
+
+        </a>
+        </h2>
+<div class="post-thumb">
+  <div class="post-text">
+    <p>{{ post.excerpt }}</p>
+    <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+  </div>
+  <img src="{{ post.thumb | default: '/assets/images/default-card.png' | relative_url }}" alt="{{ post.title }}">
+</div>
+
     </article>
   {% endfor %}
 </section>
 
 {% include pagination.html %}
 <script src="{{ '/assets/js/matrix-dash-con-w.js' | relative_url }}"></script>
-

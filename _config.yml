@@ -33,6 +33,7 @@ paginate_path: "/write-ups/page:num"
 tag_permalink_style: pretty
 tag_page_layout: tag_page
 tag_page_dir: tag
+default_thumb: /assets/images/default-card.png
 
 # for github pages custom domains:
 # include: [CNAME]
