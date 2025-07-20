@@ -27,8 +27,8 @@
   const COLOR_BASE = [0, 255, 0];  // verde Matrix
   const ALPHA_MIN = 0.45;          // transparencia mínima
   const ALPHA_MAX = 0.85;          // transparencia máxima
-  const SPEED_MIN = 0.5;           // píxeles por frame (base)
-  const SPEED_MAX = 2;
+  const SPEED_MIN = 0.3;           // píxeles por frame (base)
+  const SPEED_MAX = 1.7;
 
   const chars = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂヅテデトドナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const pool = chars.split("");
