@@ -1,3 +1,8 @@
+
+---
+---
+
+@import "dash";
 /* Matrix overlay: contenedor 
 /* Canvas Matrix */
 #matrix-dash {
@@ -18,4 +23,20 @@ main > *:not(#matrix-overlay) {
   position: relative;
   z-index: 1;
 }
+
+.post-feed .post-item {
+  border: 1px solid rgba(255, 255, 255, 0.1); /* borde tenue */
+  border-radius: 10px;                         /* esquinas redondeadas */
+  padding: 15px;                               /* espacio interno */
+  margin-bottom: 15px;                         /* separación entre posts */
+  background-color: rgba(0, 0, 0, 0.3);        /* fondo suave (opcional) */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);    /* sombra ligera */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-feed .post-item:hover {
+  transform: translateY(-4px); /* pequeño efecto hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
 
