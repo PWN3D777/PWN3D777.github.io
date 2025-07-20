@@ -1,0 +1,15 @@
+.post-feed .post-item {
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-feed .post-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+}
+
