@@ -114,3 +114,5 @@ bash -p
 ```
 
 Machine pwned!!!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

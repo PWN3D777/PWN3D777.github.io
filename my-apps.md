@@ -16,3 +16,5 @@ You can find the source code for Jekyll at GitHub:
 
 
 [jekyll-organization]: https://github.com/jekyll
+<script src="{{ '/assets/js/matrix-dash-con.js' | relative_url }}"></script>
+

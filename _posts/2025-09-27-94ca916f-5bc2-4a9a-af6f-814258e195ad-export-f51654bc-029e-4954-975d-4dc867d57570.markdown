@@ -152,3 +152,4 @@ Use net cat to run the service and upload our malicious dll
 Machine pwned!!
 
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_19.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

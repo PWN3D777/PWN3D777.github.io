@@ -149,3 +149,4 @@ We see a kernel with an outdated version (CVE-2023-2640)
 Just give it executable premises after downloaded it on tmp
 
 We’ve got root flag
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

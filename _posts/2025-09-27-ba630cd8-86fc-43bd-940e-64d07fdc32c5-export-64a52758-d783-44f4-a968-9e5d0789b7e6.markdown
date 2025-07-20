@@ -124,3 +124,4 @@ Once we create the pdf use binwalk to identify frimwares attached on a binary.
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_30.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

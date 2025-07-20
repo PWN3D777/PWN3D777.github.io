@@ -160,3 +160,4 @@ We can use wvil-winrm or psexec to open a shell as administrator
 ![image.png]({{ '/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_37.png' | relative_url }})
 
 machine pwnedd
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

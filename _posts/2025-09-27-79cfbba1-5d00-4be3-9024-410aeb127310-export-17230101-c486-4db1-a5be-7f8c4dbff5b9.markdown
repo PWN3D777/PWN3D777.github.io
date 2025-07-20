@@ -148,3 +148,4 @@ gcc -fPIC -shared -o ./libxcb.so.1 a.c -nostartfiles
 ```
 
 Machine pwned!!!@
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

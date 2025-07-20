@@ -71,3 +71,4 @@ hashcat -m 120 -a 0 "b8f...........:d" rockyou.txt
 That’s it machine pwned
 
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_10.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -105,3 +105,4 @@ while not is_password_found:
 klj12h3jhaskjh12kjh3
 
 Machine pwned!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

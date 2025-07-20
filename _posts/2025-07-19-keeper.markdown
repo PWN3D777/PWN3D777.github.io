@@ -72,3 +72,5 @@ To make the right format for ssh
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_9.png' | relative_url }})
 
 Machine pwned
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

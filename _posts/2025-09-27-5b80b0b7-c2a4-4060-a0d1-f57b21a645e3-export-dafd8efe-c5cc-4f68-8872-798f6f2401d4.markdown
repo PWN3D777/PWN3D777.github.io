@@ -152,3 +152,5 @@ This is the easy part if we make a good enumeration of Active Directory due to S
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_38.png' | relative_url }})
 
 Machine pwned!!!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

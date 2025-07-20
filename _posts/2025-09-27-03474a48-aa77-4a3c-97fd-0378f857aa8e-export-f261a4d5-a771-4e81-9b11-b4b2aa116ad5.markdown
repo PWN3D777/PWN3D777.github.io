@@ -142,3 +142,4 @@ querydispinfo
 We realise that guest user has admin permises so lets go to C:\xampp\htdocs and user ponyshell again wiht a .php ext
 
 Machine pwned./!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

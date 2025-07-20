@@ -238,3 +238,4 @@ We can even execute commands logon as L.Bianchi with hist ticket
 ![image.png]({{ '/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_58.png' | relative_url }})
 
 Machine pwned!@!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -134,3 +134,4 @@ Use the password to get the information inside, there is a private key for root,
 ![image.png]({{ '/assets/images/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da/62998538-dbff-415c-b666-2933a1f99404-export-e3df8d23-34a5-43b7-b3cf-0ccd68ba93da_image_30.png' | relative_url }})
 
 Machine pwned!!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

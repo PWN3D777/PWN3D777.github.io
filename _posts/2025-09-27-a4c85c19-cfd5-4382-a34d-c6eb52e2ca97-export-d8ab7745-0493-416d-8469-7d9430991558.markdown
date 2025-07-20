@@ -193,3 +193,4 @@ secretsdump.py -dc-ip ip -target-ip ip -k -no-pass freelancer.htb/Administrator@
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_39.png' | relative_url }})
 
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_40.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

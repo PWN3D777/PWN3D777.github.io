@@ -210,3 +210,4 @@ Root shell is as simple as
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_28.png' | relative_url }})
 
 Machine pwned!!!@#
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

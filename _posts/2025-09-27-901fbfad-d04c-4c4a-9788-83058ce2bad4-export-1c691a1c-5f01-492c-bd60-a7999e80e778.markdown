@@ -244,3 +244,4 @@ This version has a vulnerability which we can exploit it through container creat
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png' | relative_url }})
 
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

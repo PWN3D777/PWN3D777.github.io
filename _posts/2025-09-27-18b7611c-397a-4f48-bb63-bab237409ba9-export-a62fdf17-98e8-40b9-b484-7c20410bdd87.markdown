@@ -444,3 +444,4 @@ net localgroup administrators
 It is uploaded but if we want to make it valid on system we will need to exit the evil-winrm session and reopen it.
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -90,3 +90,4 @@ Flag and credentials found
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_18.png' | relative_url }})
 
 Machine pwned!!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

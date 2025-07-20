@@ -80,3 +80,4 @@ gcc -shared a.c -o a.so -nostartfiles -fPIC
 ```
 
 Root
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -98,3 +98,5 @@ while it load
 We are root
 
 ```
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

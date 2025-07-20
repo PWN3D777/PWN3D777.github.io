@@ -246,3 +246,4 @@ How lucky now we have the root password captured by the procmon binary
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_41.png' | relative_url }})
 
 Machine pwned
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

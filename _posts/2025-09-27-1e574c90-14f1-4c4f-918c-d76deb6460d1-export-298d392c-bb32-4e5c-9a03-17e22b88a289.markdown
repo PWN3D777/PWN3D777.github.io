@@ -178,3 +178,4 @@ But if we do this
 `bash -p` 
 
 A shell with root is open and the machine is pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

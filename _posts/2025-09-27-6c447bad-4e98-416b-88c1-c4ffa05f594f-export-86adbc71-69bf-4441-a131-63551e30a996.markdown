@@ -166,3 +166,4 @@ and steal the root flag using the LOAD_FILE() function
 ![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_39.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

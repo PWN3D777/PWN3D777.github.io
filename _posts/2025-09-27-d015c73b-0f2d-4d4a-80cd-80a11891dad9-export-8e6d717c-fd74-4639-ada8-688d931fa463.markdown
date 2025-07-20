@@ -277,3 +277,4 @@ Make a symbolic link of a .png file to make the script work as expected and set 
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_34.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

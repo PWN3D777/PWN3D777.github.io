@@ -80,3 +80,4 @@ Basically we are going to start and connect to mosh-server as root in localhost
 ![image.png]({{ '/assets/images/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16/acd03a7a-6936-4560-8bca-0bb2b4cbed39-export-3a97c625-bd45-4aa5-91ea-89da14a1bf16_image_17.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -77,3 +77,4 @@ There is a monitor system which has a section where someone can read log files, 
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_17.png' | relative_url }})
 
 Machine Pwned!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

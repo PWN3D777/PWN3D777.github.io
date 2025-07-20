@@ -121,3 +121,4 @@ evil-winrm -i 10.10.11.236 -u administrator -H password
 ```
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -84,3 +84,4 @@ chmod u+s /bin/bash
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_17.png' | relative_url }})
 
 Machine pwned!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

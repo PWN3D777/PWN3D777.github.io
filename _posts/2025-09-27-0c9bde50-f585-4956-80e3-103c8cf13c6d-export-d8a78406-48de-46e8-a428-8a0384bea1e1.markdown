@@ -286,3 +286,4 @@ then just making bash -p we can be able to we root, we need to run everything co
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_48.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

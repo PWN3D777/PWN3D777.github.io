@@ -102,3 +102,4 @@ $ sudo /usr/local/nagiosxi/scripts/manage_services.sh start npcd
 ```
 
 machine pwned!!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

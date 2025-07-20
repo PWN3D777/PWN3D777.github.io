@@ -136,3 +136,4 @@ The vulnerability here lies in the fact that the app.py file is mapping the acce
 ![image.png]({{ '/assets/images/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c/733723af-1ca1-47c6-8c50-363bdc9f5104-export-563f3f6c-0c2c-44e3-a4ac-490bd58f899c_image_28.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

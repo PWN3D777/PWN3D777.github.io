@@ -301,3 +301,4 @@ Using those credentials we can execute commands with those privileges we will us
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_35.png' | relative_url }})
 
 Machine pwned!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

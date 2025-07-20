@@ -309,3 +309,4 @@ Run the sudo command and verify that the setuid was applied correctly
 ![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_47.png' | relative_url }})
 
 Machine pwned!!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

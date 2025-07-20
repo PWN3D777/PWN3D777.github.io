@@ -126,3 +126,5 @@ sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
 
 - Machine pwned
 ![Untitled](/assets/images/cozyhosting/Untitled%2010.png)
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

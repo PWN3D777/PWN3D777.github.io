@@ -106,3 +106,4 @@ And get all the secrets and hashes
 ![image.png]({{ '/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_24.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

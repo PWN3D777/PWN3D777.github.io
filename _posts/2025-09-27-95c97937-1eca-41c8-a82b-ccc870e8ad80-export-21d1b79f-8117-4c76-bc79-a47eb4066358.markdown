@@ -66,3 +66,5 @@ This one is easy just create a symlink of the file sudoers and set it up to gran
 ![Untitled]({{ '/assets/images/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358/95c97937-1eca-41c8-a82b-ccc870e8ad80-export-21d1b79f-8117-4c76-bc79-a47eb4066358_Untitled_13.png' | relative_url }})
 
 Machine PWNED#@!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

@@ -180,3 +180,4 @@ systemctl restart wpa_supplicant@wlan0.service
 Use ssh to get into the router and machine pwned!!!
 
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

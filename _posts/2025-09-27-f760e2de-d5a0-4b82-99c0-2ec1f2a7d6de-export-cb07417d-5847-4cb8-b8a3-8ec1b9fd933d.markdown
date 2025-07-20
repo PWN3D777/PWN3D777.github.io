@@ -77,3 +77,5 @@ Now we are prod user, searching his permission on sudo we can see that python is
 Root flag got it but we are hungry of full control, we can make a rev shell using netcat
 
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_18.png' | relative_url }})
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

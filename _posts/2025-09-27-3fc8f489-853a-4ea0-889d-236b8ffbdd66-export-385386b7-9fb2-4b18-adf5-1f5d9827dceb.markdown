@@ -158,3 +158,5 @@ wait a little bit to obtain root password
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_34.png' | relative_url }})
 
 Machine pwned!!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

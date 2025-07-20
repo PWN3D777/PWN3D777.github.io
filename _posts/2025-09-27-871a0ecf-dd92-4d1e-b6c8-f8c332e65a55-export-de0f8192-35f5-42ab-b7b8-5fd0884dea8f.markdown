@@ -168,3 +168,4 @@ That’s how we are going to gain access as root
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_41.png' | relative_url }})
 
 Machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

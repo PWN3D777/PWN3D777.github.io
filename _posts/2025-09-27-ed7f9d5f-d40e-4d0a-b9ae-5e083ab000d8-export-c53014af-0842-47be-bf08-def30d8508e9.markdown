@@ -242,3 +242,5 @@ Use runnas to get system shell
 ![image.png]({{ '/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_27.png' | relative_url }})
 
 Machine pwned!!! But this machine was a pain of head i don’t think it is a medium machine, i had a lot of problems compiling the CVE i saw on internet that there is a better way compiling it using MSBUILD but it will be part of another compiled machine. We also need to compile it in release mode.
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

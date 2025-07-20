@@ -238,3 +238,4 @@ Inside of the mail there are information about some emerging vulnerabilities mor
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_27.png' | relative_url }})
 
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_28.png' | relative_url }})
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

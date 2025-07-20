@@ -143,3 +143,5 @@ Within the .NET source code there is a function which receives as a parameter a 
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_29.png' | relative_url }})
 
 Machine pwned@!@#!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

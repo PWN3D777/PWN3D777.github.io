@@ -159,3 +159,4 @@ GodPotato-NET64 -cmd "cmd /c type C:\Users\Administrator\Desktop\root.txt"
 There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked
 
 Machine pwned!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

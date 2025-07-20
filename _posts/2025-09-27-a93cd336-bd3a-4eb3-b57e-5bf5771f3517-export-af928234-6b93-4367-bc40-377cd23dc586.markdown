@@ -106,3 +106,5 @@ Now we have the information to escalate our privilege to root
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_23.png' | relative_url }})
 
 Machine pwned!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

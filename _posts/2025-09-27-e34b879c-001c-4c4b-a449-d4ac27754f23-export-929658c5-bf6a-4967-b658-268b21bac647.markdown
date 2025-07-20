@@ -105,3 +105,4 @@ Download those files and use impacket-secretsdump or pypykatz and it will give u
 ![image.png]({{ '/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_13.png' | relative_url }})
 
 Machine pwned!!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>

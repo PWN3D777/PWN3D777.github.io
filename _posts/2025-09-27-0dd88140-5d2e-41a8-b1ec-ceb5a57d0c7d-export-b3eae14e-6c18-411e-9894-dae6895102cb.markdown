@@ -166,3 +166,5 @@ It might look like we have fall down into a honey pot, but if you analyze the ba
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_35.png' | relative_url }})
 
 Machine pwned!!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
