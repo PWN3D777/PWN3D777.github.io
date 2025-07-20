@@ -1,0 +1,21 @@
+/* Matrix overlay: contenedor 
+/* Canvas Matrix */
+#matrix-dash {
+  position: absolute;   /* ocupa el área del contenedor */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;            /* fondo */
+  pointer-events: none;  /* no bloquea clics */
+  background: transparent !important;
+}
+
+/* Asegura que el contenido quede encima */
+.page-content > *:not(#matrix-overlay),
+.site-content > *:not(#matrix-overlay),
+main > *:not(#matrix-overlay) {
+  position: relative;
+  z-index: 1;
+}
+
