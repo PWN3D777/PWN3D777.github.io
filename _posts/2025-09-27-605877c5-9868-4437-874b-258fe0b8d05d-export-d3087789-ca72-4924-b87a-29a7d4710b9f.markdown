@@ -238,3 +238,4 @@ This privilege allow us to use a process to impersonate another user, `SweetPota
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_45.png' | relative_url }})
 
 Machine pwned@!@@!@
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
