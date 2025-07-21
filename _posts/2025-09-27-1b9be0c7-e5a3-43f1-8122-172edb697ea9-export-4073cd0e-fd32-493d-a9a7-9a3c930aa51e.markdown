@@ -131,7 +131,7 @@ It says a secret necessary for the verification code is in ~/google-authenticato
 
 ![image.png]({{ '/assets/images/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e/1b9be0c7-e5a3-43f1-8122-172edb697ea9-export-4073cd0e-fd32-493d-a9a7-9a3c930aa51e_image_19.png' | relative_url }})
 
-It’s time to find a PoC of concept to perform this attack.
+It’s time to find a Proof Of Concept to perform this attack.
 
 According with this blog post, we can use php_filter_chains_oracle_exploit to abuse this vulnerability.
 

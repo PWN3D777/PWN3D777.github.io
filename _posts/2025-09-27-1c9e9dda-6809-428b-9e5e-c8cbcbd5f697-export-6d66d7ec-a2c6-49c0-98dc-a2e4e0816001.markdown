@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "BackFire-Medium-Linux"
+title: "BackFire-Linux-Medium"
 date:   2025-07-16 12:05:57 -0400
 categories: writeups
 thumb: /assets/images/logos/aa0a93908243c51fe21e691fc6571911.webp
