@@ -1,0 +1,205 @@
+---
+layout: post
+title: "Scepter-Windows-Hard"
+date:   2025-07-22 12:05:57 -0400
+categories: writeups
+thumb: /assets/images/logos/f2df2ca13368e6e158cffd5a3ab54d5d.webp
+---
+
+# Scepter
+
+# 1. Enumeration
+
+Start by enumerating open ports, since this is a Windows machine, several Microsoft Network services running on it
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_1.png' | relative_url }})
+
+Port 2049/tcp is particularly interesting, nmap identifies it as nlockmgr (Network Lock Manager), a protocol that cooperates with Network File System (NFS) to prevent issues caused by simultaneous writing
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_2.png' | relative_url }})
+
+Enumerate the current mount points in this host
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_3.png' | relative_url }})
+
+`-a active mounts` 
+
+ `-e available exports`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_4.png' | relative_url }})
+
+# 2. User flag
+
+Download available files from the mount
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_5.png' | relative_url }})
+
+We have three .pfx files that we could try to crack in order to retrieve their pfx passwords and  generate new unprotected pfx files for domain authentication, but this will not work because those credentials have been revoked. Instead we could use one of these file to generate a hash to discover that a password was reused several times across all .pfx file. Then we can proceed to work with baker user, since we own needed files to create our own .pfx file and the password used for him is the same used for other users.
+
+Another approach is using `pem2john` tool with the `baker.key` file
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_6.png' | relative_url }})
+
+To carry out the previously mentioned actions, start using `pfx2john` to generate a hash
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_7.png' | relative_url }})
+
+Upon inspecting that hash, we found that the generated type was `pfxng`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_8.png' | relative_url }})
+
+You might encounter issues when cracking this hash because this format is not supported in some versions of john (at least not supported by the version included with kali), you can install a different version if you want,  although this could generate issues and might be problematic for your environment
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_9.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_10.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_11.png' | relative_url }})
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_12.png' | relative_url }})
+
+  The recommended tool to address this scenario is `crackpkcs12` that cracks `p12` and `pfx` files
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_99591778_a1d7_4d1d_a2aa_1fbff0d78c0a.png' | relative_url }})
+
+Once the password is found, we can obtain a `pxf` file in name of `baker`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_13.png' | relative_url }})
+
+Use that file to request a tgt using auth module in certipy
+
+```python
+certipy auth -pfx .pfx
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_14.png' | relative_url }})
+
+Set `/etc/resolv.conf` to avoid potential DNS problems while running the bloodhound collector
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_15.png' | relative_url }})
+
+```python
+bloodhound-python -u d.baker --hashes :hash -ns dns -d domain -c ALL
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_16.png' | relative_url }})
+
+Checking the information displayed by Bloodhound we discovered that `p.adams` has `DCSync` privileges. Additionally, the account operators group has `generic all` privileges over him, and he is also associated with a  `helpdesk enrrollment certificate` , for that reason, he will be our final target account in order to compromise administrator account
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_17.png' | relative_url }})
+
+But for now we need to obtain the user flag first. Mark `d.baker` as owned, and identify the `ForceChangePassword` policy that he has over `a.carter`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_18.png' | relative_url }})
+
+Abuse this configuration using
+
+```python
+bloodyAD --host dc01.domain.htb -d domain.htb -u atacker -p :hash set password victim newpassword
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_19.png' | relative_url }})
+
+`A.carter` is member of `IT support` group which holds `GenericAll` privileges over the `staff access certificate`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_20.png' | relative_url }})
+
+It is curious that this template contains `d.baker` ; this might be vulnerable to some `ESC` technique due to a clear misconfiguration
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_21.png' | relative_url }})
+
+Let’s go through this step by step. First, let’s try to obtain all possible privileges over the users the have owned
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_22.png' | relative_url }})
+
+Find `ESC` type vulnerabilities using `certipy` tool
+
+```python
+certipy find -u d.baker -p 'hash' -dc-ip ip
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_23.png' | relative_url }})
+
+It says that d.baker might be vulnerable to `ESC9` but to perform this attack we need to be able to include the `UPN` in the `SAN` of the target user, and this configuration is not present, we only can include email in the `SAN` . Even so, now we are aware that this certification template has no security extension flag. We can also notice that this certificate template has `SubjectAltRequireEmail` set as a valid name option
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_24.png' | relative_url }})
+
+Then, use the following command to discover that the `altSecurityIdentity` property is used to identify `hbrowm` user. 
+
+```python
+ netexec ldap scepter.htb -u d.baker -H 18b5fb0d99e7a475316213c15b6f22ce --query "(sAMAccountName=h.brown)" ""
+```
+
+This property is related with ESC14 and we are going to see a lot of it on this machine
+
+You can see more information about it here:
+
+https://posts.specterops.io/adcs-esc14-abuse-technique-333a004dc2b9
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_25.png' | relative_url }})
+
+With all the information gathered so far, we can perform an attack to escalate to h.brown user
+
+```python
+bloodyAD --host dc01.domain.htb -d domain.htb -u a.carter -p 'password' set object 'user-owned' mail -v 'target@mail.htb'
+certipy req -ca CA -u 'user-owned' -hashes :hash -template vulnerabletemplate -target dc01.scepter.htb
+certipy auth -domain domain.htb -pfx .pfx -dc-ip ip -username 'target'
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_26.png' | relative_url }})
+
+Set the `/etc/krb5.conf`
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_27.png' | relative_url }})
+
+Use the obtained hash to get a TGT and get remote access as h.brown
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_7e673afa_a3cb_4d7e_a84e_f9e1afe1d10f.png' | relative_url }})
+
+# 3.Priv esc
+
+Check write permissions for `h.brown` user
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_28.png' | relative_url }})
+
+Write permissions in `altSecurityIdentities` property over `p.adams` open up another potential attack ESC14 vector mixed with the previous scenario exploited
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_29.png' | relative_url }})
+
+Basically we are going to set an weak X509RFC822 explicit mapping in `altSecurityIdentities` using scenario A (Write permissions) to then perform the previous attack using scenario B
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_30.png' | relative_url }})
+
+Use the following commands to spoof `p.adams` 
+
+```python
+#Set property in p.adams 
+bloodyAD --host dc01.domain.htb -d domain.htb -u attacker1 -k set object 'victim' altSecurityIdentities -v 'x509:<RFC822>p.adams@scepter.htb'
+#Make h.brown use p.adams email
+bloodyAD --host dc01.domain.htb -d domain.htb -u attacker2 -p 'password' set object 'attacker1' mail -v 'target@domain.htb'
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_31.png' | relative_url }})
+
+```python
+#Request a .pfx fila as p.adams using d.baker ticket
+certipy req -ca CA -u 'user-owned' -k -template vulnerabletemplate -target dc01.scepter.htb -out p.adams
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_32.png' | relative_url }})
+
+```python
+#Authenticate and the nt hash for p.adams
+certipy auth -domain domain.htb -pfx .pfx -dc-ip ip -username 'target'
+```
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_33.png' | relative_url }})
+
+As `p.adams` has DCSync privileges, proceed to dump secrets to then access as administrator
+
+![image.png]({{ '/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_34.png' | relative_url }})
+
+Machine pwned@@@##!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
