@@ -32,7 +32,7 @@ We can see 2 http services, go forward the one which allows create an account
 Testing some allowed extensions, we realise .phar extensions.
 There is a  tool called ponyshell, downloaded and change its extensions
 <br/><br/>
-```bash
+```php
 <?php
 
 $SHELL_CONFIG = array(
