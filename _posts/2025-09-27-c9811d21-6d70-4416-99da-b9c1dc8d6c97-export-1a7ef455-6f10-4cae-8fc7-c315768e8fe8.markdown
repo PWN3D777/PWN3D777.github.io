@@ -63,7 +63,7 @@ sed 's/<value>//g' | sort | uniq > list.lst
 <br/><br/>
 **-P** : Enable perl-Compatible regular expressions
 <br/><br/>
-**[^>]+** : Any character that are not '>'
+**[^>]+** : Any character that are not 'greater than'
 <br/><br/>
 **(?=<value>)** : It ensure the match is followed by <value> but is not part of the match
 <br/><br/>
