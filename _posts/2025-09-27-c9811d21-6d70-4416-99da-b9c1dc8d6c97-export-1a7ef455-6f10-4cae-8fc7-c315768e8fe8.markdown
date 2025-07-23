@@ -67,7 +67,7 @@ sed 's/<value>//g' | sort | uniq > list.lst
 <br/><br/>
 **(?='value')** : It ensure the match is followed by <value> but is not part of the match
 <br/><br/>
-**s/something//g** : It replaces any something with an empy string.
+**'s/something//g'** : It replaces any something with an empy string.
 <br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png' | relative_url }})
 <br/><br/>
