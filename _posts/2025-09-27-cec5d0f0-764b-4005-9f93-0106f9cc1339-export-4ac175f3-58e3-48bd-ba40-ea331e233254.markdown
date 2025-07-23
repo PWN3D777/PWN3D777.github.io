@@ -96,12 +96,13 @@ print(cmdline)
 ```bash
 ./ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "yourpaload" --path="/portfolio/default.aspx" --appath="/" --decryptionalg="AES" --decryptionkey="74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43" --validationalg="SHA1" --validationkey="5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"
 ```
+
 <br/><br/>
-- **`./ysoserial.exe`**: :  Tool used to deserialization attacks<br/><br/>
-- **`-p ViewState`**: Specifies the payload type<br/><br/>
-- **`-g TypeConfuseDelegate`**: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.<br/><br/>
-- **`--path="/portfolio/default.aspx"`**: Specifies the path to the ASPX file where the ViewState will be injected.<br/><br/>
-- **`--appath="/"`**: Specifies the application path. In this case, it's set to the root path ("/") of the web application.Ty<br/><br/>
+- **./ysoserial.exe**: :  Tool used to deserialization attacks<br/><br/>
+- **-p ViewState**: Specifies the payload type<br/><br/>
+- **-g TypeConfuseDelegate**: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.<br/><br/>
+- **--path="/portfolio/default.aspx"**: Specifies the path to the ASPX file where the ViewState will be injected.<br/><br/>
+- **--appath="/"**: Specifies the application path. In this case, it's set to the root path ("/") of the web application.Ty<br/><br/>
 
 ![Untitled]({{ '/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_7.png' | relative_url }})
 <br/><br/>
