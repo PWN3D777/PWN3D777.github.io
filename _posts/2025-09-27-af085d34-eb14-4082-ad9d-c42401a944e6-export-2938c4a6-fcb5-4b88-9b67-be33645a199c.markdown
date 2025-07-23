@@ -35,6 +35,7 @@ Metabase has a vulnerability (CVE-2023-38646)
 <br/><br/>
 Use this POC
 <br/><br/>
+
 ```python
 import requests
 import argparse
