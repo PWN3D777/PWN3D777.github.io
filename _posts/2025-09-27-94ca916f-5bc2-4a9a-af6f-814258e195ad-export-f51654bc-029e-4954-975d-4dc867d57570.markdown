@@ -55,8 +55,8 @@ A login interface, we don’t have those creds, but may trying using the token w
 <br/><br/>
 Then we should get a success message and go yo IssuePrescription panel
 <br/><br/>
-> Open a listening port using netcat
-> 
+Open a listening port using netcat
+
 <br/><br/>
 Exploit SSFR 
 <br/><br/>
