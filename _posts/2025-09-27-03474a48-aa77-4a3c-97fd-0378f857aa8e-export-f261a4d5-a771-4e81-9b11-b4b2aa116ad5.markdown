@@ -29,9 +29,8 @@ HackTheBox: Medium
 <br/><br/>
 We can see 2 http services, go forward the one which allows create an account
 <br/><br/>
-> Testing some allowed extensions, we realise .phar extensions.
+Testing some allowed extensions, we realise .phar extensions.
 There is a  tool called ponyshell, downloaded and change its extensions
-> 
 <br/><br/>
 ```bash
 <?php
@@ -126,8 +125,8 @@ Clone the repository and create the payload to injected
 <br/><br/>
 Start this part where you spawn, theres is a file called ghostscrip.bat lets type it
 <br/><br/>
-> We found some rcpclient creds
-> 
+We found some rcpclient creds
+
 <br/><br/>
 ### rcpclient
 <br/><br/>
