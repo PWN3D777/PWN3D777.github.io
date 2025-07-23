@@ -19,8 +19,8 @@ HackTheBox: Hard
 <br/><br/>
 - nmap scanning:  http-ssh service
 <br/><br/>
-> We need to use Burp Suite to get protected files
-> 
+ We need to use Burp Suite to get protected files
+ 
 <br/><br/>
 1. Active proxy
 <br/><br/>
@@ -34,8 +34,8 @@ We access ssh port with those cred found
 <br/><br/>
 Got the route:
 <br/><br/>
-> /var/www/backups
-> 
+ /var/www/backups
+ 
 <br/><br/>
 We sent this directory with ssh
 <br/><br/>
@@ -62,9 +62,9 @@ We find creds for users.
 <br/><br/>
 There is a doodlegrive file we download
 <br/><br/>
-> Using a tool called IDA we find other creds
+Using a tool called IDA we find other creds
 IDA is a disambler and review inside the root data
-> 
+ 
 <br/><br/>
 1. Create a file where will save root
 2. compile 
