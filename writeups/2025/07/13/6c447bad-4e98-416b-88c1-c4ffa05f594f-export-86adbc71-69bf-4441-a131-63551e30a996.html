@@ -174,17 +174,17 @@ It’s important to take account the krb5.conf which is a file that indicates to
 <br /><br /></p>
 <ul>
   <li><strong>[libdefaults]:</strong> It has the default configurations to the kerberos library</li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li>
-    <p><br /><br />
+  <li><strong>[realms]:</strong> Defines all the domains</li>
+  <li><strong>[domain_realm]:</strong> Map al the domains (realms)</li>
+  <li><strong>[kdc]:</strong> Specific configurations for KDCs, like network addresses.</li>
+  <li><strong>[admin_server]:</strong> Configurations for the kerberos administration servers.
+<br /><br />
 <img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_29.png" alt="image.png" />
 <br /><br />
 After set the password  we can log as m.harris and get the user flag
 <br /><br />
 <img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_30.png" alt="image.png" />
-<br /><br /></p>
+<br /><br />
     <h1 id="3priv-esc">3.Priv esc</h1>
     <p><br /><br />
 Now, run linpeas and it will disclose information about a output messenger service with sql, this means that there are a sql database saving messages or events, we might find something interesting here, we could get the .exe and reversing but in this case if we look around all those files we will find a . zip file. We tried to see the .init file but it wasn’t possible
