@@ -11,71 +11,75 @@ thumb: /assets/images/logos/0011f6725aed869f8683589cb08c90d0.webp
 # 1. Enumeration
 
 Start with enumeration 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image.png' | relative_url }})
-
+<br/><br/>
 Two ports opened, let’s see what is happening on port 80
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_1.png' | relative_url }})
-
+<br/><br/>
 There is a cookie, we might need to steal it, but we tried reflected xssand it didn’t work, keep going the enumeration
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 The resource code show us a directory path where we can search
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_3.png' | relative_url }})
-
+<br/><br/>
 Using dirsearch we found the readme which can give us more information about the page
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_4.png' | relative_url }})
-
+<br/><br/>
 WonderCMS is used
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_5.png' | relative_url }})
-
+<br/><br/>
 Searching for vulnerabilities, we have found a stored XSS
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_6.png' | relative_url }})
-
+<br/><br/>
 1. First we need to store the xss.js file which will save a .zip file
+<br/><br/>
 2. The xss.js file will call the .zip file to get a shell
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_7.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_8.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_9.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_10.png' | relative_url }})
-
+<br/><br/>
 There are credentials on the database file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_11.png' | relative_url }})
-
+<br/><br/>
 Crack it, don’t forget to delete bashslash `\` to perform the tool with the right format
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_12.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Enumerating local ports there is a http service, go ahead and port forward this 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_13.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_14.png' | relative_url }})
-
+<br/><br/>
 Use the same creds for log in 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_15.png' | relative_url }})
-
+<br/><br/>
 There is a monitor system which has a section where someone can read log files, but this component has root permissions so try to get the flag via cat 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_16.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_17.png' | relative_url }})
-
+<br/><br/>
 Machine Pwned!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

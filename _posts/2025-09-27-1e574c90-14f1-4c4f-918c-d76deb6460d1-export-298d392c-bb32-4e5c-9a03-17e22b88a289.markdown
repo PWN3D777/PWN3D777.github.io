@@ -9,174 +9,177 @@ thumb: /assets/images/logos/2d22afd496c5ae6f6c51ca24bf3719e1.webp
 # BigBang
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports, there are only two ports open
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image.png' | relative_url }})
-
+<br/><br/>
 Nothing much in port 80
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_1.png' | relative_url }})
-
+<br/><br/>
 We can login
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_2.png' | relative_url }})
-
+<br/><br/>
 We can also submit a form
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_3.png' | relative_url }})
-
+<br/><br/>
 To perform this is used buddyForms
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_4.png' | relative_url }})
-
+<br/><br/>
 Use whatweb tool to get more information about this web application, wordpress and php are on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_5.png' | relative_url }})
-
+<br/><br/>
 Enumerate and map this website using gobuster adding php extension
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_6.png' | relative_url }})
-
+<br/><br/>
 This is the same login page that we can be redirected in budyform
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_7.png' | relative_url }})
-
+<br/><br/>
 Another endpoint but nothing useful 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_8.png' | relative_url }})
-
+<br/><br/>
 Use wpscan to a more comprehensive about vulnerabilities present
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_9.png' | relative_url }})
-
+<br/><br/>
 Buddyforms plugin is present in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_10.png' | relative_url }})
-
+<br/><br/>
 To know a little more about it search this specific version, it says that we have to be a user with minimal permissions, when we submit a form we can see that we are automatically assigned as guest user which can be enough to attack
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_11.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_12.png' | relative_url }})
-
+<br/><br/>
 Download this exploit and follow its instructions to get a rev shell
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_13.png' | relative_url }})
-
+<br/><br/>
 We have access to some .php files, search for passwords 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_14.png' | relative_url }})
-
+<br/><br/>
 We have a good sign
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_15.png' | relative_url }})
-
+<br/><br/>
 Forward sql port  to access database locally
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_16.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_17.png' | relative_url }})
-
+<br/><br/>
 Access to this database
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_18.png' | relative_url }})
-
+<br/><br/>
 Before skip ssl
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_19.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_20.png' | relative_url }})
-
+<br/><br/>
 We have shawking creds
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_21.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_22.png' | relative_url }})
-
+<br/><br/>
 Got the user flags
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_23.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Digging a little bit we found another database, this time a local database
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_24.png' | relative_url }})
-
+<br/><br/>
 We can see if we could do something in this grafana service
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_25.png' | relative_url }})
-
+<br/><br/>
 Find the right port
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_26.png' | relative_url }})
-
+<br/><br/>
 Forward that port
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_27.png' | relative_url }})
-
+<br/><br/>
 But nothing useful in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_28.png' | relative_url }})
-
+<br/><br/>
 Download this local database
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_29.png' | relative_url }})
-
+<br/><br/>
 These tables are present
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_30.png' | relative_url }})
-
+<br/><br/>
 Developer creds are present
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_31.png' | relative_url }})
-
+<br/><br/>
 Use this to make it crackeable
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_32.png' | relative_url }})
-
+<br/><br/>
 And crack it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_33.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_34.png' | relative_url }})
-
+<br/><br/>
 Access as developer with this creds
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_35.png' | relative_url }})
-
+<br/><br/>
 An application in here, download it locally
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_36.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_37.png' | relative_url }})
-
+<br/><br/>
 Use apktool to decompile it to see all we have 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_38.png' | relative_url }})
-
+<br/><br/>
 We are able to execute commands as sudo, but those commands are default ones, even that we also can specify a file where that command will be affect, we can imagine how the task is automated, it should be somethin like sudo <default command> <file>, we have control over the file and it is not sanitized which means we could make a line feed to execute another command as root
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_39.png' | relative_url }})
-
+<br/><br/>
 get authenticated first 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_40.png' | relative_url }})
-
+<br/><br/>
 You can use this script 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_41.png' | relative_url }})
-
+<br/><br/>
 It looks like it fails
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_42.png' | relative_url }})
-
+<br/><br/>
 But if we do this
-
+<br/><br/>
 `bash -p` 
-
+<br/><br/>
 A shell with root is open and the machine is pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

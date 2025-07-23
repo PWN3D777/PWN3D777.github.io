@@ -9,103 +9,106 @@ thumb: /assets/images/logos/b7d9a9b075fd49c8509866fe24f58dbb.webp
 # GreenHorn
 
 # 1. Enumeration
-
+<br/><br/>
 Start with nmap enumeration
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled.png' | relative_url }})
-
+<br/><br/>
 There are 2 web applications running on it, the first one a gitea page
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 The second one, a web page which promises helps web devs
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 Try ways to get path reverse to find a lfi
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 But it’s enforced against those kinds of attacks
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Here we have some directories
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 According with the web structure it looks like a php web application, so let’s fuzz directories
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 There is a login directory and we only need a password, it will be our work today
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Search paths in the gitea service
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 /explore/repos path has something which looked like the other web service source
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 In login page, we can analyze what is taking account to bypass the authentication protection, first we have the hash algorithm 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Then we have that the value given for the user is compared with an environmental variable
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 Digging into the repository we found the variable value
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Just crack the password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 Here we have more information about this framework. 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 With the version given we could find a vulnerability
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 To get the revese shell we only need to have a php rev shell and compress it to a .zip file, just upload it in the install modules section
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Now we are data user, but if we try to become to junior user we just re utilize the password found previously
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 There is a pdf file inside of junior desktop, let’s analyze it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 After download the pdf file we found that there is information about execute files as root, it’s showed a imagen with the corresponding password, but it is pixelated, first at all extract that image
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 Use depix tool to at some way to unpixel the image, it works using an auxiliar template with letters written in a notepad, those are compared until we finally find a copy of the original image
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 Now we have the information to escalate our privilege to root
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

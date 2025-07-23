@@ -9,75 +9,75 @@ thumb: /assets/images/logos/eb5942ec56dd9b6feb06dcf8af8aefc6.webp
 # Titanic
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image.png' | relative_url }})
-
+<br/><br/>
 A web application running on port 80, it is possible to book a trip
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_1.png' | relative_url }})
-
+<br/><br/>
 Then we can download the resume of the booking
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_2.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_3.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 There is no input sanitization at all, we can access another files performing path traversal attack
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_4.png' | relative_url }})
-
+<br/><br/>
 Easy to enumerate users, with a shell available
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_5.png' | relative_url }})
-
+<br/><br/>
 A really easy way to access the user flag using this information
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_6.png' | relative_url }})
-
+<br/><br/>
 This seems to be a unintended, anyways we need to do more steps further to gain a shell as this user, enumerate subdomains using FFUF
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_7.png' | relative_url }})
-
+<br/><br/>
 A version controlling is present in this subdomain
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_8.png' | relative_url }})
-
+<br/><br/>
 Check the compose file to find worthy paths
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_9.png' | relative_url }})
-
+<br/><br/>
 This is just a clue, the root gitea directory is disclosed, now we need to find a config file or a database, those are possible paths
-
+<br/><br/>
 ```python
 /var/lib/gitea/data/gitea.db
 /data/gitea/conf/app.ini
 ~/.gitea/custom/conf/app.ini
 ```
-
+<br/><br/>
 finally it is on `/home/developer/gitea/data/gitea/gitea.db`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_10.png' | relative_url }})
-
+<br/><br/>
 There is a hash with this password hash algorithm (pbkdf2)
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_11.png' | relative_url }})
-
+<br/><br/>
 Search a little bit to be able to crack it using hashcat
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_12.png' | relative_url }})
-
+<br/><br/>
 Follow the previous instructions but don’t forget it is in hexadecimal format, we need to pass it from hex to its original bytes format, then we can encode it to base64
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_13.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_14.png' | relative_url }})
-
+<br/><br/>
 Another way is using a python script, automating this process and avoiding using hashcat
-
+<br/><br/>
 ```python
 import hashlib
 import binascii
@@ -103,33 +103,33 @@ target_hash = binascii.unhexlify('hash')
 dictionary_file = '/usr/share/wordlist/rockyou.txt'
 crack_hash(dictionary_file, target_hash, salt)
 ```
-
+<br/><br/>
 Then password is found and we can access as developer through ssh
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_15.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 In opt there are some automation scripts, this takes every .jpg in a directory and it is passed to `magick` tool to identify every image
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_16.png' | relative_url }})
-
+<br/><br/>
 Checking it version we can see it is vulnerable to CVE-2024-41817, basically it is compiled by gcc, imagemagick is leaving some environment variables (LD_LIBRARY_PATH, MAGICK_COINFIGURE_PAHT) with insecure paths, if those paths do not exist, the tool will fallback using shared libraries present in the current directory
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_17.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_18.png' | relative_url }})
-
+<br/><br/>
 We have control over the current directory where it is executing, use the POC to create a malicious shared library
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_19.png' | relative_url }})
-
+<br/><br/>
 Wait a little bit until it is compiled and get the root flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9/79cfbba1-5d00-4be3-9024-410aeb127310-export-17230101-c486-4db1-a5be-7f8c4dbff5b9_image_20.png' | relative_url }})
-
+<br/><br/>
 Another way to do it, giving a root shell to developer user
-
+<br/><br/>
 ```
 #include <stdio.h>
 #include <sys/types.h>
@@ -147,6 +147,9 @@ void _init() {
 ```bash
 gcc -fPIC -shared -o ./libxcb.so.1 a.c -nostartfiles
 ```
-
+<br/><br/>
 Machine pwned!!!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

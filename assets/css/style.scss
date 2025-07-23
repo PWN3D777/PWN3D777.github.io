@@ -38,5 +38,8 @@ main > *:not(#matrix-overlay) {
   transform: translateY(-4px); /* pequeño efecto hover */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
-
+div {
+  font-family: 'VT323', monospace;
+  font-size: 20px; /* agrandar para que se note */
+}
 

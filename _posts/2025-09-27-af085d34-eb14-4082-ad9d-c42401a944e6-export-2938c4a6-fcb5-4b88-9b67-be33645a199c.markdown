@@ -16,27 +16,25 @@ HackTheBox: Medium
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled.png' | relative_url }})
-
+<br/><br/>
 Let’s look around http service
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 A login interface change to this subdomain
-
+<br/><br/>
 Metabase has a vulnerability (CVE-2023-38646)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 Use this POC
-
+<br/><br/>
 ```bash
 import requests
 import argparse
@@ -134,20 +132,23 @@ if __name__ == "__main__":
     if setup_token:
         post_setup_validate(args.rhost, setup_token, args.lhost, args.lport)
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 We see a kernel with an outdated version (CVE-2023-2640)
-
+<br/><br/>
 Just give it executable premises after downloaded it on tmp
-
+<br/><br/>
 We’ve got root flag
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

@@ -9,104 +9,104 @@ thumb: /assets/images/logos/a878db048e3cb6ba0e4a467bb705e145.webp
 # Magicgardens
 
 # 1. Enumeration
-
+<br/><br/>
 We started with port enumeration with nmap
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled.png' | relative_url }})
-
+<br/><br/>
 We’ve found the domain name associted, and we realized there’s a flower ecommerce, alse there are other ports like 25 or 5000 which we can explore later  
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We proceed to sign up 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 There is something interesting right here, is we create 2 users we will be able to discover a pattern in server response, to find that pattern we will focus on Username and Email input. We are able to enumerate all web application users as follow:
-
+<br/><br/>
 | Username | Email | Server response |
 | --- | --- | --- |
 | Valid username | Valid email | 200 |
 | valid username | Invalid email | 200 |
 | Invalid username | valid email | 500 |
 | Invalid username | Invalid email | 200 |
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 To automate the enumeration we will compare different usernames with a valid email
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Unfortunately we didn’t find any username so we continue user enumeration, we found some directories
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 A login page could be useful
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 We haven’t forget other ports, we have mailing server running, we can enumerate user’s here due to the valid commands shown in nmap scan, 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Depending of the size of the dictionary it could take so much time
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 we already have a user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Let’s enumerate web application service running on port 5000
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 There are some a authentication directoty we may use the username found before
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 As we known on port 5000 there is a docker https server
-
+<br/><br/>
 Hydra
-
+<br/><br/>
 Hydra can perform fast fictionary attacks againts mora than 50 protocolos, including `telnet -FTP - HTTP - HTTPS - SMB`   
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 A valid password was found, and we can see there’s a some repositories there
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 [DockerRegistryGrabber](https://github.com/Syzik/DockerRegistryGrabber) is a Python tool for enumerating/dumping Docker repositories without or with basic authentication.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Environment variables? that’s useful, but first check sqlite database
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Morty credentials!!
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Use linpeas to enumerate the whole system
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 - **firefox-esr** This is the executable for Firefox Entended Support Release, which is stable version of Firefox that is update less frequently.
 - **—marionette** This enables marionette protocol, which is an automation protocol for Firefox. Marionette allows controlling and automating interaction with Firefoz via remote client.
 - **—headless** This option starts Firefox in headless mode, meaning no graphical Firefox windows will be opened.
@@ -114,17 +114,17 @@ Use linpeas to enumerate the whole system
 - **—remote-allow-host** This allow remote connections only from the [localhost](http://localhost) (port forwarding needed)
 - **—no-remote** This option specifies that no additional remote connections will be allowed.
 - **—profile /tmp/profile** This specifies the user profile that Firefox will use when starting.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 With this information we will be able to run Firefox as debugger so with the following expoilt we cloud be able to find any file we want and take and screenshot of the open file
-
+<br/><br/>
 In python
-
+<br/><br/>
 ```python
 import json
 import requests 
@@ -217,14 +217,19 @@ else:
 	
 ws.close()
 ```
-
+<br/><br/>
 In bash
-
+<br/><br/>
 ```bash
 
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_27.png' | relative_url }})
+<br/><br/>
+Machineppwned!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

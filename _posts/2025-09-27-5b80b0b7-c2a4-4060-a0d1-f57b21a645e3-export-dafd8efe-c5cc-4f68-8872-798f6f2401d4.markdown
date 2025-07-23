@@ -9,149 +9,152 @@ thumb: /assets/images/logos/3ad1911c18a46af0d6967aef8521989c.webp
 # Blazorized
 
 # 1. Enumeration
-
+<br/><br/>
 We start enumerating ports 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled.png' | relative_url }})
-
+<br/><br/>
 Again an AD service running, but following the methodology let’s check web vulnerabilities on 80 port
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 Looking for subdomains there are two `admin` and `api` 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 Admin interface has a log in page, we could point to break it up but first we need to continue the recognition 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Api subdomain has some directories but its access is denied 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 We can use those dynamics links found in the main subdomain and we will be able to unlock some information, but after a search we realized it is a rabbit hole, although it has some useful links about cybersecurity
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Check the source page, and the scripts used, but it is obfuscated
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 We use [de4js](https://lelinhtinh.github.io/de4js/) to deobfuscate this code, and seek for useful information like paths, and there’s something interesting in `_framework/blazor.boot.json`
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 There are some dll’s used in the web application, normally we couldn’t be able to do something here because those are Microsoft dll’s but this time it has some custom dll’s which will be downloaded to make reverse engineering.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 In help dll we can find how a token is generated, we can see parameters as the algorithm and the type
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 We can use a JWT generator, and use the parameters found in the dll, we only une the first three characters to declare the parameter
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Use the token generated and got super admin interface
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 In create post we can see a bug when we put a quote as a input, so try to execute commands using SQL language
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 User flag got it
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Use meterpreter to download files generated by sharphound
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 Start neo local service en analyze those json files
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 Currently we are in NU_1055 machine, so we search information about this node, we actually can write and change the service principal name
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 Importing powerview we can change that SPN and then request the DomainSPNticket to obtain a hash
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 Using hashcat we can find the password for RSA_4810 user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 Now let’s investigate information about this user inside AD,  this user is part of Remote Management of users
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 Using powerview, we proceed to collect information about active user in AD
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 In AD environments, administrators can configure scripts which will be execute it automatically when that users runs his machine
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 We found some scriptpaths in SSA_6010 user who is also member of Remote Management User but he’s part of users as well
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 You can find that he’s got DCSync with the machine, which means he’s able to get hashes
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 check permissions on those scripts
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 Check the path where we actually have write permissions
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 Make a reverse shell and relate it to the path privileged don’t forget to encode ASCII to correct interpretation
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_34.png' | relative_url }})
-
+<br/><br/>
 Assign the script to that user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_35.png' | relative_url }})
-
+<br/><br/>
 Wait until that user sign in
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_36.png' | relative_url }})
-
+<br/><br/>
 This is the easy part if we make a good enumeration of Active Directory due to SSA_6010 has DCSync with the domain we can use mimikatz to get Administrators and users hashes
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_37.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4/5b80b0b7-c2a4-4060-a0d1-f57b21a645e3-export-dafd8efe-c5cc-4f68-8872-798f6f2401d4_Untitled_38.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!!
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

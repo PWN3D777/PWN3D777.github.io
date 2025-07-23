@@ -11,69 +11,69 @@ thumb: /assets/images/logos/426830ea2ae4f05f7892ad89195f8276.webp
 # 1. Enumeration
 
 Start enumerating ports, there are only two open ports, check the web application at first instance
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image.png' | relative_url }})
-
+<br/><br/>
 A blog talking about dogs and their issues
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_1.png' | relative_url }})
-
+<br/><br/>
 We can login and reset password, but apparently we cannot register ourselves
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_2.png' | relative_url }})
-
+<br/><br/>
 It is powered by backdrop Content Management System which is open source written in php
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_3.png' | relative_url }})
-
+<br/><br/>
 We can see its repository on github, and perform a quick checking of access to files that we don’t suppose to, we even have access to `robots.txt` but not useful information were found in there
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_4.png' | relative_url }})
-
+<br/><br/>
 We have access to `.git` directory which means that we can extract full repository content from here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_5.png' | relative_url }})
-
+<br/><br/>
 Without using tools yet we have got a username
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Using `git-dumper` we can extract all source code into a directory
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_7.png' | relative_url }})
-
+<br/><br/>
 We can perform a manual scanning review on configuration and settings file, where we found a password  
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_8.png' | relative_url }})
-
+<br/><br/>
 A hash salt is also present 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_9.png' | relative_url }})
-
+<br/><br/>
 We need to find usernames in here, the first we found didn’t work, use the domain as filter to find `Tiffany`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_10.png' | relative_url }})
-
+<br/><br/>
 Her email address is in an update settings file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_11.png' | relative_url }})
-
+<br/><br/>
 Log in the graphical interface as Tiffany
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_12.png' | relative_url }})
-
+<br/><br/>
 We have a lot of users with “administrator” role in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_13.png' | relative_url }})
-
+<br/><br/>
 Until now, we haven’t found CMS version, use this same filter to find an authenticated Remote Code Execution
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_14.png' | relative_url }})
-
+<br/><br/>
 We have and exploit that creates a php reverse shell and a module.info file, packages them into a zip archive and install it as a module, Once installed the reverse can be triggered by simply sending a GET request to the file
-
+<br/><br/>
 ```python
 import os
 import time
@@ -153,62 +153,65 @@ if __name__ == "__main__":
 	else:
 		main(sys.argv[1])
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_15.png' | relative_url }})
-
+<br/><br/>
 The zip file were generated and it indicates to go ourselves to install the module to be aware of what is happening. In this dashboard section we find a warning announcing that zip files are not allowed due to its extension is not loaded
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_16.png' | relative_url }})
-
+<br/><br/>
 Try with manual installation
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_17.png' | relative_url }})
-
+<br/><br/>
 Only `.tar.gz` files are allowed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_18.png' | relative_url }})
-
+<br/><br/>
 Use the files that previously generated by the python script and transform them into the required compatible format
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_19.png' | relative_url }})
-
+<br/><br/>
 Once the installation is completed successfully
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_20.png' | relative_url }})
-
+<br/><br/>
 Access to the shell using the `cmd` variable, during enumeration of users with valid shells, we identify johncusack, further investigation revealed that this user reused Tiffany’s password, which allowed successful ssh authentication
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_21.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 As johncusack user we can run as root bee binary
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_22.png' | relative_url }})
-
+<br/><br/>
 Basically this tool helps developers to automate tasks, execute code and access content efficiently in backdrop CMS
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_23.png' | relative_url }})
-
+<br/><br/>
 After checking its flags we found that it allows to execute php eval function
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_24.png' | relative_url }})
-
+<br/><br/>
 Immediately we ran `system(”id”)` command in the home directory but it didn’t work
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_25.png' | relative_url }})
-
+<br/><br/>
 So we checked the status of the installation, and received a message pointing out that the command should be run where the backdrop files are located
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_26.png' | relative_url }})
-
-No it is working
-
+<br/><br/>
+Now it is working
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_27.png' | relative_url }})
-
+<br/><br/>
 Root shell is as simple as
-
+<br/><br/>
 ![image.png]({{ '/assets/images/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e/ffa4a87e-38af-497f-af3d-e8e50cfff51d-export-1b877186-ee75-440e-b2af-33e8bf6b294e_image_28.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!@#
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

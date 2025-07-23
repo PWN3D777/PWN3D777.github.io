@@ -9,74 +9,76 @@ thumb: /assets/images/logos/a466db5ce4f7aaea98f588d1cb71a0aa.webp
 # Editorial
 
 # 1. Enumeration
-
+<br/><br/>
 We start port scanning, we may need to find credentials to port 22 on ort 80
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled.png' | relative_url }})
-
+<br/><br/>
 Let’s check the http service 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Looking for directories, there are a section where we can upload information about some book to publish it.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 If we seek into burp trying to upload information those inputs are sanitized, but the url information seems suspicious, but to send a properly request to the server we will need to click preview button
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Try to exploit a SSRF using common ports like 8000, 8080, as we can see on port 5000 there is a service running, and it respond with a file which we can download
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Once we downloaded it, we found others directory paths, where there might be information
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 Repeat the previous steps and find those credentials
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Now we are dev user, and he has access to a repository. In there we cannot find the easy way to escalate our privileges but on logs we can see that someone did a commit where dev user is involved 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Check the before version of the page, and make a lateral movement
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Now we are prod user, searching his permission on sudo we can see that python is used to manage versions control
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 - CVE-2022-24439
-    
+<br/><br/>
     Affected versions of this package are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to `git` without sufficient sanitization of input arguments. This is only relevant when enabling the `ext` transport protocol.
-    
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Root flag got it but we are hungry of full control, we can make a rev shell using netcat
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

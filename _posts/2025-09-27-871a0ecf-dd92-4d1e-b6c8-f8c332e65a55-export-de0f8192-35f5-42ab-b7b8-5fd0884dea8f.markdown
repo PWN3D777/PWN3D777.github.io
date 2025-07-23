@@ -9,164 +9,167 @@ thumb: /assets/images/logos/dcd5ef09ab764228c64385374ac744c1.webp
 # Heal
 
 # 1. Enumeration
-
+<br/><br/>
 Start with port recognizing, we only found two ports, ssh and http running nginx on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image.png' | relative_url }})
-
+<br/><br/>
 At first instance there are a login interface, default credentials aren’t useful to bypass authentication
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_1.png' | relative_url }})
-
+<br/><br/>
 Just create a new account to see what’s inside
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_2.png' | relative_url }})
-
+<br/><br/>
 We are being redirected to a new subdomain
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_3.png' | relative_url }})
-
+<br/><br/>
 This is a web application where you can put your data and build a resume 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_4.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_5.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 It is retrieving a pdf file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_6.png' | relative_url }})
-
+<br/><br/>
 We can try to access the new file generated
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_7.png' | relative_url }})
-
+<br/><br/>
 Luckily there are no sanitization at all on it, we can access files where we have read permissions
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_8.png' | relative_url }})
-
+<br/><br/>
 Those are users that has allowed open a shell 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_9.png' | relative_url }})
-
+<br/><br/>
 On web application files, there are no more info, this part of the vulnerability testing was a fundamental part enumerating users.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_10.png' | relative_url }})
-
+<br/><br/>
 Now it’s time to check the subdomain found previously, it is running rails, a framework to create database-backend applications, its version is disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_11.png' | relative_url }})
-
+<br/><br/>
 Reviewing some information about this framework we have some files that could contain privileged information
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_12.png' | relative_url }})
-
+<br/><br/>
 Effectively database file is readable 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_13.png' | relative_url }})
-
+<br/><br/>
 Ralph creds are found, but those didn’t work for ssh connection
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_14.png' | relative_url }})
-
+<br/><br/>
 Login as administrator
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_15.png' | relative_url }})
-
+<br/><br/>
 You will be redirected to a new subdomain
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_16.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_17.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_18.png' | relative_url }})
-
+<br/><br/>
 Login as administrator in the new subdomain
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_19.png' | relative_url }})
-
+<br/><br/>
 This application is used for perform surveys
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_20.png' | relative_url }})
-
+<br/><br/>
 Again its version is disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_21.png' | relative_url }})
-
+<br/><br/>
 CVE-2021-44967 was discover, and taking account that we have the hability to install plugins on it, we could try to exploit this cve
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_22.png' | relative_url }})
-
+<br/><br/>
 Set a .zip with config.xml which contains necessary tags to integrate as a plugin and a rev.php which will be execute it once we access the new plugin
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_23.png' | relative_url }})
-
+<br/><br/>
 Install 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_24.png' | relative_url }})
-
+<br/><br/>
 And activate
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_25.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_26.png' | relative_url }})
-
+<br/><br/>
 Access the file we want to execute 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_27.png' | relative_url }})
-
+<br/><br/>
 Now we have access as www-data
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_28.png' | relative_url }})
-
+<br/><br/>
 Check config files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_29.png' | relative_url }})
-
+<br/><br/>
 Test if there are password reuse
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_30.png' | relative_url }})
-
+<br/><br/>
 Now we have access as ron
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_31.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 This part it’s pretty straightforward, check ports open in localhost
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_32.png' | relative_url }})
-
+<br/><br/>
 8500 seems to be something else
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_33.png' | relative_url }})
-
+<br/><br/>
 Here we have a service network solution
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_34.png' | relative_url }})
-
+<br/><br/>
 Once again it is disclosing the version 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_35.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_36.png' | relative_url }})
-
+<br/><br/>
 After a search we found improper handle of errors
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_37.png' | relative_url }})
-
+<br/><br/>
 We also have an exploit of remote code execution, which takes advantage of command injection vulnerability on the `/v1/agent/service/register` endpoint, using put request
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_38.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_39.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_40.png' | relative_url }})
-
+<br/><br/>
 That’s how we are going to gain access as root
-
+<br/><br/>
 ![image.png]({{ '/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_41.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

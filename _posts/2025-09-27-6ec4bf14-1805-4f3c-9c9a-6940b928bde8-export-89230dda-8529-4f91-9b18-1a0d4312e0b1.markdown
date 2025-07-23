@@ -9,192 +9,195 @@ thumb: /assets/images/logos/464537cc0d3e9962fc598767bff7b1f1.webp
 # Intuition
 
 # 1. Enumeration
-
+<br/><br/>
 We start enumeration process using nmap
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled.png' | relative_url }})
-
+<br/><br/>
 As you can see, there are 2 ports open. Let’s check some public information with what-web
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We find the first domain
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 There is a web application where clients can compress files. At some point there is a bug report section, once we added the corresponding domains we found a flow to report a bug.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Register yourself and log in the application
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 It’s important to know what does the server do through communication process, we can see user data with a standardized structure 64 encoded.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 Try to exploit a reflected xss using some Javascript commands and encoding the payload to base 64, it is a normal document.cookie request
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 A cookie was hijacked
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Search for more subdomains, based on the previous experience it is probably to find another one.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Here we found the administrator interface, and a report can change the priority, let’s see what happens if we change the priority in our reflected xss.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Another cookie was hijacked.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 Now we’ve found the real admin, with some other feature in their interface
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 On the create pdf report we found that something is extracted from the server, what should happen if for some reason the input is not sanitized? At the first attempt it supposed to be sanitized because only allow url’s but if we remember cve-2023–24329 says that some times blank spaces can make the input pass the filter, and that’s it.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Once we realized the section is vulnerable to SSRF we can think on a plan to dig into looking for useful information for our progress.
-
+<br/><br/>
 <aside>
 💡 **/proc/self/cmdline** path in Linux based systems is a special file that provides access to the command used to start the current process.
 
 </aside>
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 As we get more and more information, we can see a blueprint section we can imagine how the data is organized thanks to the way import on Flask is made
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 Inside of one of those files there are some credentials and disclose ftp service running locally
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 The we access to de File Transfer Protocol account
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 There is a SSH private key and some information about how to get into ssh account
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 To get the username of the account it was necessary to generate a public key
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 We access with id_rsa and passphrase and got the user flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 First we make a system recognition using linpeas
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 Information about a db is exposed
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 Some users were found, crack the hash and lateral movement…?
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 The type of the hash
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 Password cracked but it doesn’t work on ssh
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_34.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_35.png' | relative_url }})
-
+<br/><br/>
 We realized there are some suricata logs expose in .gz files, start seeking for password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_36.png' | relative_url }})
-
+<br/><br/>
 There are some information about lopez, search for him
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_37.png' | relative_url }})
-
+<br/><br/>
 A password disclosed on logs!!
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_38.png' | relative_url }})
-
+<br/><br/>
 Lateral movement successful
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_39.png' | relative_url }})
-
+<br/><br/>
 As we already have a password we can search the privileged process running on this machine, we also can try to use ftp to use the creds we found before
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_40.png' | relative_url }})
-
+<br/><br/>
 Backup got it, there are some information about how Runner works, first we got the key hash which is necessary to make it run
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_41.png' | relative_url }})
-
+<br/><br/>
 We already have half password on another file in the backup directory
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_42.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_43.png' | relative_url }})
-
+<br/><br/>
 There are established ways to run the tool
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_44.png' | relative_url }})
-
+<br/><br/>
 It is necessary to use a json file to pass it parameters, and the parameters are in the test files 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_45.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_46.png' | relative_url }})
-
+<br/><br/>
 We inject code trying to get system RCE which is posible due to input not sanitized it will create a system admin role and create a shell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_47.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_48.png' | relative_url }})
-
+<br/><br/>
 <aside>
 💡 A Ansible role file, used for system automation. This file defines a role called galaxy_info which is used to manage system administrator users and create a group with sudoers permissions in an Ubuntu Xenial environment
 
 </aside>
-
+<br/><br/>
 It will create the new system role it is used to fill the prerequisite of use .yml file finally it will create a bash as root
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1/6ec4bf14-1805-4f3c-9c9a-6940b928bde8-export-89230dda-8529-4f91-9b18-1a0d4312e0b1_Untitled_49.png' | relative_url }})
-
+<br/><br/>
 machine pwned!!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

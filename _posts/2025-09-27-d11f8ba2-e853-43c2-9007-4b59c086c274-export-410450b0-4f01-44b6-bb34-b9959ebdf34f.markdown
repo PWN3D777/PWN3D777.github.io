@@ -11,58 +11,58 @@ thumb: /assets/images/logos/cedb2f991409f9f39b55b04513f6b102.webp
 # 1. Enumeration
 
 First at all we started with a port recognition we can see a http server and some services used to sent and receive mails like smtp - imap -pop3
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 The web application have some instructions about sent an email but if we want break in we will need something else
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 We can find there is a vulnerability, the smb service is vulnerable to man in the middle attacks, so we already have a clue about where the river goes
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Even with this information is not enough for create an attack vector, so let’s dig into the server requests
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Where the instructions are download we have interesting stuff, they are using php to find the file, we can check if we can perform a LFI, we can do this using:
-
+<br/><br/>
 ```arduino
 /../../../../../Windows/System32/drivers/etc/hosts
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 The we searched for the config file of hmailserver on the documentation
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 Then we found an administrator password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Analyze the hash and find the password using hashcat
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 - CVE-2024-21413
-    
+<br/><br/>
     Once we have credentials for hmailserver administrator based in the information mentioned before we can try a NTLM attack stealing the hash using another vulnerability CVE-2024-21413
-    
+<br/><br/>
     This vulnerability has some implications like the potential leakage of local NTLM information and a possible RCE.
-    
-    ```arduino
+<br/><br/>
+    ```python
     import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
@@ -137,88 +137,97 @@ Analyze the hash and find the password using hashcat
             sys.exit(1)
         main()
     ```
-    
+<br/><br/>
     This POC create a malicious hyperlink where once the victim click on the link the hash is send to attacker machine.
-    
+<br/><br/>
     ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_12.png' | relative_url }})
-    
+<br/><br/>
     This exclamation mark is what bypass protected outlook view
-    
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 The email is sent to Maya which is one of the one presented on the web application
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 The hash is pretty hard to get because we have to be patients waiting for the information. We use responder for start listening on some ports including NTLM port
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 When we got the user flag we can review two python scripts where there is a bot managing mailing we can list programmed tasks on the system using 
-
+<br/><br/>
 ```arduino
 schtasks /query /fo LIST /v
 ```
-
+<br/><br/>
 There we found `soffice.ps1` which is a file that executes .odt files bypassing powershell controls so we can be sure that exploiting a vulnerability on LibreOffice carries out a successful privilege escalation.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 On program files we realize there is a LibreOffice service running
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 So we created a shell on python and use CVE-2023-2255 to execute it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 Once we create a shell using the malicious .odt file as it is run by local admin we got a shell as local-admin, but to make this possible we need to find a path where local admin has execute permissions 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 important documents looks to be interesting so we check using the following command
-
+<br/><br/>
 ```arduino
 icacls "name of the directory"
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 - I: Objects metadata is allowed
+<br/><br/>
 - OI: Having the possession of the object is allowed
+<br/><br/>
 - CI: Inheriting from this object is allowed.
+<br/><br/>
 - F: Full control
+<br/><br/>
 - RX: Reading and executing is allowed.
+<br/><br/>
 - M: Modifying is allowed.
+<br/><br/>
 
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 Add maya to Administrator to find the Administrator hash
-
+<br/><br/>
 ```clojure
 net localgroup Administradores maya /add
 ```
-
+<br/><br/>
 Using crackmapexec to dump hashes
-
+<br/><br/>
 ```clojure
 --pass-pol to support time out on crackmapexec
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
+<br/><br/>
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

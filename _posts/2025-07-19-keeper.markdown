@@ -16,62 +16,65 @@ HackTheBox: Easy
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - Check the active connection
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled.png' | relative_url }})
-
+<br/><br/>
 - Scanning ports
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We can see there’s a web services running in 80 port and ssh service in 22 
-
+<br/><br/>
 ## 2: Looking around
-
+<br/><br/>
 - We can see a redirect to a subdomain, we look for default creds of
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 root:password
-
+<br/><br/>
 - Selecting users we find creds for ssh session
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ## 3: User flag
-
+<br/><br/>
 Got it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ## 4: Priv esc
-
+<br/><br/>
 - We find a keepass technology to protect password, there is a vulnerability (CVE-2023-32784) at:
 - [https://github.com/vdohney/keepass-password-dumper](https://github.com/vdohney/keepass-password-dumper)
-
+<br/><br/>
 We copy the .zip in our local machine
-
+<br/><br/>
 ```bash
 scp lnorgaard@10.129.122.221:~/RT30000.zip .
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 - We use a keepass tool for discover the root password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 If we can not get the password we can use a client through command line
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 To make the right format for ssh
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d/8958dd93-a8e3-413f-9775-af723d8f8468-export-45f53937-059d-48be-92d4-865e8c58645d_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Machine pwned
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

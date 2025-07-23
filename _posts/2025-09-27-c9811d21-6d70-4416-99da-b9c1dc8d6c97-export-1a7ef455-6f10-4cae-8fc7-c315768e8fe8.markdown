@@ -11,180 +11,189 @@ thumb: /assets/images/logos/e809e8df8d66ec8bb2ca3bbcc1942de7.webp
 HackTheBox: Easy
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Here we have a jabber service which is an informal chatting, after some research we found a platform which support this service.
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 Let’s open it and configure the connection, also it’s neccesary to create a new user.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 We are not going to find anything interesting unless we add XMPP Service Discovery plugin
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Our user can connect to search.jab.htb to find interesting stuff
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 A lot of user found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Now, we proceed to run pidgin on debug mode and use it as before to save a file those usernames
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 It is save in a predetermine format, so we create a list filtering not necessary information
-
+<br/><br/>
 ```bash
 grep -oP '<value>[^>]+@jab\.htb(?=<value>)' output.log | sed 's/@jab\.htb//g' | 
 sed 's/<value>//g' | sort | uniq > list.lst
 
 ```
-
+<br/><br/>
 `-o` : Only output matching parts of each line
-
+<br/><br/>
 `-P` : Enable perl-Compatible regular expressions
-
+<br/><br/>
 `[^>]+` : Any character that are not >
-
+<br/><br/>
 `(?=<value>)` : It ensure the match is followed by <value> but is not part of the match
-
+<br/><br/>
 `s/something//g` : It replaces any something with an empy string.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ```bash
 impacket-GetNPUsers jab.htb/ -userfile list.lst -request 2>&1 | grep -v 'UF_DONT_REQUIRE_PREAUTH '
 ```
-
+<br/><br/>
 - GetNPUsers is a tool which is typicallt used for Kerberos enumeration.
+<br/><br/>
 - `-request`: In this case, it’s requesting information about user accounts
+<br/><br/>
 - `2>&1` : Just redirect error to the output and not stop the execution
-
+<br/><br/>
 > It’s possible to extract a hash because the tool makes the next procedure
 > 
+<br/><br/>
 1. Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.
+<br/><br/>
 2. Hash Extraction: KDC responds with a service ticket encrypted with the user’s hash.
+<br/><br/>
 3. Output: The tool extracts this hash from the service ticket response.  
+<br/><br/>
 
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 Crack the hash found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Sing in as the user found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 We join to pentest room
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 We already have the credentials but where can we use them?
-
+<br/><br/>
 Look for some information on bloodhound-python
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 MSRPC services
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 We can see this user has direct connection with the domain trought DCOM(Distributed Components Object Model)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 It is not like evilwinrm but thanks to this we have RCE using Microsoft Management Console version 2.0
-
+<br/><br/>
 ```bash
 	dcomexec.py -object MMC20 domain/user:password@ip 'payload' -silentcommand(run without any interruption)
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 We use a reverse powershell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 - Enumerate processes running
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 Something interesting on 3128 id
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 We have a lot of ports using this process but we only need one
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 We are ready to scalate privileges, but first port forwarding
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 Log in with the credentials found before
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_34.png' | relative_url }})
-
+<br/><br/>
  CVE-2023–32315 vulnerability allows to add a plugin into openfire and obtain a RCE usually as system because openfire itself is an admin console.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_35.png' | relative_url }})
-
+<br/><br/>
 I cloned the repository but it’s not necessary we can just the .jar file
-
+<br/><br/>
 Add the plugin
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_36.png' | relative_url }})
-
+<br/><br/>
 - server→serversettings→managementtool
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_37.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_38.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_39.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_40.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_41.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

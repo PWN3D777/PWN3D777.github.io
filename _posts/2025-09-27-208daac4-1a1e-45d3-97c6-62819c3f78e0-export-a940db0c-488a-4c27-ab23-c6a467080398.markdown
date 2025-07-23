@@ -9,80 +9,83 @@ thumb: /assets/images/logos/26e076db204a74b99390e586d7ebcf8c.webp
 # Headless
 
 # 1. Enumeration
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled.png' | relative_url }})
-
+<br/><br/>
 In the enumeration section we found a upnp service, with a active cookie seted, we may have something interesting right there.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 There is a GUI with a few functionalities, one of them is a contact support section with input elements
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 We try to exploit a XSS using the fact that the service uses a cookie to work properly.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 We were detected by the system, someone can think we have no opportunities here, but before let’s open Burpsuite to check all the parameters as should be.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 The accept language parameter is no sanitized, so we sucessfully have executed XSS
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 On the current directory this cookie is irrelevant, we proceed to fuzz directories
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 Dashboard sounds interesting
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 We set the cookie a finally break out the foothold
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 There is date input which is not properly sanitized, just with a semicolon we have RCE
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 Set up a reverse shell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 User flag got it 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 We have root permissions in a binary called syscheck
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Cat it to see what is actually doing, It is executing “init.sh” we tried to find the file, but it is no there
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 So we create the file, give execution permisses and run the binary.
-
+<br/><br/>
 ```bash
 ##It will run a shell using the permisses of the user who is running the file
 ##In this case it would be root
 chmod u+s /bin/bash
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

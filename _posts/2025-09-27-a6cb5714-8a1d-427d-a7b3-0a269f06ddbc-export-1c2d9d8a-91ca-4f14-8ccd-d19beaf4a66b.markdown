@@ -9,37 +9,37 @@ thumb: /assets/images/logos/e6052efa31516d5aa9c78831509bcedd.webp
 # Axlle
 
 # 1. Enumeration
-
+<br/><br/>
 Nmap scanning to check services running on this machine
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled.png' | relative_url }})
-
+<br/><br/>
 A http service available, we also can see email service on port 25 smtp
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We are able to use swaks to test SMTP port, and we realize that we can send emails
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Checking the web application, there are some clues, about the format of the file we can send and the account available for this purpose
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Searching on google we found a way to get RCE through a dll call when excel application is initializing
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 We proceed to create the c file
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 And convert the type to a shared library file which will be open with excel
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 <aside>
 💡 `x86_64-w64-mingw32-gcc` This is a MinGWX64 GCC compiler for windows targeting the x86-64 architecture
 `-fPIC` This option generates position independent code, which is useful for shared libraries 
@@ -47,102 +47,108 @@ And convert the type to a shared library file which will be open with excel
 `-luser32` This links the user2 library which is a windows library providing functions for use interface components like windows.
 
 </aside>
-
+<br/><br/>
 Then send the email attaching the xll file with the rev shell generated
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 Got the shell as gideon
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Checking email, there is a automation development process which manage url’s
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 We can try to create a url which point to a malicious executable, that’s how we could be able to make a lateral movement due to this process is made by another user with other privileges
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 We can create the .url file with notes or creating an object with powershell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Now we’ve got the user flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 It’s time to enumerate active directory using Sharphound.exe 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Due to some permission issues we will need to create a shell using metasploit to download files generated by sharphound
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 We are part of web devs users, which can change password in jacob user, which in turn has permissions to control domain controller
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 <aside>
 💡 Powerview is a Powershell tool to gain network situational awareness on Windows domains. It contains a set of pure-PowerShell replacements for various windows net commands, which use PowerShell AD hooks and underlying Win32 API functions to perform useful Windows domain functionality.
 It also implements various useful metafunctions, including some custom written user-hunting functions which will identity where the network specific users are logged into. It can also check which machines in the domain the current user has local administrator access on. Several functions for the enumeration and abuse of domain trust also exist.
 
 </aside>
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 Create a secure string
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 And set the jacob password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 Run ps as jacob, it is also possible to use runnasCS
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 Now we can see app development content
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 But the key is on StandaloneTesting files, initially this machine had a bug where hackers could replace this file with a malicious rev shell a it was ran as Administrator but this was patched and now we only have the intended way option, we can see documentation about this file to create a vector attack to elevate our privileges
-
+<br/><br/>
 [https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md](https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md)
-
+<br/><br/>
 We can see Administrator has full control over this file
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ### Attack vector
-
+<br/><br/>
 Within the .NET source code there is a function which receives as a parameter a string which is execute by cmd, we need to find a way to call it, that’s when we use handlereboot function to call it
-
+<br/><br/>
 1. We need to create a `reboot.rsf` which will contain the next directory in the first line, and a boolean in the second line
+<br/><br/>
 2. Create a directory between work and working, the name of this file has to be specified on reboot.rsf
+<br/><br/>
 3. It is necessary to create the next directory with `working`  as a name and inside put a file called rsf.rsf
+<br/><br/>
 4. Create the command.txt file with the rev shell made using powershell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 Machine pwned@!@#!
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

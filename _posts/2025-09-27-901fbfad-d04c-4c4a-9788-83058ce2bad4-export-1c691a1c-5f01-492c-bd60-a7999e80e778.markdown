@@ -9,40 +9,40 @@ thumb: /assets/images/logos/029d258b4444bc4226b90b1f8f27d086.webp
 # Runner
 
 # 1. Enumeration
-
+<br/><br/>
 We use nmap to make port recognition
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled.png' | relative_url }})
-
+<br/><br/>
 A http and ssh ports open, let’s see what’s going on.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 After a long seeking, trying to find directories or subdomains due to the web application doesn’t have any input item, we created a custom dictionary to fuzzing.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 Then, we use go buster and add domains with the corresponding flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 A subdomain with a log in interface
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 A research was necessary to find a vulnerability in this version.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_5.png' | relative_url }})
-
-How ir works:
-
+<br/><br/>
+How it works:
+<br/><br/>
 1. Token Deletion: The script initiates a DELETE request to remove the user token associated the default user.
 2. Token Creation: Upon successful token deletion, a new user token is created for the same default user.
 3. User creation: Using the newly generated token, the script then creates a new user with administrative privileges.
 4. Output: Successful exploit are reported, and the compromised URLs are appended to a file `vulnerable.txt`
-
+<br/><br/>
 ```python
 #To generate ramdon names
 import random
@@ -176,73 +176,75 @@ if __name__ == '__main__':
 				url = f"http://{url}"
 		cve.delete_user_token(url)
 ```
-
-		
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 We can create new projects here, this input is no sanitized but needs some files to recognize it as a repository
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 There are some users which can be useful to enumerate users
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Beautiful thing happens on backup section, where we can download the .zip associated to the backup
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 There we realize that there are some credentials, with a cryptographic algorithm defined in a column 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 We crack Andrew password, it was possible due to Andrew has a insecure password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 We could think that password will be helpful to move forward which is right but first we need get into ssh but those credentials were no useful, so we dig a little more inside and we could find a private key
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 3.Priv esc
-
+<br/><br/>
 We actually don’t have credentials so sudo -l is no possible to execute it, but we can use linpeas to enumerate the whole system.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 We can see a service running locally with the localport. We proceed to port forwarding using chisel
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Again there is a log in interface, this time we tried with Andrew credentials.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 The services allows to create containers and manage them
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 This version has a vulnerability which we can exploit it through container creation process
-
+<br/><br/>
 - CVE-2024-21626
-    
+<br/><br/>
     runc is a CLI(command line interface) tool for spawning and running containers on Linux according to the OCI(Open Container Initiative). In runc 1.1.11 and earlier, due to an internal file descriptor (Resources which are used access files) leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem. The same attack could be used by a malicious image to allow a container process to gain access to the host filesystem through runc. Variants of these attacks could be also be used to overwrite semi-arbitrary host binaries, allowing for complete container escapes.
-    
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png' | relative_url }})
+<br/><br/>
+Machine pwned@W
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

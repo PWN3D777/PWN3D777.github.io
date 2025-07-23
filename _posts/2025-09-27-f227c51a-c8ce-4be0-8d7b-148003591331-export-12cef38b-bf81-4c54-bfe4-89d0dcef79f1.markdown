@@ -9,75 +9,75 @@ thumb: /assets/images/logos/7768afed979c9abe917b0c20df49ceb8.webp
 # Boardlight
 
 # 1. Enumeration
-
+<br/><br/>
 We start with nmap scanning, two ports open, one of them a web application
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled.png' | relative_url }})
-
+<br/><br/>
 Let’s see what is this about, previously the dns recognition was unsuccessful, but thanks to the contact information we can see the domain
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 So we proceed to find a subdomain using three different tools
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Dolibar sign-in as usually we need to discard obvious vulnerabilities as default credentials, and we bypass login interface
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 We’ve got the version of the software before, after searching on google we found there’s a vulnerability where someone with determine permissions can obtain RCE **(CVE-2023-30253)**
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Go to create a new website 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 The vulnerability consists in edit HTML source, apparently we can’t use php code because we don’t have those permissions but if we try to use variants like “Php, phP, pHp” this filter will be bypassed, using a normal reverse shell we could get a shell as `data`
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Looking for config files where data has reading permissions we found credentials for the database
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 If we try to break into the database, it would be useless because it has tons of tables, and users registered are admin:admin that we guess before
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Try to use those creds on ssh and got the user flag 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Using linpeas to enumerate the system we found a set uid binary in a path, casualty one of the directories of the path has almost the same of the machine it could be promising
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 There is a vulnerability
-
+<br/><br/>
 CVE-2022-37706 in bash, basically the system library function mishandles path names that begin with /dev/.. substring
-
+<br/><br/>
 ```bash
 #!/usr/bin/bash
 
@@ -124,7 +124,10 @@ rm -rf /tmp/net
 echo -e "Done"
 
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+<br/><br/>
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

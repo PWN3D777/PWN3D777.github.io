@@ -9,100 +9,100 @@ thumb: /assets/images/logos/d7bc2758fb7589dfa046bee9ce4d75cb.webp
 # 2Million
 
 # 1. Enumeration
-
+<br/><br/>
 start with nmap recognition there are just 2 ports open
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled.png' | relative_url }})
-
+<br/><br/>
 On http server we can put an invitation code to register ourselves but we don’t have this invitation code right now
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Go to see view source page, we can see that once the code is received the code is send to /register directory.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 We need to go to the file that we are calling to see more details, but the code is obfuscated 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 de4js is a online tool where it’s possible to deobfuscate Javascript code
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Now we will have a path where we can find how to generate a code, it’s needed to do a POST request
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 There’s some encrypted information
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 Use [cryptii](https://cryptii.com/pipes/rot13-decoder)  to find the plain text which is another path to generate an invitation code
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Use the generated code to register
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 Once we got a valid user we can seek for routes inside of the web application
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 There are several functionalities related with admin and generating vpn
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 In the .php resource when it is use update function, it is only checked if the variable is false, but it is false if it doesn’t exists, so regarding the value of the parameter it always return a successful response
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Set the content-type and add the proper parameters to update your settings
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Now we are able to check if we are admins
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 It is clear that the main functionality of HTB is possible due to we can connect to their private network through a vpn, using POST request we can generate vpn’s to a specific user, but we are sure this is sanitized? Try to run a command and we realize there RCE 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 Create a rev shell, and break into the system, but we are just data user, check for environment variables and got the user flag with admin user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Inside of the mail there are information about some emerging vulnerabilities more specific vulnerabilities related with OverlayFS / FUSE
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 - CVE-2023-0386
     - Background on the SUID bit and OverlayFS
-        
+<br/><br/>
         **The SUID bit**
-        
+
         The SUID bit is a special file permission that allows a binary to impersonate the owner of the binary using the `setuid` system call family, instead of the user executing it.
-        
+
         ```python
         **#include <stdio.h>
         #include <stdlib.h>
@@ -131,28 +131,28 @@ Inside of the mail there are information about some emerging vulnerabilities mor
         }**
         
         ```
-        
+
         This program attempts to impersonate the root user (UID 0). The operation will succeed only if the binary is owned by `root` and if the binary has the SUID bit set.
-        
+
         Let’s compile the binary and try to run it
-        
+
         ```python
         gcc -Wall setuid.c -o seruid
         chmod +x setuid
         ./setuid
         (Operation no permitted)
         ```
-        
+
         To change the ownership of the file to root, we need to be root. Let’s  do it as a privileged user and add the SUID bit to it:
-        
+
         ```python
         chown root:root setuid
         chmod +s setuid
         
         ```
-        
+
         Going back to our unprivileged user shell, let’s run it again:
-        
+
         ```python
          ./setuid
         Starting root shell...
@@ -160,40 +160,40 @@ Inside of the mail there are information about some emerging vulnerabilities mor
         uid=0(root) gid=0(root) groups=0(root),1002(john)
         
         ```
-        
+<br/><br/>
     - The overlay file system
-        
+<br/><br/>
         The overlay file system (often abbreviated as Overlay FS) allows a user to “merge” several mount points into a unified file system.
-        
+
         Let’s see an example of how it works. We start by creating several folders, representing out different mount points, and create a directory structure inside them:
-        
+
         ```python
         mkdir base base/foo base/bar
         mkdir upper
         ```
-        
+
         We can then create a “unified” file system mount combining these directories using an OverlayFs mount:
-        
+
         ```python
         # Create mount point and empty "workdir" directory required by OverlayFS
         mkdir /mnt/overlay workdir
         
         sudo mount overlay -t overlay -o lowerdir=./base,upperdir=./upper,workdir=./workdir /mnt/overlay
         ```
-        
+
         When a file is written to one of the lower directories (`base`)it is copied up to the upper directory and ends up in the overlay mount as well.
-        
+
         When we write a file to out overlay file system, it is reflected only in the upper  directory (`upper`)
-        
+
         ```python
         $ touch /mnt/overlay/foo/hello
         $ ls base/foo/ # 'hello' was not created in the "lower" directory
         $ ls upper/foo/ # 'hello' was created in the "upper" directory
         hello
         ```
-        
+
         Finally when we write a file to any of the mount points (`base` or `upper`) it is reflected on the overlay file system.
-        
+
         ```python
         $ touch base/from-the-base
         $ touch upper/from-upper
@@ -202,41 +202,45 @@ Inside of the mail there are information about some emerging vulnerabilities mor
         /mnt/overlay/from-upper
         
         ```
-        
+
         [overlayfs.avif](2Million%203bbd57b2faa540098692e701ec8147cc/overlayfs.avif)
-        
+<br/><br/>
     - How the CVE-2023-0386 works
-        
+<br/><br/>
         CVE-2023-0386 lies in the fact that when the kernel copied a file the overlay file system to the upper directory, it did not check if the user/group owning this file was mapped in the current userspace. This allows an unprivileged user to smuggle an SUID binary from a lower directory to the upper directory, by using OverlayFS as an intermediary.
-        
+
         The exploit works as follows:
-        
+
         1. Create a FUSE (File System in User Space) file system. This virtual file system is backed by a piece of code making it appear as if it contains a single binary that is owned by root and has the SUID bit set. This step requires FUSE, as we do not have permissions to `chmod root:root`  and `chmod +s`  on the real file system.
         2. Enter a new user and mount namespace using the unshare system call. The sole purpose of this step is to allow us to use mount in the next step to create our overlay file system.
         3. Create a new OverlayFS mount, with:
-            
+
             -as the lower directory, the FUSE file system created in step 1
-            
+
             -as the upper directory a world-write directory like `/tmp` 
-            
+
         4. Trigger a copy of out SUID binary from the overlay file system to the upper directory for instance, by running touch on it. The kernel will:
             1. catch the file change on the overlay file system
             2. read the malicious binary from our FUSE file system 
             3. consider that it has the SUID bit set and os owned by root, since out FUSE file system tells it so 
             4. Write the file with the same properties to the upper directory
-            
+
             At this point, we are left with a SUID binary owned by root in `/tmp` all we need to do is exit the user namespace created in step2 and execute de binary, allowing us to escalate to super admin privileges.
-            
+
             [flow.avif](2Million%203bbd57b2faa540098692e701ec8147cc/flow.avif)
-            
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb/9b121fbf-6c7b-408e-aa8e-0cfc28b999f7-export-7db27ed6-b710-42be-b6a2-342602858aeb_Untitled_28.png' | relative_url }})
+<br/><br/>
+Machine pwned!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

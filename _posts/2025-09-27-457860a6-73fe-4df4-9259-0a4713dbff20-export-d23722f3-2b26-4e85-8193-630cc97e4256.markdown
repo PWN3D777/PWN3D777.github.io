@@ -9,134 +9,137 @@ thumb: /assets/images/logos/8e9f11a3cceeb4f69e659ed31347cc77.webp
 # Instant
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image.png' | relative_url }})
-
+<br/><br/>
 There is a web application running 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_1.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 There are nothing much there, we can download a .apk file, decompile it in apktool
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_2.png' | relative_url }})
-
+<br/><br/>
 We can enumerate passwords, paths or subdomains, in this case the got success in subdomains
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_3.png' | relative_url }})
-
+<br/><br/>
 We have not got much in the first one
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_4.png' | relative_url }})
-
+<br/><br/>
 In the second one, we have swagger which is a tool box where we can manage RESTful webs.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_5.png' | relative_url }})
-
+<br/><br/>
 We can perform many functionalities like add a user using GET  or POST requests
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_6.png' | relative_url }})
-
+<br/><br/>
 At some admin paths it is needed an authorization
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_7.png' | relative_url }})
-
+<br/><br/>
 Search inside of the decompiled .apk to find some king of token in the source code
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_8.png' | relative_url }})
-
+<br/><br/>
 We have a path with AdminActivities which match according with what are we doing in the api
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_9.png' | relative_url }})
-
+<br/><br/>
 That’s it, we’ve got a JWT
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_10.png' | relative_url }})
-
+<br/><br/>
 If we inspect it we will find that its owner is admin
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_11.png' | relative_url }})
-
+<br/><br/>
 We need to find a way to execute commands, or disclose information of the system, read admin log seems promising 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_12.png' | relative_url }})
-
+<br/><br/>
 A LFI with path traversal is found
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_13.png' | relative_url }})
-
+<br/><br/>
 Now we can enumerate users with bash console, it seems to be only root and shirohige
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_14.png' | relative_url }})
-
+<br/><br/>
 Try to steal the private key for shirohige 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_15.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_16.png' | relative_url }})
-
+<br/><br/>
 Got the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_17.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Enumerating ports trying to find private services running
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_18.png' | relative_url }})
-
+<br/><br/>
 But they are just the two ones the we already know
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_19.png' | relative_url }})
-
+<br/><br/>
 There is a backup file saving solar-PUTTY sessions
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_20.png' | relative_url }})
-
+<br/><br/>
 We try to use a tool to decrypt those kinds of files, but something else like a password is needed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_21.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_22.png' | relative_url }})
-
+<br/><br/>
 Inside of the home directory there are mode details about the project, there are even a database with hashes
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_23.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_24.png' | relative_url }})
-
+<br/><br/>
 Initially we found a werkzeug hash which is not supported by hashcat or john
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_25.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_26.png' | relative_url }})
-
+<br/><br/>
 But after a little research we discover that if we make some encoding over specific sections of the hash we will be able to convert the format to a common PBKDF2 hash
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_27.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_28.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_29.png' | relative_url }})
-
+<br/><br/>
 The new hash generated
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_30.png' | relative_url }})
-
+<br/><br/>
 Use hashcat  -m 10900 (PBKDF2-HMAC-SHA256) and get the password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_31.png' | relative_url }})
-
+<br/><br/>
 Got the root password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_32.png' | relative_url }})
-
+<br/><br/>
 And pwn the machine
-
+<br/><br/>
 ![image.png]({{ '/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_33.png' | relative_url }})
-
+<br/><br/>
 Machine PWNED@!!!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

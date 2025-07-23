@@ -9,124 +9,127 @@ thumb: /assets/images/logos/aa0a93908243c51fe21e691fc6571911.webp
 # BackFire
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports, there are two web applications running on it, an a filtered port which could be a clue for potential SSRF
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image.png' | relative_url }})
-
+<br/><br/>
 On port 443 there are nothing at first instance
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_1.png' | relative_url }})
-
+<br/><br/>
 On 8000 port we can find two files, one that seems to be a havoc configuration file, and other one that is a patch that disables tls
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_2.png' | relative_url }})
-
+<br/><br/>
 In this file there are credentials, no we have to find a place to authenticate, we can also notice that a port is shown but is not open at least to public 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_3.png' | relative_url }})
-
+<br/><br/>
 Thanks to colordiff tool we could see better what is removed and added in this patch file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_4.png' | relative_url }})
-
+<br/><br/>
 Havoc is a modern and malleable post-exploitation command and control framework
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_5.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Searching around, there is a CVE that points to something we are looking for
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_6.png' | relative_url }})
-
+<br/><br/>
 We need to know how it is working to perform a success attack
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_7.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_8.png' | relative_url }})
-
+<br/><br/>
 We need to make it fetch a rev shell in our machine
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_9.png' | relative_url }})
-
+<br/><br/>
 Use creds found and as it is a SSRF put the local service on the target machine with its port, this port is disclosed in the patch server where TLS is disable 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_10.png' | relative_url }})
-
+<br/><br/>
 It is performing an injection in the target host updating and executing payload.sh in server team service
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_11.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_12.png' | relative_url }})
-
+<br/><br/>
 Now we are ilya, update a public key and sign in using ssh
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_13.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 A clue about a way to escalate privileges, a local service is running 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_14.png' | relative_url }})
-
+<br/><br/>
 A new port in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_15.png' | relative_url }})
-
+<br/><br/>
 Forward that port
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_16.png' | relative_url }})
-
+<br/><br/>
 Now we need a way to bypass this login page
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_17.png' | relative_url }})
-
+<br/><br/>
 There is a way crafting a jwt in /login/register path
-
+<br/><br/>
 But it looks like this path is no available in port 7096
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_18.png' | relative_url }})
-
+<br/><br/>
 Another port that is filtered to public but available now is 5000, forward it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_19.png' | relative_url }})
-
+<br/><br/>
 This register endpoint is available in here, use this poc to create a new user with administrative privileges
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_20.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_21.png' | relative_url }})
-
+<br/><br/>
 Hardhat is a command and control framework, and has its own shell, we also can see that this shell is run by serge user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_22.png' | relative_url }})
-
+<br/><br/>
 Update your public key in authorized keys file 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_23.png' | relative_url }})
-
+<br/><br/>
 No we are serge
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_24.png' | relative_url }})
-
+<br/><br/>
 Enumerating ways to run commands as root, find we have iptables sudo control 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_25.png' | relative_url }})
-
+<br/><br/>
 With a little search we find a way creating a new rule, which will later saved in other file, like /etc/passwd that would be a way to change root password, but this is not allowed in this machine
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_26.png' | relative_url }})
-
+<br/><br/>
 So perform this same attack but create a short public key and save it in root authorized keys
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_27.png' | relative_url }})
-
+<br/><br/>
 Show rules and Save it to log-in as root
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_28.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001/1c9e9dda-6809-428b-9e5e-c8cbcbd5f697-export-6d66d7ec-a2c6-49c0-98dc-a2e4e0816001_image_29.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

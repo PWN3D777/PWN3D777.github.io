@@ -9,86 +9,91 @@ thumb: /assets/images/logos/23e804513a47e8f20bc865d0419946e1.webp
 # Usage
 
 # 1. Enumeration
-
+<br/><br/>
 A http and ssh ports open
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled.png' | relative_url }})
-
+<br/><br/>
 We can log in and have access to user section 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 Just a single quote generate a internal server error, it is potentially vulnerable to sql injection
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 To specify the parameters properly on the sql injection we copy the whole request and save it as requirements for the injection.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Make a simple sql injeciton to reconnaissance the specific vulnerability
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 A database were found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 Add parameters to find inside of the command, for some reason sqlman wasn’t able to identify admin_users table, i check information on internet and i got the value.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Crack it and log in as administrator
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 On settings we can upload the profile image, we realize it has [arbitrary file upload vulnerablity](https://xavibel.com/2020/03/23/unrestricted-file-upload-in-frozennode-laravel-administrator/)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 Download the uploaded “image” to execute the reverse shell (CVE-2020-10963)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 User flag got it!
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Here we are as dash user, but we need to make a lateral movement to access to bash as xander, there are some hidden files on home, after crafting we got credentials.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 A binary if executed with root privileges, we cat it, it is compressing some files so it is possible to use [Wildcards Spare tricks](https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks)
-
+<br/><br/>
 ```bash
 sudo -l
 ```
-
+<br/><br/>
 1. Find the routes of the files, and give permissions to write
+<br/><br/>
 2. Create a file to link a file of out interest
+<br/><br/>
 3. ln -s will create a symbolink link with the private key we want to find.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Execute the normal functionality of the binary
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Flag and credentials found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

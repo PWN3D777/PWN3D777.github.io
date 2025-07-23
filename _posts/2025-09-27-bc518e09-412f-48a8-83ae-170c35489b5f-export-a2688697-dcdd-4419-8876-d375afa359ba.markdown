@@ -16,58 +16,63 @@ HackTheBox: Hard
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning:  http-ssh service
-
+<br/><br/>
 > We need to use Burp Suite to get protected files
 > 
+<br/><br/>
 1. Active proxy
+<br/><br/>
 2. Generate request
+<br/><br/>
 3. Send request number to intruder
+<br/><br/>
 4. Execute fuzz payload and find number with 200 responses
-
+<br/><br/>
 We access ssh port with those cred found
-
+<br/><br/>
 Got the route:
-
+<br/><br/>
 > /var/www/backups
 > 
-
+<br/><br/>
 We sent this directory with ssh
-
+<br/><br/>
 ```bash
 scp user@ip:/ruta/*   /routelocal/
 ```
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 Find some creds
-
+<br/><br/>
 Using net stat we can see a local service running so lets use port forwarding
-
+<br/><br/>
 ```bash
 ssh user@ip -l 3000:ip:3000
 
 ```
-
+<br/><br/>
 -l Redirect ports
-
+<br/><br/>
 We find creds for users.
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 There is a doodlegrive file we download
-
+<br/><br/>
 > Using a tool called IDA we find other creds
 IDA is a disambler and review inside the root data
 > 
+<br/><br/>
 1. Create a file where will save root
 2. compile 
-
+<br/><br/>
 ```bash
 gcc -shared a.c -o a.so -nostartfiles -fPIC
 ```
-
+<br/><br/>
 - -share create a share file
 - a.c File
 - [a.so](http://a.so) solid file
@@ -75,10 +80,13 @@ gcc -shared a.c -o a.so -nostartfiles -fPIC
 - -fpic Position independent
 1. run .doodlegrive
 2. Inject
-
+<br/><br/>
 ```bash
 "+load_extension(char(46,47,97))+"
 ```
-
+<br/><br/>
 Root
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

@@ -16,25 +16,23 @@ HackTheBox: Medium
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 We can see 2 http services, go forward the one which allows create an account
-
+<br/><br/>
 > Testing some allowed extensions, we realise .phar extensions.
 There is a  tool called ponyshell, downloaded and change its extensions
 > 
-
+<br/><br/>
 ```bash
 <?php
 
@@ -95,52 +93,55 @@ function isRunningWindows() {
     return stripos(PHP_OS, "WIN") === 0;
 }
 ```
-
+<br/><br/>
 We can search with gobuster to search routes 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 We can use a rev shell and generate estability
-
+<br/><br/>
 Using uname -a we can see there is a vulnerable kernel version, download the exploit 
-
+<br/><br/>
 - We are root at data → cat /etc/passwd
-
+<br/><br/>
 ```bash
 john hash.txt rockyou.txt
 ```
-
+<br/><br/>
 We’ve got creds in the 443 port interface, there we find a Gohostscript vulnerability
-
+<br/><br/>
 Clone the repository and create the payload to injected 
-
+<br/><br/>
 1. We send a payload with nc.exe request by email
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 1. Once it is on the victim machine we sent another payload with the rev shell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 Start this part where you spawn, theres is a file called ghostscrip.bat lets type it
-
+<br/><br/>
 > We found some rcpclient creds
 > 
-
+<br/><br/>
 ### rcpclient
-
+<br/><br/>
 It has functions of authentication and enumeration of services, getting information about users
-
+<br/><br/>
 ```bash
 rcpclient -u "user" url 
 querydispinfo
 ```
-
+<br/><br/>
 We realise that guest user has admin permises so lets go to C:\xampp\htdocs and user ponyshell again wiht a .php ext
-
+<br/><br/>
 Machine pwned./!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

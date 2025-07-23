@@ -11,164 +11,167 @@ thumb: /assets/images/logos/a6165b53a2df41fbfd6530782224925f.webp
 # 1. Enumeration
 
 Start with enumerating port 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image.png' | relative_url }})
-
+<br/><br/>
 SSH is running and a web application has werkzeug behind
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_1.png' | relative_url }})
-
+<br/><br/>
 Looking around the web application we can self register and 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_2.png' | relative_url }})
-
+<br/><br/>
 A bot is running on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_3.png' | relative_url }})
-
+<br/><br/>
 When we talk with the bot we are being redirected to /api/info with our jwt, that token it might be important for the foothold
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_4.png' | relative_url }})
-
+<br/><br/>
 We can also review contract source
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_5.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_6.png' | relative_url }})
-
+<br/><br/>
 Admin user is required to access to other functionalities
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_7.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_8.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 We also can report a user, it should be sended to admin, so lets try xss 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_9.png' | relative_url }})
-
+<br/><br/>
 This would be our payload using javascript functions as we saw the web application has js on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_10.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_11.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_12.png' | relative_url }})
-
+<br/><br/>
 Now we can access to admin pane
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_13.png' | relative_url }})
-
+<br/><br/>
 In the source code 2 routes are disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_14.png' | relative_url }})
-
+<br/><br/>
 That is an authorization api key or something like that
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_15.png' | relative_url }})
-
+<br/><br/>
 On the other path there is an address
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_16.png' | relative_url }})
-
+<br/><br/>
 With the authorization encoded and the address we can perform a request to disclose information using as a base line the source code found as admin. Use eth_balance as the first method using the same request in the source code
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_17.png' | relative_url }})
-
+<br/><br/>
 We have no found anything in there something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_18.png' | relative_url }})
-
+<br/><br/>
  something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_19.png' | relative_url }})
-
+<br/><br/>
 eth_account sounds interesting, it returns a list of addresses owned by the client
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_20.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_21.png' | relative_url }})
-
+<br/><br/>
 Here we have one, but nothing useful returned
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_22.png' | relative_url }})
-
+<br/><br/>
 this one sound good, but first we need the number
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_23.png' | relative_url }})
-
+<br/><br/>
 Let’s use this one first
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_24.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_25.png' | relative_url }})
-
+<br/><br/>
 The latest block number was returned
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_26.png' | relative_url }})
-
+<br/><br/>
 We are going to use this for return the whole block, we had to change boolean value to true due to it is question itself if the whole transactions are being included in the request
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_27.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_28.png' | relative_url }})
-
+<br/><br/>
 We have information, good. Now we need to be abe to read it, in those cases we can use something like `solcjs`  or `ethereum input data decoder` but it didn’t work here, as we can see it looks like hex, use ciberchef 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_29.png' | relative_url }})
-
+<br/><br/>
 Effectively data is being returned but that is info about the last block that we had controlled as user role
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_30.png' | relative_url }})
-
+<br/><br/>
 `0xd` means 13 on decimal, let’s go to the first block then
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_31.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_32.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_33.png' | relative_url }})
-
+<br/><br/>
 At the start it looks like it doesn’t have anything but in the last part of the code some plain text creds are disclosed, and that’s how we got user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_34.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Now we are keira user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_35.png' | relative_url }})
-
+<br/><br/>
 We can execute a binary named forge, this tool helps to  build, test, fuzz, debug and deploy Solidity smart contracts. 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_36.png' | relative_url }})
-
+<br/><br/>
 In the documentation we can find commands like init which creates a new project
-
+<br/><br/>
 Once we have a new project ready for build, create a rev shell in a file which later will be call as a solc compiler instead of using the default one
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_37.png' | relative_url }})
-
+<br/><br/>
 This will create a shell as paul
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_38.png' | relative_url }})
-
+<br/><br/>
 No we can run as root pacman tool, which is a package manager, we are going to create our new malicious package, first create a file named pkgbuild which will have all the specifications on it, and let’s say it that install our payload (pwn.install)
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_39.png' | relative_url }})
-
+<br/><br/>
 This file will contain the payload we want to execute inside the post_install function
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_40.png' | relative_url }})
-
+<br/><br/>
 make the .pkg.tar.zst which is the package ready to be install
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_41.png' | relative_url }})
-
+<br/><br/>
 Now just install package, it will create a shell as root
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_a476157b_c25c_4f91_91b1_401c8184ac79.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

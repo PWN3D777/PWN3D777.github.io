@@ -11,85 +11,85 @@ thumb: /assets/images/logos/97f12db8fafed028448e29e30be7efac.webp
 # 1. Enumeration
 
 Start enumerating open ports 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image.png' | relative_url }})
-
+<br/><br/>
 There are only two ports open, a web application is running on port 80, we can see there is information about hardware 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_1.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Looking around we realise it is powered by ghost, which is an application for publisher to manage their business
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_2.png' | relative_url }})
-
+<br/><br/>
 It is open source which means we can see their files in a git-hub repository
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_3.png' | relative_url }})
-
+<br/><br/>
 In security section there are info about some vulnerabilities found previously, but by now we don’t have enough information to perform an attack
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_4.png' | relative_url }})
-
+<br/><br/>
 Checking directories related with the repository we found a sign in page, it could be useful to find some credentials 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_5.png' | relative_url }})
-
+<br/><br/>
 There is nothing much to do here, so let’s discover new subdomains to see if we could be able to get more information, fuzzing the HOST header we could find dev in v host, we could use: [Sublist3r](https://github.com/aboul3la/Sublist3r)
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_6.png' | relative_url }})
-
+<br/><br/>
 It’s suppose to be in construction
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_7.png' | relative_url }})
-
+<br/><br/>
 But getting information about directories, the whole repository is leaked here, making only curl request we won’t find what we need
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_8.png' | relative_url }})
-
+<br/><br/>
 That’s when git-dumper tool gets into action dumpling all the files it could find and saving them to a directory in this case gdump
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_9.png' | relative_url }})
-
+<br/><br/>
 First we try to get ghost version to see if there are some CVE’s on internet, it seems to be 4.0
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_10.png' | relative_url }})
-
+<br/><br/>
 Then we try to grep recursively all “password” plain text, we can see a los of test passwords, those seems to be like default passwords 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_11.png' | relative_url }})
-
+<br/><br/>
 There are even hashes 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_12.png' | relative_url }})
-
+<br/><br/>
 Those are different passwords we can see if they are present in the public repository
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_13.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_15.png' | relative_url }})
-
+<br/><br/>
 Effectively those passwords are present in the public files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_16.png' | relative_url }})
-
+<br/><br/>
 After keeping searching there is another password, it seems a different password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_17.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_18.png' | relative_url }})
-
+<br/><br/>
 We see in the public files that this password is not  present which is a possible leakage, we tried to get in as admin or example or test in the graphical interface but we didn’t log in, password were wrong, search for vulnerabilities, there is an Arbitrary File Read with authenticated users and the version seems to be vulnerable
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_19.png' | relative_url }})
-
+<br/><br/>
 Here we have the admin api where we also can authenticate as admin
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_20.png' | relative_url }})
-
+<br/><br/>
 ```bash
 #!/bin/bash
 
@@ -226,56 +226,59 @@ done
 rm cookie.txt
 	
 ```
-
+<br/><br/>
 Execute the exploit and confirm the arbitrary file read
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_21.png' | relative_url }})
-
+<br/><br/>
 Now it’s time to find creds or something valuable it might be in config files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_22.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_23.png' | relative_url }})
-
+<br/><br/>
 We know the name of the config file but we don’t where it is, chat gpt helps us to find routes, in docker containers the config file is stored in
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_24.png' | relative_url }})
-
+<br/><br/>
 Effectively there it is, use credentials found in ssh to get user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_25.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_26.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Privilege escalation is pretty straightforward, first check at commands or scripts we can execute as root 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_27.png' | relative_url }})
-
+<br/><br/>
 We have this script and we have certain control of CHECK_CONTENT environment variable also it  won’t reset itself to default values
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_28.png' | relative_url }})
-
+<br/><br/>
 We can analyze `clean_symlink.sh`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_29.png' | relative_url }})
-
+<br/><br/>
 Basically it is receiving a .png file which is a symbolic link, this symlink is sanitized avoiding getting files that only root should have access, but the environment variable CHECK_CONTENT is not taking account here and we can set that variable to execute the commands we want to, it is only checking that this variable is not empty
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_30.png' | relative_url }})
-
+<br/><br/>
 We can see an example here, if that variable has a command catting a file in root folder it will read it, enter into the conditional statement if that script is executed with elevated privileges
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_31.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_32.png' | relative_url }})
-
+<br/><br/>
 Make a symbolic link of a .png file to make the script work as expected and set the env variable catting the private key, that’s how this machine is pwned
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_33.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463/d015c73b-0f2d-4d4a-80cd-80a11891dad9-export-8e6d717c-fd74-4639-ada8-688d931fa463_image_34.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

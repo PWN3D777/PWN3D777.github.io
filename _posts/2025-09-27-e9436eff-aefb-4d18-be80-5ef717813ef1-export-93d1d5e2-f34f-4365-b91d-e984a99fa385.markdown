@@ -9,33 +9,33 @@ thumb: /assets/images/logos/d2e8271977fdc3f13bee7d7ab48954ca.webp
 # Lantern
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_1.png' | relative_url }})
-
+<br/><br/>
 There are two web applications, lets see at 80 port
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_2.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_3.png' | relative_url }})
-
+<br/><br/>
 A IT solution web page, where we can submit a resume, only pdf files are admitted 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_4.png' | relative_url }})
-
+<br/><br/>
 On port 3000 we have a login page, we probably need to find a way to bypass this 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_5.png' | relative_url }})
-
+<br/><br/>
 As we saw before on nmap scan, there is a skipper proxy service running on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_6.png' | relative_url }})
-
+<br/><br/>
 Searching for vulnerabilities we found a SSRF where using a predetermined header we can access to internal resources
-
+<br/><br/>
 ```powershell
 #Exploit Title: X-Skipper-Proxy v0.13.237 - Server Side Request Forgery (SSRF)
 #Date: 24/10/2022
@@ -65,62 +65,63 @@ Reference:
 https://github.com/zalando/skipper/security/advisories/GHSA-f2rj-m42r-6jm2
             
 ```
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Using burpsuite we proceed to search internal service, trying common ports like 5000
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_7.png' | relative_url }})
-
+<br/><br/>
 There is an internal service on it, now we need to find resources where important information is disclosed
-
+<br/><br/>
 1. Access to the resource page
+<br/><br/>
 2. Find scripts or .js file used by the web
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_8.png' | relative_url }})
-
+<br/><br/>
 1. You will find that blazor (Which is a framework to make efficiently web application creation) is behind of this
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_9.png' | relative_url }})
-
+<br/><br/>
 There is a custom .dll which we could analyze, we are going to see different ways to download it, we cannot request it at a normal client way because we are exploiting a ssrf 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_10.png' | relative_url }})
-
+<br/><br/>
 The first one is using curl 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_11.png' | relative_url }})
-
+<br/><br/>
 Using burpsuite, it will give you a link where it can be downloaded
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_12.png' | relative_url }})
-
+<br/><br/>
 In this case, dnspy couldn’t decompile as appropiated the .dll file so we use Ilspy and after a look through the source, we can be able to find a base64 string with credentials
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_13.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_14.png' | relative_url }})
-
+<br/><br/>
 Inside of the admin panel we can see a little bit of the back end page, there is a page which receives some parameters as the language, but it doesn’t sanitize any of the user input
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_15.png' | relative_url }})
-
+<br/><br/>
 taking account that it is accessing a local file, we have a potential LFI with path traverse
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_16.png' | relative_url }})
-
+<br/><br/>
 That’s how we enumerate our user Tomas
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_17.png' | relative_url }})
-
+<br/><br/>
 As we need to get a RCE to finally obtain a shell we proceed to try choose a module, and this section is designed to receive a .dll file, so we will upload a .dll file and access it 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_18.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_19.png' | relative_url }})
-
+<br/><br/>
 Creating the .dll file
-
+<br/><br/>
 ```powershell
 # Install .NET SDK version 6.0
 sudo apt-get install -y dotnet-sdk-6.0
@@ -129,21 +130,21 @@ sudo apt-get install -y dotnet-sdk-6.0
 dotnet --list-sdks
 
 ```
-
+<br/><br/>
 Create the template
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_20.png' | relative_url }})
-
+<br/><br/>
 The .csproj file should look like this because you need to include the [AspNetCore.App](http://AspNetCore.App) to compile their components
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_21.png' | relative_url }})
-
+<br/><br/>
 I used a template in the .cs file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_22.png' | relative_url }})
-
+<br/><br/>
 The key part in the .cs file is:
-
+<br/><br/>
 ```python
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
@@ -164,87 +165,90 @@ namespace trip
     }
 }
 ```
-
+<br/><br/>
 Build the project and obtain the .dll file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_23.png' | relative_url }})
-
+<br/><br/>
 Now the framework is sending the file to the server using a serialized json parameter, so we will need to install BTP (Blazor Traffic Processor) to fix the route where will need to upload the file
-
+<br/><br/>
 Seach the .bapp file in the official burpsuite page and add it as a extension on burp
-
+<br/><br/>
 Then capture the request and fastly select the serialized parameter, send it to BTP extension 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_24.png' | relative_url }})
-
+<br/><br/>
 Deserialize the text and change the route using a path traverse we use the route we previously find the component is getting the resource
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_25.png' | relative_url }})
-
+<br/><br/>
 Now copy again the json format and serialize it to replace the initial serialized parameter
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_26.png' | relative_url }})
-
+<br/><br/>
 We will get a response like this 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_27.png' | relative_url }})
-
+<br/><br/>
 Now just get the private ssh key
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_28.png' | relative_url }})
-
+<br/><br/>
 And get the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_29.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Now, to get a clear understanding about the privilege escalation we need to be aware of every single one which is happening on this machine.
-
+<br/><br/>
 As tomas user we have privilege to execute a procmon binary
-
+<br/><br/>
 <aside>
 💡 **Procmon**, short for **Process Monitor**, is an advanced monitoring tool for Windows systems. It is part of Microsoft's Sysinternals suite and is designed to monitor and log system activity in real-time related to processes, files, the registry, and networks.
 
 </aside>
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_30.png' | relative_url }})
-
+<br/><br/>
 This means that we are able to monitor every process running on the local machine, this take us to enumerate which processes are active, and we found that someone is using nano and is handling with a file in the root directory
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_31.png' | relative_url }})
-
+<br/><br/>
 Now capture every write action made it in this process (5283) and export it to a sqlite database file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_32.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_33.png' | relative_url }})
-
+<br/><br/>
 Use SCP to download the file locally and open it 
-
+<br/><br/>
 In the table ebpf we can see a result code  1 and 2 has lots of files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_34.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_35.png' | relative_url }})
-
+<br/><br/>
 If you analyze at least five of that list, everything is the same in hex arguments, but looking meticulously three elements are changing 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_36.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_37.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_38.png' | relative_url }})
-
+<br/><br/>
 Now we proceed to create a python file which will open de .db file and it will take ebpf table, filter through resultcode 1 and 2 and finally will take the elements from the 8 to the 10 one and will show them taking them from hex to a normal character 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_39.png' | relative_url }})
-
+<br/><br/>
 How lucky now we have the root password captured by the procmon binary
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_40.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385/e9436eff-aefb-4d18-be80-5ef717813ef1-export-93d1d5e2-f34f-4365-b91d-e984a99fa385_image_41.png' | relative_url }})
-
+<br/><br/>
 Machine pwned
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

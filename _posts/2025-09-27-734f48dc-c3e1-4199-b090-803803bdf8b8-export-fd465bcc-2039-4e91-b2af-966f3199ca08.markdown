@@ -9,23 +9,23 @@ thumb: /assets/images/logos/4aaf2ad33bea830079d74497f8e7fefc.webp
 # WifineticTwo
 
 # 1. Enumeration
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled.png' | relative_url }})
-
+<br/><br/>
 There is a http service, take a look of the web application
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 OpenPLC used openplc as default credentials, we use it and it worked.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Inside there is a section with C code that it may run on the server so we try to inject a rev shell
-
+<br/><br/>
 ```c
 #include "ladder.h"
 #include <stdlib.h>
@@ -109,37 +109,37 @@ void updateCustomOut()
         wait(NULL);
     }
 ```
-
+<br/><br/>
 Save and compile
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 It is necessary to run start PLC to execute the reverse shell. 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 To get the root flag on this machine we need to use wlan0 interface to hack a wifi network 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 We can enumerate and try to make a pixie dust attack using oneshot, this attack steal a pin on the router which will help later to access to the password saved on the router.
-
+<br/><br/>
 ```jsx
 sudo airmon-ng check kill
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 Once we found the password it’s time to connect to the wifi network
-
+<br/><br/>
 We will need two files and a set of command according with the documentation.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 First path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-
+<br/><br/>
 ```c
 ctrl_interface=/var/run/wpa_supplicant
 ctrl_interface_group=0
@@ -155,9 +155,9 @@ network={
   scan_ssid=1
 }
 ```
-
+<br/><br/>
 Second path: /etc/systemd/network/25-wlan.network
-
+<br/><br/>
 ```c
 [Match]
 Name=wlan0
@@ -165,9 +165,9 @@ Name=wlan0
 [Network]
 DHCP=ipv4
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 ```coq
 #Enable wpa supplicant to connect it trought it
 systemctl enable wpa_supplicant@wlan0.service
@@ -175,10 +175,15 @@ systemctl enable wpa_supplicant@wlan0.service
 systemctl restart systemd-networkd.service
 systemctl restart wpa_supplicant@wlan0.service
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 Use ssh to get into the router and machine pwned!!!
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png' | relative_url }})
+<br/><br/>
+Machine pwned1!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

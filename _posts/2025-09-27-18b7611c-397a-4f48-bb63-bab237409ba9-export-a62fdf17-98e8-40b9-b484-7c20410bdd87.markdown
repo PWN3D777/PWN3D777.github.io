@@ -11,67 +11,67 @@ thumb: /assets/images/logos/2cdef06b99725f3dcce38431a95b7b77.webp
 HackTheBox: Easy
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 A lot of open ports let’s see what’s going on 80 port 
-
+<br/><br/>
 There’s joomla service, so we proceed to use joomla scan to check versions and other interesting information
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 On administrator there are a log in page, so we used an exploit looking for more information
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 We’ve got some creds but in the administrator interface didn’t work, may be those credentials could be useful on another part of the system but first at all make a brute force attack to find users on smb
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Once we’ve found the users lists spray the password and that’s a good advance
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Get into smb client looking for shares
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 There’s a .pcap file download it locally and use whireshark to analyse it.
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 We can intuitively search for kerberos packets
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 We had a potential hash with the proper information 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 But before search on documentation we found the way to organize information found and the mode to crack it
-
+<br/><br/>
 [https://hashcat.net/wiki/doku.php?id=example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 Good, password found, as we saw before administrator is an user 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 We are close to get the user flag, but not to close, user error.php file to tamper it and make a php revshell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 ```bash
 <?php
 // Copyright (c) 2020 Ivan Šincek
@@ -257,85 +257,85 @@ unset($sh);
 echo '</pre>';
 ?>
 ```
-
+<br/><br/>
 We trigger it calling the url
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 We got into the system but without any permissions, we already know that tony is the administrator lets try to escalate privileges running a shell with his credentials
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 We use RunasCs 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 Set the session
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ```jsx
 .\RunasCs.exe user password payload
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 User got it!!
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 ```jsx
 netstat -avn 
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 8083 Is sometimes used to host web services
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 Go ahead to port forwarding
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 We were right a web service with a section to upload documents 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 This interface allows user to upload .odt files and we know this can be vulnerable to 
-
+<br/><br/>
 - (CVE-2023-2255)
-    
+<br/><br/>
     Improper access control in editor components of The Document Foundation LibreOffice allowed and attacker to craft a document that would cause external links to be loaded without prompt. In the affected versions of LibreOffice documents that used “floating frames” linked to external files, would load the contents of those frames without prompting the user for permission to do so. This was inconsistent with the tratment of other linked content in LibreOffice.
-    
+<br/><br/>
 1. Create a evil .exe to call later exploiting the vulnerability
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 1. Once you load the file on the victim machine create the evil .odt we also can make remote command execution.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 1. Set the session 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 1. Upload the maliciuous .odt files
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 ---
-
+<br/><br/>
 That’s how we made successful lateral movement and we got a shell as ppots user
-
+<br/><br/>
 ```powershell
 #Command used to list all stored credentials 
 #or credentials that have been saved on the system
@@ -344,105 +344,108 @@ That’s how we made successful lateral movement and we got a shell as ppots use
 #User: Users
 cmdkey /list
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 mimikatz a powerful post-explotation tool commonly used in penetration testing
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 #/a:h list the hidden files
 #Route: It generally save user credentials and other auth info
 dir /a:h C:\Users\Ppots\AppData\Roaming\Microsoft\Credentials
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_34.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 #Extract and show protected stored credentials using (Data Protection API)
 dpapi:cred
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_35.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_36.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_37.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 #List secondary elements
 powershell Get-ChildItem
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_38.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_39.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 #This command is used to search and extract mastrer keys from DPAPI
 dpapi:masterkey /in"route" /rpc
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_40.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_41.png' | relative_url }})
-
+<br/><br/>
 Decrypt password
-
+<br/><br/>
 ```jsx
 #Left
 /unprotect /masterkey:<masterkey>
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_42.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_43.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_44.png' | relative_url }})
-
+<br/><br/>
 Successful lateral movement
-
+<br/><br/>
 - We can download bloodhound files which can helps us with a final recognition process, this tool is used to identify and explore relationships inside a Active Directory environment
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_45.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_46.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_47.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_48.png' | relative_url }})
-
+<br/><br/>
 Only numer Password neo4j
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_49.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_50.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_51.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_52.png' | relative_url }})
-
+<br/><br/>
 We can see that HHOGAN is a member of managers so
-
+<br/><br/>
 (As a member of the GPO Managers group, HHogan user May be granted permission to modify, create or link Group Policy objects, because the GPO Managers@office.htb group is a security group in AD and usually contains users with permissions to manage Group Policy objects (GPOs))
-
+<br/><br/>
 ```powershell
 #Used to retrieve all Group Policy Objets
 Get-GPO -All | Select-Object -ExpandProperty Displayname
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_53.png' | relative_url }})
-
+<br/><br/>
 ```powershell
 .\SharpGPOAbuse.exe --AddlocalAdmin --UserAccount HHogan --GPOname "Default Domain Controllers Policy"
 gpupdate /force
 net localgroup administrators
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87/18b7611c-397a-4f48-bb63-bab237409ba9-export-a62fdf17-98e8-40b9-b484-7c20410bdd87_Untitled_54.png' | relative_url }})
-
+<br/><br/>
 It is uploaded but if we want to make it valid on system we will need to exit the evil-winrm session and reopen it.
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

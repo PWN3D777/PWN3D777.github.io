@@ -9,120 +9,123 @@ thumb: /assets/images/logos/750ba886c8a87103c69cac0f13f2de70.webp
 # Iclean
 
 # 1. Enumeration
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled.png' | relative_url }})
-
+<br/><br/>
 We find a http service, we may use credentials to find a flaw.
-
+<br/><br/>
 A normal web application running
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 We fuzz directories and find one where we can request cleaning services.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 Use burpsuite to test input sanitization, It’s not probably to find a vulnerability in mail input due to the standar format.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 The service section is url encoded, we try to steal the cookie enconding the payload and sending it to the server
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 Cookie theft
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 As we previously see there is a dashboard directory, set the cookie and get access to admin interface.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 After simulate the normal flow data of the application we could find an input were we have to insert the link of a qr code
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 It may be a perfect context to a SSTI if it is not sanitized
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 Once we realize that it is vulnerable, we need to find the framework behind to use their functions.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 `{{config.items()}}` The server responds to this payload, so now we can exploit this vulnerability using Jinja2 (python)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 We found a payload to get RCE, we need to encode it to bypass filters.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 We are data!!
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 Check the mail, we have a clue, something about pdf’s
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 Craft a little bit and we will find mysql credentials, but the port is not open, it means that if we want log in we will need to port forwarding mysql service.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 Identify the port
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 consuela credentials found
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 Crack the password.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 User flag got it.
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 qpdf binary is using root privileges, after some research we found that it is possible to attach files to a pdf, so use:
-
+<br/><br/>
 ```bash
 sudo qpdf --empty --add-attachment /root/.ssh/id_rsa --mimetype text/plain -- .pdf
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 Once we create the pdf use binwalk to identify frimwares attached on a binary.
-
+<br/><br/>
 `-e` is used to extract files found during scanning
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

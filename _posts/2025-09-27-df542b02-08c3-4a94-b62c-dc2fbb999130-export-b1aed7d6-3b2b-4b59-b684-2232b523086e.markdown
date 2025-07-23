@@ -11,50 +11,53 @@ thumb: /assets/images/logos/d3cb6edd2a219f122696655d0015b101.webp
 # 1. Enumeration
 
 Start with nmap enumeration
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image.png' | relative_url }})
-
+<br/><br/>
 On port 80 there is a log in interface, but we didn’t find anything interesting there
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_1.png' | relative_url }})
-
+<br/><br/>
 Here we have another login interface, Gitbucket is running this time
-
+<br/><br/>
 GitBucket is a Git web platform powered by Scala offering:
-
+<br/><br/>
 - Easy installation
+<br/><br/>
 - Intuitive UI
+<br/><br/>
 - High extensibility by plugins
+<br/><br/>
 - API compatibility with GitHub
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_2.png' | relative_url }})
-
+<br/><br/>
 We tried root-root
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_3.png' | relative_url }})
-
+<br/><br/>
 And we have log in successfully, then proceed to go to system administrator, that’s a good beginning trying to find  the foothold
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_4.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Of course an administrator interface, with plugins, system settings, and database viewer, here we find the complexity of this machine, there are several paths where we can try to get a vulnerability, as we have done before plugins are potentially exploitable when we are handling with java frameworks, this is a framework powered by scala but it is needed java 11 to install it, system settings would be interesting, at the same way than data export and database viewer. Well here we are going to check database looking for creds due to have ssh on port 22.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_5.png' | relative_url }})
-
+<br/><br/>
 We have direct sql execution, there is a hash, but it is not easy crackeable
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_6.png' | relative_url }})
-
+<br/><br/>
 After some attempts we wouldn’t be able to get RCE only with SQL but as we saw before there is something of java out there so try to use it
-
+<br/><br/>
 We create an alias in SQL H2 
-
+<br/><br/>
 We throwed a java exception to run the command we wanted to
-
+<br/><br/>
 Runtime is used to interact with the system and the output is capture by getInputStream, and delimiter is used to read the whole output, not line by line
-
+<br/><br/>
 ```bash
 CREATE ALIAS SHELT AS $$ String shelt(String cmd) throws
 java.io.IOException {
@@ -64,56 +67,56 @@ java.io.IOException {
 }$$;
 CALL SHELT('id');
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_7.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_8.png' | relative_url }})
-
+<br/><br/>
 That’s how we steal the margo private key
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_9.png' | relative_url }})
-
+<br/><br/>
 And we get the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_10.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_11.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 To escalate our privileges it is necessary to check open ports which we haven’t got access before, 9090 seems interesting
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_12.png' | relative_url }})
-
+<br/><br/>
 Forward the port, there is a service that handle logs, we can create a malicious log in this way
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_13.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_15.png' | relative_url }})
-
+<br/><br/>
 Create a malicious log executing a bash script, this bash script setuid of the current user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_16.png' | relative_url }})
-
+<br/><br/>
 create the same .thrift file in our local machine to manage the log file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_17.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_18.png' | relative_url }})
-
+<br/><br/>
 ```bash
 #This will create necessary python files to invoque and implement the service
 thrift -r --gen py log_service.thrift
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_19.png' | relative_url }})
-
+<br/><br/>
 Now make the python script that will trigger the malicious log file created before
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_20.png' | relative_url }})
-
+<br/><br/>
 ```bash
 from thrift import Thrift
 from thrift.transport import TSocket
@@ -154,16 +157,19 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_21.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_22.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_23.png' | relative_url }})
-
+<br/><br/>
 /bin/bash -p and
-
+<br/><br/>
 ![image.png]({{ '/assets/images/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e/df542b02-08c3-4a94-b62c-dc2fbb999130-export-b1aed7d6-3b2b-4b59-b684-2232b523086e_image_24.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

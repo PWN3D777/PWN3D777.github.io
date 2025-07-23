@@ -9,162 +9,165 @@ thumb: /assets/images/logos/a9c8709743c935ae079e3b04d9304c99.webp
 # MonitorsThree
 
 # 1. Enumeration
-
+<br/><br/>
 Start with enumeration, there are two ports open
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image.png' | relative_url }})
-
+<br/><br/>
 Nothing interesting is disclosed in the main page
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_1.png' | relative_url }})
-
+<br/><br/>
 There is a log in page
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_2.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_3.png' | relative_url }})
-
+<br/><br/>
 And we can recover our password, it’s possible to find sql injections in here because normally it’s necessary to find a user in a database to proceed with password recovery workflow, so we check if the input is sanitized
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_4.png' | relative_url }})
-
+<br/><br/>
 Good, it’s vulnerable, keep it up fuzz subdomains and find cacti
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_5.png' | relative_url }})
-
+<br/><br/>
 There is a version disclosed but after a research we just found a authenticated vulnerability so most probably is to find the way to sign in here with credentials found in a sql injection
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Sqlmap it’s a great tool to address this vulnerability, but in case of htb is really slow, we spend more than 2 hours to get this information thanks to a time based sql injection found it by sqlmap
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_7.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_8.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_9.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_10.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_11.png' | relative_url }})
-
+<br/><br/>
 But we also have the option to use a bool based sql injection in this scenario, and we would optimize our time from 2 hours to one minute, i explained this here.
-
+<br/><br/>
 [Bool based SQL injection](https://www.notion.so/Bool-based-SQL-injection-fffb952552918089be96c15dab9994ff?pvs=21) 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_12.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_13.png' | relative_url }})
-
+<br/><br/>
 Cacti V 1.2.26 is vulnerable to **CVE-2024-25641** where we can upload a malicious package with a base 64 reverse shell waiting to be executed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_15.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_16.png' | relative_url }})
-
+<br/><br/>
 Upload the package and trigger the exploit calling to http://[cactiurl]/resource/test.php
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_17.png' | relative_url }})
-
+<br/><br/>
 Here we have credentials for a database, but after a long seeking there isn’t valuable here
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_18.png' | relative_url }})
-
+<br/><br/>
 Enumerate every file in search of credentials and find other credentials for a sql database
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_19.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_20.png' | relative_url }})
-
+<br/><br/>
 Sign in to this database skipping the `_`
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_21.png' | relative_url }})
-
+<br/><br/>
 Find the hash and crack it to get the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_22.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_23.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_24.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Start enumerating local services running 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_25.png' | relative_url }})
-
+<br/><br/>
 Forward the traffic and get a duplicati service, and it’s needed to bypass initial authentication, use the next vector attack. First at all we need to download the sqlite databases saved in the app directories, there we have some information about the duplicati database and a clue about how it’s handled the password in the server, we have the passphrase and the salt take this in count for the next steps.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_26.png' | relative_url }})
-
+<br/><br/>
 1. Send a password capturing the traffic with burpsuite
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_27.png' | relative_url }})
-
+<br/><br/>
 1. It will return a nonce and a salt based on our password, now we need to convert this to a password that the server trust modifying the format.  In the source page of duplicati we have that both as the salt and nonce are creates before to send it to the server
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_28.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_29.png' | relative_url }})
-
+<br/><br/>
 1. Take the salt is easy just take trusted password found it in the sqlite database and convert it from base64 to hex
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_30.png' | relative_url }})
-
+<br/><br/>
 With this we are going to create our valid password, use the same nonce from our given password(take it from server response in burp)
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_ef4c8d22_c22f_4454_b339_1cb6e0fce224.png' | relative_url }})
-
+<br/><br/>
 Execute the same command as the source in the console, copy and paste the password, basically the server doesn’t check if the password is registered because it isn’t anywhere, it just check if it has a valid salt.
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_31.png' | relative_url }})
-
+<br/><br/>
 Now we are just one step to get root flag, just create a new backup
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_32.png' | relative_url }})
-
+<br/><br/>
 No encryption
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_33.png' | relative_url }})
-
+<br/><br/>
 set the destination
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_34.png' | relative_url }})
-
+<br/><br/>
 Go inside of the computer
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_35.png' | relative_url }})
-
+<br/><br/>
 Get source 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_36.png' | relative_url }})
-
+<br/><br/>
 You will find there the flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_37.png' | relative_url }})
-
+<br/><br/>
 Once the back up is created you need to reload the page to see it in the main dashboard
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_38.png' | relative_url }})
-
+<br/><br/>
 Now we proceed to recover the file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_39.png' | relative_url }})
-
+<br/><br/>
 Choose a location on the machine/source path
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_40.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_41.png' | relative_url }})
-
+<br/><br/>
 There it is 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_42.png' | relative_url }})
-
+<br/><br/>
 Finally pwn4d!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

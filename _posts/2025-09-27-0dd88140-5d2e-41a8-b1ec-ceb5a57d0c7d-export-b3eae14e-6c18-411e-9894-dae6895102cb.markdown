@@ -9,139 +9,139 @@ thumb: /assets/images/logos/0eff5f0d7d2208024e519e5abfb132d0.webp
 # Trickster
 
 # 1. Enumeration
-
+<br/><br/>
 Starting enumerating all the public services running
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image.png' | relative_url }})
-
+<br/><br/>
 Only two ports are open, there is a web application with a shop
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_1.png' | relative_url }})
-
+<br/><br/>
 We can register ourselves in the shop
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_2.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_3.png' | relative_url }})
-
+<br/><br/>
 We can add products to the cart
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_4.png' | relative_url }})
-
+<br/><br/>
 And make a normal payment process inside
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_5.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 There are many functionalities inside that we can test, but we can start looking information about prestashop
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_6.png' | relative_url }})
-
+<br/><br/>
 Searching on internet we found that prestashop is a E-commerce web application, we have some default files in the repository, we might try to access to them
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_7.png' | relative_url }})
-
+<br/><br/>
 It seems that the resources are taken from a repository, and they look protected
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_8.png' | relative_url }})
-
+<br/><br/>
 Get the `.git` path, and we have some directories disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_9.png' | relative_url }})
-
+<br/><br/>
 Here we can access to those file which will give us clues for initial foothold
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_10.png' | relative_url }})
-
+<br/><br/>
 We can even see a hash which belongs to adam
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_11.png' | relative_url }})
-
+<br/><br/>
 The hash is not easy crackeable, so we keep looking for vulnerabilities, it might have a SQL injection
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_12.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_13.png' | relative_url }})
-
+<br/><br/>
 And a XSS uploading files
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_14.png' | relative_url }})
-
+<br/><br/>
 But first at all we already noted that there is a repository behind, so let’s use git dumper tool to download all files we can access 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_15.png' | relative_url }})
-
+<br/><br/>
 There are some new files, and a directory… 
-
+<br/><br/>
 It looks like it is another path
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_16.png' | relative_url }})
-
+<br/><br/>
 We sent the request and indeed it is the admin interface and the version is disclosed.
-
+<br/><br/>
 As we saw before there is a XSS affecting 8.1.0 to 8.1.5. Let’s get into it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_17.png' | relative_url }})
-
+<br/><br/>
 basically the Proof Of Concept is composed by 
-
+<br/><br/>
 `exploit.py` It is in charge of send the requests it means it sends an email through `/contact-us`uploading the .zip file, and open the listener port to get the rev shell
-
+<br/><br/>
 `exploit.html` It is in charge of trigger the reverse shell, it gets a csrf token and call the path where the .zip file is hosted
-
+<br/><br/>
 `file.zip` this is the theme that will be uploaded, it has the reverse shell and we have to open it in the GUI and set it
-
+<br/><br/>
 `revshell.php` That’s the file that we need to set, we just need to change the local ip and port
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_18.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_19.png' | relative_url }})
-
+<br/><br/>
 If everything goes find we will be able to get the shell, we are data user it means we have limited access to the machine, find configuration files searching for credentials 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_20.png' | relative_url }})
-
+<br/><br/>
 There are lots of configuration files, cat the database credentials, stabilize the shell and log in to the database as ps_user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_21.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_22.png' | relative_url }})
-
+<br/><br/>
 Got the hash as james
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_23.png' | relative_url }})
-
+<br/><br/>
 JohnTheRipper will facilitate the access to the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_24.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 Again there are some ports which we haven’t got access before forward them, in this case 5000 is used, but i think this is due to another user which already pwned the machine, if it is not open try to forward others like 38377 or 3306 because they are like a docker container or something like that
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_25.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_26.png' | relative_url }})
-
+<br/><br/>
 [changedetection.io](http://changedetection.io) service running on it
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_27.png' | relative_url }})
-
+<br/><br/>
 Again the version is disclosed
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_28.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_29.png' | relative_url }})
-
+<br/><br/>
 There we have all the information to do it manually
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_30.png' | relative_url }})
-
+<br/><br/>
 Go to notifications and use the SSTI payload
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_31.png' | relative_url }})
-
+<br/><br/>
 ```python
 {% raw %}
 {{% for x in ().__class__.__base__.__subclasses__() %}}
@@ -151,21 +151,24 @@ Go to notifications and use the SSTI payload
 {{% endfor %}}
 {% endraw %}
 ```
-
+<br/><br/>
 Test the notification
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_32.png' | relative_url }})
-
+<br/><br/>
 And get root access to the container
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_33.png' | relative_url }})
-
+<br/><br/>
 It might look like we have fall down into a honey pot, but if you analyze the bash_history you’ll notice that the same password was used for root access in the container and on the machine, which means that we can use that password to gain root access and capture the root flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_34.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb/0dd88140-5d2e-41a8-b1ec-ceb5a57d0c7d-export-b3eae14e-6c18-411e-9894-dae6895102cb_image_35.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
-
+<br/><br/>
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

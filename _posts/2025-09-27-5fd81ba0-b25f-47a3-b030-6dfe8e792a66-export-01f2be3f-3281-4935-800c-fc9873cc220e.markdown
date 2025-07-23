@@ -7,101 +7,101 @@ thumb: /assets/images/logos/a2c2bd7b4e98ff8b782ed590896305a1.webp
 ---
 
 # SolarLab
-
+<br/><br/>
 # 1. Enumeration
-
+<br/><br/>
 Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled.png' | relative_url }})
-
+<br/><br/>
 In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 we can scan port 6791 and it disclose another url: http:report.solarlab.htb
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 Using crackmapexec to search some share files we found some files
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like:
-
+<br/><br/>
 Usename: blakeb
-
+<br/><br/>
 Password: password
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 Those are valid credentials to the web application running on 6791
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_10.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_11.png' | relative_url }})
-
+<br/><br/>
 According with the name of the machine this looks promising
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_12.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_13.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_14.png' | relative_url }})
-
+<br/><br/>
 But we need to find a way to inject this code here and execute remote commands with this.
-
+<br/><br/>
 Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter.
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_15.png' | relative_url }})
-
+<br/><br/>
 here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_16.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_17.png' | relative_url }})
-
+<br/><br/>
 User flag got succesfully
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_18.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 There is a openfire user, as we have learnt there are some vulnerabilities around there 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_19.png' | relative_url }})
-
+<br/><br/>
 So check if there is a service running locally and try to port forwarding using that port
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_20.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_21.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_22.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_23.png' | relative_url }})
-
+<br/><br/>
 - CVE-2023-32315
-    
+<br/><br/>
     This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users
-    
+<br/><br/>
     ```python
     import random
     import string
@@ -261,45 +261,47 @@ So check if there is a service running locally and try to port forwarding using 
     if __name__ == "__main__":
         main()
     ```
-    
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_24.png' | relative_url }})
-
+<br/><br/>
 Log in as the new admin user
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_25.png' | relative_url }})
-
+<br/><br/>
 Exploit the vulnerability uploading the plugin
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_26.png' | relative_url }})
-
+<br/><br/>
 Use the same rev shell that we used before to get user flag
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_27.png' | relative_url }})
-
+<br/><br/>
 Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_28.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_29.png' | relative_url }})
-
+<br/><br/>
 In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_30.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_31.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_32.png' | relative_url }})
-
+<br/><br/>
 We search on internet a script able to decrypt openfire passwords, and we got the password!!
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_33.png' | relative_url }})
-
+<br/><br/>
 Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_34.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_35.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

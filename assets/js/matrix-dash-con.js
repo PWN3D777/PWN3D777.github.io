@@ -23,7 +23,7 @@
   const ctx = canvas.getContext('2d');
 
   // Config
-  const FONT_SIZE = 14;            // tamaño del caracter
+  const FONT_SIZE = 12;            // tamaño del caracter
   const COLOR_BASE = [0, 255, 0];  // verde Matrix
   const ALPHA_MIN = 0.45;          // transparencia mínima
   const ALPHA_MAX = 0.85;          // transparencia máxima
@@ -38,16 +38,27 @@
 
   function measureContainer() {
     const rect = container.getBoundingClientRect();
-    const height = container.scrollHeight; // altura real del contenido
+    const height = Math.max(window.innerHeight, rect.height);	
     const width = rect.width;
     return { width, height };
   }
-
+  let canvasCSSWidth = 0;
+  let canvasCSSHeight = 0;
   function resize() {
     const { width, height } = measureContainer();
-    canvas.width = width;
-    canvas.height = height;
+    //canvas.width = width;
+    //canvas.height = height;
+    const dpr = window.devicePixelRatio || 1;
+    canvasCSSWidth = width;
+    canvasCSSHeight = height;
+  // Ajustar tamaño interno del canvas para alta resolución
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
 
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+    ctx.scale(dpr, dpr); // Escala para mantener nitidez
     columns = Math.floor(width / FONT_SIZE);
     drops = new Array(columns).fill(null).map(() => ({
       // arranca por arriba en posiciones aleatorias negativas
@@ -71,7 +82,7 @@
       d.y += d.speed * 3; // velocidad vertical
 
       // REINICIO SIEMPRE al salir del canvas (antes era random y se "morían")
-      if (d.y > canvas.height) {
+      if (d.y > canvasCSSHeight) {
         d.y = Math.random() * -50; // reinicia arriba (un poco disperso)
         d.speed = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN);
         d.alpha = ALPHA_MIN + Math.random() * (ALPHA_MAX - ALPHA_MIN);

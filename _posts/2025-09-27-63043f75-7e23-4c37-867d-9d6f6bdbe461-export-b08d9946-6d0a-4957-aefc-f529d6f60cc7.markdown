@@ -9,27 +9,27 @@ thumb: /assets/images/logos/4291edf91628b7c378a58084318a70c1.webp
 # EvilCups
 
 # 1. Enumeration
-
+<br/><br/>
 Start enumerating ports
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image.png' | relative_url }})
-
+<br/><br/>
 We can see CUPS running on 631 port, we can see the http api, we can see connected printers, jobs and its states
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_1.png' | relative_url }})
-
+<br/><br/>
 Normally we only scan tcp ports, but due to this is a printer service, we might need to check udp ports as well. effectively it is also communicating through udp
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_2.png' | relative_url }})
-
+<br/><br/>
 # 2. User flag
-
+<br/><br/>
 Checking for vulnerabilities, there is a recent release, a serie of vulnerabilities where we can gain rce when we chain them
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_3.png' | relative_url }})
-
+<br/><br/>
 There is a PoC on internet, basically
-
+<br/><br/>
 <aside>
 ⚠️
 
@@ -42,7 +42,7 @@ There is a PoC on internet, basically
 `CVE-2024-47177` cups-filters allows inject malicious code to trigger it when the printer is used
 
 </aside>
-
+<br/><br/>
 ```python
 
 #!/usr/bin/python3
@@ -224,29 +224,29 @@ if __name__ == "__main__":
 	
 	
 ```
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_4.png' | relative_url }})
-
+<br/><br/>
 Effectively it is added
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_5.png' | relative_url }})
-
+<br/><br/>
 When we test our malicious printer we get the rev shell and the user flag
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_6.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_7.png' | relative_url }})
-
+<br/><br/>
 # 3.Priv esc
-
+<br/><br/>
 There we can see out malicious printer
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_8.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_9.png' | relative_url }})
-
+<br/><br/>
 Check for the jobs running on it on `/var/spool/cups` actually we can’t list jobs, we have not got permissions but according with the format we will be able to cat them to get information, the format is in this way
-
+<br/><br/>
 <aside>
 ⚠️
 
@@ -261,26 +261,29 @@ d —> Data file of the printer job
 001 —> Copy number or fragment
 
 </aside>
-
+<br/><br/>
 Cat the file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_10.png' | relative_url }})
-
+<br/><br/>
 And find the password for the root user
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_11.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_12.png' | relative_url }})
-
+<br/><br/>
 Note that it is a PostScript document, we can copy it 
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_13.png' | relative_url }})
-
+<br/><br/>
 And visualize it as a .pdf file
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_14.png' | relative_url }})
-
+<br/><br/>
 ![image.png]({{ '/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_15.png' | relative_url }})
-
+<br/><br/>
 Machine pwned!!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

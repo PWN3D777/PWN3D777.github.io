@@ -16,60 +16,63 @@ HackTheBox: Medium
 </aside>
 
 ## 1: Enumeration
-
+<br/><br/>
 - nmap scanning
-
- 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled.png' | relative_url }})
-
+<br/><br/>
 We can see a https service running let’s use dirsearch 
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_1.png' | relative_url }})
-
+<br/><br/>
 We found there is a login interface powered by apache ofbiz 18.12v after a search on google we find a vulnerability which allow us inject commands (CVE-2023-51467 AND CVE-2023-49070)
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_2.png' | relative_url }})
-
+<br/><br/>
 ## 2: User flag
-
+<br/><br/>
 Let’s exploit this vulnerability
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_3.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_4.png' | relative_url }})
-
+<br/><br/>
 Lets stabilize the shell
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_5.png' | relative_url }})
-
+<br/><br/>
 ## 3: Priv esc
-
+<br/><br/>
 After a little seeking into the machine we find this route with credential
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_6.png' | relative_url }})
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_7.png' | relative_url }})
-
+<br/><br/>
 password for admin
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_8.png' | relative_url }})
-
+<br/><br/>
 There is a useful tool called cyberchef to decode it. It is on base64.urlsafe_b64encode()
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_9.png' | relative_url }})
-
+<br/><br/>
 now let’s hash it
-
+<br/><br/>
 It is a SHA-1 So use this command
-
+<br/><br/>
 ```bash
 hashcat -m 120 -a 0 "b8f...........:d" rockyou.txt
 ```
-
+<br/><br/>
 :d is the salt 
-
+<br/><br/>
 That’s it machine pwned
-
+<br/><br/>
 ![Untitled]({{ '/assets/images/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3/74925a2a-b68e-4660-b3e5-9f03a6391283-export-a2d73d6a-4839-4c14-a590-8521bdb05db3_Untitled_10.png' | relative_url }})
+<br/><br/>
+Machine pwned!@
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
