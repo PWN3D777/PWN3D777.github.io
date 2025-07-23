@@ -7,7 +7,7 @@ thumb: /assets/images/logos/a2c2bd7b4e98ff8b782ed590896305a1.webp
 ---
 
 # SolarLab
-<br/><br/>
+
 # 1. Enumeration
 <br/><br/>
 Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file 
