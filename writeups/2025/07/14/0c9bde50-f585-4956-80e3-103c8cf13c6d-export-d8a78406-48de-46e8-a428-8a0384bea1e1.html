@@ -100,50 +100,50 @@ Effectively it is vulnerable, taking /etc/passwd we already have enumerate users
 <br /><br />
 <img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_9.png" alt="image.png" />
 <br /><br />
-In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/<pid>/cmdline but that didn’t work, there are no much processes running on it
+In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/’pid’/cmdline but that didn’t work, there are no much processes running on it
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_10.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_10.png" alt="image.png" />
 <br /><br />
 Next step is try to get jobs or tasks that are being executed taking /etc/crontab
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_11.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_11.png" alt="image.png" />
 <br /><br />
 There are different paths related with the automation of tasks in the web application
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_12.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_12.png" alt="image.png" />
 <br /><br />
 Starting at the beginning we try with app_backup.sh 
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_13.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_13.png" alt="image.png" />
 <br /><br />
 Basically it is zipping the folder where it is supposed the app hosted, that a big clue, let’s try to get the famous app.py present in the majority of web application that runs python behind
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_14.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_14.png" alt="image.png" />
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_15.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_15.png" alt="image.png" />
 <br /><br />
 Good luck! We finally get the backend information, there we have a db password, but it didn’t work in ssh
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_16.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_16.png" alt="image.png" />
 <br /><br />
 A validation process is being made, it is checking for the administrator role, that’s a good point because having a JWT token we probably need to take it, decode it and change the role
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_17.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_17.png" alt="image.png" />
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_18.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_18.png" alt="image.png" />
 <br /><br />
 A role is there, it’s time to find a way to decode the token and change the role 
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_19.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_19.png" alt="image.png" />
 <br /><br />
 app.py give us the way 
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_20.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_20.png" alt="image.png" />
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_21.png)
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_21.png" alt="image.png" />
 <br /><br />
-![image.png](/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_22.png)
-<br /><br /></pid></p>
+<img src="/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_22.png" alt="image.png" />
+<br /><br /></p>
 <div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3</span>
 
 <span class="k">import</span> <span class="nx">argparse</span>
