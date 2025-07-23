@@ -112,15 +112,15 @@ sed 's/<value>//g' | sort | uniq &gt; list.lst</value></value></value></p>
 </ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
-`-o` : Only output matching parts of each line
+**-o** : Only output matching parts of each line
 &lt;br/&gt;&lt;br/&gt;
-`-P` : Enable perl-Compatible regular expressions
+**-P** : Enable perl-Compatible regular expressions
 &lt;br/&gt;&lt;br/&gt;
-`[^&gt;]+` : Any character that are not &gt;
+**[^&gt;]+** : Any character that are not '&gt;'
 &lt;br/&gt;&lt;br/&gt;
-`(?=&lt;value&gt;)` : It ensure the match is followed by &lt;value&gt; but is not part of the match
+**(?=&lt;value&gt;)** : It ensure the match is followed by &lt;value&gt; but is not part of the match
 &lt;br/&gt;&lt;br/&gt;
-`s/something//g` : It replaces any something with an empy string.
+**s/something//g** : It replaces any something with an empy string.
 &lt;br/&gt;&lt;br/&gt;
 ![Untitled](/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png)
 &lt;br/&gt;&lt;br/&gt;
@@ -135,21 +135,18 @@ impacket-GetNPUsers jab.htb/ -userfile list.lst -request 2&gt;&amp;1 | grep -v '
 <br /><br /></li>
   <li><code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> : Just redirect error to the output and not stop the execution
 <br /><br />
-    <blockquote>
-      <p>It’s possible to extract a hash because the tool makes the next procedure</p>
-
-      <p><br /><br /></p>
-      <ol>
-        <li>Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.
-<br /><br /></li>
-        <li>Hash Extraction: KDC responds with a service ticket encrypted with the user’s hash.
-<br /><br /></li>
-        <li>Output: The tool extracts this hash from the service ticket response.<br />
-<br /><br /></li>
-      </ol>
-    </blockquote>
-  </li>
+It’s possible to extract a hash because the tool makes the next procedure</li>
 </ul>
+
+<p><br /><br /></p>
+<ol>
+  <li>Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.
+<br /><br /></li>
+  <li>Hash Extraction: KDC responds with a service ticket encrypted with the user’s hash.
+<br /><br /></li>
+  <li>Output: The tool extracts this hash from the service ticket response.<br />
+<br /><br /></li>
+</ol>
 
 <p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_13.png" alt="Untitled" />
 <br /><br />
