@@ -57,7 +57,6 @@ It is save in a predetermine format, so we create a list filtering not necessary
 ```bash
 grep -oP '<value>[^>]+@jab\.htb(?=<value>)' output.log | sed 's/@jab\.htb//g' | 
 sed 's/<value>//g' | sort | uniq > list.lst
-
 ```
 <br/><br/>
 **-o** : Only output matching parts of each line
