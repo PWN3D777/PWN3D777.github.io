@@ -47,9 +47,9 @@ We use this script to create a reverse powershell with base64 encoded
 <br/><br/>
 ```bash
 #!/usr/bin/env python3
-#
+
 # generate reverse powershell cmdline with base64 encoded args
-#
+
 
 import sys
 import base64
