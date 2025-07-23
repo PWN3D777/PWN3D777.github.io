@@ -17,7 +17,7 @@ HackTheBox: Hard
 
 ## 1: Enumeration
 <br/><br/>
-- nmap scanning
+nmap scanning
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled.png' | relative_url }})
 <br/><br/>
@@ -27,8 +27,8 @@ There’s just two ports opened let's see what’s going on
 <br/><br/>
 A healthcare page with a sign in interface, try sign up a use brupsuite
 <br/><br/>
-- There are some parameters we pass away when we sign up, one of those is Acctype which is normally 1 but there’s no sanitization and we can change it to number 2 and create a doctor account.
-- Using burpsuite we catch the access_token which could help us later
+There are some parameters we pass away when we sign up, one of those is Acctype which is normally 1 but there’s no sanitization and we can change it to number 2 and create a doctor account.
+Using burpsuite we catch the access_token which could help us later
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_2.png' | relative_url }})
 <br/><br/>
@@ -42,8 +42,8 @@ A login interface, we don’t have those creds, but may trying using the token w
 <br/><br/>
 - Once inside go to Upload report where we can send .pdf reports, the system (function upload) check the extension and the header of the file.
 <br/><br/>
-> Additionally we use burpsuite to  see existing reports and found a ViewReports.aspx file used to read reports. So we’re gonna use a revshell.aspx to induce later a SSFR on Issue Prescription where there is a panel which enable make requests to the [localhost](http://localhost) on 8080 port.
-> 
+ Additionally we use burpsuite to  see existing reports and found a ViewReports.aspx file used to read reports. So we’re gonna use a revshell.aspx to induce later a SSFR on Issue Prescription where there is a panel which enable make requests to the [localhost](http://localhost) on 8080 port.
+ 
 <br/><br/>
 1. Our rev shell must have %PDF-1.3 on the first line to assure the program will recognize as a pdf.
 <br/><br/>
