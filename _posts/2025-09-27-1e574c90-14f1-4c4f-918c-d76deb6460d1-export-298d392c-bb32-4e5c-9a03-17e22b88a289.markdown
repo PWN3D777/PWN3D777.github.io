@@ -158,7 +158,7 @@ Use apktool to decompile it to see all we have
 <br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_38.png' | relative_url }})
 <br/><br/>
-We are able to execute commands as sudo, but those commands are default ones, even that we also can specify a file where that command will be affect, we can imagine how the task is automated, it should be somethin like sudo <default command> <file>, we have control over the file and it is not sanitized which means we could make a line feed to execute another command as root
+We are able to execute commands as sudo, but those commands are default ones, even that we also can specify a file where that command will be affect, we can imagine how the task is automated, it should be somethin like sudo 'default command' 'file', we have control over the file and it is not sanitized which means we could make a line feed to execute another command as root
 <br/><br/>
 ![image.png]({{ '/assets/images/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289/1e574c90-14f1-4c4f-918c-d76deb6460d1-export-298d392c-bb32-4e5c-9a03-17e22b88a289_image_39.png' | relative_url }})
 <br/><br/>
