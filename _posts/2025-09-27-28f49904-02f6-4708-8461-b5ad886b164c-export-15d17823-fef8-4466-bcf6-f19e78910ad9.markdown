@@ -125,6 +125,7 @@ With this information we will be able to run Firefox as debugger so with the fol
 <br/><br/>
 In python
 <br/><br/>
+
 ```python
 import json
 import requests 
@@ -217,12 +218,14 @@ else:
 	
 ws.close()
 ```
+
 <br/><br/>
 In bash
 <br/><br/>
-```bash
 
+```bash
 ```
+
 <br/><br/>
 ![Untitled]({{ '/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png' | relative_url }})
 <br/><br/>
