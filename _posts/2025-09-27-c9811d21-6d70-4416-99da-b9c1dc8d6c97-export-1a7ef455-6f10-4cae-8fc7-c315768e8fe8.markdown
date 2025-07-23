@@ -65,7 +65,7 @@ sed 's/<value>//g' | sort | uniq > list.lst
 <br/><br/>
 **[^>]+** : Any character that are not 'greater than'
 <br/><br/>
-**(?='value')** : It ensure the match is followed by <value> but is not part of the match
+**(?='value')** : It ensure the match is followed by 'value' but is not part of the match
 <br/><br/>
 **g** : It replaces any something with an empy string.
 <br/><br/>
