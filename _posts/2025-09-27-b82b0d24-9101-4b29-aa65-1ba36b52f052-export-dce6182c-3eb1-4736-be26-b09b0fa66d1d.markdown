@@ -18,11 +18,11 @@ HackTheBox: Medium
 <br/><br/>
 With Rustscan we found 
 <br/><br/>
-> 445 SMB
+445 SMB
 1433 mssql
 464 kpass
 88 Kerberos
-> 
+
 <br/><br/>
 ![Untitled]({{ '/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png' | relative_url }})
 <br/><br/>
@@ -34,8 +34,8 @@ That’s how we find active users in the machine
 <br/><br/>
 ## 2: User flag
 <br/><br/>
-> Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.
-> 
+ Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.
+
 <br/><br/>
 Enum shared resources
 
