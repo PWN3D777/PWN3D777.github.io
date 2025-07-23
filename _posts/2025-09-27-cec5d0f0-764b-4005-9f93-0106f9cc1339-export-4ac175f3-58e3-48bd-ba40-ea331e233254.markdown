@@ -39,17 +39,11 @@ There is some information and _VIEWSTATE parameter has a vulnerability
 <br/><br/>
 ![Untitled]({{ '/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_5.png' | relative_url }})
 <br/><br/>
-More info about this vulnerability on _Viewstate
-<br/><br/>
-[Back-end](https://www.notion.so/Back-end-37b97a6f88e54ee6992f6741a33799f8?pvs=21)
-<br/><br/>
 We use this script to create a reverse powershell with base64 encoded
 <br/><br/>
-```bash
+```python
 #!/usr/bin/env python3
-
 # generate reverse powershell cmdline with base64 encoded args
-
 
 import sys
 import base64
