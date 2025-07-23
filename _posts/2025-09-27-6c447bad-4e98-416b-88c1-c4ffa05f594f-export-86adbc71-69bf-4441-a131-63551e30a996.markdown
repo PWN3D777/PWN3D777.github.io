@@ -123,10 +123,10 @@ Now as part of the chief’s marketing group we can force the password change of
 It’s important to take account the krb5.conf which is a file that indicates to kerberos protocol how to handle communication with other servers including Key Distribution Center KDC, this file can include:
 <br/><br/>
 - **[libdefaults]:** It has the default configurations to the kerberos library
-- [realms]: Defines all the domains
-- [domain_realm]: Map al the domains (realms)
-- [kdc]: Specific configurations for KDCs, like network addresses.
-- [admin_server]: Configurations for the kerberos administration servers.
+- **[realms]:** Defines all the domains
+- **[domain_realm]:** Map al the domains (realms)
+- **[kdc]:** Specific configurations for KDCs, like network addresses.
+- **[admin_server]:** Configurations for the kerberos administration servers.
 <br/><br/>
 ![image.png]({{ '/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_29.png' | relative_url }})
 <br/><br/>
