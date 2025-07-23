@@ -60,15 +60,15 @@ sed 's/<value>//g' | sort | uniq > list.lst
 
 ```
 <br/><br/>
-`-o` : Only output matching parts of each line
+**-o** : Only output matching parts of each line
 <br/><br/>
-`-P` : Enable perl-Compatible regular expressions
+**-P** : Enable perl-Compatible regular expressions
 <br/><br/>
-`[^>]+` : Any character that are not >
+**[^>]+** : Any character that are not '>'
 <br/><br/>
-`(?=<value>)` : It ensure the match is followed by <value> but is not part of the match
+**(?=<value>)** : It ensure the match is followed by <value> but is not part of the match
 <br/><br/>
-`s/something//g` : It replaces any something with an empy string.
+**s/something//g** : It replaces any something with an empy string.
 <br/><br/>
 ![Untitled]({{ '/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png' | relative_url }})
 <br/><br/>
@@ -82,8 +82,8 @@ impacket-GetNPUsers jab.htb/ -userfile list.lst -request 2>&1 | grep -v 'UF_DONT
 <br/><br/>
 - `2>&1` : Just redirect error to the output and not stop the execution
 <br/><br/>
-> It’s possible to extract a hash because the tool makes the next procedure
-> 
+It’s possible to extract a hash because the tool makes the next procedure
+ 
 <br/><br/>
 1. Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.
 <br/><br/>
