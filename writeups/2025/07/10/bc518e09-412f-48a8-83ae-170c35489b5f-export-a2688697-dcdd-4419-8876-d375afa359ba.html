@@ -70,83 +70,79 @@
 <ul>
   <li>nmap scanning:  http-ssh service
 <br /><br />
-    <blockquote>
-      <p>We need to use Burp Suite to get protected files</p>
+ We need to use Burp Suite to get protected files</li>
+</ul>
 
-      <p><br /><br /></p>
-      <ol>
-        <li>Active proxy
+<p><br /><br /></p>
+<ol>
+  <li>Active proxy
 <br /><br /></li>
-        <li>Generate request
+  <li>Generate request
 <br /><br /></li>
-        <li>Send request number to intruder
+  <li>Send request number to intruder
 <br /><br /></li>
-        <li>Execute fuzz payload and find number with 200 responses
+  <li>Execute fuzz payload and find number with 200 responses
 <br /><br />
 We access ssh port with those cred found
 <br /><br />
 Got the route:
 <br /><br />
-/var/www/backups</li>
-      </ol>
+ /var/www/backups</li>
+</ol>
 
-      <p><br /><br />
+<p><br /><br />
 We sent this directory with ssh
 <br /><br /></p>
-      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp user@ip:/ruta/<span class="k">*</span>   /routelocal/
-</code></pre></div>      </div>
-      <p><br /><br /></p>
-      <h2 id="2-user-flag">2: User flag</h2>
-      <p><br /><br />
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp user@ip:/ruta/<span class="k">*</span>   /routelocal/
+</code></pre></div></div>
+<p><br /><br /></p>
+<h2 id="2-user-flag">2: User flag</h2>
+<p><br /><br />
 Find some creds
 <br /><br />
 Using net stat we can see a local service running so lets use port forwarding
-<br /><br />
-```bash
-ssh user@ip -l 3000:ip:3000</p>
-    </blockquote>
-  </li>
-</ul>
+<br /><br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh user@ip <span class="nt">-l</span> 3000:ip:3000
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
--l Redirect ports
-&lt;br/&gt;&lt;br/&gt;
-We find creds for users.
-&lt;br/&gt;&lt;br/&gt;
-## 3: Priv esc
-&lt;br/&gt;&lt;br/&gt;
-There is a doodlegrive file we download
-&lt;br/&gt;&lt;br/&gt;
-&gt; Using a tool called IDA we find other creds
-IDA is a disambler and review inside the root data
-&gt; 
-&lt;br/&gt;&lt;br/&gt;
-1. Create a file where will save root
-2. compile 
-&lt;br/&gt;&lt;br/&gt;
-```bash
-gcc -shared a.c -o a.so -nostartfiles -fPIC
 </code></pre></div></div>
-<p><br /><br /></p>
-<ul>
-  <li>-share create a share file</li>
-  <li>a.c File</li>
-  <li><a href="http://a.so">a.so</a> solid file</li>
-  <li>-nostartfile Dont include standart files</li>
-  <li>-fpic Position independent
-    <ol>
-      <li>run .doodlegrive</li>
-      <li>Inject
+<p><br /><br />
+-l Redirect ports
 <br /><br />
-        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"+load_extension(char(46,47,97))+"</span>
-</code></pre></div>        </div>
-        <p><br /><br />
+We find creds for users.
+<br /><br /></p>
+<h2 id="3-priv-esc">3: Priv esc</h2>
+<p><br /><br />
+There is a doodlegrive file we download
+<br /><br />
+Using a tool called IDA we find other creds
+IDA is a disambler and review inside the root data</p>
+
+<p><br /><br /></p>
+<ol>
+  <li>Create a file where will save root</li>
+  <li>compile 
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-shared</span> a.c <span class="nt">-o</span> a.so <span class="nt">-nostartfiles</span> <span class="nt">-fPIC</span>
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <ul>
+      <li>-share create a share file</li>
+      <li>a.c File</li>
+      <li><a href="http://a.so">a.so</a> solid file</li>
+      <li>-nostartfile Dont include standart files</li>
+      <li>-fpic Position independent</li>
+    </ul>
+  </li>
+  <li>run .doodlegrive</li>
+  <li>Inject
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"+load_extension(char(46,47,97))+"</span>
+</code></pre></div>    </div>
+    <p><br /><br />
 Root
 <script src="/assets/js/matrix-overlay.js"></script></p>
-      </li>
-    </ol>
   </li>
-</ul>
+</ol>
 
 <link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
