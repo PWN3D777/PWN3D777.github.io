@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Scepter-Windows-Hard"
-date:   2025-07-22 12:05:57 -0400
+date:   2025-07-22 12:06:57 -0400
 categories: writeups
 thumb: /assets/images/logos/f2df2ca13368e6e158cffd5a3ab54d5d.webp
 ---
@@ -203,3 +203,4 @@ As `p.adams` has DCSync privileges, proceed to dump secrets to then access as ad
 
 Machine pwned@@@##!
 <script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
