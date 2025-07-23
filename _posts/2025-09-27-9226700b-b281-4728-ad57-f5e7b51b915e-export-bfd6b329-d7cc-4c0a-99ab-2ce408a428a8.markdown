@@ -51,6 +51,7 @@ it’d be possible to make requests? Let’s see users dir
 <br/><br/>
 vulnerable to ldpa injection Use a payload
 <br/><br/>
+
 ```bash
 import argparse
 import requests
@@ -86,6 +87,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 <br/><br/>
 - **Logic**
     1. Base URL definition: The base URL is defined as "[http://internal.analysis.htb/users/list.php?name=*](http://internal.analysis.htb/users/list.php?name=*))(%26(objectClass=user)(description={found_char}{FUZZ} *)". This URL includes a placeholder {FUZZ} that will be replaced by each character in the character file and another placeholder {found_char} that will be replaced with the characters found during the fuzzing process.
@@ -122,9 +124,11 @@ Send a php rev shell and get access as svc_web
 <br/><br/>
 Looking for creds on logon config
 <br/><br/>
+
 ```bash
 reg query "HKEY_LOCAL_MACHINE\software\Microsoft\Windows NT\Currentversion\Winlogon"
 ```
+
 <br/><br/>
 ![Untitled]({{ '/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_13.png' | relative_url }})
 <br/><br/>
@@ -148,9 +152,11 @@ Even when we haven’t the same vulnerability here this one is really similar an
 <br/><br/>
 Using linpeas we found there is a possible dll hijacking on 
 <br/><br/>
+
 ```bash
 C:\Snort\bin\snort.exe
 ```
+
 <br/><br/>
 Check permissions
 <br/><br/>
