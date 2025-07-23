@@ -50,7 +50,7 @@ Effectively it is vulnerable, taking /etc/passwd we already have enumerate users
 <br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_9.png' | relative_url }})
 <br/><br/>
-In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/<pid>/cmdline but that didn’t work, there are no much processes running on it
+In this file we found that caddy server is running, it is also disclosed in the response header. But from now we need to find a way or path where we can find the backend application or something like that. I created a script where i took the token and exploit the vulnerability fuzzing /proc/'pid'/cmdline but that didn’t work, there are no much processes running on it
 <br/><br/>
 ![image.png]({{ '/assets/images/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1/0c9bde50-f585-4956-80e3-103c8cf13c6d-export-d8a78406-48de-46e8-a428-8a0384bea1e1_image_10.png' | relative_url }})
 <br/><br/>
