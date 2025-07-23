@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Boardlight-Linux-Easy</h1>
   
@@ -67,75 +59,75 @@
   <h1 id="boardlight">Boardlight</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>We start with nmap scanning, two ports open, one of them a web application</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled.png" alt="Untitled" /></p>
-
-<p>Let’s see what is this about, previously the dns recognition was unsuccessful, but thanks to the contact information we can see the domain</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_2.png" alt="Untitled" /></p>
-
-<p>So we proceed to find a subdomain using three different tools</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_4.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Dolibar sign-in as usually we need to discard obvious vulnerabilities as default credentials, and we bypass login interface</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_6.png" alt="Untitled" /></p>
-
+<p><br /><br />
+We start with nmap scanning, two ports open, one of them a web application
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled.png" alt="Untitled" />
+<br /><br />
+Let’s see what is this about, previously the dns recognition was unsuccessful, but thanks to the contact information we can see the domain
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_2.png" alt="Untitled" />
+<br /><br />
+So we proceed to find a subdomain using three different tools
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Dolibar sign-in as usually we need to discard obvious vulnerabilities as default credentials, and we bypass login interface
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>We’ve got the version of the software before, after searching on google we found there’s a vulnerability where someone with determine permissions can obtain RCE <strong>(CVE-2023-30253)</strong></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_8.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Go to create a new website</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_11.png" alt="Untitled" /></p>
-
-<p>The vulnerability consists in edit HTML source, apparently we can’t use php code because we don’t have those permissions but if we try to use variants like “Php, phP, pHp” this filter will be bypassed, using a normal reverse shell we could get a shell as <code class="language-plaintext highlighter-rouge">data</code></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Looking for config files where data has reading permissions we found credentials for the database</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_14.png" alt="Untitled" /></p>
-
-<p>If we try to break into the database, it would be useless because it has tons of tables, and users registered are admin:admin that we guess before</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_15.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_16.png" alt="Untitled" /></p>
-
-<p>Try to use those creds on ssh and got the user flag</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_17.png" alt="Untitled" /></p>
-
+<p><br /><br />
+We’ve got the version of the software before, after searching on google we found there’s a vulnerability where someone with determine permissions can obtain RCE <strong>(CVE-2023-30253)</strong>
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_8.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Go to create a new website 
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_11.png" alt="Untitled" />
+<br /><br />
+The vulnerability consists in edit HTML source, apparently we can’t use php code because we don’t have those permissions but if we try to use variants like “Php, phP, pHp” this filter will be bypassed, using a normal reverse shell we could get a shell as <code class="language-plaintext highlighter-rouge">data</code>
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_12.png" alt="Untitled" />
+<br /><br />
+Looking for config files where data has reading permissions we found credentials for the database
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_14.png" alt="Untitled" />
+<br /><br />
+If we try to break into the database, it would be useless because it has tons of tables, and users registered are admin:admin that we guess before
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_15.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_16.png" alt="Untitled" />
+<br /><br />
+Try to use those creds on ssh and got the user flag 
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_17.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Using linpeas to enumerate the system we found a set uid binary in a path, casualty one of the directories of the path has almost the same of the machine it could be promising</p>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_18.png" alt="Untitled" /></p>
-
-<p>There is a vulnerability</p>
-
-<p>CVE-2022-37706 in bash, basically the system library function mishandles path names that begin with /dev/.. substring</p>
-
+<p><br /><br />
+Using linpeas to enumerate the system we found a set uid binary in a path, casualty one of the directories of the path has almost the same of the machine it could be promising
+<br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_18.png" alt="Untitled" />
+<br /><br />
+There is a vulnerability
+<br /><br />
+CVE-2022-37706 in bash, basically the system library function mishandles path names that begin with /dev/.. substring
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/bash</span>
 
 <span class="c">#This code is trying to search a specific vulnerable SUID </span>
@@ -181,10 +173,13 @@ rm -rf /tmp/net
 echo -e "</span>Done<span class="s2">"
 
 </span></code></pre></div></div>
-
-<p><img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_19.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1/f227c51a-c8ce-4be0-8d7b-148003591331-export-12cef38b-bf81-4c54-bfe4-89d0dcef79f1_Untitled_19.png" alt="Untitled" />
+<br /><br />
 <script src="/assets/js/matrix-overlay.js"></script>
+<br /><br /></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

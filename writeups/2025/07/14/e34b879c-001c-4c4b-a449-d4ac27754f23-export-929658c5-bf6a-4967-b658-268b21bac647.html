@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Cicada-Windows-Easy</h1>
   
@@ -68,29 +60,29 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>Start nmap looking for open ports</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image.png" alt="image.png" /></p>
-
-<p>Kerberos authentication is used, smb protocol running on 445, a good way to start could be checking for public files shared in smb, we also can note that rpc is used in port135</p>
-
+<p>Start nmap looking for open ports
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image.png" alt="image.png" />
+<br /><br />
+Kerberos authentication is used, smb protocol running on 445, a good way to start could be checking for public files shared in smb, we also can note that rpc is used in port135
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>We use GUEST user and find a public file on HR directory</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_1.png" alt="image.png" /></p>
-
-<p>That file is disclosing a default password, it might happen that a user just forgot to change it, let’s break it up</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_2.png" alt="image.png" /></p>
-
-<p>We can perform a user recognizing using kerbrute, but for this case it is no useful</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_3.png" alt="image.png" /></p>
-
-<p>Consequently we use <code class="language-plaintext highlighter-rouge">—rid-brute</code> in crackmapexec, this flag helps us to carry out a rid brute force attack. Basically it will try to get valid user accounts making requests using known RIDs (Relative IDentifiers) when it finds valid accounts, the system will respond with information related with that RID.
-What we are going to do is take all this output saving it to a next .txt file, and using VIM we are going to filter (SidTypeuser) we can use regular expressions like:</p>
-
+<p><br /><br />
+We use GUEST user and find a public file on HR directory
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_1.png" alt="image.png" />
+<br /><br />
+That file is disclosing a default password, it might happen that a user just forgot to change it, let’s break it up
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_2.png" alt="image.png" />
+<br /><br />
+We can perform a user recognizing using kerbrute, but for this case it is no useful
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_3.png" alt="image.png" />
+<br /><br />
+Consequently we use <code class="language-plaintext highlighter-rouge">—rid-brute</code> in crackmapexec, this flag helps us to carry out a rid brute force attack. Basically it will try to get valid user accounts making requests using known RIDs (Relative IDentifiers) when it finds valid accounts, the system will respond with information related with that RID.
+What we are going to do is take all this output saving it to a next .txt file, and using VIM we are going to filter (SidTypeuser) we can use regular expressions like:
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">##</span><span class="nx">Eliminar</span> <span class="nx">todas</span> <span class="nx">las</span> <span class="nx">lineas</span> <span class="nx">que</span> <span class="nx">no</span> <span class="nx">tengan</span> <span class="p">(</span><span class="nx">SidTypeUser</span><span class="p">)</span>
 <span class="p">:</span><span class="nx">g</span><span class="o">!</span><span class="sr">/SidTypeUser/</span><span class="nx">d</span>
 <span class="err">##</span><span class="nx">Eliminar</span> <span class="nx">todo</span> <span class="nx">lo</span> <span class="nx">que</span> <span class="nx">este</span> <span class="nx">detras</span> <span class="nx">de</span> <span class="nx">CICADA</span><span class="o">\</span>
@@ -98,71 +90,75 @@ What we are going to do is take all this output saving it to a next .txt file, a
 <span class="err">##</span><span class="nx">Eliminar</span> <span class="p">(</span><span class="nx">SidTypeGroup</span><span class="p">)</span>
 <span class="p">:</span><span class="o">%</span><span class="nx">s</span><span class="o">/</span><span class="p">(</span><span class="nx">SidTypeUser</span><span class="p">)</span><span class="c1">//g</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_4.png" alt="image.png" /></p>
-
-<p>After that we could spray the password in all the usernames found on it.</p>
-
-<p>We are going to find that michael.wrightson haven’t change his password, we can access to his shared files, but as we see below there are no more than the guest user can see</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_5.png" alt="image.png" /></p>
-
-<p>Go to rpcclient we might get more information there</p>
-
+<p><br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_4.png" alt="image.png" />
+<br /><br />
+After that we could spray the password in all the usernames found on it.
+<br /><br />
+We are going to find that michael.wrightson haven’t change his password, we can access to his shared files, but as we see below there are no more than the guest user can see
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_5.png" alt="image.png" />
+<br /><br />
+Go to rpcclient we might get more information there
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">getdompwinfo</span> <span class="err">#</span><span class="nx">Retrieves</span> <span class="nx">domain</span> <span class="nx">password</span> <span class="nx">information</span>
 <span class="nx">enumdomusers</span> <span class="err">#</span><span class="nx">Retrieves</span> <span class="nx">users</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">domain</span> <span class="kd">with</span> <span class="nx">their</span> <span class="nx">rid</span>
 <span class="nx">queryuser</span> <span class="err">#</span><span class="nx">Retrieves</span> <span class="nx">information</span> <span class="nx">about</span> <span class="nx">the</span> <span class="nx">given</span> <span class="nx">user</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_6.png" alt="image.png" /></p>
-
-<p>That’s how we are able to get to dev directory inside smb protocol using david password.</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_7.png" alt="image.png" /></p>
-
-<p>Download the file contained in DEV</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_8.png" alt="image.png" /></p>
-
-<p>There we can find Powershell code, where emily password is changed</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_9.png" alt="image.png" /></p>
-
-<p>Got the user flag</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_10.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_6.png" alt="image.png" />
+<br /><br />
+That’s how we are able to get to dev directory inside smb protocol using david password.
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_7.png" alt="image.png" />
+<br /><br />
+Download the file contained in DEV
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_8.png" alt="image.png" />
+<br /><br />
+There we can find Powershell code, where emily password is changed
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_9.png" alt="image.png" />
+<br /><br />
+Got the user flag
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_10.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Enumerate privileges using</p>
-
+<p><br /><br />
+Enumerate privileges using
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">whoami</span> <span class="o">/</span><span class="nx">all</span>
 
 <span class="err">##</span><span class="nx">We</span> <span class="nx">have</span> <span class="nx">SeBackUpPrivilege</span>  <span class="o">-</span> <span class="nx">BackUp</span> <span class="nx">files</span> <span class="nx">and</span> <span class="nx">directories</span>
 <span class="err">##</span><span class="nx">It</span> <span class="nx">means</span> <span class="nx">we</span> <span class="nx">can</span> <span class="nx">proceed</span> <span class="k">as</span> <span class="nx">shown</span> <span class="nx">below</span>
 </code></pre></div></div>
-
-<p>We are going to use the command <code class="language-plaintext highlighter-rouge">reg save</code> to save log sections with determined files:</p>
-
+<p><br /><br />
+We are going to use the command <code class="language-plaintext highlighter-rouge">reg save</code> to save log sections with determined files:
+<br /><br /></p>
 <ul>
   <li>HKLM/SAM (HKEY_LOCAL_MACHINE)/(Security Account Manager): This path contains user accounts and their passwords in form of hashes. This includes local users and security policies associated.</li>
-  <li>HKLM/SYSTEM: This path contains critical information about the configuration system, including hardware, drivers, and services</li>
+  <li>HKLM/SYSTEM: This path contains critical information about the configuration system, including hardware, drivers, and services
+<br /><br />
+    <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">reg</span> <span class="nx">save</span> <span class="nx">hklm</span><span class="err">\</span><span class="nx">sam</span> <span class="nx">sam</span>
+<span class="nx">reg</span> <span class="nx">save</span> <span class="nx">hklm</span><span class="err">\</span><span class="nx">system</span> <span class="nx">system</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_11.png" alt="image.png" />
+<br /><br />
+Download those files and use impacket-secretsdump or pypykatz and it will give us the administrator and other users hashes
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_12.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_13.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!!
+<script src="/assets/js/matrix-overlay.js"></script></p>
+  </li>
 </ul>
 
-<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">reg</span> <span class="nx">save</span> <span class="nx">hklm</span><span class="err">\</span><span class="nx">sam</span> <span class="nx">sam</span>
-<span class="nx">reg</span> <span class="nx">save</span> <span class="nx">hklm</span><span class="err">\</span><span class="nx">system</span> <span class="nx">system</span>
-</code></pre></div></div>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_11.png" alt="image.png" /></p>
-
-<p>Download those files and use impacket-secretsdump or pypykatz and it will give us the administrator and other users hashes</p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_12.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647/e34b879c-001c-4c4b-a449-d4ac27754f23-export-929658c5-bf6a-4967-b658-268b21bac647_image_13.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

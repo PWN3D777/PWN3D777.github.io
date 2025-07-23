@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Compiled-Windows-Medium</h1>
   
@@ -67,59 +59,59 @@
   <h1 id="compiled">Compiled</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start performing the corresponding nmap scan, there are 2 web applications running, one in 3000 and another in 5000</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled.png" alt="Untitled" /></p>
-
-<p>In 3000 there is a gitea service where we are able to log in</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_1.png" alt="Untitled" /></p>
-
-<p>In 5000 there is a compiler where we can enter a repository, first we test some unintended inputs, but it looks to be sanitized</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_2.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Start performing the corresponding nmap scan, there are 2 web applications running, one in 3000 and another in 5000
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled.png" alt="Untitled" />
+<br /><br />
+In 3000 there is a gitea service where we are able to log in
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_1.png" alt="Untitled" />
+<br /><br />
+In 5000 there is a compiler where we can enter a repository, first we test some unintended inputs, but it looks to be sanitized
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Having no more information we proceeded to create an account in the gitea service</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Effectively we can create new repositories</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_4.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_5.png" alt="Untitled" /></p>
-
-<p>We also could see repositories other user’s</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image.png" alt="image.png" /></p>
-
-<p>A key part to find the foothold is the gitea version disclosed on the footer’s page, we searched gitea cves but we only found a stored XSS but the versions didn’t match pretty well</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_1.png" alt="image.png" /></p>
-
-<p>As we can see on gitea’s web page, and we can infer due to its name it is based on git, even when it is not so common we can search git vulnerabilities</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_2.png" alt="image.png" /></p>
-
-<p>There is a recent vulnerability, it could matching with what we are looking for</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_3.png" alt="image.png" /></p>
-
-<p>A blog explaining the CVE is in there but first at all let’s see whether it will be helpful</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_4.png" alt="image.png" /></p>
-
-<p>Looking around changelog version we realize it is running with a vulnerable version of git</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_5.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_6.png" alt="image.png" /></p>
-
-<p>Now we can focus a little bit more on the vulnerability, basically it is executing hooks without proper control in files called recursively, the issue is due to bad symbolic links handle by git.</p>
-
+<p><br /><br />
+Having no more information we proceeded to create an account in the gitea service
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Effectively we can create new repositories 
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_Untitled_5.png" alt="Untitled" />
+<br /><br />
+We also could see repositories other user’s
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image.png" alt="image.png" />
+<br /><br />
+A key part to find the foothold is the gitea version disclosed on the footer’s page, we searched gitea cves but we only found a stored XSS but the versions didn’t match pretty well
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_1.png" alt="image.png" />
+<br /><br />
+As we can see on gitea’s web page, and we can infer due to its name it is based on git, even when it is not so common we can search git vulnerabilities
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_2.png" alt="image.png" />
+<br /><br />
+There is a recent vulnerability, it could matching with what we are looking for
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_3.png" alt="image.png" />
+<br /><br />
+A blog explaining the CVE is in there but first at all let’s see whether it will be helpful
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_4.png" alt="image.png" />
+<br /><br />
+Looking around changelog version we realize it is running with a vulnerable version of git
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_5.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_6.png" alt="image.png" />
+<br /><br />
+Now we can focus a little bit more on the vulnerability, basically it is executing hooks without proper control in files called recursively, the issue is due to bad symbolic links handle by git.
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="c">#Configure Git to allow file protocol and enable symbolic links</span>
@@ -179,39 +171,39 @@ git update-index <span class="nt">--index-info</span> &lt; index.info
 git commit <span class="nt">-m</span> <span class="s2">"Add symbolic link"</span>
 git push
 </code></pre></div></div>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_7.png" alt="image.png" /></p>
-
-<p>To make this exploit work, we need to create two empty repos</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_8.png" alt="image.png" /></p>
-
-<p>Execute the script</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_9.png" alt="image.png" /></p>
-
-<p>those are all the actions made</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_10.png" alt="image.png" /></p>
-
-<p>To trigger the rev shell we need to compile the repository in the web application previously mentioned</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_11.png" alt="image.png" /></p>
-
-<p>Now we have access as Richard</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_12.png" alt="image.png" /></p>
-
-<p>We found the gitea database, download it using python</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_13.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_14.png" alt="image.png" /></p>
-
-<p>There is a split pbdfkf2 up hash, it’s important to node that emily is the only one who needs change password, it might be due to a default password or due to a weak one</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_15.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_7.png" alt="image.png" />
+<br /><br />
+To make this exploit work, we need to create two empty repos 
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_8.png" alt="image.png" />
+<br /><br />
+Execute the script
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_9.png" alt="image.png" />
+<br /><br />
+those are all the actions made
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_10.png" alt="image.png" />
+<br /><br />
+To trigger the rev shell we need to compile the repository in the web application previously mentioned 
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_11.png" alt="image.png" />
+<br /><br />
+Now we have access as Richard
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_12.png" alt="image.png" />
+<br /><br />
+We found the gitea database, download it using python
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_13.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_14.png" alt="image.png" />
+<br /><br />
+There is a split pbdfkf2 up hash, it’s important to node that emily is the only one who needs change password, it might be due to a default password or due to a weak one
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_15.png" alt="image.png" />
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span><span class="p">,</span> <span class="n">hashlib</span>
 
 <span class="c1">#Funcion to genereate the PBKDF3 hash from a password
@@ -255,52 +247,54 @@ git push
 
 <span class="n">find_matching_password</span><span class="p">(</span><span class="n">dictionary_file</span><span class="p">,</span> <span class="n">target_hash</span><span class="p">,</span> <span class="n">salt</span><span class="p">)</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_16.png" alt="image.png" /></p>
-
-<p>Then are going to be able to open a session as emily and get the user flag</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_17.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_18.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_19.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_16.png" alt="image.png" />
+<br /><br />
+Then are going to be able to open a session as emily and get the user flag
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_17.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_18.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_19.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
+<p><br /><br />
+If we dig a little bit more in the machine we found that visual studio is installed, there is a recent vulnerability found in VSStandardCollectorService
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_20.png" alt="image.png" />
+<br /><br />
+We only need to fix the path where the exploit will search into VSDiagnostics
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_21.png" alt="image.png" />
+<br /><br />
+In visual studio 2022 we had need to add the W at the end of some statements
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_22.png" alt="image.png" />
+<br /><br />
+Set the payload to a new one with the path of the rev shell generated by msfvenom
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_23.png" alt="image.png" />
+<br /><br />
+To compile the project it is necessary to use Developer command prompt
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_24.png" alt="image.png" />
+<br /><br />
+Using cl set some initial parameters and get the .exe to execute 
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_25.png" alt="image.png" />
+<br /><br />
+Use runnas to get system shell
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_26.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_27.png" alt="image.png" />
+<br /><br />
+Machine pwned!!! But this machine was a pain of head i don’t think it is a medium machine, i had a lot of problems compiling the CVE i saw on internet that there is a better way compiling it using MSBUILD but it will be part of another compiled machine. We also need to compile it in release mode.
+<br /><br />
+<script src="/assets/js/matrix-overlay.js"></script></p>
 
-<p>If we dig a little bit more in the machine we found that visual studio is installed, there is a recent vulnerability found in VSStandardCollectorService</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_20.png" alt="image.png" /></p>
-
-<p>We only need to fix the path where the exploit will search into VSDiagnostics</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_21.png" alt="image.png" /></p>
-
-<p>In visual studio 2022 we had need to add the W at the end of some statements</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_22.png" alt="image.png" /></p>
-
-<p>Set the payload to a new one with the path of the rev shell generated by msfvenom</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_23.png" alt="image.png" /></p>
-
-<p>To compile the project it is necessary to use Developer command prompt</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_24.png" alt="image.png" /></p>
-
-<p>Using cl set some initial parameters and get the .exe to execute</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_25.png" alt="image.png" /></p>
-
-<p>Use runnas to get system shell</p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_26.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9/ed7f9d5f-d40e-4d0a-b9ae-5e083ab000d8-export-c53014af-0842-47be-bf08-def30d8508e9_image_27.png" alt="image.png" /></p>
-
-<p>Machine pwned!!! But this machine was a pain of head i don’t think it is a medium machine, i had a lot of problems compiling the CVE i saw on internet that there is a better way compiling it using MSBUILD but it will be part of another compiled machine. We also need to compile it in release mode.</p>
-
-<script src="/assets/js/matrix-overlay.js"></script>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

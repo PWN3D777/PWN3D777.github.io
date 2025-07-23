@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Resource-Linux-Hard</h1>
   
@@ -68,94 +60,94 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>Start with enumeration, something unusual is that there are 2 ports open running ssh behind</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled.png" alt="Untitled" /></p>
-
-<p>Looking more information about the server, add the domain in the hots files and go to start web vulnerability enumeration</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_1.png" alt="Untitled" /></p>
-
-<p>It is a service which offers ssh solutions</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_2.png" alt="Untitled" /></p>
-
-<p>Logging in, there is a section where a user can upload some information including .zip files</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_4.png" alt="Untitled" /></p>
-
+<p>Start with enumeration, something unusual is that there are 2 ports open running ssh behind
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled.png" alt="Untitled" />
+<br /><br />
+Looking more information about the server, add the domain in the hots files and go to start web vulnerability enumeration
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_1.png" alt="Untitled" />
+<br /><br />
+It is a service which offers ssh solutions 
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_2.png" alt="Untitled" />
+<br /><br />
+Logging in, there is a section where a user can upload some information including .zip files
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_4.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Looking for the initial foothold, we can see a file manage in url’s using GET requests</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_5.png" alt="Untitled" /></p>
-
-<p>But it doesn’t change anything in the server responses</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_6.png" alt="Untitled" /></p>
-
-<p>So go to create a php rev shell file and compress it to upload it</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_7.png" alt="Untitled" /></p>
-
-<p>Once it is on the server we need to trigger it, we use php <code class="language-plaintext highlighter-rouge">phar</code> wrapper, getting into uploads files, and calling the file through its hash</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Now we are data user</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_9.png" alt="Untitled" /></p>
-
-<p>There are several files where we have access, we even have can see some configuration files, where some credentials were found</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_10.png" alt="Untitled" /></p>
-
-<p>enumerate users to start a targeted attack</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_11.png" alt="Untitled" /></p>
-
-<p>We use the information previously found to access the database</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Where we are going to find users hashes, but those aren’t easy to find, so we keep it up digging into tables</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_13.png" alt="Untitled" /></p>
-
-<p>The database is disclosing information about some public keys that have been uploaded for active users, further we can find information about some certificate authorities that allegedly arethrough an update process</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_14.png" alt="Untitled" /></p>
-
-<p>The best way to analyze those files is download them like we did before, and then search for information file by file, but in this case we unzip them in the same machine and we used cat tool, but the principal file which is .har file is to large to show the whole file</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_15.png" alt="Untitled" /></p>
-
-<p>Besides there are so much information in there, so we just use cat and grep pass word to find patterns where we could get a password</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_16.png" alt="Untitled" /></p>
-
-<p>That’s how we sign in as msainristil user in ssg.htb domain</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_17.png" alt="Untitled" /></p>
-
-<p>Now we can confirm the update process, and we know that this certification authority is valid yet in the system</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_18.png" alt="Untitled" /></p>
-
-<p>So create a key pair as zzinter user</p>
-
+<p><br /><br />
+Looking for the initial foothold, we can see a file manage in url’s using GET requests
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_5.png" alt="Untitled" />
+<br /><br />
+But it doesn’t change anything in the server responses
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_6.png" alt="Untitled" />
+<br /><br />
+So go to create a php rev shell file and compress it to upload it
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_7.png" alt="Untitled" />
+<br /><br />
+Once it is on the server we need to trigger it, we use php <code class="language-plaintext highlighter-rouge">phar</code> wrapper, getting into uploads files, and calling the file through its hash
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Now we are data user
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_9.png" alt="Untitled" />
+<br /><br />
+There are several files where we have access, we even have can see some configuration files, where some credentials were found
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_10.png" alt="Untitled" />
+<br /><br />
+enumerate users to start a targeted attack
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We use the information previously found to access the database
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_12.png" alt="Untitled" />
+<br /><br />
+Where we are going to find users hashes, but those aren’t easy to find, so we keep it up digging into tables
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_13.png" alt="Untitled" />
+<br /><br />
+The database is disclosing information about some public keys that have been uploaded for active users, further we can find information about some certificate authorities that allegedly arethrough an update process
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_14.png" alt="Untitled" />
+<br /><br />
+The best way to analyze those files is download them like we did before, and then search for information file by file, but in this case we unzip them in the same machine and we used cat tool, but the principal file which is .har file is to large to show the whole file 
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_15.png" alt="Untitled" />
+<br /><br />
+Besides there are so much information in there, so we just use cat and grep pass word to find patterns where we could get a password
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_16.png" alt="Untitled" />
+<br /><br />
+That’s how we sign in as msainristil user in ssg.htb domain
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Now we can confirm the update process, and we know that this certification authority is valid yet in the system
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_18.png" alt="Untitled" />
+<br /><br />
+So create a key pair as zzinter user
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-b</span> 4096 <span class="nt">-C</span> <span class="s2">"user@domain"</span>
 <span class="nt">-t</span> <span class="nb">type</span>
 <span class="nt">-b</span> number of bits
 <span class="nt">-C</span> comment
 </code></pre></div></div>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_19.png" alt="Untitled" /></p>
-
-<p>Sign the public key with the private key of the ca, and make sure the information about this cert is valid</p>
-
+<p><br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_19.png" alt="Untitled" />
+<br /><br />
+Sign the public key with the private key of the ca, and make sure the information about this cert is valid
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-s</span> ca <span class="nt">-i</span> <span class="s2">"algo"</span> <span class="nt">-n</span> zzinter +52w key.pub
 <span class="nt">-s</span> sign
 <span class="nt">-i</span> identifier
@@ -166,80 +158,84 @@ ssh-keygen <span class="nt">-L</span> <span class="nt">-f</span> cert.pub
 <span class="nt">-L</span> shows detailed information
 <span class="nt">-f</span> file to show information
 </code></pre></div></div>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_20.png" alt="Untitled" /></p>
-
-<p>Sign in as zzinter and get user flag</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_21.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_22.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_23.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_20.png" alt="Untitled" />
+<br /><br />
+Sign in as zzinter and get user flag
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_21.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_23.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Now as zzinter user we can execute this file, which signs a public key using a request authenticated by a token disclosed</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_24.png" alt="Untitled" /></p>
-
-<p>Use that token to sign your own key and sign in as root</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_26.png" alt="Untitled" /></p>
-
-<p>But surprisingly there isn’t root flag</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_27.png" alt="Untitled" /></p>
-
-<p>As we remember there are two ssh ports open, one is a container but now we need to find the way to escape the container, there is a support user that we can see in the sudo script file, repeat the process with this user</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_28.png" alt="Untitled" /></p>
-
-<p>And sign in as support through 2222 port</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_29.png" alt="Untitled" /></p>
-
-<p>There are nothing interesting except for a new principal which is not in the original file</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_30.png" alt="Untitled" /></p>
-
-<p>Just add it in a new script with no problems to excecute</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_31.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_32.png" alt="Untitled" /></p>
-
-<p>Sign in as zzinter in 2222 port</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_33.png" alt="Untitled" /></p>
-
-<p>Review which permissions we have</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_34.png" alt="Untitled" /></p>
-
-<p>This script checks the private key of root, we need to create another script to use this command and take advantage that the private key is taken as variable and we could compare it character by character to find the whole key</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_35.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Now as zzinter user we can execute this file, which signs a public key using a request authenticated by a token disclosed
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_24.png" alt="Untitled" />
+<br /><br />
+Use that token to sign your own key and sign in as root
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_26.png" alt="Untitled" />
+<br /><br />
+But surprisingly there isn’t root flag
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_27.png" alt="Untitled" />
+<br /><br />
+As we remember there are two ssh ports open, one is a container but now we need to find the way to escape the container, there is a support user that we can see in the sudo script file, repeat the process with this user
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_28.png" alt="Untitled" />
+<br /><br />
+And sign in as support through 2222 port
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_29.png" alt="Untitled" />
+<br /><br />
+There are nothing interesting except for a new principal which is not in the original file
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_30.png" alt="Untitled" />
+<br /><br />
+Just add it in a new script with no problems to excecute
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_31.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_32.png" alt="Untitled" />
+<br /><br />
+Sign in as zzinter in 2222 port
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_33.png" alt="Untitled" />
+<br /><br />
+Review which permissions we have
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_34.png" alt="Untitled" />
+<br /><br />
+This script checks the private key of root, we need to create another script to use this command and take advantage that the private key is taken as variable and we could compare it character by character to find the whole key 
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_35.png" alt="Untitled" />
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_36.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_37.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_38.png" alt="Untitled" /></p>
-
-<p>Sign a new key with the private key of root</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_39.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!</p>
-
-<p><img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_40.png" alt="Untitled" />
+<p><br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_36.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_37.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_38.png" alt="Untitled" />
+<br /><br />
+Sign a new key with the private key of root 
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_39.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!
+<br /><br />
+<img src="/assets/images/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834/f2e392e4-dc23-475e-982d-9c09f0dbea82-export-b50ca131-adde-4d5a-a3ca-09aa4b250834_Untitled_40.png" alt="Untitled" />
+<br /><br />
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

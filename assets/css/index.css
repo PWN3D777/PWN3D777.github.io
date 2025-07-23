@@ -1,0 +1,108 @@
+.author-avatar {
+  width: 60px;       /* ajusta este valor (ej: 40px o 50px) */
+  height: 60px;      /* igual que width para mantener proporción */
+  object-fit: cover; /* recorta si es necesario */
+  border-radius: 8px;/* opcional, para esquinas redondeadas */
+}
+.hero {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el texto e imagen */
+  gap: 10px;           /* Espacio entre imagen y texto */
+}
+
+.hero .author-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;  /* Opcional: hace la imagen circular */
+}
+.hero p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 20px auto 40px auto; /* espacio entre texto y GIF */
+}
+.home-blocks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+}
+.home-blocks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.gif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.gif-center {
+  width: 300px;  /* Ajusta el tamaño del GIF */
+  height: auto;
+  display: block;
+}
+/* Estilos para los botones */
+.gif-button {
+  position: absolute;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #003b1f, #00b33c);
+  color: white;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  font-weight: bold;
+  font-size: 20px;
+  transition: background 0.3s;
+}
+
+div {
+  font-family: 'VT323', monospace;
+  font-size: 20px; /* agrandar para que se note */
+}
+.gif-button:hover {
+  background: linear-gradient(135deg, #4a148c, #7b1fa2, #9c27b0); /* Morado en hover */
+  box-shadow: 0 0 15px rgba(156, 39, 176, 0.8); /* Glow morado */
+  background-position: right center; /* Efecto dinámico en hover */
+  transform: scale(1.05);
+}
+/* Posiciones específicas */
+.btn-top-left {
+  top: 130px;
+  left: -150px;
+}
+
+.btn-top-right {
+  top: 130px;
+  right: -150px;
+}
+
+.btn-bottom-center {
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: center;
+}
+.btn-bottom-center:hover {
+  transform: translateX(-50%) scale(1.05); /* Combinar translate y scale */
+}
+p {
+  max-width: 600px;
+  margin: auto;
+  line-height: 1.6;
+}
+.gif-button {
+  text-decoration: none;
+}
+
+.gif-button:hover {
+  text-decoration: none;
+}
+.site-footer {
+  display: none !important;
+}

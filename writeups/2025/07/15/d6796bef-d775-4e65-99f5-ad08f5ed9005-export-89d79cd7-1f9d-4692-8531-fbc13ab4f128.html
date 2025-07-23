@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Vintage-Windows-Hard</h1>
   
@@ -67,237 +59,240 @@
   <h1 id="vintage">Vintage</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start enumerating with a given username and password</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image.png" alt="image.png" /></p>
-
-<p>Check all ports open, something curious is that there are no web application around there, but there are a whole Active Directory infrastructure deployed</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_1.png" alt="image.png" /></p>
-
-<p>We can even check if it is possible to execute commands remotely by evil-winrm</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_2.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating with a given username and password
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image.png" alt="image.png" />
+<br /><br />
+Check all ports open, something curious is that there are no web application around there, but there are a whole Active Directory infrastructure deployed
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_1.png" alt="image.png" />
+<br /><br />
+We can even check if it is possible to execute commands remotely by evil-winrm 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_2.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>As we don’t have much to explore begin trying to enumerate shares or users, but it wasn’t possible. We might need to set <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code> file to perform valid authentication in the server</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_3.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_4.png" alt="image.png" /></p>
-
-<p>But first let’s enumerate the active directory as we can download .json files with that info</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_5.png" alt="image.png" /></p>
-
-<p>Once inside we can note that L.BIANCHI_ADM user has high privileges, he even has  DCSync with the domain which means he could dump secrets or perform other privileged tasks</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_6.png" alt="image.png" /></p>
-
-<p>At this point we can see that he even has privileges over all users in the domain, so mark him as a high value target</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_8.png" alt="image.png" /></p>
-
-<p>We can also enumerate users here, you can see P.ROSA who is pwned from the start of this penetration testing</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_9.png" alt="image.png" /></p>
-
-<p>Set the file using Regular Expressions</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_10.png" alt="image.png" /></p>
-
-<p>It looks like we don’t have more options that just try to exploit some privileges with ROSA but she hasn’t got privileges yet, she is only member of SERVICEMANAGERS</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_11.png" alt="image.png" /></p>
-
-<p>May be other user would have the same credentials. But, something is wrong with the domain</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_12.png" alt="image.png" /></p>
-
-<p>It’s time to set <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code> to avoid problems with kerberos</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_13.png" alt="image.png" /></p>
-
-<p>It should be as follow</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_14.png" alt="image.png" /></p>
-
-<p>After all we keep getting not supported error, this might be due crackmapexec is not longer maintained it could encounter some errors</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_15.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_16.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_17.png" alt="image.png" /></p>
-
-<p>Try it again</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_18.png" alt="image.png" /></p>
-
-<p>But this time use netexec (nxc) and perform rid brute attack successfully</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_19.png" alt="image.png" /></p>
-
-<p>Now use grep and cut to filter only valide users</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_20.png" alt="image.png" /></p>
-
-<p>Comparing the 2 file we got there are almost the same users the only difference is capital letters, active directory don’t used to be case-sensitive in users fields, but let’s use the second file to be sure. Also we users account like DC01 in here</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_21.png" alt="image.png" /></p>
-
-<p>$pre2k$ is a useful tool to enumerate old objects checking for bad configurations, in this case we found an access as FS01$ account with predetermined creds it is used because FS01 is part of PRE-WINDOWS 2000 COMPATIBLE ACCESS group</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_22.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_23.png" alt="image.png" /></p>
-
-<p>It’s time to check who is FS01$ and what it could do</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_24.png" alt="image.png" /></p>
-
-<p>It is member of Domaincompuers, and Domaincomputers has ReadGMSAPassword right over GMSA01 which is a group managed service account</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_25.png" alt="image.png" /></p>
-
-<p>Authenticated as FS01 we might be able to get info of that Group Managed Service Account</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_26.png" alt="image.png" /></p>
-
-<p>We effectively have got information, we tried to get msDS-ManagedPasswrodId</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_27.png" alt="image.png" /></p>
-
-<p>A hash is retrieved but this is not what we are looking for</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_28.png" alt="image.png" /></p>
-
-<p>Let’s break the point getting <code class="language-plaintext highlighter-rouge">msDS-ManagedPassword</code> NTLM hash is retrieved</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_29.png" alt="image.png" /></p>
-
-<p>That’s how we impersonate GMSA01$ service account</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_30.png" alt="image.png" /></p>
-
-<p>We have generic write rights over service managers</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_31.png" alt="image.png" /></p>
-
-<p>Try to add a to rosa in here</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_32.png" alt="image.png" /></p>
-
-<p>Now as part of SERVICEMANAGERS group we have generic-all rights over all service accounts</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_33.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_34.png" alt="image.png" /></p>
-
-<p>We might try to perform a Pre-authentication attack using GetNPUsers which will retrieve users who have “Do not require Kerberos preauthentication” set</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_35.png" alt="image.png" /></p>
-
-<p>It seems that any user have this attribute set, as we saw before we have generic rights over service accounts, we could set that flag ourselves</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_36.png" alt="image.png" /></p>
-
-<p>After that only SVC_ARK hash is retrieved, but after a while we discovered that it is not useful in here, we need to find the reason why svc_sql is not retrieving a hash, try to remove the uac set as ACCOUNTDISABLE</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_37.png" alt="image.png" /></p>
-
-<p>The account were disabled and now we can get the hash</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_38.png" alt="image.png" /></p>
-
-<p>Cracking it using john</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_39.png" alt="image.png" /></p>
-
-<p>Spray the password using kerbrute to find that it is a reused password and we can access as C.Neri</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_40.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_41.png" alt="image.png" /></p>
-
-<p>Save her Ticket Granting Ticket and get the user flag</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_42.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_43.png" alt="image.png" /></p>
-
+<p><br /><br />
+As we don’t have much to explore begin trying to enumerate shares or users, but it wasn’t possible. We might need to set <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code> file to perform valid authentication in the server
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_3.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_4.png" alt="image.png" />
+<br /><br />
+But first let’s enumerate the active directory as we can download .json files with that info
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_5.png" alt="image.png" />
+<br /><br />
+Once inside we can note that L.BIANCHI_ADM user has high privileges, he even has  DCSync with the domain which means he could dump secrets or perform other privileged tasks
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_6.png" alt="image.png" />
+<br /><br />
+At this point we can see that he even has privileges over all users in the domain, so mark him as a high value target
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_8.png" alt="image.png" />
+<br /><br />
+We can also enumerate users here, you can see P.ROSA who is pwned from the start of this penetration testing 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_9.png" alt="image.png" />
+<br /><br />
+Set the file using Regular Expressions 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_10.png" alt="image.png" />
+<br /><br />
+It looks like we don’t have more options that just try to exploit some privileges with ROSA but she hasn’t got privileges yet, she is only member of SERVICEMANAGERS
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_11.png" alt="image.png" />
+<br /><br />
+May be other user would have the same credentials. But, something is wrong with the domain
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_12.png" alt="image.png" />
+<br /><br />
+It’s time to set <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code> to avoid problems with kerberos
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_13.png" alt="image.png" />
+<br /><br />
+It should be as follow
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_14.png" alt="image.png" />
+<br /><br />
+After all we keep getting not supported error, this might be due crackmapexec is not longer maintained it could encounter some errors
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_15.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_16.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_17.png" alt="image.png" />
+<br /><br />
+Try it again 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_18.png" alt="image.png" />
+<br /><br />
+But this time use netexec (nxc) and perform rid brute attack successfully 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_19.png" alt="image.png" />
+<br /><br />
+Now use grep and cut to filter only valide users
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_20.png" alt="image.png" />
+<br /><br />
+Comparing the 2 file we got there are almost the same users the only difference is capital letters, active directory don’t used to be case-sensitive in users fields, but let’s use the second file to be sure. Also we users account like DC01 in here
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_21.png" alt="image.png" />
+<br /><br />
+$pre2k$ is a useful tool to enumerate old objects checking for bad configurations, in this case we found an access as FS01$ account with predetermined creds it is used because FS01 is part of PRE-WINDOWS 2000 COMPATIBLE ACCESS group
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_22.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_23.png" alt="image.png" />
+<br /><br />
+It’s time to check who is FS01$ and what it could do
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_24.png" alt="image.png" />
+<br /><br />
+It is member of Domaincompuers, and Domaincomputers has ReadGMSAPassword right over GMSA01 which is a group managed service account
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_25.png" alt="image.png" />
+<br /><br />
+Authenticated as FS01 we might be able to get info of that Group Managed Service Account
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_26.png" alt="image.png" />
+<br /><br />
+We effectively have got information, we tried to get msDS-ManagedPasswrodId
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_27.png" alt="image.png" />
+<br /><br />
+A hash is retrieved but this is not what we are looking for
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_28.png" alt="image.png" />
+<br /><br />
+ Let’s break the point getting <code class="language-plaintext highlighter-rouge">msDS-ManagedPassword</code> NTLM hash is retrieved
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_29.png" alt="image.png" />
+<br /><br />
+That’s how we impersonate GMSA01$ service account
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_30.png" alt="image.png" />
+<br /><br />
+We have generic write rights over service managers 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_31.png" alt="image.png" />
+<br /><br />
+Try to add a to rosa in here
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_32.png" alt="image.png" />
+<br /><br />
+Now as part of SERVICEMANAGERS group we have generic-all rights over all service accounts 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_33.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_34.png" alt="image.png" />
+<br /><br />
+We might try to perform a Pre-authentication attack using GetNPUsers which will retrieve users who have “Do not require Kerberos preauthentication” set 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_35.png" alt="image.png" />
+<br /><br />
+It seems that any user have this attribute set, as we saw before we have generic rights over service accounts, we could set that flag ourselves
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_36.png" alt="image.png" />
+<br /><br />
+After that only SVC_ARK hash is retrieved, but after a while we discovered that it is not useful in here, we need to find the reason why svc_sql is not retrieving a hash, try to remove the uac set as ACCOUNTDISABLE 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_37.png" alt="image.png" />
+<br /><br />
+The account were disabled and now we can get the hash
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_38.png" alt="image.png" />
+<br /><br />
+Cracking it using john
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_39.png" alt="image.png" />
+<br /><br />
+Spray the password using kerbrute to find that it is a reused password and we can access as C.Neri 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_40.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_41.png" alt="image.png" />
+<br /><br />
+Save her Ticket Granting Ticket and get the user flag
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_42.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_43.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>We tried to extract password stored with sharpdpapi but there is an antivirus that detect this as malicious actions, but we are low level hackers, so we tried to extract them by ourselves manually.</p>
-
-<p>Listing child items inside our user folder we know that we have access to some interenting directories like AppData</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_44.png" alt="image.png" /></p>
-
-<p>Follow paths until find Microsoft protected credentials</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_45.png" alt="image.png" /></p>
-
-<p>Now save it in a <code class="language-plaintext highlighter-rouge">.blob</code> file</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_46.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_47.png" alt="image.png" /></p>
-
-<p>We have the encrypted credential but we need a master key, otherwise we won’t have access to plain text password</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_48.png" alt="image.png" /></p>
-
-<p>It seems like there are 2 master keys, save them both as a <code class="language-plaintext highlighter-rouge">.bin</code> file</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_49.png" alt="image.png" /></p>
-
-<p>Download all this locally to start playing</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_50.png" alt="image.png" /></p>
-
-<p>Decrypt the masterkey with impacket-dpapi using the password to logon used previously, once retrieved saved in a shell variable</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_51.png" alt="image.png" /></p>
-
-<p>Use that master key to decrypt the .blob file which is the password for <code class="language-plaintext highlighter-rouge">c.neri_adm</code></p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_52.png" alt="image.png" /></p>
-
-<p>Access to the system as the new admin user</p>
-
-<p>Check privileges for the new admin user</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_53.png" alt="image.png" /></p>
-
-<p>Enable again sql account</p>
-
-<p>Set its service principal name to cifs/x (Common Internet File System)</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_54.png" alt="image.png" /></p>
-
-<p>Add this user to delegateadmins</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_55.png" alt="image.png" /></p>
-
-<p>Now as member of delegatedadmins sql user could impersonate admins account in the domain, as we set a new service principal name to it we use this to impersonate L.BIANCHI_ADM user and steal his TGS</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_56.png" alt="image.png" /></p>
-
-<p>That’s how we can even dump hashes</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_57.png" alt="image.png" /></p>
-
-<p>We can even execute commands logon as L.Bianchi with hist ticket</p>
-
-<p><img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_58.png" alt="image.png" /></p>
-
-<p>Machine pwned!@!!
+<p><br /><br />
+We tried to extract password stored with sharpdpapi but there is an antivirus that detect this as malicious actions, but we are low level hackers, so we tried to extract them by ourselves manually.
+<br /><br />
+Listing child items inside our user folder we know that we have access to some interenting directories like AppData
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_44.png" alt="image.png" />
+<br /><br />
+Follow paths until find Microsoft protected credentials
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_45.png" alt="image.png" />
+<br /><br />
+Now save it in a <code class="language-plaintext highlighter-rouge">.blob</code> file
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_46.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_47.png" alt="image.png" />
+<br /><br />
+We have the encrypted credential but we need a master key, otherwise we won’t have access to plain text password
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_48.png" alt="image.png" />
+<br /><br />
+It seems like there are 2 master keys, save them both as a <code class="language-plaintext highlighter-rouge">.bin</code> file
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_49.png" alt="image.png" />
+<br /><br />
+Download all this locally to start playing
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_50.png" alt="image.png" />
+<br /><br />
+Decrypt the masterkey with impacket-dpapi using the password to logon used previously, once retrieved saved in a shell variable
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_51.png" alt="image.png" />
+<br /><br />
+Use that master key to decrypt the .blob file which is the password for <code class="language-plaintext highlighter-rouge">c.neri_adm</code>
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_52.png" alt="image.png" />
+<br /><br />
+Access to the system as the new admin user
+<br /><br />
+Check privileges for the new admin user
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_53.png" alt="image.png" />
+<br /><br />
+Enable again sql account
+<br /><br />
+Set its service principal name to cifs/x (Common Internet File System)
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_54.png" alt="image.png" />
+<br /><br />
+Add this user to delegateadmins
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_55.png" alt="image.png" />
+<br /><br />
+Now as member of delegatedadmins sql user could impersonate admins account in the domain, as we set a new service principal name to it we use this to impersonate L.BIANCHI_ADM user and steal his TGS
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_56.png" alt="image.png" />
+<br /><br />
+That’s how we can even dump hashes 
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_57.png" alt="image.png" />
+<br /><br />
+We can even execute commands logon as L.Bianchi with hist ticket
+<br /><br />
+<img src="/assets/images/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128/d6796bef-d775-4e65-99f5-ad08f5ed9005-export-89d79cd7-1f9d-4692-8531-fbc13ab4f128_image_58.png" alt="image.png" />
+<br /><br />
+Machine pwned!@!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

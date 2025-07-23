@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Headless-Linux-Easy</h1>
   
@@ -67,82 +59,85 @@
   <h1 id="headless">Headless</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled.png" alt="Untitled" /></p>
-
-<p>In the enumeration section we found a upnp service, with a active cookie seted, we may have something interesting right there.</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_2.png" alt="Untitled" /></p>
-
-<p>There is a GUI with a few functionalities, one of them is a contact support section with input elements</p>
-
+<p><br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled.png" alt="Untitled" />
+<br /><br />
+In the enumeration section we found a upnp service, with a active cookie seted, we may have something interesting right there.
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_2.png" alt="Untitled" />
+<br /><br />
+There is a GUI with a few functionalities, one of them is a contact support section with input elements
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_3.png" alt="Untitled" /></p>
-
-<p>We try to exploit a XSS using the fact that the service uses a cookie to work properly.</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_4.png" alt="Untitled" /></p>
-
-<p>We were detected by the system, someone can think we have no opportunities here, but before let’s open Burpsuite to check all the parameters as should be.</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_5.png" alt="Untitled" /></p>
-
-<p>The accept language parameter is no sanitized, so we sucessfully have executed XSS</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_6.png" alt="Untitled" /></p>
-
-<p>On the current directory this cookie is irrelevant, we proceed to fuzz directories</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_7.png" alt="Untitled" /></p>
-
-<p>Dashboard sounds interesting</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_8.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_9.png" alt="Untitled" /></p>
-
-<p>We set the cookie a finally break out the foothold</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_10.png" alt="Untitled" /></p>
-
-<p>There is date input which is not properly sanitized, just with a semicolon we have RCE</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_11.png" alt="Untitled" /></p>
-
-<p>Set up a reverse shell</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_12.png" alt="Untitled" /></p>
-
-<p>User flag got it</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_13.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_3.png" alt="Untitled" />
+<br /><br />
+We try to exploit a XSS using the fact that the service uses a cookie to work properly.
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_4.png" alt="Untitled" />
+<br /><br />
+We were detected by the system, someone can think we have no opportunities here, but before let’s open Burpsuite to check all the parameters as should be.
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_5.png" alt="Untitled" />
+<br /><br />
+The accept language parameter is no sanitized, so we sucessfully have executed XSS
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_6.png" alt="Untitled" />
+<br /><br />
+On the current directory this cookie is irrelevant, we proceed to fuzz directories
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_7.png" alt="Untitled" />
+<br /><br />
+Dashboard sounds interesting
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_8.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_9.png" alt="Untitled" />
+<br /><br />
+We set the cookie a finally break out the foothold
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_10.png" alt="Untitled" />
+<br /><br />
+There is date input which is not properly sanitized, just with a semicolon we have RCE
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_11.png" alt="Untitled" />
+<br /><br />
+Set up a reverse shell
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_12.png" alt="Untitled" />
+<br /><br />
+User flag got it 
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_13.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>We have root permissions in a binary called syscheck</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Cat it to see what is actually doing, It is executing “init.sh” we tried to find the file, but it is no there</p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_15.png" alt="Untitled" /></p>
-
-<p>So we create the file, give execution permisses and run the binary.</p>
-
+<p><br /><br />
+We have root permissions in a binary called syscheck
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Cat it to see what is actually doing, It is executing “init.sh” we tried to find the file, but it is no there
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_15.png" alt="Untitled" />
+<br /><br />
+So we create the file, give execution permisses and run the binary.
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">##It will run a shell using the permisses of the user who is running the file</span>
 <span class="c">##In this case it would be root</span>
 <span class="nb">chmod </span>u+s /bin/bash
 </code></pre></div></div>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_17.png" alt="Untitled" /></p>
-
-<p>Machine pwned!
+<p><br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398/208daac4-1a1e-45d3-97c6-62819c3f78e0-export-a940db0c-488a-4c27-ab23-c6a467080398_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Machine pwned!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

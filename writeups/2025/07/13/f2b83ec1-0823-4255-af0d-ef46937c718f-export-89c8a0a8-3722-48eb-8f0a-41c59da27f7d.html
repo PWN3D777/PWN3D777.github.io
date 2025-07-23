@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Sea-Linux-Easy</h1>
   
@@ -68,77 +60,82 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>Start with enumeration</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image.png" alt="image.png" /></p>
-
-<p>Two ports opened, let’s see what is happening on port 80</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_1.png" alt="image.png" /></p>
-
-<p>There is a cookie, we might need to steal it, but we tried reflected xssand it didn’t work, keep going the enumeration</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_2.png" alt="image.png" /></p>
-
+<p>Start with enumeration 
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image.png" alt="image.png" />
+<br /><br />
+Two ports opened, let’s see what is happening on port 80
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_1.png" alt="image.png" />
+<br /><br />
+There is a cookie, we might need to steal it, but we tried reflected xssand it didn’t work, keep going the enumeration
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_2.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>The resource code show us a directory path where we can search</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_3.png" alt="image.png" /></p>
-
-<p>Using dirsearch we found the readme which can give us more information about the page</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_4.png" alt="image.png" /></p>
-
-<p>WonderCMS is used</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_5.png" alt="image.png" /></p>
-
-<p>Searching for vulnerabilities, we have found a stored XSS</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_6.png" alt="image.png" /></p>
-
+<p><br /><br />
+The resource code show us a directory path where we can search
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_3.png" alt="image.png" />
+<br /><br />
+Using dirsearch we found the readme which can give us more information about the page
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_4.png" alt="image.png" />
+<br /><br />
+WonderCMS is used
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_5.png" alt="image.png" />
+<br /><br />
+Searching for vulnerabilities, we have found a stored XSS
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_6.png" alt="image.png" />
+<br /><br /></p>
 <ol>
-  <li>First we need to store the xss.js file which will save a .zip file</li>
-  <li>The xss.js file will call the .zip file to get a shell</li>
+  <li>First we need to store the xss.js file which will save a .zip file
+<br /><br /></li>
+  <li>The xss.js file will call the .zip file to get a shell
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_8.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_9.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_10.png" alt="image.png" />
+<br /><br />
+There are credentials on the database file
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_11.png" alt="image.png" />
+<br /><br />
+Crack it, don’t forget to delete bashslash <code class="language-plaintext highlighter-rouge">\</code> to perform the tool with the right format
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_12.png" alt="image.png" />
+<br /><br />
+    <h1 id="3priv-esc">3.Priv esc</h1>
+    <p><br /><br />
+Enumerating local ports there is a http service, go ahead and port forward this 
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_13.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_14.png" alt="image.png" />
+<br /><br />
+Use the same creds for log in 
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_15.png" alt="image.png" />
+<br /><br />
+There is a monitor system which has a section where someone can read log files, but this component has root permissions so try to get the flag via cat 
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_16.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_17.png" alt="image.png" />
+<br /><br />
+Machine Pwned!!
+<script src="/assets/js/matrix-overlay.js"></script></p>
+  </li>
 </ol>
 
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_7.png" alt="image.png" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_8.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_9.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_10.png" alt="image.png" /></p>
-
-<p>There are credentials on the database file</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_11.png" alt="image.png" /></p>
-
-<p>Crack it, don’t forget to delete bashslash <code class="language-plaintext highlighter-rouge">\</code> to perform the tool with the right format</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_12.png" alt="image.png" /></p>
-
-<h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Enumerating local ports there is a http service, go ahead and port forward this</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_13.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_14.png" alt="image.png" /></p>
-
-<p>Use the same creds for log in</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_15.png" alt="image.png" /></p>
-
-<p>There is a monitor system which has a section where someone can read log files, but this component has root permissions so try to get the flag via cat</p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_16.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d/f2b83ec1-0823-4255-af0d-ef46937c718f-export-89c8a0a8-3722-48eb-8f0a-41c59da27f7d_image_17.png" alt="image.png" /></p>
-
-<p>Machine Pwned!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

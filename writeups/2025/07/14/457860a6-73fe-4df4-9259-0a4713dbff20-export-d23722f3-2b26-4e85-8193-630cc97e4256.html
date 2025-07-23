@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Instant-Linux-Medium</h1>
   
@@ -67,137 +59,140 @@
   <h1 id="instant">Instant</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start enumerating ports</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image.png" alt="image.png" /></p>
-
-<p>There is a web application running</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_1.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating ports 
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image.png" alt="image.png" />
+<br /><br />
+There is a web application running 
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_1.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>There are nothing much there, we can download a .apk file, decompile it in apktool</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_2.png" alt="image.png" /></p>
-
-<p>We can enumerate passwords, paths or subdomains, in this case the got success in subdomains</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_3.png" alt="image.png" /></p>
-
-<p>We have not got much in the first one</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_4.png" alt="image.png" /></p>
-
-<p>In the second one, we have swagger which is a tool box where we can manage RESTful webs.</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_5.png" alt="image.png" /></p>
-
-<p>We can perform many functionalities like add a user using GET  or POST requests</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_6.png" alt="image.png" /></p>
-
-<p>At some admin paths it is needed an authorization</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_7.png" alt="image.png" /></p>
-
-<p>Search inside of the decompiled .apk to find some king of token in the source code</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_8.png" alt="image.png" /></p>
-
-<p>We have a path with AdminActivities which match according with what are we doing in the api</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_9.png" alt="image.png" /></p>
-
-<p>That’s it, we’ve got a JWT</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_10.png" alt="image.png" /></p>
-
-<p>If we inspect it we will find that its owner is admin</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_11.png" alt="image.png" /></p>
-
-<p>We need to find a way to execute commands, or disclose information of the system, read admin log seems promising</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_12.png" alt="image.png" /></p>
-
-<p>A LFI with path traversal is found</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_13.png" alt="image.png" /></p>
-
-<p>Now we can enumerate users with bash console, it seems to be only root and shirohige</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_14.png" alt="image.png" /></p>
-
-<p>Try to steal the private key for shirohige</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_15.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_16.png" alt="image.png" /></p>
-
-<p>Got the user flag</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_17.png" alt="image.png" /></p>
-
+<p><br /><br />
+There are nothing much there, we can download a .apk file, decompile it in apktool
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_2.png" alt="image.png" />
+<br /><br />
+We can enumerate passwords, paths or subdomains, in this case the got success in subdomains
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_3.png" alt="image.png" />
+<br /><br />
+We have not got much in the first one
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_4.png" alt="image.png" />
+<br /><br />
+In the second one, we have swagger which is a tool box where we can manage RESTful webs.
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_5.png" alt="image.png" />
+<br /><br />
+We can perform many functionalities like add a user using GET  or POST requests
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_6.png" alt="image.png" />
+<br /><br />
+At some admin paths it is needed an authorization
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_7.png" alt="image.png" />
+<br /><br />
+Search inside of the decompiled .apk to find some king of token in the source code
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_8.png" alt="image.png" />
+<br /><br />
+We have a path with AdminActivities which match according with what are we doing in the api
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_9.png" alt="image.png" />
+<br /><br />
+That’s it, we’ve got a JWT
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_10.png" alt="image.png" />
+<br /><br />
+If we inspect it we will find that its owner is admin
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_11.png" alt="image.png" />
+<br /><br />
+We need to find a way to execute commands, or disclose information of the system, read admin log seems promising 
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_12.png" alt="image.png" />
+<br /><br />
+A LFI with path traversal is found
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_13.png" alt="image.png" />
+<br /><br />
+Now we can enumerate users with bash console, it seems to be only root and shirohige
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_14.png" alt="image.png" />
+<br /><br />
+Try to steal the private key for shirohige 
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_15.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_16.png" alt="image.png" />
+<br /><br />
+Got the user flag
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_17.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Enumerating ports trying to find private services running</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_18.png" alt="image.png" /></p>
-
-<p>But they are just the two ones the we already know</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_19.png" alt="image.png" /></p>
-
-<p>There is a backup file saving solar-PUTTY sessions</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_20.png" alt="image.png" /></p>
-
-<p>We try to use a tool to decrypt those kinds of files, but something else like a password is needed</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_21.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_22.png" alt="image.png" /></p>
-
-<p>Inside of the home directory there are mode details about the project, there are even a database with hashes</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_23.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_24.png" alt="image.png" /></p>
-
-<p>Initially we found a werkzeug hash which is not supported by hashcat or john</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_25.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_26.png" alt="image.png" /></p>
-
-<p>But after a little research we discover that if we make some encoding over specific sections of the hash we will be able to convert the format to a common PBKDF2 hash</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_27.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_28.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_29.png" alt="image.png" /></p>
-
-<p>The new hash generated</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_30.png" alt="image.png" /></p>
-
-<p>Use hashcat  -m 10900 (PBKDF2-HMAC-SHA256) and get the password</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_31.png" alt="image.png" /></p>
-
-<p>Got the root password</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_32.png" alt="image.png" /></p>
-
-<p>And pwn the machine</p>
-
-<p><img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_33.png" alt="image.png" /></p>
-
-<p>Machine PWNED@!!!!!
+<p><br /><br />
+Enumerating ports trying to find private services running
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_18.png" alt="image.png" />
+<br /><br />
+But they are just the two ones the we already know
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_19.png" alt="image.png" />
+<br /><br />
+There is a backup file saving solar-PUTTY sessions
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_20.png" alt="image.png" />
+<br /><br />
+We try to use a tool to decrypt those kinds of files, but something else like a password is needed
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_21.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_22.png" alt="image.png" />
+<br /><br />
+Inside of the home directory there are mode details about the project, there are even a database with hashes
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_23.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_24.png" alt="image.png" />
+<br /><br />
+Initially we found a werkzeug hash which is not supported by hashcat or john
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_25.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_26.png" alt="image.png" />
+<br /><br />
+But after a little research we discover that if we make some encoding over specific sections of the hash we will be able to convert the format to a common PBKDF2 hash
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_27.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_28.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_29.png" alt="image.png" />
+<br /><br />
+The new hash generated
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_30.png" alt="image.png" />
+<br /><br />
+Use hashcat  -m 10900 (PBKDF2-HMAC-SHA256) and get the password
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_31.png" alt="image.png" />
+<br /><br />
+Got the root password
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_32.png" alt="image.png" />
+<br /><br />
+And pwn the machine
+<br /><br />
+<img src="/assets/images/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256/457860a6-73fe-4df4-9259-0a4713dbff20-export-d23722f3-2b26-4e85-8193-630cc97e4256_image_33.png" alt="image.png" />
+<br /><br />
+Machine PWNED@!!!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

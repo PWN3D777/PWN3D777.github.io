@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Usage-Linux-Easy</h1>
   
@@ -67,90 +59,95 @@
   <h1 id="usage">Usage</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>A http and ssh ports open</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled.png" alt="Untitled" /></p>
-
-<p>We can log in and have access to user section</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_1.png" alt="Untitled" /></p>
-
-<p>Just a single quote generate a internal server error, it is potentially vulnerable to sql injection</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_2.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_3.png" alt="Untitled" /></p>
-
+<p><br /><br />
+A http and ssh ports open
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled.png" alt="Untitled" />
+<br /><br />
+We can log in and have access to user section 
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_1.png" alt="Untitled" />
+<br /><br />
+Just a single quote generate a internal server error, it is potentially vulnerable to sql injection
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_2.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_3.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>To specify the parameters properly on the sql injection we copy the whole request and save it as requirements for the injection.</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Make a simple sql injeciton to reconnaissance the specific vulnerability</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_5.png" alt="Untitled" /></p>
-
-<p>A database were found</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_6.png" alt="Untitled" /></p>
-
-<p>Add parameters to find inside of the command, for some reason sqlman wasn’t able to identify admin_users table, i check information on internet and i got the value.</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Crack it and log in as administrator</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_9.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_10.png" alt="Untitled" /></p>
-
-<p>On settings we can upload the profile image, we realize it has <a href="https://xavibel.com/2020/03/23/unrestricted-file-upload-in-frozennode-laravel-administrator/">arbitrary file upload vulnerablity</a></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_11.png" alt="Untitled" /></p>
-
-<p>Download the uploaded “image” to execute the reverse shell (CVE-2020-10963)</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_13.png" alt="Untitled" /></p>
-
-<p>User flag got it!</p>
-
+<p><br /><br />
+To specify the parameters properly on the sql injection we copy the whole request and save it as requirements for the injection.
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Make a simple sql injeciton to reconnaissance the specific vulnerability
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_5.png" alt="Untitled" />
+<br /><br />
+A database were found
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_6.png" alt="Untitled" />
+<br /><br />
+Add parameters to find inside of the command, for some reason sqlman wasn’t able to identify admin_users table, i check information on internet and i got the value.
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Crack it and log in as administrator
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_9.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_10.png" alt="Untitled" />
+<br /><br />
+On settings we can upload the profile image, we realize it has <a href="https://xavibel.com/2020/03/23/unrestricted-file-upload-in-frozennode-laravel-administrator/">arbitrary file upload vulnerablity</a>
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_11.png" alt="Untitled" />
+<br /><br />
+Download the uploaded “image” to execute the reverse shell (CVE-2020-10963)
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_13.png" alt="Untitled" />
+<br /><br />
+User flag got it!
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Here we are as dash user, but we need to make a lateral movement to access to bash as xander, there are some hidden files on home, after crafting we got credentials.</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_14.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_15.png" alt="Untitled" /></p>
-
-<p>A binary if executed with root privileges, we cat it, it is compressing some files so it is possible to use <a href="https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks">Wildcards Spare tricks</a></p>
-
+<p><br /><br />
+Here we are as dash user, but we need to make a lateral movement to access to bash as xander, there are some hidden files on home, after crafting we got credentials.
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_15.png" alt="Untitled" />
+<br /><br />
+A binary if executed with root privileges, we cat it, it is compressing some files so it is possible to use <a href="https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks">Wildcards Spare tricks</a>
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span>
 </code></pre></div></div>
-
+<p><br /><br /></p>
 <ol>
-  <li>Find the routes of the files, and give permissions to write</li>
-  <li>Create a file to link a file of out interest</li>
-  <li>ln -s will create a symbolink link with the private key we want to find.</li>
+  <li>Find the routes of the files, and give permissions to write
+<br /><br /></li>
+  <li>Create a file to link a file of out interest
+<br /><br /></li>
+  <li>ln -s will create a symbolink link with the private key we want to find.
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_16.png" alt="Untitled" />
+<br /><br />
+Execute the normal functionality of the binary
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Flag and credentials found
+<br /><br />
+<img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_18.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!!
+<script src="/assets/js/matrix-overlay.js"></script></li>
 </ol>
 
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_16.png" alt="Untitled" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>Execute the normal functionality of the binary</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_17.png" alt="Untitled" /></p>
-
-<p>Flag and credentials found</p>
-
-<p><img src="/assets/images/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf/984d04a9-aa7d-4816-aed5-e8ab7c47caf4-export-d72262f8-d536-4ea6-ae8d-3cb78f19ebaf_Untitled_18.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

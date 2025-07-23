@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">MonitorsThree-Linux-Medium</h1>
   
@@ -67,171 +59,170 @@
   <h1 id="monitorsthree">MonitorsThree</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with enumeration, there are two ports open</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image.png" alt="image.png" /></p>
-
-<p>Nothing interesting is disclosed in the main page</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_1.png" alt="image.png" /></p>
-
-<p>There is a log in page</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_2.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_3.png" alt="image.png" /></p>
-
-<p>And we can recover our password, it’s possible to find sql injections in here because normally it’s necessary to find a user in a database to proceed with password recovery workflow, so we check if the input is sanitized</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_4.png" alt="image.png" /></p>
-
-<p>Good, it’s vulnerable, keep it up fuzz subdomains and find cacti</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_5.png" alt="image.png" /></p>
-
-<p>There is a version disclosed but after a research we just found a authenticated vulnerability so most probably is to find the way to sign in here with credentials found in a sql injection</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_6.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start with enumeration, there are two ports open
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image.png" alt="image.png" />
+<br /><br />
+Nothing interesting is disclosed in the main page
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_1.png" alt="image.png" />
+<br /><br />
+There is a log in page
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_2.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_3.png" alt="image.png" />
+<br /><br />
+And we can recover our password, it’s possible to find sql injections in here because normally it’s necessary to find a user in a database to proceed with password recovery workflow, so we check if the input is sanitized
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_4.png" alt="image.png" />
+<br /><br />
+Good, it’s vulnerable, keep it up fuzz subdomains and find cacti
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_5.png" alt="image.png" />
+<br /><br />
+There is a version disclosed but after a research we just found a authenticated vulnerability so most probably is to find the way to sign in here with credentials found in a sql injection
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_6.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Sqlmap it’s a great tool to address this vulnerability, but in case of htb is really slow, we spend more than 2 hours to get this information thanks to a time based sql injection found it by sqlmap</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_8.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_9.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_10.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_11.png" alt="image.png" /></p>
-
-<p>But we also have the option to use a bool based sql injection in this scenario, and we would optimize our time from 2 hours to one minute, i explained this here.</p>
-
-<p><a href="https://www.notion.so/Bool-based-SQL-injection-fffb952552918089be96c15dab9994ff?pvs=21">Bool based SQL injection</a></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_12.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_13.png" alt="image.png" /></p>
-
-<p>Cacti V 1.2.26 is vulnerable to <strong>CVE-2024-25641</strong> where we can upload a malicious package with a base 64 reverse shell waiting to be executed</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_14.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_15.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_16.png" alt="image.png" /></p>
-
-<p>Upload the package and trigger the exploit calling to http://[cactiurl]/resource/test.php</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_17.png" alt="image.png" /></p>
-
-<p>Here we have credentials for a database, but after a long seeking there isn’t valuable here</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_18.png" alt="image.png" /></p>
-
-<p>Enumerate every file in search of credentials and find other credentials for a sql database</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_19.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_20.png" alt="image.png" /></p>
-
-<p>Sign in to this database skipping the <code class="language-plaintext highlighter-rouge">_</code></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_21.png" alt="image.png" /></p>
-
-<p>Find the hash and crack it to get the user flag</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_22.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_23.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_24.png" alt="image.png" /></p>
-
+<p><br /><br />
+Sqlmap it’s a great tool to address this vulnerability, but in case of htb is really slow, we spend more than 2 hours to get this information thanks to a time based sql injection found it by sqlmap
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_8.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_9.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_10.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_11.png" alt="image.png" />
+<br /><br />
+But we also have the option to use a bool based sql injection in this scenario, and we would optimize our time from 2 hours to one minute, i explained this here.
+<br /><br />
+<a href="https://www.notion.so/Bool-based-SQL-injection-fffb952552918089be96c15dab9994ff?pvs=21">Bool based SQL injection</a> 
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_12.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_13.png" alt="image.png" />
+<br /><br />
+Cacti V 1.2.26 is vulnerable to <strong>CVE-2024-25641</strong> where we can upload a malicious package with a base 64 reverse shell waiting to be executed
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_14.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_15.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_16.png" alt="image.png" />
+<br /><br />
+Upload the package and trigger the exploit calling to http://[cactiurl]/resource/test.php
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_17.png" alt="image.png" />
+<br /><br />
+Here we have credentials for a database, but after a long seeking there isn’t valuable here
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_18.png" alt="image.png" />
+<br /><br />
+Enumerate every file in search of credentials and find other credentials for a sql database
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_19.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_20.png" alt="image.png" />
+<br /><br />
+Sign in to this database skipping the <code class="language-plaintext highlighter-rouge">_</code>
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_21.png" alt="image.png" />
+<br /><br />
+Find the hash and crack it to get the user flag
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_22.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_23.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_24.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Start enumerating local services running</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_25.png" alt="image.png" /></p>
-
-<p>Forward the traffic and get a duplicati service, and it’s needed to bypass initial authentication, use the next vector attack. First at all we need to download the sqlite databases saved in the app directories, there we have some information about the duplicati database and a clue about how it’s handled the password in the server, we have the passphrase and the salt take this in count for the next steps.</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_26.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating local services running 
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_25.png" alt="image.png" />
+<br /><br />
+Forward the traffic and get a duplicati service, and it’s needed to bypass initial authentication, use the next vector attack. First at all we need to download the sqlite databases saved in the app directories, there we have some information about the duplicati database and a clue about how it’s handled the password in the server, we have the passphrase and the salt take this in count for the next steps.
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_26.png" alt="image.png" />
+<br /><br /></p>
 <ol>
-  <li>Send a password capturing the traffic with burpsuite</li>
+  <li>Send a password capturing the traffic with burpsuite
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_27.png" alt="image.png" />
+<br /><br /></li>
+  <li>It will return a nonce and a salt based on our password, now we need to convert this to a password that the server trust modifying the format.  In the source page of duplicati we have that both as the salt and nonce are creates before to send it to the server
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_28.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_29.png" alt="image.png" />
+<br /><br /></li>
+  <li>Take the salt is easy just take trusted password found it in the sqlite database and convert it from base64 to hex
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_30.png" alt="image.png" />
+<br /><br />
+With this we are going to create our valid password, use the same nonce from our given password(take it from server response in burp)
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_ef4c8d22_c22f_4454_b339_1cb6e0fce224.png" alt="image.png" />
+<br /><br />
+Execute the same command as the source in the console, copy and paste the password, basically the server doesn’t check if the password is registered because it isn’t anywhere, it just check if it has a valid salt.
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_31.png" alt="image.png" />
+<br /><br />
+Now we are just one step to get root flag, just create a new backup
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_32.png" alt="image.png" />
+<br /><br />
+No encryption
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_33.png" alt="image.png" />
+<br /><br />
+set the destination
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_34.png" alt="image.png" />
+<br /><br />
+Go inside of the computer
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_35.png" alt="image.png" />
+<br /><br />
+Get source 
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_36.png" alt="image.png" />
+<br /><br />
+You will find there the flag
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_37.png" alt="image.png" />
+<br /><br />
+Once the back up is created you need to reload the page to see it in the main dashboard
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_38.png" alt="image.png" />
+<br /><br />
+Now we proceed to recover the file
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_39.png" alt="image.png" />
+<br /><br />
+Choose a location on the machine/source path
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_40.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_41.png" alt="image.png" />
+<br /><br />
+There it is 
+<br /><br />
+<img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_42.png" alt="image.png" />
+<br /><br />
+Finally pwn4d!!!
+<script src="/assets/js/matrix-overlay.js"></script></li>
 </ol>
 
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_27.png" alt="image.png" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<ol>
-  <li>It will return a nonce and a salt based on our password, now we need to convert this to a password that the server trust modifying the format.  In the source page of duplicati we have that both as the salt and nonce are creates before to send it to the server</li>
-</ol>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_28.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_29.png" alt="image.png" /></p>
-
-<ol>
-  <li>Take the salt is easy just take trusted password found it in the sqlite database and convert it from base64 to hex</li>
-</ol>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_30.png" alt="image.png" /></p>
-
-<p>With this we are going to create our valid password, use the same nonce from our given password(take it from server response in burp)</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_ef4c8d22_c22f_4454_b339_1cb6e0fce224.png" alt="image.png" /></p>
-
-<p>Execute the same command as the source in the console, copy and paste the password, basically the server doesn’t check if the password is registered because it isn’t anywhere, it just check if it has a valid salt.</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_31.png" alt="image.png" /></p>
-
-<p>Now we are just one step to get root flag, just create a new backup</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_32.png" alt="image.png" /></p>
-
-<p>No encryption</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_33.png" alt="image.png" /></p>
-
-<p>set the destination</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_34.png" alt="image.png" /></p>
-
-<p>Go inside of the computer</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_35.png" alt="image.png" /></p>
-
-<p>Get source</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_36.png" alt="image.png" /></p>
-
-<p>You will find there the flag</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_37.png" alt="image.png" /></p>
-
-<p>Once the back up is created you need to reload the page to see it in the main dashboard</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_38.png" alt="image.png" /></p>
-
-<p>Now we proceed to recover the file</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_39.png" alt="image.png" /></p>
-
-<p>Choose a location on the machine/source path</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_40.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_41.png" alt="image.png" /></p>
-
-<p>There it is</p>
-
-<p><img src="/assets/images/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489/19be0efc-ce22-4f71-af35-1001daae3986-export-e9675ca6-060c-472f-afd1-32c2c6611489_image_42.png" alt="image.png" /></p>
-
-<p>Finally pwn4d!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Editorial-Linux-Easy</h1>
   
@@ -67,80 +59,80 @@
   <h1 id="editorial">Editorial</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>We start port scanning, we may need to find credentials to port 22 on ort 80</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled.png" alt="Untitled" /></p>
-
-<p>Let’s check the http service</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_2.png" alt="Untitled" /></p>
-
+<p><br /><br />
+We start port scanning, we may need to find credentials to port 22 on ort 80
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled.png" alt="Untitled" />
+<br /><br />
+Let’s check the http service 
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Looking for directories, there are a section where we can upload information about some book to publish it.</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_3.png" alt="Untitled" /></p>
-
-<p>If we seek into burp trying to upload information those inputs are sanitized, but the url information seems suspicious, but to send a properly request to the server we will need to click preview button</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Try to exploit a SSRF using common ports like 8000, 8080, as we can see on port 5000 there is a service running, and it respond with a file which we can download</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Once we downloaded it, we found others directory paths, where there might be information</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_6.png" alt="Untitled" /></p>
-
-<p>Repeat the previous steps and find those credentials</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_8.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_9.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Looking for directories, there are a section where we can upload information about some book to publish it.
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_3.png" alt="Untitled" />
+<br /><br />
+If we seek into burp trying to upload information those inputs are sanitized, but the url information seems suspicious, but to send a properly request to the server we will need to click preview button
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Try to exploit a SSRF using common ports like 8000, 8080, as we can see on port 5000 there is a service running, and it respond with a file which we can download
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Once we downloaded it, we found others directory paths, where there might be information
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_6.png" alt="Untitled" />
+<br /><br />
+Repeat the previous steps and find those credentials
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_8.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_9.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Now we are dev user, and he has access to a repository. In there we cannot find the easy way to escalate our privileges but on logs we can see that someone did a commit where dev user is involved</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Check the before version of the page, and make a lateral movement</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_11.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Now we are prod user, searching his permission on sudo we can see that python is used to manage versions control</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_15.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Now we are dev user, and he has access to a repository. In there we cannot find the easy way to escalate our privileges but on logs we can see that someone did a commit where dev user is involved 
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_10.png" alt="Untitled" />
+<br /><br />
+Check the before version of the page, and make a lateral movement
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_11.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Now we are prod user, searching his permission on sudo we can see that python is used to manage versions control
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_15.png" alt="Untitled" />
+<br /><br /></p>
 <ul>
-  <li>
-    <p>CVE-2022-24439</p>
-
-    <p>Affected versions of this package are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to <code class="language-plaintext highlighter-rouge">git</code> without sufficient sanitization of input arguments. This is only relevant when enabling the <code class="language-plaintext highlighter-rouge">ext</code> transport protocol.</p>
-  </li>
+  <li>CVE-2022-24439
+<br /><br />
+  Affected versions of this package are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to <code class="language-plaintext highlighter-rouge">git</code> without sufficient sanitization of input arguments. This is only relevant when enabling the <code class="language-plaintext highlighter-rouge">ext</code> transport protocol.
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Root flag got it but we are hungry of full control, we can make a rev shell using netcat
+<br /><br />
+<img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_18.png" alt="Untitled" />
+<br /><br />
+<script src="/assets/js/matrix-overlay.js"></script></li>
 </ul>
 
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_17.png" alt="Untitled" /></p>
-
-<p>Root flag got it but we are hungry of full control, we can make a rev shell using netcat</p>
-
-<p><img src="/assets/images/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d/f760e2de-d5a0-4b82-99c0-2ec1f2a7d6de-export-cb07417d-5847-4cb8-b8a3-8ec1b9fd933d_Untitled_18.png" alt="Untitled" /></p>
-
-<script src="/assets/js/matrix-overlay.js"></script>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

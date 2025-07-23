@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">EscapeTwo-Windows-Easy</h1>
   
@@ -68,34 +60,34 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>We have some initial credentials</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image.png" alt="image.png" /></p>
-
-<p>Anyways we also have to enumerate ports, useful information is retrieved, we have domain controler hostname</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_1.png" alt="image.png" /></p>
-
-<p>Enumerate users, action allowed thanks to rose credentials</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_2.png" alt="image.png" /></p>
-
+<p>We have some initial credentials
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image.png" alt="image.png" />
+<br /><br />
+Anyways we also have to enumerate ports, useful information is retrieved, we have domain controler hostname
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_1.png" alt="image.png" />
+<br /><br />
+Enumerate users, action allowed thanks to rose credentials
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_2.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Check rose shares allowed and its permissions</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_3.png" alt="image.png" /></p>
-
-<p>That’s how we access to some accounting information</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_4.png" alt="image.png" /></p>
-
-<p>New credentials are found</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_5.png" alt="image.png" /></p>
-
-<p>We might try to use SQL port to connect and execute commands as sql_svc like</p>
-
+<p><br /><br />
+Check rose shares allowed and its permissions
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_3.png" alt="image.png" />
+<br /><br />
+That’s how we access to some accounting information 
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_4.png" alt="image.png" />
+<br /><br />
+New credentials are found
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_5.png" alt="image.png" />
+<br /><br />
+We might try to use SQL port to connect and execute commands as sql_svc like
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="o">--</span> <span class="nx">Allow</span> <span class="nx">advanced</span> <span class="nx">configuration</span>
 <span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">show advanced options</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
@@ -109,96 +101,99 @@
 <span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">xp_cmdshell</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
 <span class="nx">RECONFIGURE</span><span class="p">;</span>
 </code></pre></div></div>
-
-<p>Confirm we have access, we use impacket-mysqlclient</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_6.png" alt="image.png" /></p>
-
-<p>Now we have to do two steps forward, first upload in a specific directory netcat, and then execute it as it follow to gain a shell as this user</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_8.png" alt="image.png" /></p>
-
-<p>As this user we have access to database configuration</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_9.png" alt="image.png" /></p>
-
-<p>Check if this password is reused</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_10.png" alt="image.png" /></p>
-
-<p>WinRM port is open to access as ryan</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_11.png" alt="image.png" /></p>
-
+<p><br /><br />
+Confirm we have access, we use impacket-mysqlclient
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_6.png" alt="image.png" />
+<br /><br />
+Now we have to do two steps forward, first upload in a specific directory netcat, and then execute it as it follow to gain a shell as this user
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_8.png" alt="image.png" />
+<br /><br />
+As this user we have access to database configuration
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_9.png" alt="image.png" />
+<br /><br />
+Check if this password is reused
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_10.png" alt="image.png" />
+<br /><br />
+WinRM port is open to access as ryan
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_11.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>As this box has much more users, and at this point we just have got access to three we could try to perform an Active Directory enumeration using SharpHound.exe</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_12.png" alt="image.png" /></p>
-
-<p>As we can see we could have control over CA_SVC account using write owner right</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_13.png" alt="image.png" /></p>
-
-<p>CA_SVC if member of some groups, that seems templates or something like that could be enrollable</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_14.png" alt="image.png" /></p>
-
-<p>Open write action using impacket-owneredit over ca_svc</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_15.png" alt="image.png" /></p>
-
-<p>Now modify acl to give ryan full control of ca_svc</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_16.png" alt="image.png" /></p>
-
-<p>As we owned ca_svc user we could use pywhisker tool to get a private certificate of ca_svc</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_17.png" alt="image.png" /></p>
-
-<p>Now we are able to request a Ticket Grant Ticket of this user</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_18.png" alt="image.png" /></p>
-
-<p>Get its NT hash to perform actions as this user</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_19.png" alt="image.png" /></p>
-
-<p>As previously saw, ca_svc is member of some cert groups, it might probably that user being vulnerable within its ADCS, check it using certipy</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_20.png" alt="image.png" /></p>
-
-<p>ESC4 is a misconfiguration which allow me to escalate privileges thanks to a write permission</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_21.png" alt="image.png" /></p>
-
-<p>I just need to update the configuration of the template to make it vulnerable to ESC1</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_22.png" alt="image.png" /></p>
-
-<p>Use this</p>
-
+<p><br /><br />
+As this box has much more users, and at this point we just have got access to three we could try to perform an Active Directory enumeration using SharpHound.exe
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_12.png" alt="image.png" />
+<br /><br />
+As we can see we could have control over CA_SVC account using write owner right
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_13.png" alt="image.png" />
+<br /><br />
+CA_SVC if member of some groups, that seems templates or something like that could be enrollable
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_14.png" alt="image.png" />
+<br /><br />
+Open write action using impacket-owneredit over ca_svc
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_15.png" alt="image.png" />
+<br /><br />
+Now modify acl to give ryan full control of ca_svc
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_16.png" alt="image.png" />
+<br /><br />
+As we owned ca_svc user we could use pywhisker tool to get a private certificate of ca_svc
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_17.png" alt="image.png" />
+<br /><br />
+Now we are able to request a Ticket Grant Ticket of this user
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_18.png" alt="image.png" />
+<br /><br />
+Get its NT hash to perform actions as this user
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_19.png" alt="image.png" />
+<br /><br />
+As previously saw, ca_svc is member of some cert groups, it might probably that user being vulnerable within its ADCS, check it using certipy
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_20.png" alt="image.png" />
+<br /><br />
+ESC4 is a misconfiguration which allow me to escalate privileges thanks to a write permission
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_21.png" alt="image.png" />
+<br /><br />
+I just need to update the configuration of the template to make it vulnerable to ESC1
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_22.png" alt="image.png" />
+<br /><br />
+Use this
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> certipy-ad template <span class="nt">-k</span> <span class="nt">-template</span> DunderMifflinAuthentication <span class="nt">-dc-ip</span> 10.10.XX.XX <span class="nt">-target</span> dc01.sequel.htb
 </code></pre></div></div>
-
-<p>Now we have are able to authenticate and enroll using an arbitrary subject alternative name SAN</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_23.png" alt="image.png" /></p>
-
-<p>Request a certificate using administrator as user principal name, this will retrieve a certificate of this template as administrator</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_24.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_25.png" alt="image.png" /></p>
-
-<p>Now that we have this .pfx file as administrator we are able to authenticate and steal the NT hash for administrator, which means privilege escalation were success</p>
-
-<p><img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_26.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+Now we have are able to authenticate and enroll using an arbitrary subject alternative name SAN
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_23.png" alt="image.png" />
+<br /><br />
+Request a certificate using administrator as user principal name, this will retrieve a certificate of this template as administrator
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_24.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_25.png" alt="image.png" />
+<br /><br />
+Now that we have this .pfx file as administrator we are able to authenticate and steal the NT hash for administrator, which means privilege escalation were success
+<br /><br />
+<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_26.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

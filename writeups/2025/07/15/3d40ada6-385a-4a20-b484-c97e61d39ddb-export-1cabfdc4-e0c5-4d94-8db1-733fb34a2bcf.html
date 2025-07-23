@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Block-Block-Linux-Hard</h1>
   
@@ -68,168 +60,171 @@
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 
-<p>Start with enumerating port</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image.png" alt="image.png" /></p>
-
-<p>SSH is running and a web application has werkzeug behind</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_1.png" alt="image.png" /></p>
-
-<p>Looking around the web application we can self register and</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_2.png" alt="image.png" /></p>
-
-<p>A bot is running on it</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_3.png" alt="image.png" /></p>
-
-<p>When we talk with the bot we are being redirected to /api/info with our jwt, that token it might be important for the foothold</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_4.png" alt="image.png" /></p>
-
-<p>We can also review contract source</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_5.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_6.png" alt="image.png" /></p>
-
-<p>Admin user is required to access to other functionalities</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_8.png" alt="image.png" /></p>
-
+<p>Start with enumerating port 
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image.png" alt="image.png" />
+<br /><br />
+SSH is running and a web application has werkzeug behind
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_1.png" alt="image.png" />
+<br /><br />
+Looking around the web application we can self register and 
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_2.png" alt="image.png" />
+<br /><br />
+A bot is running on it
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_3.png" alt="image.png" />
+<br /><br />
+When we talk with the bot we are being redirected to /api/info with our jwt, that token it might be important for the foothold
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_4.png" alt="image.png" />
+<br /><br />
+We can also review contract source
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_5.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_6.png" alt="image.png" />
+<br /><br />
+Admin user is required to access to other functionalities
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_8.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>We also can report a user, it should be sended to admin, so lets try xss</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_9.png" alt="image.png" /></p>
-
-<p>This would be our payload using javascript functions as we saw the web application has js on it</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_10.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_11.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_12.png" alt="image.png" /></p>
-
-<p>Now we can access to admin pane</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_13.png" alt="image.png" /></p>
-
-<p>In the source code 2 routes are disclosed</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_14.png" alt="image.png" /></p>
-
-<p>That is an authorization api key or something like that</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_15.png" alt="image.png" /></p>
-
-<p>On the other path there is an address</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_16.png" alt="image.png" /></p>
-
-<p>With the authorization encoded and the address we can perform a request to disclose information using as a base line the source code found as admin. Use eth_balance as the first method using the same request in the source code</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_17.png" alt="image.png" /></p>
-
-<p>We have no found anything in there something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_18.png" alt="image.png" /></p>
-
-<p>something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_19.png" alt="image.png" /></p>
-
-<p>eth_account sounds interesting, it returns a list of addresses owned by the client</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_20.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_21.png" alt="image.png" /></p>
-
-<p>Here we have one, but nothing useful returned</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_22.png" alt="image.png" /></p>
-
-<p>this one sound good, but first we need the number</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_23.png" alt="image.png" /></p>
-
-<p>Let’s use this one first</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_24.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_25.png" alt="image.png" /></p>
-
-<p>The latest block number was returned</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_26.png" alt="image.png" /></p>
-
-<p>We are going to use this for return the whole block, we had to change boolean value to true due to it is question itself if the whole transactions are being included in the request</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_27.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_28.png" alt="image.png" /></p>
-
-<p>We have information, good. Now we need to be abe to read it, in those cases we can use something like <code class="language-plaintext highlighter-rouge">solcjs</code>  or <code class="language-plaintext highlighter-rouge">ethereum input data decoder</code> but it didn’t work here, as we can see it looks like hex, use ciberchef</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_29.png" alt="image.png" /></p>
-
-<p>Effectively data is being returned but that is info about the last block that we had controlled as user role</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_30.png" alt="image.png" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">0xd</code> means 13 on decimal, let’s go to the first block then</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_31.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_32.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_33.png" alt="image.png" /></p>
-
-<p>At the start it looks like it doesn’t have anything but in the last part of the code some plain text creds are disclosed, and that’s how we got user flag</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_34.png" alt="image.png" /></p>
-
+<p><br /><br />
+We also can report a user, it should be sended to admin, so lets try xss 
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_9.png" alt="image.png" />
+<br /><br />
+This would be our payload using javascript functions as we saw the web application has js on it
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_10.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_12.png" alt="image.png" />
+<br /><br />
+Now we can access to admin pane
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_13.png" alt="image.png" />
+<br /><br />
+In the source code 2 routes are disclosed
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_14.png" alt="image.png" />
+<br /><br />
+That is an authorization api key or something like that
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_15.png" alt="image.png" />
+<br /><br />
+On the other path there is an address
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_16.png" alt="image.png" />
+<br /><br />
+With the authorization encoded and the address we can perform a request to disclose information using as a base line the source code found as admin. Use eth_balance as the first method using the same request in the source code
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_17.png" alt="image.png" />
+<br /><br />
+We have no found anything in there something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_18.png" alt="image.png" />
+<br /><br />
+ something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_19.png" alt="image.png" />
+<br /><br />
+eth_account sounds interesting, it returns a list of addresses owned by the client
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_20.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_21.png" alt="image.png" />
+<br /><br />
+Here we have one, but nothing useful returned
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_22.png" alt="image.png" />
+<br /><br />
+this one sound good, but first we need the number
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_23.png" alt="image.png" />
+<br /><br />
+Let’s use this one first
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_24.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_25.png" alt="image.png" />
+<br /><br />
+The latest block number was returned
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_26.png" alt="image.png" />
+<br /><br />
+We are going to use this for return the whole block, we had to change boolean value to true due to it is question itself if the whole transactions are being included in the request
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_27.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_28.png" alt="image.png" />
+<br /><br />
+We have information, good. Now we need to be abe to read it, in those cases we can use something like <code class="language-plaintext highlighter-rouge">solcjs</code>  or <code class="language-plaintext highlighter-rouge">ethereum input data decoder</code> but it didn’t work here, as we can see it looks like hex, use ciberchef 
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_29.png" alt="image.png" />
+<br /><br />
+Effectively data is being returned but that is info about the last block that we had controlled as user role
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_30.png" alt="image.png" />
+<br /><br />
+<code class="language-plaintext highlighter-rouge">0xd</code> means 13 on decimal, let’s go to the first block then
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_31.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_32.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_33.png" alt="image.png" />
+<br /><br />
+At the start it looks like it doesn’t have anything but in the last part of the code some plain text creds are disclosed, and that’s how we got user flag
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_34.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Now we are keira user</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_35.png" alt="image.png" /></p>
-
-<p>We can execute a binary named forge, this tool helps to  build, test, fuzz, debug and deploy Solidity smart contracts.</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_36.png" alt="image.png" /></p>
-
-<p>In the documentation we can find commands like init which creates a new project</p>
-
-<p>Once we have a new project ready for build, create a rev shell in a file which later will be call as a solc compiler instead of using the default one</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_37.png" alt="image.png" /></p>
-
-<p>This will create a shell as paul</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_38.png" alt="image.png" /></p>
-
-<p>No we can run as root pacman tool, which is a package manager, we are going to create our new malicious package, first create a file named pkgbuild which will have all the specifications on it, and let’s say it that install our payload (pwn.install)</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_39.png" alt="image.png" /></p>
-
-<p>This file will contain the payload we want to execute inside the post_install function</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_40.png" alt="image.png" /></p>
-
-<p>make the .pkg.tar.zst which is the package ready to be install</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_41.png" alt="image.png" /></p>
-
-<p>Now just install package, it will create a shell as root</p>
-
-<p><img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_a476157b_c25c_4f91_91b1_401c8184ac79.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+Now we are keira user
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_35.png" alt="image.png" />
+<br /><br />
+We can execute a binary named forge, this tool helps to  build, test, fuzz, debug and deploy Solidity smart contracts. 
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_36.png" alt="image.png" />
+<br /><br />
+In the documentation we can find commands like init which creates a new project
+<br /><br />
+Once we have a new project ready for build, create a rev shell in a file which later will be call as a solc compiler instead of using the default one
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_37.png" alt="image.png" />
+<br /><br />
+This will create a shell as paul
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_38.png" alt="image.png" />
+<br /><br />
+No we can run as root pacman tool, which is a package manager, we are going to create our new malicious package, first create a file named pkgbuild which will have all the specifications on it, and let’s say it that install our payload (pwn.install)
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_39.png" alt="image.png" />
+<br /><br />
+This file will contain the payload we want to execute inside the post_install function
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_40.png" alt="image.png" />
+<br /><br />
+make the .pkg.tar.zst which is the package ready to be install
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_41.png" alt="image.png" />
+<br /><br />
+Now just install package, it will create a shell as root
+<br /><br />
+<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_a476157b_c25c_4f91_91b1_401c8184ac79.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

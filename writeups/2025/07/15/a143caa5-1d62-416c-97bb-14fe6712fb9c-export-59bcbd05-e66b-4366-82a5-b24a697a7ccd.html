@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Administrator-Windows-Medium</h1>
   
@@ -67,105 +59,108 @@
   <h1 id="administrator">Administrator</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>We have initial username and password from htb to start enumeration</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image.png" alt="image.png" /></p>
-
-<p>Once again we don’t</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_1.png" alt="image.png" /></p>
-
+<p><br /><br />
+We have initial username and password from htb to start enumeration 
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image.png" alt="image.png" />
+<br /><br />
+Once again we don’t 
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_1.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Effectively those are valid credentials, check share files</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_2.png" alt="image.png" /></p>
-
-<p>we can not log in as this user in ftp</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_3.png" alt="image.png" /></p>
-
-<p>proceed to get all shared files it would be useful to get more information</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_4.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_5.png" alt="image.png" /></p>
-
-<p>Not interesting stuff, check Active Directory structure with bloodhound, ethan has a high privilege, we may try to reach him</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_6.png" alt="image.png" /></p>
-
-<p>As olivia we can set michael password</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_8.png" alt="image.png" /></p>
-
-<p>And Michael can force bejamin password change</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_9.png" alt="image.png" /></p>
-
-<p>Enumerate users in the domain</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_10.png" alt="image.png" /></p>
-
-<p>Set Benjamin password</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_11.png" alt="image.png" /></p>
-
-<p>Log in as benjamin in ftp</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_12.png" alt="image.png" /></p>
-
-<p>There we will find a backup in psafe3 format</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_13.png" alt="image.png" /></p>
-
-<p>use pwsafe2john to get a crackeable hash of the password file</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_14.png" alt="image.png" /></p>
-
-<p>That’s how we could access to this protected database, where emily password is disclosed</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_15.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_16.png" alt="image.png" /></p>
-
-<p>Get user flag</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_17.png" alt="image.png" /></p>
-
+<p><br /><br />
+Effectively those are valid credentials, check share files
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_2.png" alt="image.png" />
+<br /><br />
+we can not log in as this user in ftp
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_3.png" alt="image.png" />
+<br /><br />
+proceed to get all shared files it would be useful to get more information 
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_4.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_5.png" alt="image.png" />
+<br /><br />
+Not interesting stuff, check Active Directory structure with bloodhound, ethan has a high privilege, we may try to reach him
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_6.png" alt="image.png" />
+<br /><br />
+As olivia we can set michael password
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_8.png" alt="image.png" />
+<br /><br />
+And Michael can force bejamin password change 
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_9.png" alt="image.png" />
+<br /><br />
+Enumerate users in the domain
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_10.png" alt="image.png" />
+<br /><br />
+Set Benjamin password
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_11.png" alt="image.png" />
+<br /><br />
+Log in as benjamin in ftp
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_12.png" alt="image.png" />
+<br /><br />
+There we will find a backup in psafe3 format
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_13.png" alt="image.png" />
+<br /><br />
+use pwsafe2john to get a crackeable hash of the password file
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_14.png" alt="image.png" />
+<br /><br />
+That’s how we could access to this protected database, where emily password is disclosed
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_15.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_16.png" alt="image.png" />
+<br /><br />
+Get user flag
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_17.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Emily has generic write over ethan</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_18.png" alt="image.png" /></p>
-
-<p>And ethan direct DCSync with the domain</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_19.png" alt="image.png" /></p>
-
-<p>We try to perform a DS-keycredential attack but KDC don’t support pre-auth data</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_20.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_21.png" alt="image.png" /></p>
-
-<p>Perform a kerberoast attack and get ethan hash</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_22.png" alt="image.png" /></p>
-
-<p>crack it with john</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_23.png" alt="image.png" /></p>
-
-<p>And get all the secrets and hashes</p>
-
-<p><img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_24.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+Emily has generic write over ethan
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_18.png" alt="image.png" />
+<br /><br />
+And ethan direct DCSync with the domain
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_19.png" alt="image.png" />
+<br /><br />
+We try to perform a DS-keycredential attack but KDC don’t support pre-auth data
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_20.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_21.png" alt="image.png" />
+<br /><br />
+Perform a kerberoast attack and get ethan hash
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_22.png" alt="image.png" />
+<br /><br />
+crack it with john
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_23.png" alt="image.png" />
+<br /><br />
+And get all the secrets and hashes
+<br /><br />
+<img src="/assets/images/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd/a143caa5-1d62-416c-97bb-14fe6712fb9c-export-59bcbd05-e66b-4366-82a5-b24a697a7ccd_image_24.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

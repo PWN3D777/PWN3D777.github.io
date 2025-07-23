@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Drive-Linux-Hard</h1>
   
@@ -74,67 +66,68 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning:  http-ssh service</li>
+  <li>nmap scanning:  http-ssh service
+<br /><br />
+    <blockquote>
+      <p>We need to use Burp Suite to get protected files</p>
+
+      <p><br /><br /></p>
+      <ol>
+        <li>Active proxy
+<br /><br /></li>
+        <li>Generate request
+<br /><br /></li>
+        <li>Send request number to intruder
+<br /><br /></li>
+        <li>Execute fuzz payload and find number with 200 responses
+<br /><br />
+We access ssh port with those cred found
+<br /><br />
+Got the route:
+<br /><br />
+/var/www/backups</li>
+      </ol>
+
+      <p><br /><br />
+We sent this directory with ssh
+<br /><br /></p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp user@ip:/ruta/<span class="k">*</span>   /routelocal/
+</code></pre></div>      </div>
+      <p><br /><br /></p>
+      <h2 id="2-user-flag">2: User flag</h2>
+      <p><br /><br />
+Find some creds
+<br /><br />
+Using net stat we can see a local service running so lets use port forwarding
+<br /><br />
+```bash
+ssh user@ip -l 3000:ip:3000</p>
+    </blockquote>
+  </li>
 </ul>
 
-<blockquote>
-  <p>We need to use Burp Suite to get protected files</p>
-
-  <ol>
-    <li>Active proxy</li>
-    <li>Generate request</li>
-    <li>Send request number to intruder</li>
-    <li>Execute fuzz payload and find number with 200 responses</li>
-  </ol>
-</blockquote>
-
-<p>We access ssh port with those cred found</p>
-
-<p>Got the route:</p>
-
-<blockquote>
-  <p>/var/www/backups</p>
-
-</blockquote>
-
-<p>We sent this directory with ssh</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp user@ip:/ruta/<span class="k">*</span>   /routelocal/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+-l Redirect ports
+&lt;br/&gt;&lt;br/&gt;
+We find creds for users.
+&lt;br/&gt;&lt;br/&gt;
+## 3: Priv esc
+&lt;br/&gt;&lt;br/&gt;
+There is a doodlegrive file we download
+&lt;br/&gt;&lt;br/&gt;
+&gt; Using a tool called IDA we find other creds
+IDA is a disambler and review inside the root data
+&gt; 
+&lt;br/&gt;&lt;br/&gt;
+1. Create a file where will save root
+2. compile 
+&lt;br/&gt;&lt;br/&gt;
+```bash
+gcc -shared a.c -o a.so -nostartfiles -fPIC
 </code></pre></div></div>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p>Find some creds</p>
-
-<p>Using net stat we can see a local service running so lets use port forwarding</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh user@ip <span class="nt">-l</span> 3000:ip:3000
-
-</code></pre></div></div>
-
-<p>-l Redirect ports</p>
-
-<p>We find creds for users.</p>
-
-<h2 id="3-priv-esc">3: Priv esc</h2>
-
-<p>There is a doodlegrive file we download</p>
-
-<blockquote>
-  <p>Using a tool called IDA we find other creds
-IDA is a disambler and review inside the root data</p>
-
-  <ol>
-    <li>Create a file where will save root</li>
-    <li>compile</li>
-  </ol>
-</blockquote>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-shared</span> a.c <span class="nt">-o</span> a.so <span class="nt">-nostartfiles</span> <span class="nt">-fPIC</span>
-</code></pre></div></div>
-
+<p><br /><br /></p>
 <ul>
   <li>-share create a share file</li>
   <li>a.c File</li>
@@ -143,16 +136,20 @@ IDA is a disambler and review inside the root data</p>
   <li>-fpic Position independent
     <ol>
       <li>run .doodlegrive</li>
-      <li>Inject</li>
+      <li>Inject
+<br /><br />
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"+load_extension(char(46,47,97))+"</span>
+</code></pre></div>        </div>
+        <p><br /><br />
+Root
+<script src="/assets/js/matrix-overlay.js"></script></p>
+      </li>
     </ol>
   </li>
 </ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"+load_extension(char(46,47,97))+"</span>
-</code></pre></div></div>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>Root
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

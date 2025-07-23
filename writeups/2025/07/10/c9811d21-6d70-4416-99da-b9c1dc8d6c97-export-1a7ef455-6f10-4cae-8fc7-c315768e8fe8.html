@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Jab-Windows-Medium</h1>
   
@@ -69,192 +61,202 @@
 <p>HackTheBox: Easy</p>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_2.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Here we have a jabber service which is an informal chatting, after some research we found a platform which support this service.
+<br /><br />
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br />
+Let’s open it and configure the connection, also it’s neccesary to create a new user.
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_5.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_6.png" alt="Untitled" />
+<br /><br />
+We are not going to find anything interesting unless we add XMPP Service Discovery plugin
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Our user can connect to search.jab.htb to find interesting stuff
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_9.png" alt="Untitled" />
+<br /><br />
+A lot of user found
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_10.png" alt="Untitled" />
+<br /><br />
+Now, we proceed to run pidgin on debug mode and use it as before to save a file those usernames
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_11.png" alt="Untitled" />
+<br /><br />
+It is save in a predetermine format, so we create a list filtering not necessary information
+<br /><br />
+```bash
+grep -oP ‘<value>[^&gt;]+@jab\.htb(?=<value>)' output.log | sed 's/@jab\.htb//g' | 
+sed 's/<value>//g' | sort | uniq &gt; list.lst</value></value></value></p>
+  </li>
 </ul>
 
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_2.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Here we have a jabber service which is an informal chatting, after some research we found a platform which support this service.</p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p>Let’s open it and configure the connection, also it’s neccesary to create a new user.</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_4.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_5.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_6.png" alt="Untitled" /></p>
-
-<p>We are not going to find anything interesting unless we add XMPP Service Discovery plugin</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Our user can connect to search.jab.htb to find interesting stuff</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_9.png" alt="Untitled" /></p>
-
-<p>A lot of user found</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Now, we proceed to run pidgin on debug mode and use it as before to save a file those usernames</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_11.png" alt="Untitled" /></p>
-
-<p>It is save in a predetermine format, so we create a list filtering not necessary information</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'&lt;value&gt;[^&gt;]+@jab\.htb(?=&lt;value&gt;)'</span> output.log | <span class="nb">sed</span> <span class="s1">'s/@jab\.htb//g'</span> | 
-<span class="nb">sed</span> <span class="s1">'s/&lt;value&gt;//g'</span> | <span class="nb">sort</span> | <span class="nb">uniq</span> <span class="o">&gt;</span> list.lst
-
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+`-o` : Only output matching parts of each line
+&lt;br/&gt;&lt;br/&gt;
+`-P` : Enable perl-Compatible regular expressions
+&lt;br/&gt;&lt;br/&gt;
+`[^&gt;]+` : Any character that are not &gt;
+&lt;br/&gt;&lt;br/&gt;
+`(?=&lt;value&gt;)` : It ensure the match is followed by &lt;value&gt; but is not part of the match
+&lt;br/&gt;&lt;br/&gt;
+`s/something//g` : It replaces any something with an empy string.
+&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png)
+&lt;br/&gt;&lt;br/&gt;
+```bash
+impacket-GetNPUsers jab.htb/ -userfile list.lst -request 2&gt;&amp;1 | grep -v 'UF_DONT_REQUIRE_PREAUTH '
 </code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">-o</code> : Only output matching parts of each line</p>
-
-<p><code class="language-plaintext highlighter-rouge">-P</code> : Enable perl-Compatible regular expressions</p>
-
-<p><code class="language-plaintext highlighter-rouge">[^&gt;]+</code> : Any character that are not &gt;</p>
-
-<p><code class="language-plaintext highlighter-rouge">(?=&lt;value&gt;)</code> : It ensure the match is followed by <value> but is not part of the match</value></p>
-
-<p><code class="language-plaintext highlighter-rouge">s/something//g</code> : It replaces any something with an empy string.</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_12.png" alt="Untitled" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>impacket-GetNPUsers jab.htb/ <span class="nt">-userfile</span> list.lst <span class="nt">-request</span> 2&gt;&amp;1 | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'UF_DONT_REQUIRE_PREAUTH '</span>
-</code></pre></div></div>
-
+<p><br /><br /></p>
 <ul>
-  <li>GetNPUsers is a tool which is typicallt used for Kerberos enumeration.</li>
-  <li><code class="language-plaintext highlighter-rouge">-request</code>: In this case, it’s requesting information about user accounts</li>
-  <li><code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> : Just redirect error to the output and not stop the execution</li>
+  <li>GetNPUsers is a tool which is typicallt used for Kerberos enumeration.
+<br /><br /></li>
+  <li><code class="language-plaintext highlighter-rouge">-request</code>: In this case, it’s requesting information about user accounts
+<br /><br /></li>
+  <li><code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> : Just redirect error to the output and not stop the execution
+<br /><br />
+    <blockquote>
+      <p>It’s possible to extract a hash because the tool makes the next procedure</p>
+
+      <p><br /><br /></p>
+      <ol>
+        <li>Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.
+<br /><br /></li>
+        <li>Hash Extraction: KDC responds with a service ticket encrypted with the user’s hash.
+<br /><br /></li>
+        <li>Output: The tool extracts this hash from the service ticket response.<br />
+<br /><br /></li>
+      </ol>
+    </blockquote>
+  </li>
 </ul>
 
-<blockquote>
-  <p>It’s possible to extract a hash because the tool makes the next procedure</p>
-
-  <ol>
-    <li>Requesting a Service Ticket: The tool sends a request to the key Distribution Center(KDC) for a service ticket for a specified user.</li>
-    <li>Hash Extraction: KDC responds with a service ticket encrypted with the user’s hash.</li>
-    <li>Output: The tool extracts this hash from the service ticket response.</li>
-  </ol>
-</blockquote>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_13.png" alt="Untitled" /></p>
-
-<p>Crack the hash found</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Sing in as the user found</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_15.png" alt="Untitled" /></p>
-
-<p>We join to pentest room</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_17.png" alt="Untitled" /></p>
-
-<p>We already have the credentials but where can we use them?</p>
-
-<p>Look for some information on bloodhound-python</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_18.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_19.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_20.png" alt="Untitled" /></p>
-
-<p>MSRPC services</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_21.png" alt="Untitled" /></p>
-
-<p>We can see this user has direct connection with the domain trought DCOM(Distributed Components Object Model)</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_22.png" alt="Untitled" /></p>
-
-<p>It is not like evilwinrm but thanks to this we have RCE using Microsoft Management Console version 2.0</p>
-
+<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_13.png" alt="Untitled" />
+<br /><br />
+Crack the hash found
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Sing in as the user found
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_15.png" alt="Untitled" />
+<br /><br />
+We join to pentest room
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_17.png" alt="Untitled" />
+<br /><br />
+We already have the credentials but where can we use them?
+<br /><br />
+Look for some information on bloodhound-python
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_18.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_19.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_20.png" alt="Untitled" />
+<br /><br />
+MSRPC services
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_21.png" alt="Untitled" />
+<br /><br />
+We can see this user has direct connection with the domain trought DCOM(Distributed Components Object Model)
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_22.png" alt="Untitled" />
+<br /><br />
+It is not like evilwinrm but thanks to this we have RCE using Microsoft Management Console version 2.0
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	dcomexec.py <span class="nt">-object</span> MMC20 domain/user:password@ip <span class="s1">'payload'</span> <span class="nt">-silentcommand</span><span class="o">(</span>run without any interruption<span class="o">)</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_23.png" alt="Untitled" /></p>
-
-<p>We use a reverse powershell</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_24.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_25.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_23.png" alt="Untitled" />
+<br /><br />
+We use a reverse powershell
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_24.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_25.png" alt="Untitled" />
+<br /><br /></p>
 <h2 id="3-priv-esc">3: Priv esc</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>Enumerate processes running</li>
+  <li>Enumerate processes running
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_26.png" alt="Untitled" />
+<br /><br />
+Something interesting on 3128 id
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_27.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_29.png" alt="Untitled" />
+<br /><br />
+We have a lot of ports using this process but we only need one
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_30.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_31.png" alt="Untitled" />
+<br /><br />
+We are ready to scalate privileges, but first port forwarding
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_32.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_33.png" alt="Untitled" />
+<br /><br />
+Log in with the credentials found before
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_34.png" alt="Untitled" />
+<br /><br />
+ CVE-2023–32315 vulnerability allows to add a plugin into openfire and obtain a RCE usually as system because openfire itself is an admin console.
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_35.png" alt="Untitled" />
+<br /><br />
+I cloned the repository but it’s not necessary we can just the .jar file
+<br /><br />
+Add the plugin
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_36.png" alt="Untitled" />
+<br /><br /></li>
+  <li>server→serversettings→managementtool
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_37.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_38.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_39.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_40.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_41.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!!
+<script src="/assets/js/matrix-overlay.js"></script></li>
 </ul>
 
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_26.png" alt="Untitled" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>Something interesting on 3128 id</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_27.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_29.png" alt="Untitled" /></p>
-
-<p>We have a lot of ports using this process but we only need one</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_30.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_31.png" alt="Untitled" /></p>
-
-<p>We are ready to scalate privileges, but first port forwarding</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_32.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_33.png" alt="Untitled" /></p>
-
-<p>Log in with the credentials found before</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_34.png" alt="Untitled" /></p>
-
-<p>CVE-2023–32315 vulnerability allows to add a plugin into openfire and obtain a RCE usually as system because openfire itself is an admin console.</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_35.png" alt="Untitled" /></p>
-
-<p>I cloned the repository but it’s not necessary we can just the .jar file</p>
-
-<p>Add the plugin</p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_36.png" alt="Untitled" /></p>
-
-<ul>
-  <li>server→serversettings→managementtool</li>
-</ul>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_37.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_38.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_39.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_40.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8/c9811d21-6d70-4416-99da-b9c1dc8d6c97-export-1a7ef455-6f10-4cae-8fc7-c315768e8fe8_Untitled_41.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

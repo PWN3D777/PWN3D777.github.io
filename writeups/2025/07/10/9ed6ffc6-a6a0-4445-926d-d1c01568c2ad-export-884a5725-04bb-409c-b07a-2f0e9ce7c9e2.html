@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">FormulaX-Linux-Hard</h1>
   
@@ -69,34 +61,33 @@
 <p>HackTheBox: Easy</p>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
-</ul>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled.png" alt="Untitled" /></p>
-
-<p>There is a http service, and ssh running, we may need to find some credentials to log on.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_2.png" alt="Untitled" /></p>
-
-<p>Here we found the html and js files it will help us to understand the functionality of the web application.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_3.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Digging into the web application we realize this section with a XSS vulnerability</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Using the same code that we analyze early we will use it to disclose information using the server response</p>
-
-<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">value</span><span class="p">;</span>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled.png" alt="Untitled" />
+<br /><br />
+There is a http service, and ssh running, we may need to find some credentials to log on.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_2.png" alt="Untitled" />
+<br /><br />
+Here we found the html and js files it will help us to understand the functionality of the web application.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_3.png" alt="Untitled" />
+<br /><br />
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Digging into the web application we realize this section with a XSS vulnerability
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Using the same code that we analyze early we will use it to disclose information using the server response
+<br /><br /></p>
+    <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">value</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`/user/api/chat`</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,{</span><span class="na">withCredentials</span><span class="p">:</span> <span class="kc">true</span><span class="p">});</span>
 <span class="c1">//listening for the messages</span>
@@ -110,123 +101,129 @@
 <span class="nx">value</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">history</span><span class="dl">"</span><span class="p">;</span> 
 <span class="c1">//document.getElementById('user_message').value  </span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>    
-	<span class="c1">// sending the  messages to the server    </span>
-	<span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">client_message</span><span class="dl">'</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>    
-	<span class="nx">Show_messages_on_screen_of_Client</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>    
-	<span class="c1">// here we will do out socket things..    </span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">user_message</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span>  <span class="p">}</span>  
+  <span class="c1">// sending the  messages to the server    </span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">client_message</span><span class="dl">'</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>    
+  <span class="nx">Show_messages_on_screen_of_Client</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>    
+  <span class="c1">// here we will do out socket things..    </span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">user_message</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span>  <span class="p">}</span>  
 <span class="k">else</span> <span class="p">{</span>    <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cannot send Empty Messages</span><span class="dl">"</span><span class="p">);</span> 
  <span class="p">}}</span>
  <span class="c1">// send message</span>
  <span class="nx">typing_chat_new</span><span class="p">()</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+    <p><br /><br />
+We need to use a resource from the web application to make the disclose information effective, then we load the .js file that we just create.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_6.png" alt="Untitled" />
+<br /><br />
+A subdomain were found successfully.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_7.png" alt="Untitled" />
+<br /><br />
+We have a new section powered by simple-git, after some research we found a RCE but the problem were that we can only execute one single command per sent request, so the best option was call a file with a reverse shell and it will execute it automatically.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_8.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Reverse shell to a linux OS
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We found some information about the data base, so we used some mongo commands looking for some credentials as we mentioned before.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Password found, using john to crack it.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_15.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_16.png" alt="Untitled" />
+<br /><br /></p>
+    <h2 id="3-priv-esc">3: Priv esc</h2>
+    <p><br /><br />
+We enumerate using linpeas, it is necessary use sh to execute, otherwise it won’t execute it.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_17.png" alt="Untitled" />
+<br /><br />
+We have discovered some local services running but we don’t want to waste time looking for each one, we hace a clue in the config file of librenms
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_18.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_19.png" alt="Untitled" />
+<br /><br />
+Port forwarding using ssh
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_20.png" alt="Untitled" />
+<br /><br />
+In this part we can log in adding a user, we have permissions but we don’t know where is the adduser.php file.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_21.png" alt="Untitled" />
+<br /><br />
+May be in this path there is something
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_22.png" alt="Untitled" />
+<br /><br />
+Here we can’t see the file but we can call it so we search the command for add a admin user.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_23.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_24.png" alt="Untitled" />
+<br /><br />
+Add the domain to the local host and go to template directory
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_25.png" alt="Untitled" />
+<br /><br />
+Create a template with the same reverse shell we use in the user flag
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_26.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_27.png" alt="Untitled" />
+<br /><br />
+No we are librenms user, use env to see credentials for kai_relay.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_29.png" alt="Untitled" />
+<br /><br />
+Now we are in sudoers users, and we can see a service running LibreOffice
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_30.png" alt="Untitled" />
+<br /><br />
+There is another RCE on this service
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_31.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_32.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_33.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_34.png" alt="Untitled" />
+<br /><br />
+Give all permission to rev.sh and set the reverse shell path. The we connect to the target, and listening on the specific port we got a root shell
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_35.png" alt="Untitled" />
+<br /><br />
+We use this exploit, but i modified to custom the ip address and the target port.
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_36.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!
+<br /><br />
+<img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_37.png" alt="Untitled" /></p>
+  </li>
+</ul>
 
-<p>We need to use a resource from the web application to make the disclose information effective, then we load the .js file that we just create.</p>
+<script src="/assets/js/matrix-overlay.js"></script>
 
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_6.png" alt="Untitled" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>A subdomain were found successfully.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_7.png" alt="Untitled" /></p>
-
-<p>We have a new section powered by simple-git, after some research we found a RCE but the problem were that we can only execute one single command per sent request, so the best option was call a file with a reverse shell and it will execute it automatically.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_8.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Reverse shell to a linux OS</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_11.png" alt="Untitled" /></p>
-
-<p>We found some information about the data base, so we used some mongo commands looking for some credentials as we mentioned before.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Password found, using john to crack it.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_15.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_16.png" alt="Untitled" /></p>
-
-<h2 id="3-priv-esc">3: Priv esc</h2>
-
-<p>We enumerate using linpeas, it is necessary use sh to execute, otherwise it won’t execute it.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_17.png" alt="Untitled" /></p>
-
-<p>We have discovered some local services running but we don’t want to waste time looking for each one, we hace a clue in the config file of librenms</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_18.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_19.png" alt="Untitled" /></p>
-
-<p>Port forwarding using ssh</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_20.png" alt="Untitled" /></p>
-
-<p>In this part we can log in adding a user, we have permissions but we don’t know where is the adduser.php file.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_21.png" alt="Untitled" /></p>
-
-<p>May be in this path there is something</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_22.png" alt="Untitled" /></p>
-
-<p>Here we can’t see the file but we can call it so we search the command for add a admin user.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_23.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_24.png" alt="Untitled" /></p>
-
-<p>Add the domain to the local host and go to template directory</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_25.png" alt="Untitled" /></p>
-
-<p>Create a template with the same reverse shell we use in the user flag</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_26.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_27.png" alt="Untitled" /></p>
-
-<p>No we are librenms user, use env to see credentials for kai_relay.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_29.png" alt="Untitled" /></p>
-
-<p>Now we are in sudoers users, and we can see a service running LibreOffice</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_30.png" alt="Untitled" /></p>
-
-<p>There is another RCE on this service</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_31.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_32.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_33.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_34.png" alt="Untitled" /></p>
-
-<p>Give all permission to rev.sh and set the reverse shell path. The we connect to the target, and listening on the specific port we got a root shell</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_35.png" alt="Untitled" /></p>
-
-<p>We use this exploit, but i modified to custom the ip address and the target port.</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_36.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!</p>
-
-<p><img src="/assets/images/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2/9ed6ffc6-a6a0-4445-926d-d1c01568c2ad-export-884a5725-04bb-409c-b07a-2f0e9ce7c9e2_Untitled_37.png" alt="Untitled" />
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

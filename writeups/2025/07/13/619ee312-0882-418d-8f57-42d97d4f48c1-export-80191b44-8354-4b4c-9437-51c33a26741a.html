@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Cap-Linux-Easy</h1>
   
@@ -67,49 +59,54 @@
   <h1 id="cap">Cap</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with nmap, there are just 3 open ports</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image.png" alt="image.png" /></p>
-
-<p>It looks like a web security application service running on 80 port</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_1.png" alt="image.png" /></p>
-
-<p>we already are in the dashboard</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_2.png" alt="image.png" /></p>
-
-<p>Let’s know more about the web aplication, there is a section where some data is show, but we don’t have any log, fuzz the path and find multiple directories, we might have a IDOR vulnerabilty</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_3.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start with nmap, there are just 3 open ports
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image.png" alt="image.png" />
+<br /><br />
+It looks like a web security application service running on 80 port
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_1.png" alt="image.png" />
+<br /><br />
+we already are in the dashboard
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_2.png" alt="image.png" />
+<br /><br />
+Let’s know more about the web aplication, there is a section where some data is show, but we don’t have any log, fuzz the path and find multiple directories, we might have a IDOR vulnerabilty
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_3.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Using the 0 file</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_4.png" alt="image.png" /></p>
-
-<p>We can be able to steal creds</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_5.png" alt="image.png" /></p>
-
-<p>And use them to access to ftp and ssh</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_6.png" alt="image.png" /></p>
-
+<p><br /><br />
+Using the 0 file
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_4.png" alt="image.png" />
+<br /><br />
+We can be able to steal creds
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_5.png" alt="image.png" />
+<br /><br />
+And use them to access to ftp and ssh
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_6.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Inside of the backend file we can see a set uid on the /capture file</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_7.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_8.png" alt="image.png" /></p>
-
-<p>Just set the uid and spawn a shell</p>
-
-<p><img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_9.png" alt="image.png" />
+<p><br /><br />
+Inside of the backend file we can see a set uid on the /capture file
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_8.png" alt="image.png" />
+<br /><br />
+Just set the uid and spawn a shell
+<br /><br />
+<img src="/assets/images/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a/619ee312-0882-418d-8f57-42d97d4f48c1-export-80191b44-8354-4b4c-9437-51c33a26741a_image_9.png" alt="image.png" />
+<br /><br />
+Machine pwned
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

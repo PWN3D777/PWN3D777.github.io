@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">EvilCups-Medium-LInux</h1>
   
@@ -67,27 +59,27 @@
   <h1 id="evilcups">EvilCups</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start enumerating ports</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image.png" alt="image.png" /></p>
-
-<p>We can see CUPS running on 631 port, we can see the http api, we can see connected printers, jobs and its states</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_1.png" alt="image.png" /></p>
-
-<p>Normally we only scan tcp ports, but due to this is a printer service, we might need to check udp ports as well. effectively it is also communicating through udp</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_2.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating ports
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image.png" alt="image.png" />
+<br /><br />
+We can see CUPS running on 631 port, we can see the http api, we can see connected printers, jobs and its states
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_1.png" alt="image.png" />
+<br /><br />
+Normally we only scan tcp ports, but due to this is a printer service, we might need to check udp ports as well. effectively it is also communicating through udp
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_2.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Checking for vulnerabilities, there is a recent release, a serie of vulnerabilities where we can gain rce when we chain them</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_3.png" alt="image.png" /></p>
-
-<p>There is a PoC on internet, basically</p>
-
+<p><br /><br />
+Checking for vulnerabilities, there is a recent release, a serie of vulnerabilities where we can gain rce when we chain them
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_3.png" alt="image.png" />
+<br /><br />
+There is a PoC on internet, basically
+<br /><br /></p>
 <aside>
 ⚠️
 
@@ -100,7 +92,7 @@
 `CVE-2024-47177` cups-filters allows inject malicious code to trigger it when the printer is used
 
 </aside>
-
+<p><br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="c1">#!/usr/bin/python3
 </span><span class="kn">import</span> <span class="nn">sys</span>
@@ -281,29 +273,29 @@
 	
 	
 </code></pre></div></div>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_4.png" alt="image.png" /></p>
-
-<p>Effectively it is added</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_5.png" alt="image.png" /></p>
-
-<p>When we test our malicious printer we get the rev shell and the user flag</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_6.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_7.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_4.png" alt="image.png" />
+<br /><br />
+Effectively it is added
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_5.png" alt="image.png" />
+<br /><br />
+When we test our malicious printer we get the rev shell and the user flag
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_6.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_7.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>There we can see out malicious printer</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_8.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_9.png" alt="image.png" /></p>
-
-<p>Check for the jobs running on it on <code class="language-plaintext highlighter-rouge">/var/spool/cups</code> actually we can’t list jobs, we have not got permissions but according with the format we will be able to cat them to get information, the format is in this way</p>
-
+<p><br /><br />
+There we can see out malicious printer
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_8.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_9.png" alt="image.png" />
+<br /><br />
+Check for the jobs running on it on <code class="language-plaintext highlighter-rouge">/var/spool/cups</code> actually we can’t list jobs, we have not got permissions but according with the format we will be able to cat them to get information, the format is in this way
+<br /><br /></p>
 <aside>
 ⚠️
 
@@ -318,29 +310,32 @@ d —&gt; Data file of the printer job
 001 —&gt; Copy number or fragment
 
 </aside>
-
-<p>Cat the file</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_10.png" alt="image.png" /></p>
-
-<p>And find the password for the root user</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_11.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_12.png" alt="image.png" /></p>
-
-<p>Note that it is a PostScript document, we can copy it</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_13.png" alt="image.png" /></p>
-
-<p>And visualize it as a .pdf file</p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_14.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_15.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+Cat the file
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_10.png" alt="image.png" />
+<br /><br />
+And find the password for the root user
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_12.png" alt="image.png" />
+<br /><br />
+Note that it is a PostScript document, we can copy it 
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_13.png" alt="image.png" />
+<br /><br />
+And visualize it as a .pdf file
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_14.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7/63043f75-7e23-4c37-867d-9d6f6bdbe461-export-b08d9946-6d0a-4957-aefc-f529d6f60cc7_image_15.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

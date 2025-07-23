@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Heal-Linux-Medium</h1>
   
@@ -67,167 +59,170 @@
   <h1 id="heal">Heal</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with port recognizing, we only found two ports, ssh and http running nginx on it</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image.png" alt="image.png" /></p>
-
-<p>At first instance there are a login interface, default credentials aren’t useful to bypass authentication</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_1.png" alt="image.png" /></p>
-
-<p>Just create a new account to see what’s inside</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_2.png" alt="image.png" /></p>
-
-<p>We are being redirected to a new subdomain</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_3.png" alt="image.png" /></p>
-
-<p>This is a web application where you can put your data and build a resume</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_4.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_5.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start with port recognizing, we only found two ports, ssh and http running nginx on it
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image.png" alt="image.png" />
+<br /><br />
+At first instance there are a login interface, default credentials aren’t useful to bypass authentication
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_1.png" alt="image.png" />
+<br /><br />
+Just create a new account to see what’s inside
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_2.png" alt="image.png" />
+<br /><br />
+We are being redirected to a new subdomain
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_3.png" alt="image.png" />
+<br /><br />
+This is a web application where you can put your data and build a resume 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_4.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_5.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>It is retrieving a pdf file</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_6.png" alt="image.png" /></p>
-
-<p>We can try to access the new file generated</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_7.png" alt="image.png" /></p>
-
-<p>Luckily there are no sanitization at all on it, we can access files where we have read permissions</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_8.png" alt="image.png" /></p>
-
-<p>Those are users that has allowed open a shell</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_9.png" alt="image.png" /></p>
-
-<p>On web application files, there are no more info, this part of the vulnerability testing was a fundamental part enumerating users.</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_10.png" alt="image.png" /></p>
-
-<p>Now it’s time to check the subdomain found previously, it is running rails, a framework to create database-backend applications, its version is disclosed</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_11.png" alt="image.png" /></p>
-
-<p>Reviewing some information about this framework we have some files that could contain privileged information</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_12.png" alt="image.png" /></p>
-
-<p>Effectively database file is readable</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_13.png" alt="image.png" /></p>
-
-<p>Ralph creds are found, but those didn’t work for ssh connection</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_14.png" alt="image.png" /></p>
-
-<p>Login as administrator</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_15.png" alt="image.png" /></p>
-
-<p>You will be redirected to a new subdomain</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_16.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_17.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_18.png" alt="image.png" /></p>
-
-<p>Login as administrator in the new subdomain</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_19.png" alt="image.png" /></p>
-
-<p>This application is used for perform surveys</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_20.png" alt="image.png" /></p>
-
-<p>Again its version is disclosed</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_21.png" alt="image.png" /></p>
-
-<p>CVE-2021-44967 was discover, and taking account that we have the hability to install plugins on it, we could try to exploit this cve</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_22.png" alt="image.png" /></p>
-
-<p>Set a .zip with config.xml which contains necessary tags to integrate as a plugin and a rev.php which will be execute it once we access the new plugin</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_23.png" alt="image.png" /></p>
-
-<p>Install</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_24.png" alt="image.png" /></p>
-
-<p>And activate</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_25.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_26.png" alt="image.png" /></p>
-
-<p>Access the file we want to execute</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_27.png" alt="image.png" /></p>
-
-<p>Now we have access as www-data</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_28.png" alt="image.png" /></p>
-
-<p>Check config files</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_29.png" alt="image.png" /></p>
-
-<p>Test if there are password reuse</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_30.png" alt="image.png" /></p>
-
-<p>Now we have access as ron</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_31.png" alt="image.png" /></p>
-
+<p><br /><br />
+It is retrieving a pdf file
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_6.png" alt="image.png" />
+<br /><br />
+We can try to access the new file generated
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_7.png" alt="image.png" />
+<br /><br />
+Luckily there are no sanitization at all on it, we can access files where we have read permissions
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_8.png" alt="image.png" />
+<br /><br />
+Those are users that has allowed open a shell 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_9.png" alt="image.png" />
+<br /><br />
+On web application files, there are no more info, this part of the vulnerability testing was a fundamental part enumerating users.
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_10.png" alt="image.png" />
+<br /><br />
+Now it’s time to check the subdomain found previously, it is running rails, a framework to create database-backend applications, its version is disclosed
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_11.png" alt="image.png" />
+<br /><br />
+Reviewing some information about this framework we have some files that could contain privileged information
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_12.png" alt="image.png" />
+<br /><br />
+Effectively database file is readable 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_13.png" alt="image.png" />
+<br /><br />
+Ralph creds are found, but those didn’t work for ssh connection
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_14.png" alt="image.png" />
+<br /><br />
+Login as administrator
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_15.png" alt="image.png" />
+<br /><br />
+You will be redirected to a new subdomain
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_16.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_17.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_18.png" alt="image.png" />
+<br /><br />
+Login as administrator in the new subdomain
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_19.png" alt="image.png" />
+<br /><br />
+This application is used for perform surveys
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_20.png" alt="image.png" />
+<br /><br />
+Again its version is disclosed
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_21.png" alt="image.png" />
+<br /><br />
+CVE-2021-44967 was discover, and taking account that we have the hability to install plugins on it, we could try to exploit this cve
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_22.png" alt="image.png" />
+<br /><br />
+Set a .zip with config.xml which contains necessary tags to integrate as a plugin and a rev.php which will be execute it once we access the new plugin
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_23.png" alt="image.png" />
+<br /><br />
+Install 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_24.png" alt="image.png" />
+<br /><br />
+And activate
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_25.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_26.png" alt="image.png" />
+<br /><br />
+Access the file we want to execute 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_27.png" alt="image.png" />
+<br /><br />
+Now we have access as www-data
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_28.png" alt="image.png" />
+<br /><br />
+Check config files
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_29.png" alt="image.png" />
+<br /><br />
+Test if there are password reuse
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_30.png" alt="image.png" />
+<br /><br />
+Now we have access as ron
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_31.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>This part it’s pretty straightforward, check ports open in localhost</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_32.png" alt="image.png" /></p>
-
-<p>8500 seems to be something else</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_33.png" alt="image.png" /></p>
-
-<p>Here we have a service network solution</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_34.png" alt="image.png" /></p>
-
-<p>Once again it is disclosing the version</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_35.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_36.png" alt="image.png" /></p>
-
-<p>After a search we found improper handle of errors</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_37.png" alt="image.png" /></p>
-
-<p>We also have an exploit of remote code execution, which takes advantage of command injection vulnerability on the <code class="language-plaintext highlighter-rouge">/v1/agent/service/register</code> endpoint, using put request</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_38.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_39.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_40.png" alt="image.png" /></p>
-
-<p>That’s how we are going to gain access as root</p>
-
-<p><img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_41.png" alt="image.png" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+This part it’s pretty straightforward, check ports open in localhost
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_32.png" alt="image.png" />
+<br /><br />
+8500 seems to be something else
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_33.png" alt="image.png" />
+<br /><br />
+Here we have a service network solution
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_34.png" alt="image.png" />
+<br /><br />
+Once again it is disclosing the version 
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_35.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_36.png" alt="image.png" />
+<br /><br />
+After a search we found improper handle of errors
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_37.png" alt="image.png" />
+<br /><br />
+We also have an exploit of remote code execution, which takes advantage of command injection vulnerability on the <code class="language-plaintext highlighter-rouge">/v1/agent/service/register</code> endpoint, using put request
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_38.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_39.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_40.png" alt="image.png" />
+<br /><br />
+That’s how we are going to gain access as root
+<br /><br />
+<img src="/assets/images/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f/871a0ecf-dd92-4d1e-b6c8-f8c332e65a55-export-de0f8192-35f5-42ab-b7b8-5fd0884dea8f_image_41.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

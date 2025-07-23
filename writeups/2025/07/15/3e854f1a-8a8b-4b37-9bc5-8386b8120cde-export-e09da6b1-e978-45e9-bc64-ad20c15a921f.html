@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Alert-Linux-Easy</h1>
   
@@ -67,27 +59,27 @@
   <h1 id="alert">Alert</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start enumerating ports, there is a web application running, and a ssh service we may need to find some creds</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image.png" alt="image.png" /></p>
-
-<p>We can perform some actions like, view a .md file, exploring the web application there is a message suggesting report any trouble through contact us</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_1.png" alt="image.png" /></p>
-
+<p><br /><br />
+Start enumerating ports, there is a web application running, and a ssh service we may need to find some creds
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image.png" alt="image.png" />
+<br /><br />
+We can perform some actions like, view a .md file, exploring the web application there is a message suggesting report any trouble through contact us 
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_1.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Let’s keep enumerating the machine listing directories, there is another one called messages, if we try to send a request to it it doesn’t show anything it may be allowed to show info only to admin</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_2.png" alt="image.png" /></p>
-
-<p>Messages is also present in here</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_3.png" alt="image.png" /></p>
-
-<p>We tried to upload js code to perform a xss attack, it seems to be vulnerable to it but there are no cookies to steal and we are not able to do anything else different from share the .md file, so we could attempt to fetch files as whoever is behind contact us and send that information to a listener we will set up</p>
-
+<p><br /><br />
+Let’s keep enumerating the machine listing directories, there is another one called messages, if we try to send a request to it it doesn’t show anything it may be allowed to show info only to admin
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_2.png" alt="image.png" />
+<br /><br />
+Messages is also present in here
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_3.png" alt="image.png" />
+<br /><br />
+We tried to upload js code to perform a xss attack, it seems to be vulnerable to it but there are no cookies to steal and we are not able to do anything else different from share the .md file, so we could attempt to fetch files as whoever is behind contact us and send that information to a listener we will set up
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 fetch("http://alert.htb/index.php?page=messages")
 	.then(response =&gt; response.text())
@@ -97,84 +89,87 @@ fetch("http://alert.htb/index.php?page=messages")
 	.catch(error =&gt; console.error("Error", error));
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div></div>
-
-<p>Send the payload but before clicking it in share, intercept the request, copy and paste the link and send it to contact us interface</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_4.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_5.png" alt="image.png" /></p>
-
-<p>It will be sent successfully</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_6.png" alt="image.png" /></p>
-
-<p>And we will receive the info in the netcat listener</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_7.png" alt="image.png" /></p>
-
-<p>Decode it using cyberchef, there is a .txt file on it and it is disclosing the way to access files with messages php script, there may be a LFI</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_8.png" alt="image.png" /></p>
-
-<p>There is a Apache2 server running</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_9.png" alt="image.png" /></p>
-
-<p>Check default configuration files</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_10.png" alt="image.png" /></p>
-
-<p>It give us the whole configurations and the file where a password is stored</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_11.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_12.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_13.png" alt="image.png" /></p>
-
-<p>Check the content on .htpasswd</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_14.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_15.png" alt="image.png" /></p>
-
-<p>Albert hash found</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_16.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_17.png" alt="image.png" /></p>
-
-<p>Log in as Albert and  get user flag</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_18.png" alt="image.png" /></p>
-
+<p><br /><br />
+Send the payload but before clicking it in share, intercept the request, copy and paste the link and send it to contact us interface
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_4.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_5.png" alt="image.png" />
+<br /><br />
+It will be sent successfully
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_6.png" alt="image.png" />
+<br /><br />
+And we will receive the info in the netcat listener
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_7.png" alt="image.png" />
+<br /><br />
+Decode it using cyberchef, there is a .txt file on it and it is disclosing the way to access files with messages php script, there may be a LFI 
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_8.png" alt="image.png" />
+<br /><br />
+There is a Apache2 server running
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_9.png" alt="image.png" />
+<br /><br />
+Check default configuration files
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_10.png" alt="image.png" />
+<br /><br />
+It give us the whole configurations and the file where a password is stored
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_12.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_13.png" alt="image.png" />
+<br /><br />
+Check the content on .htpasswd
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_14.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_15.png" alt="image.png" />
+<br /><br />
+Albert hash found
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_16.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_17.png" alt="image.png" />
+<br /><br />
+Log in as Albert and  get user flag
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_18.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>To escalate privileges we found in <code class="language-plaintext highlighter-rouge">/opt/website-monitor</code> files that seems to run a web application, root is the owner but management group can performs some tasks in config files</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_19.png" alt="image.png" /></p>
-
-<p>Effectively we are part of management group</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_20.png" alt="image.png" /></p>
-
-<p>And there is a local service running on port 8080</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_21.png" alt="image.png" /></p>
-
-<p>We could forward that port to get more information of this, but i think that we have the necessary to elevate our privileges, furthermore we have the base path where files are requested</p>
-
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_22.png" alt="image.png" /></p>
-
+<p><br /><br />
+To escalate privileges we found in <code class="language-plaintext highlighter-rouge">/opt/website-monitor</code> files that seems to run a web application, root is the owner but management group can performs some tasks in config files
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_19.png" alt="image.png" />
+<br /><br />
+Effectively we are part of management group
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_20.png" alt="image.png" />
+<br /><br />
+And there is a local service running on port 8080
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_21.png" alt="image.png" />
+<br /><br />
+We could forward that port to get more information of this, but i think that we have the necessary to elevate our privileges, furthermore we have the base path where files are requested
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_22.png" alt="image.png" />
+<br /><br /></p>
 <ol>
   <li>Create a new .php file opening the door to get requests executing commands</li>
-  <li>Make a request executing whatever command we want through the file we’ve created previously</li>
+  <li>Make a request executing whatever command we want through the file we’ve created previously
+<br /><br />
+<img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_23.png" alt="image.png" />
+<br /><br />
+Machine Pwned!!!
+<script src="/assets/js/matrix-overlay.js"></script></li>
 </ol>
 
-<p><img src="/assets/images/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f/3e854f1a-8a8b-4b37-9bc5-8386b8120cde-export-e09da6b1-e978-45e9-bc64-ad20c15a921f_image_23.png" alt="image.png" /></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
-<p>Machine Pwned!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
 
 </div>
 

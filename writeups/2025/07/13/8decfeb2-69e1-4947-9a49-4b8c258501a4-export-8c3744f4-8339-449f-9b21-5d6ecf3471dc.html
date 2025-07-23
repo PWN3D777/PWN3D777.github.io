@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Certified-Windows-Medium</h1>
   
@@ -67,159 +59,162 @@
   <h1 id="certified">Certified</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>This machine seems to be funny we might be dealing with certifies as always start with nmap</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image.png" alt="image.png" /></p>
-
-<p>There are no web application in here, only active directory environment</p>
-
+<p><br /><br />
+This machine seems to be funny we might be dealing with certifies as always start with nmap
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image.png" alt="image.png" />
+<br /><br />
+There are no web application in here, only active directory environment
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>It’s important to take the initial creds htb give us at the beginning</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_1.png" alt="image.png" /></p>
-
-<p>But in those situations we are stubborn and as a good read teamers we will try to enumerate everything by ourselves, this step should add the difficulty to this machine due to the time invested to get a valid username an its password, we used 10-million of usernames but as we are in kerberos is probably that usernames follow the string format something.someone, filter those usernames an start with kerbrute enumeration</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_2.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_3.png" alt="image.png" /></p>
-
-<p>Here we have its password, we could use rockyou but it is necessary to check clocks before every attempt. we have two options set the kerbrute script and wait like days or just filter the output and when the error message is related with the sync clock that is a effective</p>
-
-<p>valid password</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_4.png" alt="image.png" /></p>
-
-<p>using ntpdate</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_5.png" alt="image.png" /></p>
-
-<p>Now we can start with the machine enumerating valid users</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_6.png" alt="image.png" /></p>
-
-<p>Send this information to a text file and create a list of valid users using regular expressions</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_7.png" alt="image.png" /></p>
-
-<p>Check for users with service principal names associated, those users are important because they usually have privileges attached</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_8.png" alt="image.png" /></p>
-
-<p>We can even requesting a service ticket, that give us a hash for management_svc user but it is not easy crackeable</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_9.png" alt="image.png" /></p>
-
-<p>Now getting more information about AD we made this by using bloodhound tool</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_10.png" alt="image.png" /></p>
-
-<p>Here we found a route path for own management_scv user</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_11.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_12.png" alt="image.png" /></p>
-
-<p>First own management group using this PKI tool</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_13.png" alt="image.png" /></p>
-
-<p>Now that we have owned the group, set the ACL and and yourself to it</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_14.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_15.png" alt="image.png" /></p>
-
-<p>Having generic-write on management_svc user we can change  <code class="language-plaintext highlighter-rouge">msDS-KeyCredentialLink</code> attribute to get a management user certificate, the tool sometimes fails</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_16.png" alt="image.png" /></p>
-
-<p>we can change the branch to another that doesn’t have the error</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_17.png" alt="image.png" /></p>
-
-<p>This version of pywhister has a compatibility problem with our openSSL version installed</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_18.png" alt="image.png" /></p>
-
-<p>Set it and try again</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_19.png" alt="image.png" /></p>
-
-<p>Now we have the certificate</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_20.png" alt="image.png" /></p>
-
-<p>Request a TGT using that certificate</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_21.png" alt="image.png" /></p>
-
-<p>With this TGT request a NT hash, that’s how we have got the user flag</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_22.png" alt="image.png" /></p>
-
+<p><br /><br />
+It’s important to take the initial creds htb give us at the beginning
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_1.png" alt="image.png" />
+<br /><br />
+But in those situations we are stubborn and as a good read teamers we will try to enumerate everything by ourselves, this step should add the difficulty to this machine due to the time invested to get a valid username an its password, we used 10-million of usernames but as we are in kerberos is probably that usernames follow the string format something.someone, filter those usernames an start with kerbrute enumeration
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_2.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_3.png" alt="image.png" />
+<br /><br />
+Here we have its password, we could use rockyou but it is necessary to check clocks before every attempt. we have two options set the kerbrute script and wait like days or just filter the output and when the error message is related with the sync clock that is a effective 
+<br /><br />
+valid password
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_4.png" alt="image.png" />
+<br /><br />
+using ntpdate
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_5.png" alt="image.png" />
+<br /><br />
+Now we can start with the machine enumerating valid users
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_6.png" alt="image.png" />
+<br /><br />
+Send this information to a text file and create a list of valid users using regular expressions 
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_7.png" alt="image.png" />
+<br /><br />
+Check for users with service principal names associated, those users are important because they usually have privileges attached
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_8.png" alt="image.png" />
+<br /><br />
+We can even requesting a service ticket, that give us a hash for management_svc user but it is not easy crackeable
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_9.png" alt="image.png" />
+<br /><br />
+Now getting more information about AD we made this by using bloodhound tool
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_10.png" alt="image.png" />
+<br /><br />
+Here we found a route path for own management_scv user
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_12.png" alt="image.png" />
+<br /><br />
+First own management group using this PKI tool
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_13.png" alt="image.png" />
+<br /><br />
+Now that we have owned the group, set the ACL and and yourself to it
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_14.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_15.png" alt="image.png" />
+<br /><br />
+Having generic-write on management_svc user we can change  <code class="language-plaintext highlighter-rouge">msDS-KeyCredentialLink</code> attribute to get a management user certificate, the tool sometimes fails 
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_16.png" alt="image.png" />
+<br /><br />
+we can change the branch to another that doesn’t have the error
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_17.png" alt="image.png" />
+<br /><br />
+This version of pywhister has a compatibility problem with our openSSL version installed
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_18.png" alt="image.png" />
+<br /><br />
+Set it and try again
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_19.png" alt="image.png" />
+<br /><br />
+Now we have the certificate
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_20.png" alt="image.png" />
+<br /><br />
+Request a TGT using that certificate
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_21.png" alt="image.png" />
+<br /><br />
+With this TGT request a NT hash, that’s how we have got the user flag
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_22.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Manangement_svc user has generic all over ca_operator and operators group</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_23.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_24.png" alt="image.png" /></p>
-
-<p>We used certify to explore visible misconfigurations but nothing was found</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_25.png" alt="image.png" /></p>
-
-<p>First, own ca_operator changing his password</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_26.png" alt="image.png" /></p>
-
-<p>To find possible vulnerable template we use certipy to extract information about GPOs</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_27.png" alt="image.png" /></p>
-
-<p>We found it is vulnerable to ESC09, we dig into custom queries for domain escalation in its repository</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_28.png" alt="image.png" /></p>
-
-<p>we can see that CERTIFIEDAUTHENTICATION is vulnerable</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_29.png" alt="image.png" /></p>
-
-<p>update ca_operator user principal name to Administrator</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_30.png" alt="image.png" /></p>
-
-<p>we can see ca-operator has auto enroll rights for this template</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_31.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_32.png" alt="image.png" /></p>
-
-<p>collect information about the ca name</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_33.png" alt="image.png" /></p>
-
-<p>Request a certificate as ca-operator which has upn as administrator using the vulnerable template</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_34.png" alt="image.png" /></p>
-
-<p>set again the ca-operator upn taking advantage of generic write right</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_35.png" alt="image.png" /></p>
-
-<p>Get a TGT and try to authenticate using the administrator certificated to get NT hash</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_36.png" alt="image.png" /></p>
-
-<p>We can use wvil-winrm or psexec to open a shell as administrator</p>
-
-<p><img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_37.png" alt="image.png" /></p>
-
-<p>machine pwnedd
+<p><br /><br />
+Manangement_svc user has generic all over ca_operator and operators group
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_23.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_24.png" alt="image.png" />
+<br /><br />
+We used certify to explore visible misconfigurations but nothing was found
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_25.png" alt="image.png" />
+<br /><br />
+First, own ca_operator changing his password
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_26.png" alt="image.png" />
+<br /><br />
+To find possible vulnerable template we use certipy to extract information about GPOs
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_27.png" alt="image.png" />
+<br /><br />
+We found it is vulnerable to ESC09, we dig into custom queries for domain escalation in its repository
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_28.png" alt="image.png" />
+<br /><br />
+we can see that CERTIFIEDAUTHENTICATION is vulnerable 
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_29.png" alt="image.png" />
+<br /><br />
+update ca_operator user principal name to Administrator
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_30.png" alt="image.png" />
+<br /><br />
+we can see ca-operator has auto enroll rights for this template
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_31.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_32.png" alt="image.png" />
+<br /><br />
+collect information about the ca name
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_33.png" alt="image.png" />
+<br /><br />
+Request a certificate as ca-operator which has upn as administrator using the vulnerable template
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_34.png" alt="image.png" />
+<br /><br />
+set again the ca-operator upn taking advantage of generic write right 
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_35.png" alt="image.png" />
+<br /><br />
+Get a TGT and try to authenticate using the administrator certificated to get NT hash
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_36.png" alt="image.png" />
+<br /><br />
+We can use wvil-winrm or psexec to open a shell as administrator
+<br /><br />
+<img src="/assets/images/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc/8decfeb2-69e1-4947-9a49-4b8c258501a4-export-8c3744f4-8339-449f-9b21-5d6ecf3471dc_image_37.png" alt="image.png" />
+<br /><br />
+machine pwnedd
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

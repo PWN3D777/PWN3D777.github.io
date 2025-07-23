@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">WifineticTwo-Linux-Easy</h1>
   
@@ -67,23 +59,23 @@
   <h1 id="wifinetictwo">WifineticTwo</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled.png" alt="Untitled" /></p>
-
-<p>There is a http service, take a look of the web application</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_1.png" alt="Untitled" /></p>
-
-<p>OpenPLC used openplc as default credentials, we use it and it worked.</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_2.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled.png" alt="Untitled" />
+<br /><br />
+There is a http service, take a look of the web application
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_1.png" alt="Untitled" />
+<br /><br />
+OpenPLC used openplc as default credentials, we use it and it worked.
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_2.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Inside there is a section with C code that it may run on the server so we try to inject a rev shell</p>
-
+<p><br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Inside there is a section with C code that it may run on the server so we try to inject a rev shell
+<br /><br /></p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"ladder.h"</span><span class="cp">
 #include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
@@ -166,36 +158,36 @@
         <span class="n">wait</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
     <span class="p">}</span>
 </code></pre></div></div>
-
-<p>Save and compile</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_4.png" alt="Untitled" /></p>
-
-<p>It is necessary to run start PLC to execute the reverse shell.</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_5.png" alt="Untitled" /></p>
-
+<p><br /><br />
+Save and compile
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_4.png" alt="Untitled" />
+<br /><br />
+It is necessary to run start PLC to execute the reverse shell. 
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_5.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>To get the root flag on this machine we need to use wlan0 interface to hack a wifi network</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_6.png" alt="Untitled" /></p>
-
-<p>We can enumerate and try to make a pixie dust attack using oneshot, this attack steal a pin on the router which will help later to access to the password saved on the router.</p>
-
+<p><br /><br />
+To get the root flag on this machine we need to use wlan0 interface to hack a wifi network 
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_6.png" alt="Untitled" />
+<br /><br />
+We can enumerate and try to make a pixie dust attack using oneshot, this attack steal a pin on the router which will help later to access to the password saved on the router.
+<br /><br /></p>
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">sudo</span> <span class="nx">airmon</span><span class="o">-</span><span class="nx">ng</span> <span class="nx">check</span> <span class="nx">kill</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_7.png" alt="Untitled" /></p>
-
-<p>Once we found the password it’s time to connect to the wifi network</p>
-
-<p>We will need two files and a set of command according with the documentation.</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_8.png" alt="Untitled" /></p>
-
-<p>First path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf</p>
-
+<p><br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_7.png" alt="Untitled" />
+<br /><br />
+Once we found the password it’s time to connect to the wifi network
+<br /><br />
+We will need two files and a set of command according with the documentation.
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_8.png" alt="Untitled" />
+<br /><br />
+First path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+<br /><br /></p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctrl_interface</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">wpa_supplicant</span>
 <span class="n">ctrl_interface_group</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">update_config</span><span class="o">=</span><span class="mi">1</span>
@@ -210,31 +202,36 @@
   <span class="n">scan_ssid</span><span class="o">=</span><span class="mi">1</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<p>Second path: /etc/systemd/network/25-wlan.network</p>
-
+<p><br /><br />
+Second path: /etc/systemd/network/25-wlan.network
+<br /><br /></p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Match</span><span class="p">]</span>
 <span class="n">Name</span><span class="o">=</span><span class="n">wlan0</span>
 
 <span class="p">[</span><span class="n">Network</span><span class="p">]</span>
 <span class="n">DHCP</span><span class="o">=</span><span class="n">ipv4</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_9.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_9.png" alt="Untitled" />
+<br /><br /></p>
 <div class="language-coq highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span><span class="no">Enable</span><span class="w"> </span><span class="no">wpa</span><span class="w"> </span><span class="no">supplicant</span><span class="w"> </span><span class="no">to</span><span class="w"> </span><span class="no">connect</span><span class="w"> </span><span class="no">it</span><span class="w"> </span><span class="no">trought</span><span class="w"> </span><span class="no">it</span><span class="w">
 </span><span class="no">systemctl</span><span class="w"> </span><span class="no">enable</span><span class="w"> </span><span class="no">wpa_supplicant</span><span class="o">@</span><span class="nn">wlan0</span><span class="p">.</span><span class="no">service</span><span class="w">
 </span><span class="o">#</span><span class="no">Restart</span><span class="w"> </span><span class="no">the</span><span class="w"> </span><span class="no">services</span><span class="w"> </span><span class="no">to</span><span class="w"> </span><span class="no">connect</span><span class="w"> </span><span class="no">automatically</span><span class="w">
 </span><span class="no">systemctl</span><span class="w"> </span><span class="no">restart</span><span class="w"> </span><span class="no">systemd</span><span class="o">-</span><span class="nn">networkd</span><span class="p">.</span><span class="no">service</span><span class="w">
 </span><span class="no">systemctl</span><span class="w"> </span><span class="no">restart</span><span class="w"> </span><span class="no">wpa_supplicant</span><span class="o">@</span><span class="nn">wlan0</span><span class="p">.</span><span class="no">service</span><span class="w">
 </span></code></pre></div></div>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_10.png" alt="Untitled" /></p>
-
-<p>Use ssh to get into the router and machine pwned!!!</p>
-
-<p><img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png" alt="Untitled" />
+<p><br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_10.png" alt="Untitled" />
+<br /><br />
+Use ssh to get into the router and machine pwned!!!
+<br /><br />
+<img src="/assets/images/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08/734f48dc-c3e1-4199-b090-803803bdf8b8-export-fd465bcc-2039-4e91-b2af-966f3199ca08_Untitled_11.png" alt="Untitled" />
+<br /><br />
+Machine pwned1!@
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Blurry-Linux-Medium</h1>
   
@@ -67,43 +59,43 @@
   <h1 id="blurry">Blurry</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>As we used to, we start enumerating ports</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled.png" alt="Untitled" /></p>
-
-<p>There are just two port open, the 80 port is redirecting to a subdomain, which indicates that probably there are other subdomains running on it.</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_1.png" alt="Untitled" /></p>
-
-<p>We can register ourselves and follow the instructions to authenticate us, and prepare crearml to execute tasks through it.</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_2.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Let’s search for another subdomains</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_4.png" alt="Untitled" /></p>
-
-<p>Configure clearml to authenticate using .conf file</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_5.png" alt="Untitled" /></p>
-
-<p>There is a public chat inside of one subdomain</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_6.png" alt="Untitled" /></p>
-
+<p><br /><br />
+As we used to, we start enumerating ports
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled.png" alt="Untitled" />
+<br /><br />
+There are just two port open, the 80 port is redirecting to a subdomain, which indicates that probably there are other subdomains running on it.
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_1.png" alt="Untitled" />
+<br /><br />
+We can register ourselves and follow the instructions to authenticate us, and prepare crearml to execute tasks through it.
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_2.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Let’s search for another subdomains
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_4.png" alt="Untitled" />
+<br /><br />
+Configure clearml to authenticate using .conf file
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_5.png" alt="Untitled" />
+<br /><br />
+There is a public chat inside of one subdomain
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_6.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Now we have a clue, it is necessary to use review tag to make that an admin open the artifact file which is the object that have the reverse shell</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_7.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_8.png" alt="Untitled" /></p>
-
-<p>Prepare the exploit</p>
-
+<p><br /><br />
+Now we have a clue, it is necessary to use review tag to make that an admin open the artifact file which is the object that have the reverse shell
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_7.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_8.png" alt="Untitled" />
+<br /><br />
+Prepare the exploit
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">clearml</span> <span class="kn">import</span> <span class="n">Task</span>
 <span class="kn">import</span> <span class="nn">base64</span>
@@ -121,24 +113,27 @@
 
 <span class="n">task</span><span class="p">.</span><span class="n">execute_remotely</span><span class="p">(</span><span class="n">queue_name</span><span class="o">=</span><span class="s">'default'</span><span class="p">)</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Execute it and get user flag</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_10.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_11.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Execute it and get user flag
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_10.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_11.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
+<p><br /><br />
+We can see that we have sudo permission to run evaluate model, and we have permise to delete that file so just delete it and create another one performing a shell in bash using python, then run it as sudo and got the root flag
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_13.png" alt="Untitled" />
+<br /><br />
+Machine pwned!@
+<script src="/assets/js/matrix-overlay.js"></script></p>
 
-<p>We can see that we have sudo permission to run evaluate model, and we have permise to delete that file so just delete it and create another one performing a shell in bash using python, then run it as sudo and got the root flag</p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988/06705de6-cdc9-4a88-8879-4a03e3f03416-export-09f465a8-166f-4109-8879-1c8b0e42d988_Untitled_13.png" alt="Untitled" /></p>
-
-<script src="/assets/js/matrix-overlay.js"></script>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
 
 
 </div>

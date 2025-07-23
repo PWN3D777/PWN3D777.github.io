@@ -14,11 +14,11 @@
 <meta property="og:url" content="https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html" />
 <meta property="og:site_name" content="Pwn3d777" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2025-07-22T16:05:57+00:00" />
+<meta property="article:published_time" content="2025-07-22T16:06:57+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Scepter-Windows-Hard" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-22T16:05:57+00:00","datePublished":"2025-07-22T16:05:57+00:00","description":"Scepter","headline":"Scepter-Windows-Hard","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"},"url":"https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-07-22T16:06:57+00:00","datePublished":"2025-07-22T16:06:57+00:00","description":"Scepter","headline":"Scepter-Windows-Hard","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"},"url":"https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Scepter-Windows-Hard</h1>
   
@@ -66,192 +58,194 @@
   
   <h1 id="scepter">Scepter</h1>
 
-<h1 id="1-enumeration">1. Enumeration</h1>
+<h1 id="1-enumeration">1. Enumeration<br /><br /></h1>
 
-<p>Start by enumerating open ports, since this is a Windows machine, several Microsoft Network services running on it</p>
+<p>Start by enumerating open ports, since this is a Windows machine, several Microsoft Network services running on it
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_1.png" alt="image.png" />
+<br /><br />
+Port 2049/tcp is particularly interesting, nmap identifies it as nlockmgr (Network Lock Manager), a protocol that cooperates with Network File System (NFS) to prevent issues caused by simultaneous writing
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_2.png" alt="image.png" />
+<br /><br />
+Enumerate the current mount points in this host
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_3.png" alt="image.png" />
+<br /><br />
+<code class="language-plaintext highlighter-rouge">-a active mounts</code></p>
 
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_1.png" alt="image.png" /></p>
-
-<p>Port 2049/tcp is particularly interesting, nmap identifies it as nlockmgr (Network Lock Manager), a protocol that cooperates with Network File System (NFS) to prevent issues caused by simultaneous writing</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_2.png" alt="image.png" /></p>
-
-<p>Enumerate the current mount points in this host</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_3.png" alt="image.png" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">-a active mounts</code></p>
-
-<p><code class="language-plaintext highlighter-rouge">-e available exports</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_4.png" alt="image.png" /></p>
-
+<p><code class="language-plaintext highlighter-rouge">-e available exports</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_4.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>Download available files from the mount</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_5.png" alt="image.png" /></p>
-
-<p>We have three .pfx files that we could try to crack in order to retrieve their pfx passwords and  generate new unprotected pfx files for domain authentication, but this will not work because those credentials have been revoked. Instead we could use one of these file to generate a hash to discover that a password was reused several times across all .pfx file. Then we can proceed to work with baker user, since we own needed files to create our own .pfx file and the password used for him is the same used for other users.</p>
-
-<p>Another approach is using <code class="language-plaintext highlighter-rouge">pem2john</code> tool with the <code class="language-plaintext highlighter-rouge">baker.key</code> file</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_6.png" alt="image.png" /></p>
-
-<p>To carry out the previously mentioned actions, start using <code class="language-plaintext highlighter-rouge">pfx2john</code> to generate a hash</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_7.png" alt="image.png" /></p>
-
-<p>Upon inspecting that hash, we found that the generated type was <code class="language-plaintext highlighter-rouge">pfxng</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_8.png" alt="image.png" /></p>
-
-<p>You might encounter issues when cracking this hash because this format is not supported in some versions of john (at least not supported by the version included with kali), you can install a different version if you want,  although this could generate issues and might be problematic for your environment</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_9.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_10.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_11.png" alt="image.png" /></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_12.png" alt="image.png" /></p>
-
-<p>The recommended tool to address this scenario is <code class="language-plaintext highlighter-rouge">crackpkcs12</code> that cracks <code class="language-plaintext highlighter-rouge">p12</code> and <code class="language-plaintext highlighter-rouge">pfx</code> files</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_99591778_a1d7_4d1d_a2aa_1fbff0d78c0a.png" alt="image.png" /></p>
-
-<p>Once the password is found, we can obtain a <code class="language-plaintext highlighter-rouge">pxf</code> file in name of <code class="language-plaintext highlighter-rouge">baker</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_13.png" alt="image.png" /></p>
-
-<p>Use that file to request a tgt using auth module in certipy</p>
-
+<p><br /><br />
+Download available files from the mount
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_5.png" alt="image.png" />
+<br /><br />
+We have three .pfx files that we could try to crack in order to retrieve their pfx passwords and  generate new unprotected pfx files for domain authentication, but this will not work because those credentials have been revoked. Instead we could use one of these file to generate a hash to discover that a password was reused several times across all .pfx file. Then we can proceed to work with baker user, since we own needed files to create our own .pfx file and the password used for him is the same used for other users.
+<br /><br />
+Another approach is using <code class="language-plaintext highlighter-rouge">pem2john</code> tool with the <code class="language-plaintext highlighter-rouge">baker.key</code> file
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_6.png" alt="image.png" />
+<br /><br />
+To carry out the previously mentioned actions, start using <code class="language-plaintext highlighter-rouge">pfx2john</code> to generate a hash
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_7.png" alt="image.png" />
+<br /><br />
+Upon inspecting that hash, we found that the generated type was <code class="language-plaintext highlighter-rouge">pfxng</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_8.png" alt="image.png" />
+<br /><br />
+You might encounter issues when cracking this hash because this format is not supported in some versions of john (at least not supported by the version included with kali), you can install a different version if you want,  although this could generate issues and might be problematic for your environment
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_9.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_10.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_12.png" alt="image.png" />
+<br /><br />
+  The recommended tool to address this scenario is <code class="language-plaintext highlighter-rouge">crackpkcs12</code> that cracks <code class="language-plaintext highlighter-rouge">p12</code> and <code class="language-plaintext highlighter-rouge">pfx</code> files
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_99591778_a1d7_4d1d_a2aa_1fbff0d78c0a.png" alt="image.png" />
+<br /><br />
+Once the password is found, we can obtain a <code class="language-plaintext highlighter-rouge">pxf</code> file in name of <code class="language-plaintext highlighter-rouge">baker</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_13.png" alt="image.png" />
+<br /><br />
+Use that file to request a tgt using auth module in certipy
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">certipy</span> <span class="n">auth</span> <span class="o">-</span><span class="n">pfx</span> <span class="p">.</span><span class="n">pfx</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_14.png" alt="image.png" /></p>
-
-<p>Set <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code> to avoid potential DNS problems while running the bloodhound collector</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_15.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_14.png" alt="image.png" />
+<br /><br />
+Set <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code> to avoid potential DNS problems while running the bloodhound collector
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_15.png" alt="image.png" />
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bloodhound</span><span class="o">-</span><span class="n">python</span> <span class="o">-</span><span class="n">u</span> <span class="n">d</span><span class="p">.</span><span class="n">baker</span> <span class="o">--</span><span class="n">hashes</span> <span class="p">:</span><span class="nb">hash</span> <span class="o">-</span><span class="n">ns</span> <span class="n">dns</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span> <span class="o">-</span><span class="n">c</span> <span class="n">ALL</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_16.png" alt="image.png" /></p>
-
-<p>Checking the information displayed by Bloodhound we discovered that <code class="language-plaintext highlighter-rouge">p.adams</code> has <code class="language-plaintext highlighter-rouge">DCSync</code> privileges. Additionally, the account operators group has <code class="language-plaintext highlighter-rouge">generic all</code> privileges over him, and he is also associated with a  <code class="language-plaintext highlighter-rouge">helpdesk enrrollment certificate</code> , for that reason, he will be our final target account in order to compromise administrator account</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_17.png" alt="image.png" /></p>
-
-<p>But for now we need to obtain the user flag first. Mark <code class="language-plaintext highlighter-rouge">d.baker</code> as owned, and identify the <code class="language-plaintext highlighter-rouge">ForceChangePassword</code> policy that he has over <code class="language-plaintext highlighter-rouge">a.carter</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_18.png" alt="image.png" /></p>
-
-<p>Abuse this configuration using</p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_16.png" alt="image.png" />
+<br /><br />
+Checking the information displayed by Bloodhound we discovered that <code class="language-plaintext highlighter-rouge">p.adams</code> has <code class="language-plaintext highlighter-rouge">DCSync</code> privileges. Additionally, the account operators group has <code class="language-plaintext highlighter-rouge">generic all</code> privileges over him, and he is also associated with a  <code class="language-plaintext highlighter-rouge">helpdesk enrrollment certificate</code> , for that reason, he will be our final target account in order to compromise administrator account
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_17.png" alt="image.png" />
+<br /><br />
+But for now we need to obtain the user flag first. Mark <code class="language-plaintext highlighter-rouge">d.baker</code> as owned, and identify the <code class="language-plaintext highlighter-rouge">ForceChangePassword</code> policy that he has over <code class="language-plaintext highlighter-rouge">a.carter</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_18.png" alt="image.png" />
+<br /><br />
+Abuse this configuration using
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bloodyAD</span> <span class="o">--</span><span class="n">host</span> <span class="n">dc01</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">u</span> <span class="n">atacker</span> <span class="o">-</span><span class="n">p</span> <span class="p">:</span><span class="nb">hash</span> <span class="nb">set</span> <span class="n">password</span> <span class="n">victim</span> <span class="n">newpassword</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_19.png" alt="image.png" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">A.carter</code> is member of <code class="language-plaintext highlighter-rouge">IT support</code> group which holds <code class="language-plaintext highlighter-rouge">GenericAll</code> privileges over the <code class="language-plaintext highlighter-rouge">staff access certificate</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_20.png" alt="image.png" /></p>
-
-<p>It is curious that this template contains <code class="language-plaintext highlighter-rouge">d.baker</code> ; this might be vulnerable to some <code class="language-plaintext highlighter-rouge">ESC</code> technique due to a clear misconfiguration</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_21.png" alt="image.png" /></p>
-
-<p>Let’s go through this step by step. First, let’s try to obtain all possible privileges over the users the have owned</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_22.png" alt="image.png" /></p>
-
-<p>Find <code class="language-plaintext highlighter-rouge">ESC</code> type vulnerabilities using <code class="language-plaintext highlighter-rouge">certipy</code> tool</p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_19.png" alt="image.png" />
+<br /><br />
+<code class="language-plaintext highlighter-rouge">A.carter</code> is member of <code class="language-plaintext highlighter-rouge">IT support</code> group which holds <code class="language-plaintext highlighter-rouge">GenericAll</code> privileges over the <code class="language-plaintext highlighter-rouge">staff access certificate</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_20.png" alt="image.png" />
+<br /><br />
+It is curious that this template contains <code class="language-plaintext highlighter-rouge">d.baker</code> ; this might be vulnerable to some <code class="language-plaintext highlighter-rouge">ESC</code> technique due to a clear misconfiguration
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_21.png" alt="image.png" />
+<br /><br />
+Let’s go through this step by step. First, let’s try to obtain all possible privileges over the users the have owned
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_22.png" alt="image.png" />
+<br /><br />
+Find <code class="language-plaintext highlighter-rouge">ESC</code> type vulnerabilities using <code class="language-plaintext highlighter-rouge">certipy</code> tool
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">certipy</span> <span class="n">find</span> <span class="o">-</span><span class="n">u</span> <span class="n">d</span><span class="p">.</span><span class="n">baker</span> <span class="o">-</span><span class="n">p</span> <span class="s">'hash'</span> <span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span> <span class="n">ip</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_23.png" alt="image.png" /></p>
-
-<p>It says that d.baker might be vulnerable to <code class="language-plaintext highlighter-rouge">ESC9</code> but to perform this attack we need to be able to include the <code class="language-plaintext highlighter-rouge">UPN</code> in the <code class="language-plaintext highlighter-rouge">SAN</code> of the target user, and this configuration is not present, we only can include email in the <code class="language-plaintext highlighter-rouge">SAN</code> . Even so, now we are aware that this certification template has no security extension flag. We can also notice that this certificate template has <code class="language-plaintext highlighter-rouge">SubjectAltRequireEmail</code> set as a valid name option</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_24.png" alt="image.png" /></p>
-
-<p>Then, use the following command to discover that the <code class="language-plaintext highlighter-rouge">altSecurityIdentity</code> property is used to identify <code class="language-plaintext highlighter-rouge">hbrowm</code> user.</p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_23.png" alt="image.png" />
+<br /><br />
+It says that d.baker might be vulnerable to <code class="language-plaintext highlighter-rouge">ESC9</code> but to perform this attack we need to be able to include the <code class="language-plaintext highlighter-rouge">UPN</code> in the <code class="language-plaintext highlighter-rouge">SAN</code> of the target user, and this configuration is not present, we only can include email in the <code class="language-plaintext highlighter-rouge">SAN</code> . Even so, now we are aware that this certification template has no security extension flag. We can also notice that this certificate template has <code class="language-plaintext highlighter-rouge">SubjectAltRequireEmail</code> set as a valid name option
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_24.png" alt="image.png" />
+<br /><br />
+Then, use the following command to discover that the <code class="language-plaintext highlighter-rouge">altSecurityIdentity</code> property is used to identify <code class="language-plaintext highlighter-rouge">hbrowm</code> user. 
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">netexec</span> <span class="n">ldap</span> <span class="n">scepter</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">u</span> <span class="n">d</span><span class="p">.</span><span class="n">baker</span> <span class="o">-</span><span class="n">H</span> <span class="mi">18</span><span class="n">b5fb0d99e7a475316213c15b6f22ce</span> <span class="o">--</span><span class="n">query</span> <span class="s">"(sAMAccountName=h.brown)"</span> <span class="s">""</span>
 </code></pre></div></div>
-
-<p>This property is related with ESC14 and we are going to see a lot of it on this machine</p>
-
-<p>You can see more information about it here:</p>
-
-<p>https://posts.specterops.io/adcs-esc14-abuse-technique-333a004dc2b9</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_25.png" alt="image.png" /></p>
-
-<p>With all the information gathered so far, we can perform an attack to escalate to h.brown user</p>
-
+<p><br /><br />
+This property is related with ESC14 and we are going to see a lot of it on this machine
+<br /><br />
+You can see more information about it here:
+<br /><br />
+https://posts.specterops.io/adcs-esc14-abuse-technique-333a004dc2b9
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_25.png" alt="image.png" />
+<br /><br />
+With all the information gathered so far, we can perform an attack to escalate to h.brown user
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bloodyAD</span> <span class="o">--</span><span class="n">host</span> <span class="n">dc01</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">u</span> <span class="n">a</span><span class="p">.</span><span class="n">carter</span> <span class="o">-</span><span class="n">p</span> <span class="s">'password'</span> <span class="nb">set</span> <span class="nb">object</span> <span class="s">'user-owned'</span> <span class="n">mail</span> <span class="o">-</span><span class="n">v</span> <span class="s">'target@mail.htb'</span>
 <span class="n">certipy</span> <span class="n">req</span> <span class="o">-</span><span class="n">ca</span> <span class="n">CA</span> <span class="o">-</span><span class="n">u</span> <span class="s">'user-owned'</span> <span class="o">-</span><span class="n">hashes</span> <span class="p">:</span><span class="nb">hash</span> <span class="o">-</span><span class="n">template</span> <span class="n">vulnerabletemplate</span> <span class="o">-</span><span class="n">target</span> <span class="n">dc01</span><span class="p">.</span><span class="n">scepter</span><span class="p">.</span><span class="n">htb</span>
 <span class="n">certipy</span> <span class="n">auth</span> <span class="o">-</span><span class="n">domain</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">pfx</span> <span class="p">.</span><span class="n">pfx</span> <span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span> <span class="n">ip</span> <span class="o">-</span><span class="n">username</span> <span class="s">'target'</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_26.png" alt="image.png" /></p>
-
-<p>Set the <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code></p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_27.png" alt="image.png" /></p>
-
-<p>Use the obtained hash to get a TGT and get remote access as h.brown</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_7e673afa_a3cb_4d7e_a84e_f9e1afe1d10f.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_26.png" alt="image.png" />
+<br /><br />
+Set the <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code>
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_27.png" alt="image.png" />
+<br /><br />
+Use the obtained hash to get a TGT and get remote access as h.brown
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_7e673afa_a3cb_4d7e_a84e_f9e1afe1d10f.png" alt="image.png" />
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p>Check write permissions for <code class="language-plaintext highlighter-rouge">h.brown</code> user</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_28.png" alt="image.png" /></p>
-
-<p>Write permissions in <code class="language-plaintext highlighter-rouge">altSecurityIdentities</code> property over <code class="language-plaintext highlighter-rouge">p.adams</code> open up another potential attack ESC14 vector mixed with the previous scenario exploited</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_29.png" alt="image.png" /></p>
-
-<p>Basically we are going to set an weak X509RFC822 explicit mapping in <code class="language-plaintext highlighter-rouge">altSecurityIdentities</code> using scenario A (Write permissions) to then perform the previous attack using scenario B</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_30.png" alt="image.png" /></p>
-
-<p>Use the following commands to spoof <code class="language-plaintext highlighter-rouge">p.adams</code></p>
-
+<p><br /><br />
+Check write permissions for <code class="language-plaintext highlighter-rouge">h.brown</code> user
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_28.png" alt="image.png" />
+<br /><br />
+Write permissions in <code class="language-plaintext highlighter-rouge">altSecurityIdentities</code> property over <code class="language-plaintext highlighter-rouge">p.adams</code> open up another potential attack ESC14 vector mixed with the previous scenario exploited
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_29.png" alt="image.png" />
+<br /><br />
+Basically we are going to set an weak X509RFC822 explicit mapping in <code class="language-plaintext highlighter-rouge">altSecurityIdentities</code> using scenario A (Write permissions) to then perform the previous attack using scenario B
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_30.png" alt="image.png" />
+<br /><br />
+Use the following commands to spoof <code class="language-plaintext highlighter-rouge">p.adams</code> 
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Set property in p.adams 
 </span><span class="n">bloodyAD</span> <span class="o">--</span><span class="n">host</span> <span class="n">dc01</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">u</span> <span class="n">attacker1</span> <span class="o">-</span><span class="n">k</span> <span class="nb">set</span> <span class="nb">object</span> <span class="s">'victim'</span> <span class="n">altSecurityIdentities</span> <span class="o">-</span><span class="n">v</span> <span class="s">'x509:&lt;RFC822&gt;p.adams@scepter.htb'</span>
 <span class="c1">#Make h.brown use p.adams email
 </span><span class="n">bloodyAD</span> <span class="o">--</span><span class="n">host</span> <span class="n">dc01</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">u</span> <span class="n">attacker2</span> <span class="o">-</span><span class="n">p</span> <span class="s">'password'</span> <span class="nb">set</span> <span class="nb">object</span> <span class="s">'attacker1'</span> <span class="n">mail</span> <span class="o">-</span><span class="n">v</span> <span class="s">'target@domain.htb'</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_31.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_31.png" alt="image.png" />
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Request a .pfx fila as p.adams using d.baker ticket
 </span><span class="n">certipy</span> <span class="n">req</span> <span class="o">-</span><span class="n">ca</span> <span class="n">CA</span> <span class="o">-</span><span class="n">u</span> <span class="s">'user-owned'</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">template</span> <span class="n">vulnerabletemplate</span> <span class="o">-</span><span class="n">target</span> <span class="n">dc01</span><span class="p">.</span><span class="n">scepter</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">out</span> <span class="n">p</span><span class="p">.</span><span class="n">adams</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_32.png" alt="image.png" /></p>
-
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_32.png" alt="image.png" />
+<br /><br /></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Authenticate and the nt hash for p.adams
 </span><span class="n">certipy</span> <span class="n">auth</span> <span class="o">-</span><span class="n">domain</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">pfx</span> <span class="p">.</span><span class="n">pfx</span> <span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span> <span class="n">ip</span> <span class="o">-</span><span class="n">username</span> <span class="s">'target'</span>
 </code></pre></div></div>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_33.png" alt="image.png" /></p>
-
-<p>As <code class="language-plaintext highlighter-rouge">p.adams</code> has DCSync privileges, proceed to dump secrets to then access as administrator</p>
-
-<p><img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_34.png" alt="image.png" /></p>
-
-<p>Machine pwned@@@##!
+<p><br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_33.png" alt="image.png" />
+<br /><br />
+As <code class="language-plaintext highlighter-rouge">p.adams</code> has DCSync privileges, proceed to dump secrets to then access as administrator
+<br /><br />
+<img src="/assets/images/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9_image_34.png" alt="image.png" />
+<br /><br />
+Machine pwned@@@##!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 

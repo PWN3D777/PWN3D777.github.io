@@ -48,14 +48,6 @@
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         
-  <div class="author-box">
-
-<div class="description">This is my blog, here you will find more information about me, in addition to my work on HackTheBox and some interesting apps i've developed
-</div>
-
-</div>
-
-
 <div class="post">
   <h1 class="post-title">Iclean-Linux-Medium</h1>
   
@@ -67,122 +59,125 @@
   <h1 id="iclean">Iclean</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled.png" alt="Untitled" /></p>
-
-<p>We find a http service, we may use credentials to find a flaw.</p>
-
-<p>A normal web application running</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_1.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_2.png" alt="Untitled" /></p>
-
-<p>We fuzz directories and find one where we can request cleaning services.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_3.png" alt="Untitled" /></p>
-
-<p>Use burpsuite to test input sanitization, It’s not probably to find a vulnerability in mail input due to the standar format.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_4.png" alt="Untitled" /></p>
-
+<p><br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled.png" alt="Untitled" />
+<br /><br />
+We find a http service, we may use credentials to find a flaw.
+<br /><br />
+A normal web application running
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_1.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_2.png" alt="Untitled" />
+<br /><br />
+We fuzz directories and find one where we can request cleaning services.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_3.png" alt="Untitled" />
+<br /><br />
+Use burpsuite to test input sanitization, It’s not probably to find a vulnerability in mail input due to the standar format.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_4.png" alt="Untitled" />
+<br /><br /></p>
 <h1 id="2-user-flag">2. User flag</h1>
-
-<p>The service section is url encoded, we try to steal the cookie enconding the payload and sending it to the server</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_5.png" alt="Untitled" /></p>
-
-<p>Cookie theft</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_6.png" alt="Untitled" /></p>
-
-<p>As we previously see there is a dashboard directory, set the cookie and get access to admin interface.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_7.png" alt="Untitled" /></p>
-
-<p>After simulate the normal flow data of the application we could find an input were we have to insert the link of a qr code</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_8.png" alt="Untitled" /></p>
-
-<p>It may be a perfect context to a SSTI if it is not sanitized</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_9.png" alt="Untitled" /></p>
-
-<p>Once we realize that it is vulnerable, we need to find the framework behind to use their functions.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_10.png" alt="Untitled" /></p>
-
-<p>`` The server responds to this payload, so now we can exploit this vulnerability using Jinja2 (python)</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_11.png" alt="Untitled" /></p>
-
-<p>We found a payload to get RCE, we need to encode it to bypass filters.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_12.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_13.png" alt="Untitled" /></p>
-
-<p>We are data!!</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_14.png" alt="Untitled" /></p>
-
-<p>Check the mail, we have a clue, something about pdf’s</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_15.png" alt="Untitled" /></p>
-
-<p>Craft a little bit and we will find mysql credentials, but the port is not open, it means that if we want log in we will need to port forwarding mysql service.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_16.png" alt="Untitled" /></p>
-
-<p>Identify the port</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_17.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_18.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_19.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_20.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_21.png" alt="Untitled" /></p>
-
-<p>consuela credentials found</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_22.png" alt="Untitled" /></p>
-
-<p>Crack the password.</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_23.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_24.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_25.png" alt="Untitled" /></p>
-
-<p>User flag got it.</p>
-
+<p><br /><br />
+The service section is url encoded, we try to steal the cookie enconding the payload and sending it to the server
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_5.png" alt="Untitled" />
+<br /><br />
+Cookie theft
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_6.png" alt="Untitled" />
+<br /><br />
+As we previously see there is a dashboard directory, set the cookie and get access to admin interface.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_7.png" alt="Untitled" />
+<br /><br />
+After simulate the normal flow data of the application we could find an input were we have to insert the link of a qr code
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_8.png" alt="Untitled" />
+<br /><br />
+It may be a perfect context to a SSTI if it is not sanitized
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_9.png" alt="Untitled" />
+<br /><br />
+Once we realize that it is vulnerable, we need to find the framework behind to use their functions.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_10.png" alt="Untitled" />
+<br /><br />
+`` The server responds to this payload, so now we can exploit this vulnerability using Jinja2 (python)
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_11.png" alt="Untitled" />
+<br /><br />
+We found a payload to get RCE, we need to encode it to bypass filters.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_12.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_13.png" alt="Untitled" />
+<br /><br />
+We are data!!
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_14.png" alt="Untitled" />
+<br /><br />
+Check the mail, we have a clue, something about pdf’s
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_15.png" alt="Untitled" />
+<br /><br />
+Craft a little bit and we will find mysql credentials, but the port is not open, it means that if we want log in we will need to port forwarding mysql service.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_16.png" alt="Untitled" />
+<br /><br />
+Identify the port
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_17.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_18.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_19.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_20.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_21.png" alt="Untitled" />
+<br /><br />
+consuela credentials found
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_22.png" alt="Untitled" />
+<br /><br />
+Crack the password.
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_23.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_24.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_25.png" alt="Untitled" />
+<br /><br />
+User flag got it.
+<br /><br /></p>
 <h1 id="3priv-esc">3.Priv esc</h1>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_26.png" alt="Untitled" /></p>
-
-<p>qpdf binary is using root privileges, after some research we found that it is possible to attach files to a pdf, so use:</p>
-
+<p><br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_26.png" alt="Untitled" />
+<br /><br />
+qpdf binary is using root privileges, after some research we found that it is possible to attach files to a pdf, so use:
+<br /><br /></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>qpdf <span class="nt">--empty</span> <span class="nt">--add-attachment</span> /root/.ssh/id_rsa <span class="nt">--mimetype</span> text/plain <span class="nt">--</span> .pdf
 </code></pre></div></div>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_27.png" alt="Untitled" /></p>
-
-<p>Once we create the pdf use binwalk to identify frimwares attached on a binary.</p>
-
-<p><code class="language-plaintext highlighter-rouge">-e</code> is used to extract files found during scanning</p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_28.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_29.png" alt="Untitled" /></p>
-
-<p><img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_30.png" alt="Untitled" /></p>
-
-<p>Machine pwned!!!
+<p><br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_27.png" alt="Untitled" />
+<br /><br />
+Once we create the pdf use binwalk to identify frimwares attached on a binary.
+<br /><br />
+<code class="language-plaintext highlighter-rouge">-e</code> is used to extract files found during scanning
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_28.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_29.png" alt="Untitled" />
+<br /><br />
+<img src="/assets/images/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6/ba630cd8-86fc-43bd-940e-64d07fdc32c5-export-64a52758-d783-44f4-a968-9e5d0789b7e6_Untitled_30.png" alt="Untitled" />
+<br /><br />
+Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
 
 </div>
 
