@@ -8,7 +8,7 @@
   display: flex;
   align-items: center; /* Alinea verticalmente el texto e imagen */
   gap: 10px;           /* Espacio entre imagen y texto */
-  flex-wrap: wrap;
+
 }
 
 .hero .author-avatar {
