@@ -1,5 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-07-24T14:11:59+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i&apos;ve developed.
-</subtitle><author><name>GitHub User</name></author><entry><title type="html">Scepter-Windows-Hard</title><link href="https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html" rel="alternate" type="text/html" title="Scepter-Windows-Hard" /><published>2025-07-22T16:06:57+00:00</published><updated>2025-07-22T16:06:57+00:00</updated><id>https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"><![CDATA[<h1 id="scepter">Scepter</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-07-27T01:23:16+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i&apos;ve developed.
+</subtitle><author><name>GitHub User</name></author><entry><title type="html">Cypher-Linux-Medium</title><link href="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html" rel="alternate" type="text/html" title="Cypher-Linux-Medium" /><published>2025-07-26T16:05:57+00:00</published><updated>2025-07-26T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html"><![CDATA[<h1 id="cypher">Cypher</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+<p><br /><br />
+Start using nmap to enumerate open tcp ports
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image.png" alt="image.png" />
+<br /><br />
+A nginx web application running on port 80, looks like a simple web application, there are almost any functionality on here
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_1.png" alt="image.png" />
+<br /><br />
+We can sign in but we have no credentials yet
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_2.png" alt="image.png" />
+<br /><br />
+Use wfuzz to discover directories available without authentication, testing is a one that we have not checked
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_3.png" alt="image.png" />
+<br /><br />
+A jar artifact that seems to be own of this web application
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_4.png" alt="image.png" />
+<br /><br /></p>
+<h1 id="2-user-flag">2. User flag</h1>
+<p><br /><br />
+Let’s analyze this .jar file using jd-gui (java-decompiler) this is a custom application <code class="language-plaintext highlighter-rouge">getUrlStatusCode</code> that receives a url to obtain its url status code, now we need a way to call this function and inject this command 
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_5.png" alt="image.png" />
+<br /><br />
+We haven’t got many options, check if the username in the sign in form is sanitized
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_6.png" alt="image.png" />
+<br /><br />
+Effectively it is vulnerable, but this is not sql injection, as we can see, some information is disclosed in the error message, it is running neo4j database, and the query is also shown
+<br /><br /></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MATCH</span> <span class="p">(</span><span class="n">u</span><span class="o">:</span><span class="n">USER</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="n">SECRET</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">(</span><span class="n">h</span><span class="p">.</span><span class="n">SHA1</span><span class="p">)</span> <span class="n">WHERE</span> <span class="n">u</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="err">'</span><span class="n">username</span><span class="err">'</span> <span class="k">return</span> <span class="n">h</span><span class="p">.</span><span class="n">value</span> <span class="n">as</span> <span class="n">hash</span>
+</code></pre></div></div>
+
+<p><br /><br />
+The procedure to build a valid cypher injection is:
+<br /><br /></p>
+<ul>
+  <li>We need to close the query as it normally would</li>
+  <li>Perform a function call to trigger the command executed in <code class="language-plaintext highlighter-rouge">getUrlStatusCode</code></li>
+  <li>We need to be sure, the neo4j engine perform the query correctly without errors, use YIELD to return the status code dicted in the function to the query, then return this value to the query return
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_7.png" alt="image.png" />
+<br /><br />
+As we can see it is being executed, the only problem is the name of the function, check the class where the function is defined to call it properly
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_8.png" alt="image.png" />
+<br /><br />
+Now it’s time to inject the reverse shell in the url parameter expected by the function 
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_9.png" alt="image.png" />
+<br /><br />
+It has run correctly, a shell with neo4j user is returned 
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_10.png" alt="image.png" />
+<br /><br />
+Moving around, enumerating other users and their directories we found read permissions over a files in graphasm directory with neo4j credentials
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_11.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_12.png" alt="image.png" />
+<br /><br />
+Those creds are being reused to get the user flag
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_13.png" alt="image.png" />
+<br /><br />
+    <h1 id="3priv-esc">3.Priv esc</h1>
+    <p><br /><br />
+This user has the ability to run bbot binary as root
+<br /><br /></p>
+  </li>
+</ul>
+
+<aside>
+💡
+
+bbot is a scanning tool, used for enumerating and reconnaissance, focusing on OSINT for penetration testing purposes
+
+</aside>
+
+<p><br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_14.png" alt="image.png" />
+<br /><br />
+Searching on internet there are malicious modules we can use it to spawn a shell as root
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_15.png" alt="image.png" />
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##preset.yml
+</span><span class="n">description</span><span class="p">:</span> <span class="n">HAHA</span> <span class="n">PWNED</span>
+<span class="n">module_dirs</span><span class="p">:</span>
+	<span class="o">-</span><span class="p">.</span>
+<span class="n">modules</span><span class="p">:</span>
+	<span class="o">-</span><span class="n">systeminfo_enum</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#systeminfo_enum.py
+</span><span class="kn">from</span> <span class="nn">bbot.modules.base</span> <span class="kn">import</span> <span class="n">BaseModule</span>
+<span class="kn">import</span> <span class="nn">pty</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">systeninfo_enum</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
+	<span class="n">watched_events</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">produced_events</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">"description"</span><span class="p">:</span><span class="s">"You will be pwned"</span><span class="p">}</span>
+	
+	<span class="c1">#setup called when the module is initialized
+</span>	<span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">sef</span><span class="p">.</span><span class="n">hugesuccess</span><span class="p">(</span><span class="s">"Set-up called - pwned!!@@!"</span><span class="p">)</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">pty</span><span class="p">.</span><span class="n">spawn</span><span class="p">([</span><span class="s">"/bin/bash"</span><span class="p">,</span> <span class="s">"-p"</span><span class="p">])</span>
+			<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+			<span class="bp">self</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s">"Somethin wrong </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">True</span>
+		
+</code></pre></div></div>
+
+<p><br /><br />
+All bbot even modules running as root
+<br /><br />
+<img src="/assets/images/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947_image_16.png" alt="image.png" />
+<br /><br />
+If we only want the flag we can avoid this module method and use the next flags
+<br /><br /></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bbot</span> <span class="o">-</span><span class="n">t</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">root</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">d</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bbot</span> <span class="o">--</span><span class="n">custom</span><span class="o">-</span><span class="n">yara</span><span class="o">-</span><span class="n">rules</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">root</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">debug</span>
+</code></pre></div></div>
+
+<p><br /><br />
+Machine pwned!@!@!!</p>
+
+<script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Cypher]]></summary></entry><entry><title type="html">Scepter-Windows-Hard</title><link href="https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html" rel="alternate" type="text/html" title="Scepter-Windows-Hard" /><published>2025-07-22T16:06:57+00:00</published><updated>2025-07-22T16:06:57+00:00</updated><id>https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/22/d0bd1f30-699b-4cb4-8096-51966443e47d-export-f2fed7e5-8f3c-486d-8c98-5912154c70d9.html"><![CDATA[<h1 id="scepter">Scepter</h1>
 
 <h1 id="1-enumeration">1. Enumeration<br /><br /></h1>
 
@@ -1659,171 +1799,4 @@ Now that we have this .pfx file as administrator we are able to authenticate and
 Machine pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
 
-<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[EscapeTwo]]></summary></entry><entry><title type="html">Block-Block-Linux-Hard</title><link href="https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf.html" rel="alternate" type="text/html" title="Block-Block-Linux-Hard" /><published>2025-07-15T16:05:57+00:00</published><updated>2025-07-15T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/15/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf.html"><![CDATA[<h1 id="block-block">Block Block</h1>
-
-<h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>Start with enumerating port 
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image.png" alt="image.png" />
-<br /><br />
-SSH is running and a web application has werkzeug behind
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_1.png" alt="image.png" />
-<br /><br />
-Looking around the web application we can self register and 
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_2.png" alt="image.png" />
-<br /><br />
-A bot is running on it
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_3.png" alt="image.png" />
-<br /><br />
-When we talk with the bot we are being redirected to /api/info with our jwt, that token it might be important for the foothold
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_4.png" alt="image.png" />
-<br /><br />
-We can also review contract source
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_5.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_6.png" alt="image.png" />
-<br /><br />
-Admin user is required to access to other functionalities
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_7.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_8.png" alt="image.png" />
-<br /><br /></p>
-<h1 id="2-user-flag">2. User flag</h1>
-<p><br /><br />
-We also can report a user, it should be sended to admin, so lets try xss 
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_9.png" alt="image.png" />
-<br /><br />
-This would be our payload using javascript functions as we saw the web application has js on it
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_10.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_11.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_12.png" alt="image.png" />
-<br /><br />
-Now we can access to admin pane
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_13.png" alt="image.png" />
-<br /><br />
-In the source code 2 routes are disclosed
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_14.png" alt="image.png" />
-<br /><br />
-That is an authorization api key or something like that
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_15.png" alt="image.png" />
-<br /><br />
-On the other path there is an address
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_16.png" alt="image.png" />
-<br /><br />
-With the authorization encoded and the address we can perform a request to disclose information using as a base line the source code found as admin. Use eth_balance as the first method using the same request in the source code
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_17.png" alt="image.png" />
-<br /><br />
-We have no found anything in there something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_18.png" alt="image.png" />
-<br /><br />
- something important is the fact that possibly ethereum is being used on this, due that method, search a little bit about it
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_19.png" alt="image.png" />
-<br /><br />
-eth_account sounds interesting, it returns a list of addresses owned by the client
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_20.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_21.png" alt="image.png" />
-<br /><br />
-Here we have one, but nothing useful returned
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_22.png" alt="image.png" />
-<br /><br />
-this one sound good, but first we need the number
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_23.png" alt="image.png" />
-<br /><br />
-Let’s use this one first
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_24.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_25.png" alt="image.png" />
-<br /><br />
-The latest block number was returned
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_26.png" alt="image.png" />
-<br /><br />
-We are going to use this for return the whole block, we had to change boolean value to true due to it is question itself if the whole transactions are being included in the request
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_27.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_28.png" alt="image.png" />
-<br /><br />
-We have information, good. Now we need to be abe to read it, in those cases we can use something like <code class="language-plaintext highlighter-rouge">solcjs</code>  or <code class="language-plaintext highlighter-rouge">ethereum input data decoder</code> but it didn’t work here, as we can see it looks like hex, use ciberchef 
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_29.png" alt="image.png" />
-<br /><br />
-Effectively data is being returned but that is info about the last block that we had controlled as user role
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_30.png" alt="image.png" />
-<br /><br />
-<code class="language-plaintext highlighter-rouge">0xd</code> means 13 on decimal, let’s go to the first block then
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_31.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_32.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_33.png" alt="image.png" />
-<br /><br />
-At the start it looks like it doesn’t have anything but in the last part of the code some plain text creds are disclosed, and that’s how we got user flag
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_34.png" alt="image.png" />
-<br /><br /></p>
-<h1 id="3priv-esc">3.Priv esc</h1>
-<p><br /><br />
-Now we are keira user
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_35.png" alt="image.png" />
-<br /><br />
-We can execute a binary named forge, this tool helps to  build, test, fuzz, debug and deploy Solidity smart contracts. 
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_36.png" alt="image.png" />
-<br /><br />
-In the documentation we can find commands like init which creates a new project
-<br /><br />
-Once we have a new project ready for build, create a rev shell in a file which later will be call as a solc compiler instead of using the default one
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_37.png" alt="image.png" />
-<br /><br />
-This will create a shell as paul
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_38.png" alt="image.png" />
-<br /><br />
-No we can run as root pacman tool, which is a package manager, we are going to create our new malicious package, first create a file named pkgbuild which will have all the specifications on it, and let’s say it that install our payload (pwn.install)
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_39.png" alt="image.png" />
-<br /><br />
-This file will contain the payload we want to execute inside the post_install function
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_40.png" alt="image.png" />
-<br /><br />
-make the .pkg.tar.zst which is the package ready to be install
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_image_41.png" alt="image.png" />
-<br /><br />
-Now just install package, it will create a shell as root
-<br /><br />
-<img src="/assets/images/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf/3d40ada6-385a-4a20-b484-c97e61d39ddb-export-1cabfdc4-e0c5-4d94-8db1-733fb34a2bcf_a476157b_c25c_4f91_91b1_401c8184ac79.png" alt="image.png" />
-<br /><br />
-Machine pwned!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
-
-<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Block Block]]></summary></entry></feed>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[EscapeTwo]]></summary></entry></feed>
