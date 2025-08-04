@@ -1,5 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-07-27T01:23:16+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i&apos;ve developed.
-</subtitle><author><name>GitHub User</name></author><entry><title type="html">Cypher-Linux-Medium</title><link href="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html" rel="alternate" type="text/html" title="Cypher-Linux-Medium" /><published>2025-07-26T16:05:57+00:00</published><updated>2025-07-26T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html"><![CDATA[<h1 id="cypher">Cypher</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://your-site-url/feed.xml" rel="self" type="application/atom+xml" /><link href="https://your-site-url/" rel="alternate" type="text/html" /><updated>2025-08-04T23:09:54+00:00</updated><id>https://your-site-url/feed.xml</id><title type="html">Pwn3d777</title><subtitle>This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i&apos;ve developed.
+</subtitle><author><name>GitHub User</name></author><entry><title type="html">Code-Linux-Easy</title><link href="https://your-site-url/writeups/2025/08/04/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de.html" rel="alternate" type="text/html" title="Code-Linux-Easy" /><published>2025-08-04T16:05:57+00:00</published><updated>2025-08-04T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/08/04/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de</id><content type="html" xml:base="https://your-site-url/writeups/2025/08/04/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de.html"><![CDATA[<h1 id="code">Code</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+<p><br /><br />
+Begin enumerating open ports in the target system
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image.png" alt="image.png" />
+<br /><br /></p>
+<h1 id="2-user-flag">2. User flag</h1>
+<p><br /><br />
+Enumeration on this box was simple, there is only a web application which is running a python code compiler. A basic Server-Side Template Injection payload is sufficient to confirm the vulnerability
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_1.png" alt="image.png" />
+<br /><br />
+It wouldn’t be so easy, there is a sanitization behind which is filtering certain words in the script
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_2.png" alt="image.png" />
+<br /><br />
+Even though we can list subclasses inherited by object (python base class)
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="mi">1</span><span class="p">).</span><span class="n">__class__</span><span class="p">.</span><span class="n">__base__</span><span class="p">.</span><span class="n">__subclasses__</span><span class="p">())]</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_3.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_4.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_5.png" alt="image.png" />
+<br /><br />
+But unfortunately we cannot use them to spawn a reverse shell due the sanitization
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_6.png" alt="image.png" />
+<br /><br />
+Let’s change the methodology, instead of attempting execute code try to disclose information, use the following command to list available objects in this context
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">global</span><span class="p">().</span><span class="n">keys</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><br /><br />
+We have critical objects like, <code class="language-plaintext highlighter-rouge">app</code>, <code class="language-plaintext highlighter-rouge">db</code>, <code class="language-plaintext highlighter-rouge">user</code>, <code class="language-plaintext highlighter-rouge">code</code>,
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_7.png" alt="image.png" />
+<br /><br />
+Check the application configuration
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_8.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_9.png" alt="image.png" />
+<br /><br />
+List User attributes and methods
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_10.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_11.png" alt="image.png" />
+<br /><br />
+Enumerate users present in the database
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_12.png" alt="image.png" />
+<br /><br />
+Access a Martin via SSH to retrieve the user flag
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_13.png" alt="image.png" />
+<br /><br /></p>
+<h1 id="3priv-esc">3.Priv esc</h1>
+<p><br /><br />
+Let’s discover what commands Martin user can execute on behalf of root
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_14.png" alt="image.png" />
+<br /><br />
+Backy.sh is a custom script which expects a .json file as parameter, it acts as a sanitizer, it cleans the <code class="language-plaintext highlighter-rouge">directories_to_archive</code> object, principally to avoid any path traversal attempts, it also check the root directory being passed, allowing only paths that starts with <code class="language-plaintext highlighter-rouge">/home/</code> or <code class="language-plaintext highlighter-rouge">/var/</code> 
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_15.png" alt="image.png" />
+<br /><br />
+Once the file has passed all these filters, original backy tool is executed.The sanitized path is then  used by the tool to create a backup
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_16.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_17.png" alt="image.png" />
+<br /><br />
+We can simulate this behavior locally, i tested different payloads to see how the map function performs, we discovered that it is possible to bypass this prevention method by adding paths like this
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_18.png" alt="image.png" />
+<br /><br />
+We need to remove this exclude because it will avoid to backup anything that starts with a <code class="language-plaintext highlighter-rouge">.</code> . This could be troubled with the path traversal attack we are trying to perform
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_19.png" alt="image.png" />
+<br /><br />
+The tool runs as expected and we can extract the content of root directory and obtain the root flag
+<br /><br />
+<img src="/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_20.png" alt="image.png" />
+<br /><br />
+Machine pwned!!!#@@!
+<script src="/assets/js/matrix-overlay.js"></script></p>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[Code]]></summary></entry><entry><title type="html">Cypher-Linux-Medium</title><link href="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html" rel="alternate" type="text/html" title="Cypher-Linux-Medium" /><published>2025-07-26T16:05:57+00:00</published><updated>2025-07-26T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/26/e76d8ea2-ffc7-429a-835f-9f3b0344d1ab-export-d6a1d454-c23f-4600-bcb8-77c5a1ed5947.html"><![CDATA[<h1 id="cypher">Cypher</h1>
 
 <h1 id="1-enumeration">1. Enumeration</h1>
 <p><br /><br />
@@ -1663,140 +1760,4 @@ But if we do this
 A shell with root is open and the machine is pwned!!!
 <script src="/assets/js/matrix-overlay.js"></script></p>
 
-<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[BigBang]]></summary></entry><entry><title type="html">EscapeTwo-Windows-Easy</title><link href="https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7.html" rel="alternate" type="text/html" title="EscapeTwo-Windows-Easy" /><published>2025-07-16T16:05:57+00:00</published><updated>2025-07-16T16:05:57+00:00</updated><id>https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7</id><content type="html" xml:base="https://your-site-url/writeups/2025/07/16/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7.html"><![CDATA[<h1 id="escapetwo">EscapeTwo</h1>
-
-<h1 id="1-enumeration">1. Enumeration</h1>
-
-<p>We have some initial credentials
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image.png" alt="image.png" />
-<br /><br />
-Anyways we also have to enumerate ports, useful information is retrieved, we have domain controler hostname
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_1.png" alt="image.png" />
-<br /><br />
-Enumerate users, action allowed thanks to rose credentials
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_2.png" alt="image.png" />
-<br /><br /></p>
-<h1 id="2-user-flag">2. User flag</h1>
-<p><br /><br />
-Check rose shares allowed and its permissions
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_3.png" alt="image.png" />
-<br /><br />
-That’s how we access to some accounting information 
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_4.png" alt="image.png" />
-<br /><br />
-New credentials are found
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_5.png" alt="image.png" />
-<br /><br />
-We might try to use SQL port to connect and execute commands as sql_svc like
-<br /><br /></p>
-<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="o">--</span> <span class="nx">Allow</span> <span class="nx">advanced</span> <span class="nx">configuration</span>
-<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">show advanced options</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nx">RECONFIGURE</span>
-
-<span class="o">--</span> <span class="nx">Enable</span> <span class="nx">xp_cmdshell</span>
-<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">xp_cmdshell</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nx">RECONFIGURE</span><span class="p">;</span>
-
-<span class="o">--</span><span class="nx">Execute</span>
-<span class="nx">EXEC</span> <span class="nx">sp_configure</span> <span class="dl">'</span><span class="s1">xp_cmdshell</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nx">RECONFIGURE</span><span class="p">;</span>
-</code></pre></div></div>
-<p><br /><br />
-Confirm we have access, we use impacket-mysqlclient
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_6.png" alt="image.png" />
-<br /><br />
-Now we have to do two steps forward, first upload in a specific directory netcat, and then execute it as it follow to gain a shell as this user
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_7.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_8.png" alt="image.png" />
-<br /><br />
-As this user we have access to database configuration
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_9.png" alt="image.png" />
-<br /><br />
-Check if this password is reused
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_10.png" alt="image.png" />
-<br /><br />
-WinRM port is open to access as ryan
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_11.png" alt="image.png" />
-<br /><br /></p>
-<h1 id="3priv-esc">3.Priv esc</h1>
-<p><br /><br />
-As this box has much more users, and at this point we just have got access to three we could try to perform an Active Directory enumeration using SharpHound.exe
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_12.png" alt="image.png" />
-<br /><br />
-As we can see we could have control over CA_SVC account using write owner right
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_13.png" alt="image.png" />
-<br /><br />
-CA_SVC if member of some groups, that seems templates or something like that could be enrollable
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_14.png" alt="image.png" />
-<br /><br />
-Open write action using impacket-owneredit over ca_svc
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_15.png" alt="image.png" />
-<br /><br />
-Now modify acl to give ryan full control of ca_svc
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_16.png" alt="image.png" />
-<br /><br />
-As we owned ca_svc user we could use pywhisker tool to get a private certificate of ca_svc
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_17.png" alt="image.png" />
-<br /><br />
-Now we are able to request a Ticket Grant Ticket of this user
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_18.png" alt="image.png" />
-<br /><br />
-Get its NT hash to perform actions as this user
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_19.png" alt="image.png" />
-<br /><br />
-As previously saw, ca_svc is member of some cert groups, it might probably that user being vulnerable within its ADCS, check it using certipy
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_20.png" alt="image.png" />
-<br /><br />
-ESC4 is a misconfiguration which allow me to escalate privileges thanks to a write permission
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_21.png" alt="image.png" />
-<br /><br />
-I just need to update the configuration of the template to make it vulnerable to ESC1
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_22.png" alt="image.png" />
-<br /><br />
-Use this
-<br /><br /></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> certipy-ad template <span class="nt">-k</span> <span class="nt">-template</span> DunderMifflinAuthentication <span class="nt">-dc-ip</span> 10.10.XX.XX <span class="nt">-target</span> dc01.sequel.htb
-</code></pre></div></div>
-<p><br /><br />
-Now we have are able to authenticate and enroll using an arbitrary subject alternative name SAN
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_23.png" alt="image.png" />
-<br /><br />
-Request a certificate using administrator as user principal name, this will retrieve a certificate of this template as administrator
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_24.png" alt="image.png" />
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_25.png" alt="image.png" />
-<br /><br />
-Now that we have this .pfx file as administrator we are able to authenticate and steal the NT hash for administrator, which means privilege escalation were success
-<br /><br />
-<img src="/assets/images/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7/e7977474-9c5b-456b-b380-9765f21751a6-export-b755f7ae-8678-47ba-ae80-b27d7b8f45b7_image_26.png" alt="image.png" />
-<br /><br />
-Machine pwned!!!
-<script src="/assets/js/matrix-overlay.js"></script></p>
-
-<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[EscapeTwo]]></summary></entry></feed>
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />]]></content><author><name>GitHub User</name></author><category term="writeups" /><summary type="html"><![CDATA[BigBang]]></summary></entry></feed>
