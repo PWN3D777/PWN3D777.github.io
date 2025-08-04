@@ -1,0 +1,109 @@
+---
+layout: post
+title: "Code-Linux-Easy"
+date:   2025-08-04 12:05:57 -0400
+categories: writeups
+thumb: /assets/images/logos/Code.webp
+---
+
+# Code
+
+# 1. Enumeration
+<br/><br/>
+Begin enumerating open ports in the target system
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image.png' | relative_url }})
+<br/><br/>
+# 2. User flag
+<br/><br/>
+Enumeration on this box was simple, there is only a web application which is running a python code compiler. A basic Server-Side Template Injection payload is sufficient to confirm the vulnerability
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_1.png' | relative_url }})
+<br/><br/>
+It wouldn’t be so easy, there is a sanitization behind which is filtering certain words in the script
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_2.png' | relative_url }})
+<br/><br/>
+Even though we can list subclasses inherited by object (python base class)
+<br/><br/>
+
+```python
+[(i, str(x)) for i,x in enumerate((1).__class__.__base__.__subclasses__())]
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_3.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_4.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_5.png' | relative_url }})
+<br/><br/>
+But unfortunately we cannot use them to spawn a reverse shell due the sanitization
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_6.png' | relative_url }})
+<br/><br/>
+Let’s change the methodology, instead of attempting execute code try to disclose information, use the following command to list available objects in this context
+<br/><br/>
+
+```python
+global().keys()
+```
+
+<br/><br/>
+We have critical objects like, `app`, `db`, `user`, `code`,
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_7.png' | relative_url }})
+<br/><br/>
+Check the application configuration
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_8.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_9.png' | relative_url }})
+<br/><br/>
+List User attributes and methods
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_10.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_11.png' | relative_url }})
+<br/><br/>
+Enumerate users present in the database
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_12.png' | relative_url }})
+<br/><br/>
+Access a Martin via SSH to retrieve the user flag
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_13.png' | relative_url }})
+<br/><br/>
+# 3.Priv esc
+<br/><br/>
+Let’s discover what commands Martin user can execute on behalf of root
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_14.png' | relative_url }})
+<br/><br/>
+Backy.sh is a custom script which expects a .json file as parameter, it acts as a sanitizer, it cleans the `directories_to_archive` object, principally to avoid any path traversal attempts, it also check the root directory being passed, allowing only paths that starts with `/home/` or `/var/` 
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_15.png' | relative_url }})
+<br/><br/>
+Once the file has passed all these filters, original backy tool is executed.The sanitized path is then  used by the tool to create a backup
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_16.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_17.png' | relative_url }})
+<br/><br/>
+We can simulate this behavior locally, i tested different payloads to see how the map function performs, we discovered that it is possible to bypass this prevention method by adding paths like this
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_18.png' | relative_url }})
+<br/><br/>
+We need to remove this exclude because it will avoid to backup anything that starts with a `.` . This could be troubled with the path traversal attack we are trying to perform
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_19.png' | relative_url }})
+<br/><br/>
+The tool runs as expected and we can extract the content of root directory and obtain the root flag
+<br/><br/>
+![image.png]({{ '/assets/images/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de_image_20.png' | relative_url }})
+<br/><br/>
+Machine pwned!!!#@@!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
