@@ -21,7 +21,7 @@
 title: Pwn3d777
 author: GitHub User
 description: > # this means to ignore newlines until "show_exerpts:"
-  This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i've developed.
+  This is my blog. Here you will find more information about me, as well as my work on HackTheBox and some interesting apps i've developed.
 show_excerpts: false # set to true to show excerpts on the homepage
 url: https://your-site-url
 
@@ -60,16 +60,16 @@ dash:
 
   # generate social links in footer
   # supported colors: green, red, orange, blue, cyan, pink, teal, yellow, indigo, purple
-  social_links:
-    - url: https://twitter.com/bitbrain_
-      icon: twitter-square
-      color: cyan
-    - url: https://bitbrain.itch.io
-      icon: itch-io
-      color: red
-    - url: https://github.com/bitbrain
-      icon: github-square
-      color: purple
+  #social_links:
+    #- url: https://twitter.com/bitbrain_
+    #  icon: twitter-square
+    #  color: cyan
+    #- url: https://bitbrain.itch.io
+    #  icon: itch-io
+    #  color: red
+    #- url: https://github.com/bitbrain
+    #  icon: github-square
+    #  color: purple
   
   # wether the author box should be displayed or not
   show_author: false

@@ -1,0 +1,223 @@
+---
+layout: page
+title: Apps
+permalink: /my-apps/
+---
+
+<style>
+.site-header, header {
+  /*display: none !important;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+  .app-footer{
+    padding-top: 80px;
+  }
+
+  .app-title {
+    padding-top: 85px;   /* espacio arriba */
+    padding-bottom: 75px; /* espacio abajo */ 
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+	
+  .carousel-breakout {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;      /* ancho total de la ventana */
+  overflow: hidden;
+  padding: 24px 0;
+  background: transparent; /* puedes poner color si quieres */
+  }
+  /* Contenedor carrusel full width */
+  .carousel-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    overflow: hidden;
+    justify-content: center;
+    position: relative;
+    height: 400px;
+    box-sizing: border-box;
+  }
+
+  .carousel1 {
+    display: flex;
+    animation: scroll1 95s linear infinite; #!important
+  }
+  
+  .carousel2 {
+    display: flex;
+    animation: scroll2 105s linear infinite; #!important
+  }
+ 
+  
+  .carousel1 img {
+    height: 350px;
+    margin: 0 30px;
+    border-radius: 16px;
+    position: relative;
+    border-radius: 20px;
+    padding: 3px;
+    border: 3px solid #ff073a; 
+    box-shadow:
+      0 0 10px #ff073a,
+      0 0 20px #ff00ff,
+      0 0 40px #00faff,
+      0 0 80px #00faff;
+    animation: neonPulse1 2s infinite alternate;
+  }
+
+  .carousel2 img {
+    height: 350px;
+    margin: 0 30px;
+    border-radius: 20px;
+    position: relative;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #39ff14; 
+    box-shadow:
+      0 0 10px #39ff14,
+      0 0 20px #39ff14,
+      0 0 40px #fff700;
+    animation: neonPulse2 2s infinite alternate;
+  }
+
+  
+  @keyframes neonPulse1 {
+    0% {
+      border-color: #ff073a;
+      box-shadow:
+        0 0 3px #ff073a,
+        0 0 6px #ff00ff,
+        0 0 10px #00faff;
+    }
+    100% {
+      border-color: #ff00ff;
+      box-shadow:
+        0 0 3px #ff00ff,
+        0 0 6px #00faff,
+        0 0 10px #ff073a;
+    }
+  }
+  @keyframes neonPulse2 {
+  0% {
+    border-color: #39ff14;
+    box-shadow:
+      0 0 3px #39ff14,
+      0 0 6px #39ff14,
+      0 0 10px #fff700;
+  }
+  100% {
+    border-color: #fff700;
+    box-shadow:
+      0 0 3px #fff700,
+      0 0 6px #fff700,
+      0 0 10px #39ff14;
+  }
+}
+
+  @keyframes ledBorder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  @keyframes scroll1 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1650px); }
+  }
+  @keyframes scroll2 {
+    0% { transform: translateX(-2225px); }
+    100% { transform: translateX(0); }
+
+  }
+
+
+  /* Pausa al pasar el mouse */
+  .carousel-container:hover .carousel {
+    animation-play-state: paused;
+  }
+  footer {
+  display: none !important;
+  }
+</style>
+
+<div class="portfolio-container">
+
+  <!-- App 1 -->
+  <div>
+    <div class="app-title">Tabble Tennis Tournament</div>
+    <div class="carousel-breakout">
+      <div class="carousel1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(1).jpeg" alt="App 1 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.55 AM.jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM.jpeg" alt="App 1 - Pantalla 4">
+	
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(1).jpeg" alt="App 1 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.55 AM.jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm"  src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM.jpeg" alt="App 1 - Pantalla 4">	
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+      </div>
+    </div>
+  </div>
+
+  <!-- App 2 -->
+  <div>
+    <div class="app-title">Myaccount</div>
+    <div class="carousel-breakout">
+      <div class="carousel2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(3).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM.jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM.jpeg" alt="App 2 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(2).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(3).jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(2).jpeg" alt="App 2 - Pantalla 4">
+	
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(3).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM.jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM.jpeg" alt="App 2 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(2).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(3).jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(2).jpeg" alt="App 2 - Pantalla 4">
+      </div>
+    </div>
+  </div>
+
+
+<div class="app-footer"></div>
+</div>
+
+
+<script src="{{ '/assets/js/matrix-dash-con.js' | relative_url }}"></script>
+

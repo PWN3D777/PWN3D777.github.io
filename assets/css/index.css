@@ -151,6 +151,6 @@ p {
   }
 }
 .btn-bottom-center:hover {
-  transform: translateX(0%) scale(1.05); /* Combinar translate y scale */
+  transform: translateX(-50%) scale(1.05); /* Combinar translate y scale */
 }
 
