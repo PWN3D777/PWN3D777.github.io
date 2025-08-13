@@ -3,21 +3,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>my-apps | Pwn3d777</title>
+<title>Apps | Pwn3d777</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="my-apps" />
+<meta property="og:title" content="Apps" />
 <meta name="author" content="GitHub User" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
-<meta property="og:description" content="This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
+<meta name="description" content="This is my blog. Here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
+<meta property="og:description" content="This is my blog. Here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed." />
 <link rel="canonical" href="https://your-site-url/my-apps/" />
 <meta property="og:url" content="https://your-site-url/my-apps/" />
 <meta property="og:site_name" content="Pwn3d777" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="my-apps" />
+<meta property="twitter:title" content="Apps" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"GitHub User"},"description":"This is my blog, here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed.","headline":"my-apps","url":"https://your-site-url/my-apps/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"GitHub User"},"description":"This is my blog. Here you will find more information about me, as well as my work on HackTheBox and some interesting apps i’ve developed.","headline":"Apps","url":"https://your-site-url/my-apps/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -29,32 +29,225 @@
     <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
     <span class="social_links">
         
-        
-        <a class="color-cyan-hover" href="https://twitter.com/bitbrain_"><i class="fab fa-twitter-square"></i></a>
-        
-        
-        
-        <a class="color-red-hover" href="https://bitbrain.itch.io"><i class="fab fa-itch-io"></i></a>
-        
-        
-        
-        <a class="color-purple-hover" href="https://github.com/bitbrain"><i class="fab fa-github-square"></i></a>
-        
-        
     </span>
   </div>
 </div>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="https://jekyllrb.com/">jekyllrb.com</a></p>
+        <style>
+.site-header, header {
+  /*display: none !important;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+  .app-footer{
+    padding-top: 80px;
+  }
 
-<p>You can find the source code for Minima at GitHub:
-<a href="https://github.com/jekyll">jekyll</a> /
-<a href="https://github.com/jekyll/minima">minima</a></p>
+  .app-title {
+    padding-top: 85px;   /* espacio arriba */
+    padding-bottom: 75px; /* espacio abajo */ 
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+	
+  .carousel-breakout {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;      /* ancho total de la ventana */
+  overflow: hidden;
+  padding: 24px 0;
+  background: transparent; /* puedes poner color si quieres */
+  }
+  /* Contenedor carrusel full width */
+  .carousel-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    overflow: hidden;
+    justify-content: center;
+    position: relative;
+    height: 400px;
+    box-sizing: border-box;
+  }
 
-<p>You can find the source code for Jekyll at GitHub:
-<a href="https://github.com/jekyll">jekyll</a> /
-<a href="https://github.com/jekyll/jekyll">jekyll</a></p>
+  .carousel1 {
+    display: flex;
+    animation: scroll1 95s linear infinite; #!important
+  }
+  
+  .carousel2 {
+    display: flex;
+    animation: scroll2 105s linear infinite; #!important
+  }
+ 
+  
+  .carousel1 img {
+    height: 350px;
+    margin: 0 30px;
+    border-radius: 16px;
+    position: relative;
+    border-radius: 20px;
+    padding: 3px;
+    border: 3px solid #ff073a; 
+    box-shadow:
+      0 0 10px #ff073a,
+      0 0 20px #ff00ff,
+      0 0 40px #00faff,
+      0 0 80px #00faff;
+    animation: neonPulse1 2s infinite alternate;
+  }
+
+  .carousel2 img {
+    height: 350px;
+    margin: 0 30px;
+    border-radius: 20px;
+    position: relative;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #39ff14; 
+    box-shadow:
+      0 0 10px #39ff14,
+      0 0 20px #39ff14,
+      0 0 40px #fff700;
+    animation: neonPulse2 2s infinite alternate;
+  }
+
+  
+  @keyframes neonPulse1 {
+    0% {
+      border-color: #ff073a;
+      box-shadow:
+        0 0 3px #ff073a,
+        0 0 6px #ff00ff,
+        0 0 10px #00faff;
+    }
+    100% {
+      border-color: #ff00ff;
+      box-shadow:
+        0 0 3px #ff00ff,
+        0 0 6px #00faff,
+        0 0 10px #ff073a;
+    }
+  }
+  @keyframes neonPulse2 {
+  0% {
+    border-color: #39ff14;
+    box-shadow:
+      0 0 3px #39ff14,
+      0 0 6px #39ff14,
+      0 0 10px #fff700;
+  }
+  100% {
+    border-color: #fff700;
+    box-shadow:
+      0 0 3px #fff700,
+      0 0 6px #fff700,
+      0 0 10px #39ff14;
+  }
+}
+
+  @keyframes ledBorder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  @keyframes scroll1 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1650px); }
+  }
+  @keyframes scroll2 {
+    0% { transform: translateX(-2225px); }
+    100% { transform: translateX(0); }
+
+  }
+
+
+  /* Pausa al pasar el mouse */
+  .carousel-container:hover .carousel {
+    animation-play-state: paused;
+  }
+  footer {
+  display: none !important;
+  }
+</style>
+
+<div class="portfolio-container">
+
+  <!-- App 1 -->
+  <div>
+    <div class="app-title">Tabble Tennis Tournament</div>
+    <div class="carousel-breakout">
+      <div class="carousel1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(1).jpeg" alt="App 1 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.55 AM.jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM.jpeg" alt="App 1 - Pantalla 4">
+	
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(1).jpeg" alt="App 1 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.55 AM.jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM.jpeg" alt="App 1 - Pantalla 3">
+        <img class="led-warm"  src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.42.20 AM.jpeg" alt="App 1 - Pantalla 4">	
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.54 AM(2).jpeg" alt="App 1 - Pantalla 1">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.41.53 AM(1).jpeg" alt="App 1 - Pantalla 2">
+        <img class="led-warm" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 11.47.54 AM.jpeg" alt="App 1 - Pantalla 3">
+      </div>
+    </div>
+  </div>
+
+  <!-- App 2 -->
+  <div>
+    <div class="app-title">Myaccount</div>
+    <div class="carousel-breakout">
+      <div class="carousel2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(3).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM.jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM.jpeg" alt="App 2 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(2).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(3).jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(2).jpeg" alt="App 2 - Pantalla 4">
+	
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(3).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM.jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM.jpeg" alt="App 2 - Pantalla 4">
+
+        <!-- Copia para loop infinito -->
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(2).jpeg" alt="App 2 - Pantalla 1">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.56 AM(1).jpeg" alt="App 2 - Pantalla 2">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(3).jpeg" alt="App 2 - Pantalla 3">
+        <img class="led-cool" src="/assets/images/Apps/WhatsApp Image 2025-08-13 at 10.13.55 AM(2).jpeg" alt="App 2 - Pantalla 4">
+      </div>
+    </div>
+  </div>
+
+
+<div class="app-footer"></div>
+</div>
+
 
 <script src="/assets/js/matrix-dash-con.js"></script>
 
