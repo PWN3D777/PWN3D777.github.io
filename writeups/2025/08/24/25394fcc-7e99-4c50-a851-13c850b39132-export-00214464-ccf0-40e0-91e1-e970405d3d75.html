@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>TheFrizz-Windows-Medium | Pwn3d777</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="TheFrizz-Windows-Medium" />
+<meta name="author" content="GitHub User" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="TheFrizz" />
+<meta property="og:description" content="TheFrizz" />
+<link rel="canonical" href="https://your-site-url/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75.html" />
+<meta property="og:url" content="https://your-site-url/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75.html" />
+<meta property="og:site_name" content="Pwn3d777" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-08-24T12:05:57+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="TheFrizz-Windows-Medium" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2025-08-24T12:05:57+00:00","datePublished":"2025-08-24T12:05:57+00:00","description":"TheFrizz","headline":"TheFrizz-Windows-Medium","mainEntityOfPage":{"@type":"WebPage","@id":"https://your-site-url/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75.html"},"url":"https://your-site-url/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="https://your-site-url/feed.xml" title="Pwn3d777" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Pwn3d777<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+<div class="post">
+  <h1 class="post-title">TheFrizz-Windows-Medium</h1>
+  
+  <div class="post-date">
+    Published on 24 Aug 2025
+    
+  </div>
+  
+  <h1 id="thefrizz">TheFrizz</h1>
+
+<h1 id="1-enumeration">1. Enumeration</h1>
+
+<p>Start enumerating tcp ports
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image.png" alt="image.png" />
+<br /><br />
+Interesting information were found in the enumeration, there is a web application, even a ssh service for windows running on it, let’s take a look at port 80
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_1.png" alt="image.png" />
+<br /><br />
+We were redirected to a subdomain and Gibbon is running behind, a open-source software designed for schools and universities
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_2.png" alt="image.png" />
+<br /><br />
+After a little research on internet, a CVE was found. It is vulnerable to Local file inclusion 
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_3.png" alt="image.png" />
+<br /><br /></p>
+<h1 id="2-user-flag">2. User flag</h1>
+<p><br /><br />
+We followed the instructions in the repository but we don’t find anything significant, furthermore it contained a large amount of data that almost crash the ram memory, and we had no full control of files as we were limited to certain ones only.
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_4.png" alt="image.png" />
+<br /><br />
+Keep searching to find CVE-2023-45878, this is a unauthenticated arbitrary file upload that can be used to execute code on the target system
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_5.png" alt="image.png" />
+<br /><br />
+Information on internet indicates that this vulnerability resides on <code class="language-plaintext highlighter-rouge">rubrics_visualise_saveAjax.php</code> script, we can use Gibbon official repository to analyze the code and find where is the break point for this CVE.
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_6.png" alt="image.png" />
+<br /><br />
+This endpoint expects three arguments
+<br /><br /></p>
+
+<ul>
+  <li>An image. The file to be uploaded.There is no filtering or validation process to verify its type</li>
+  <li>gibbonPersonID. This parameter is simple, it only expects alphanumeric characters</li>
+  <li>imgpath. The destination path where the image will be stored</li>
+</ul>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_7.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_8.png" alt="image.png" />
+<br /><br />
+Let’s verify we have access to this url-path 
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_9.png" alt="image.png" />
+<br /><br />
+As we saw before it is no taking care about what is the content of the image or its extension. Prepare a payload in cyberchef using php code using base64 encode
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_10.png" alt="image.png" />
+<br /><br />
+Send the payload to exploit this vulnerability
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_11.png" alt="image.png" />
+<br /><br />
+When attempting to access the shell, a syntax error was displayed, probably due to issues with how especial characters are handled 
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_12.png" alt="image.png" />
+<br /><br />
+Use the <code class="language-plaintext highlighter-rouge">application/x-www-form-urlencoded</code> content type and replace the last character of the payload into its urlencoded equivalent
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_13.png" alt="image.png" />
+<br /><br />
+We are now able to list files across different directories
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_14.png" alt="image.png" />
+<br /><br />
+We attempted to find shh credentials in configuration files but, instead we discover critical database information
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_15.png" alt="image.png" />
+<br /><br />
+Let’s trigger a reverse shell once and for all
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_16.png" alt="image.png" />
+<br /><br />
+Then we accessed the database using the previously obtained credentials, since we don’t have any stable shell commands were executed directly without spawning a sql console, take account the double quotes to avoid execution errors
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_17.png" alt="image.png" />
+<br /><br />
+List tables
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_18.png" alt="image.png" />
+<br /><br />
+We discover f.frizzle hash and salt
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_19.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_20.png" alt="image.png" />
+<br /><br />
+Chat gpt provided useful guidance to crack the hash. Although SHA-256 algorithm was used for encryption, Gibbon software has a different method to generated it
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_21.png" alt="image.png" />
+<br /><br />
+Fortunately this method is supported by <code class="language-plaintext highlighter-rouge">john-the-ripper</code> tool in <code class="language-plaintext highlighter-rouge">dinamic_61</code> format
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_22.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_23.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_24.png" alt="image.png" />
+<br /><br />
+Hashcat also support this algorithm format in 1420 code
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_25.png" alt="image.png" />
+<br /><br />
+We will need to access ssh by using a TGT, be sure we had set right configuration
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_26.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_27.png" alt="image.png" />
+<br /><br />
+Request the TGT and get the user flag
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_28.png" alt="image.png" />
+<br /><br /></p>
+<h1 id="3priv-esc">3.Priv esc</h1>
+<p><br /><br />
+To enumerate the system, start with active directory reconnaissance we are going to upload SharpHound.exe to extract domain information 
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span>\<span class="n">SharpHound</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">c</span> <span class="n">ALL</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_29.png" alt="image.png" />
+<br /><br />
+Transfer the generated file in our local machine
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_30.png" alt="image.png" />
+<br /><br />
+Unpack the bloohound file and use Bloodhound to graphical view of what we’ve collected
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_31.png" alt="image.png" />
+<br /><br />
+V.frizzel seems to be out target user, since he is a member of domain admins group
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_32.png" alt="image.png" />
+<br /><br />
+Inspecting root directory in the machine, the recycle bin looks suspicious
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_33.png" alt="image.png" />
+<br /><br />
+A SID is the name of a directory located in here, access its content, then copy the file to the Desktop directory of f.frizzle user using a different name to make the transfer to local process easier
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_34.png" alt="image.png" />
+<br /><br />
+Extract it
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_35.png" alt="image.png" />
+<br /><br />
+In this file we can see a base64 encoded password
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_36.png" alt="image.png" />
+<br /><br />
+Obtain all users in the domain to perform a password spraying with the credential we just found
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GET</span><span class="o">-</span><span class="n">ADUSER</span> <span class="o">-</span><span class="n">FILTER</span> <span class="o">*</span> <span class="o">|</span> <span class="n">Select</span><span class="o">-</span><span class="n">Object</span> <span class="n">Name</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_37.png" alt="image.png" />
+<br /><br />
+Kerbrute is the indicated tool for this tasks
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kerbrute_linux_amd64</span> <span class="n">passwordspray</span> <span class="o">--</span><span class="n">dc</span> <span class="n">controller</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="o">-</span><span class="n">d</span> <span class="n">domain</span><span class="p">.</span><span class="n">htb</span> <span class="nb">list</span> <span class="s">'password'</span> <span class="o">-</span><span class="n">vv</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_38.png" alt="image.png" />
+<br /><br />
+M.schoolbus account is reusing this password, log in as this user via ssh
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_39.png" alt="image.png" />
+<br /><br />
+M.schoolbus is part of the desktop admins group, which makes him a member of Group Policy Creator Owners group
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_40.png" alt="image.png" />
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_41.png" alt="image.png" />
+<br /><br />
+Get OU’s and group policy objects to create a gpo that makes m.schoolbus user an admin
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get</span><span class="o">-</span><span class="n">adorganizationalunit</span> <span class="o">-</span><span class="nb">filter</span> <span class="o">*|</span><span class="n">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">distinguishedname</span>
+<span class="n">get</span><span class="o">-</span><span class="n">gpo</span> <span class="o">-</span><span class="nb">all</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_42.png" alt="image.png" />
+<br /><br />
+Here we are creating a new gpo and linking it to the Domain Controllers Organizational Unit, this means that every change applied to this GPO will affect all objects within Domain Controllers OU
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">New</span><span class="o">-</span><span class="n">GPO</span> <span class="o">-</span><span class="n">Name</span> <span class="n">pwned</span> <span class="o">|</span> <span class="n">New</span><span class="o">-</span><span class="n">GPLink</span> <span class="o">-</span><span class="n">Target</span> <span class="s">"OU=DOMAIN CONTROLLERS, DC=FRIZZ,DC=HTB"</span> <span class="o">-</span><span class="n">LinkEnabled</span> <span class="n">Yes</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_43.png" alt="image.png" />
+<br /><br />
+Now we use SharpGPOAbuse to add M.SchoolBus user as a local admin of all objects within the linked OU, since the GPO is linked to Domain Controllers this will result in M.SchoolBus becoming a Domain Admin
+<br /><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span>\<span class="n">SharpGPOAbuse</span><span class="p">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">AddLocalAdmin</span> <span class="o">--</span><span class="n">UserAccount</span> <span class="n">M</span><span class="p">.</span><span class="n">SchoolBus</span> <span class="o">--</span><span class="n">GPOName</span> <span class="n">pwned</span>
+</code></pre></div></div>
+
+<p><br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_44.png" alt="image.png" />
+<br /><br />
+Update Group Policies
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_45.png" alt="image.png" />
+<br /><br />
+Create a new shell session as this user to obtain the root flag
+<br /><br />
+<img src="/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_46.png" alt="image.png" />
+<br /><br />
+Machine pwned!!@!@!</p>
+
+<script src="/assets/js/matrix-overlay.js"></script>
+
+<link rel="stylesheet" href="/assets/css/imagesstyle.css" />
+
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://your-site-url/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75.html';
+     this.page.identifier = '/writeups/2025/08/24/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75';
+     this.page.title = 'TheFrizz-Windows-Medium';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//<your-disqus-shortname>.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/08/17/3504a2b6-e9c0-430d-b937-f7ad30743c1c-export-7da3f4a5-05b5-4c03-83a8-e4e8d58e7c91.html">
+            Nocturnal-Linux-Easy
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/08/09/dddc540b-b15a-4ca6-a4e5-f95074025ea8-export-c6a747d0-44c2-4f1a-b1f3-cc9f14194be4.html">
+            University-Windows-Insane
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/writeups/2025/08/04/d2fd2792-68e0-4168-9904-f90f3bf63609-export-0ee8c1a5-de29-43f8-b0f4-339fa55d28de.html">
+            Code-Linux-Easy
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
