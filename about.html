@@ -1,0 +1,128 @@
+---
+layout: page
+title: About
+permalink: /about/
+---
+
+<style>
+  
+  .site-header, header {
+  /*display: none !important;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  }
+
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 100px;
+    gap: 50px;
+  }
+
+  .column-group {
+    display: flex;
+    flex-direction: row;
+    gap: 50px; /* espacio entre columnas dentro del grupo */
+  }
+
+  .column {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 120px;
+    padding-left:120px;
+    flex-shrink: 0;
+    gap: 80px; /* espacio entre filas */
+  }
+
+  .center-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;     /* centra horizontal */
+    padding: 50px;           /* opcional */
+    padding-left: 150px;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+    animation: breathe 3s ease-in-out infinite;
+    transition: transform 0.3s;
+  }
+
+  .center-img {
+    width: 200px;
+    height: auto;
+    border-radius: 0;
+    border: none;
+    
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .logo:hover {
+    transform: scale(1.2);
+  }
+  footer {
+  display: none !important;
+  }
+
+</style>
+
+<div class="container">
+  <!-- Grupo izquierdo: 2 columnas x 5 filas -->
+  <div class="column-group">
+    <div class="column">
+      <img src="/assets/images/logos/burp_suite_macos_bigsur_icon_190319.png" class="logo" alt="Logo1">
+      <img src="/assets/images/logos/kali-linux-logo-vector--comseeklogo434141.png" class="logo" alt="Logo3">
+      <img src="/assets/images/logos/bloodhound-logo.svg" class="logo" alt="Logo5">
+      <img src="/assets/images/logos/hd-java-logo-transparent-background-701751694771845zainlxmlfo.png" class="logo" alt="Logo7">
+      <img src="/assets/images/logos/impacket-logo.png" class="logo" alt="Logo9">
+    </div>
+    <div class="column">
+      <img src="/assets/images/logos/hack-the-box.svg" class="logo" alt="Logo2">
+      <img src="/assets/images/logos/png-clipart-macos-app-icons-wireshark-thumbnail.png" class="logo" alt="Logo4">
+      <img src="/assets/images/logos/mysql-logo-png-11660514406ail33e74hc.png" class="logo" alt="Logo6">
+      <img src="/assets/images/logos/0c4fd6ff55ed6b13a1d8ef205522af95_owasp_logo_flat2_icon.png" class="logo" alt="Logo8">
+      <img src="/assets/images/logos/nmap-logo-256x256-1.png" class="logo" alt="Logo10">
+    </div>
+  </div>
+
+  <!-- Imagen central centrada verticalmente -->
+  <div class="center-wrapper">
+    <img src="/assets/images/logos/Icon_hacker.png"  alt="Imagen Central" class="center-img">
+  </div>
+
+  <!-- Grupo derecho: 2 columnas x 5 filas -->
+  <div class="column-group">
+    <div class="column">
+      <img src="/assets/images/logos/png-transparent-python-logo.png" class="logo" alt="Logo21">
+      <img src="/assets/images/logos/metasploit-framework-logo.svg" class="logo" alt="Logo23">
+      <img src="/assets/images/logos/hydra-logo.svg" class="logo" alt="Logo25">
+      <img src="/assets/images/logos/2945093.webp" class="logo" alt="Logo27">
+      <img src="/assets/images/logos/1_vnhOZGVBojessbQ9NCJqSw.png" class="logo" alt="Logo29">
+    </div>
+    <div class="column">
+      <img src="/assets/images/logos/png-clipart-bash-shell-script-bourne-shell-scripting-language-unix-shell-shell-rectangle-logo-thumbnail.png" class="logo" alt="Logo22">
+      <img src="/assets/images/logos/144470396.png" class="logo" alt="Logo24">
+      <img src="/assets/images/logos/wfuzz-logo.svg" class="logo" alt="Logo26">
+      <img src="/assets/images/logos/hashcat-icon.png" class="logo" alt="Logo28">
+      <img src="/assets/images/logos/neo4j-logo-png-transparent.png" class="logo" alt="Logo30">
+    </div>
+  </div>
+</div>
+
+
+
+<script src="{{ '/assets/js/matrix-dash-con.js' | relative_url }}"></script>
+
+

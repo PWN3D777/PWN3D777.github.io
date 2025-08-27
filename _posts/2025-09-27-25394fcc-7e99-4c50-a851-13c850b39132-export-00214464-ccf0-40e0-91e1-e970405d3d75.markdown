@@ -1,0 +1,241 @@
+---
+layout: post
+title: "TheFrizz-Windows-Medium"
+date: 2025-08-24 8:05:57 -0400
+categories: writeups
+thumb: /assets/images/logos/c91ef1b641cf88156c7a9d3793d54216.png
+---
+
+# TheFrizz
+
+# 1. Enumeration
+
+Start enumerating tcp ports
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image.png' | relative_url }})
+<br/><br/>
+Interesting information were found in the enumeration, there is a web application, even a ssh service for windows running on it, let’s take a look at port 80
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_1.png' | relative_url }})
+<br/><br/>
+We were redirected to a subdomain and Gibbon is running behind, a open-source software designed for schools and universities
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_2.png' | relative_url }})
+<br/><br/>
+After a little research on internet, a CVE was found. It is vulnerable to Local file inclusion 
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_3.png' | relative_url }})
+<br/><br/>
+# 2. User flag
+<br/><br/>
+We followed the instructions in the repository but we don’t find anything significant, furthermore it contained a large amount of data that almost crash the ram memory, and we had no full control of files as we were limited to certain ones only.
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_4.png' | relative_url }})
+<br/><br/>
+Keep searching to find CVE-2023-45878, this is a unauthenticated arbitrary file upload that can be used to execute code on the target system
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_5.png' | relative_url }})
+<br/><br/>
+Information on internet indicates that this vulnerability resides on `rubrics_visualise_saveAjax.php` script, we can use Gibbon official repository to analyze the code and find where is the break point for this CVE.
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_6.png' | relative_url }})
+<br/><br/>
+This endpoint expects three arguments
+<br/><br/>
+
+- An image. The file to be uploaded.There is no filtering or validation process to verify its type
+- gibbonPersonID. This parameter is simple, it only expects alphanumeric characters
+- imgpath. The destination path where the image will be stored
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_7.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_8.png' | relative_url }})
+<br/><br/>
+Let’s verify we have access to this url-path 
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_9.png' | relative_url }})
+<br/><br/>
+As we saw before it is no taking care about what is the content of the image or its extension. Prepare a payload in cyberchef using php code using base64 encode
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_10.png' | relative_url }})
+<br/><br/>
+Send the payload to exploit this vulnerability
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_11.png' | relative_url }})
+<br/><br/>
+When attempting to access the shell, a syntax error was displayed, probably due to issues with how especial characters are handled 
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_12.png' | relative_url }})
+<br/><br/>
+Use the `application/x-www-form-urlencoded` content type and replace the last character of the payload into its urlencoded equivalent
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_13.png' | relative_url }})
+<br/><br/>
+We are now able to list files across different directories
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_14.png' | relative_url }})
+<br/><br/>
+We attempted to find shh credentials in configuration files but, instead we discover critical database information
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_15.png' | relative_url }})
+<br/><br/>
+Let’s trigger a reverse shell once and for all
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_16.png' | relative_url }})
+<br/><br/>
+Then we accessed the database using the previously obtained credentials, since we don’t have any stable shell commands were executed directly without spawning a sql console, take account the double quotes to avoid execution errors
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_17.png' | relative_url }})
+<br/><br/>
+List tables
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_18.png' | relative_url }})
+<br/><br/>
+We discover f.frizzle hash and salt
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_19.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_20.png' | relative_url }})
+<br/><br/>
+Chat gpt provided useful guidance to crack the hash. Although SHA-256 algorithm was used for encryption, Gibbon software has a different method to generated it
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_21.png' | relative_url }})
+<br/><br/>
+Fortunately this method is supported by `john-the-ripper` tool in `dinamic_61` format
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_22.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_23.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_24.png' | relative_url }})
+<br/><br/>
+Hashcat also support this algorithm format in 1420 code
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_25.png' | relative_url }})
+<br/><br/>
+We will need to access ssh by using a TGT, be sure we had set right configuration
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_26.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_27.png' | relative_url }})
+<br/><br/>
+Request the TGT and get the user flag
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_28.png' | relative_url }})
+<br/><br/>
+# 3.Priv esc
+<br/><br/>
+To enumerate the system, start with active directory reconnaissance we are going to upload SharpHound.exe to extract domain information 
+<br/><br/>
+
+```python
+.\SharpHound.exe -c ALL -d domain.htb
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_29.png' | relative_url }})
+<br/><br/>
+Transfer the generated file in our local machine
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_30.png' | relative_url }})
+<br/><br/>
+Unpack the bloohound file and use Bloodhound to graphical view of what we’ve collected
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_31.png' | relative_url }})
+<br/><br/>
+V.frizzel seems to be out target user, since he is a member of domain admins group
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_32.png' | relative_url }})
+<br/><br/>
+Inspecting root directory in the machine, the recycle bin looks suspicious
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_33.png' | relative_url }})
+<br/><br/>
+A SID is the name of a directory located in here, access its content, then copy the file to the Desktop directory of f.frizzle user using a different name to make the transfer to local process easier
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_34.png' | relative_url }})
+<br/><br/>
+Extract it
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_35.png' | relative_url }})
+<br/><br/>
+In this file we can see a base64 encoded password
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_36.png' | relative_url }})
+<br/><br/>
+Obtain all users in the domain to perform a password spraying with the credential we just found
+<br/><br/>
+
+```python
+GET-ADUSER -FILTER * | Select-Object Name
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_37.png' | relative_url }})
+<br/><br/>
+Kerbrute is the indicated tool for this tasks
+<br/><br/>
+
+```python
+kerbrute_linux_amd64 passwordspray --dc controller.domain.htb -d domain.htb list 'password' -vv
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_38.png' | relative_url }})
+<br/><br/>
+M.schoolbus account is reusing this password, log in as this user via ssh
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_39.png' | relative_url }})
+<br/><br/>
+M.schoolbus is part of the desktop admins group, which makes him a member of Group Policy Creator Owners group
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_40.png' | relative_url }})
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_41.png' | relative_url }})
+<br/><br/>
+Get OU’s and group policy objects to create a gpo that makes m.schoolbus user an admin
+<br/><br/>
+
+```python
+get-adorganizationalunit -filter *|select name, distinguishedname
+get-gpo -all
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_42.png' | relative_url }})
+<br/><br/>
+Here we are creating a new gpo and linking it to the Domain Controllers Organizational Unit, this means that every change applied to this GPO will affect all objects within Domain Controllers OU
+<br/><br/>
+
+```python
+New-GPO -Name pwned | New-GPLink -Target "OU=DOMAIN CONTROLLERS, DC=FRIZZ,DC=HTB" -LinkEnabled Yes
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_43.png' | relative_url }})
+<br/><br/>
+Now we use SharpGPOAbuse to add M.SchoolBus user as a local admin of all objects within the linked OU, since the GPO is linked to Domain Controllers this will result in M.SchoolBus becoming a Domain Admin
+<br/><br/>
+
+```python
+.\SharpGPOAbuse.exe --AddLocalAdmin --UserAccount M.SchoolBus --GPOName pwned
+```
+
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_44.png' | relative_url }})
+<br/><br/>
+Update Group Policies
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_45.png' | relative_url }})
+<br/><br/>
+Create a new shell session as this user to obtain the root flag
+<br/><br/>
+![image.png]({{ '/assets/images/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75/25394fcc-7e99-4c50-a851-13c850b39132-export-00214464-ccf0-40e0-91e1-e970405d3d75_image_46.png' | relative_url }})
+<br/><br/>
+Machine pwned!!@!@!
+
+<script src="{{ '/assets/js/matrix-overlay.js' | relative_url }}"></script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/imagesstyle.css' | relative_url }}">
